@@ -53,7 +53,7 @@ export default {
                 {
                     id: 2,
                     title: 'Total Sales',
-                    value: 35000,
+                    value: '35000 DH',
                     icon: 'mdi-currency-usd',
                     color: 'green'
                 },

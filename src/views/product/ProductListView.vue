@@ -8,81 +8,120 @@
       <div>
         <v-btn color="primary-orange" link :to="{name: 'product/add'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
-          <span class="text-white ">
+          <span class="text-white">
             Add Product
           </span>
         </v-btn>
       </div>
     </div>
     <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
-      <v-data-table
-        :headers="headers"
-        :items="desserts"
-        item-value="name"
-        class="elevation-1"
-      >
-        <template v-slot:[`column.checkbox`]="{ column }">
-          <input type="checkbox" :name="column.name" id="">
-        </template>
-
-        <template v-slot:[`item`]="{ item }">
-          <input type="checkbox" :name="item.title" id="">
-        </template>
-      </v-data-table>
+      <div class="mb-5 tw-flex">
+        <v-btn icon rounded="lg" variant="flat" size="small" color="primary-orange" class="text-white">
+          <v-icon color="white">mdi-filter</v-icon>
+        </v-btn>
+        <div class="focus-within:tw-border-orange-400 tw-w-[250px] ml-2 px-2 tw-rounded-md tw-border tw-flex tw-items-center">
+          <v-img width="18" height="18" max-width="18" class="ma-0 pa-0" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
+          <input type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-text-sm" placeholder="Search">
+        </div>
+      </div>
+      <div class="tw-h-[500px]">
+        <v-grid
+          :can-focus="false"
+          theme="material"
+          :source="rows"
+          :columns="columns"
+          :filter="filterConfig"
+          :resize="true"
+          :sortable="true"
+          frameSize="5"
+          class="tw-border"
+        >
+        </v-grid>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { VDataTable } from 'vuetify/labs/VDataTable'
+import VGrid from '@revolist/vue3-datagrid'
+import { rows, filterConfig } from './config'
+import { VGridVueTemplate} from '@revolist/vue3-datagrid';
+import MyVue from './MyVue.vue';
+import ProductStatus from './ProductStatus.vue';
+import {localUrl} from '@/config'
+
+
 export default {
-  components: {'v-data-table': VDataTable},
+  components: {VGrid},
   data() {
     return {
-      headers: [
+      filterConfig,
+      localUrl,
+      columns: 
+      [
         {
-          title: 'checkbox',
-          align: 'start',
-          key: 'checkbox',
-          sortable: false,
+            prop: 'id',
+            name: '#',
+            size: 50,
+            sortable: true,
+            filter: false
         },
         {
-          title: 'Dessert (100g serving)',
-          align: 'start',
-          key: 'name',
-          sortable: false,
-        },
-        { title: 'Calories', key: 'calories' },
-        { title: 'Fat (g)', key: 'fat' },
-        { title: 'Carbs (g)', key: 'carbs' },
-        { title: 'Protein (g)', key: 'protein' },
-        { title: 'Iron (%)', key: 'iron' },
-      ],
-      desserts: [
-        {
-          isChecked: false,
-          name: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
+            prop: "name",
+            name: "Name",
+            size: 200,
+            filter: 'name'
         },
         {
-          isChecked: false,
-          name: 'Ice cream sandwich',
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: '1%',
+          prop: 'sku',
+          name: 'SKU',
+          filter: 'name',
         },
-      ],
+        {
+          prop: 'category',
+          name: 'Category',
+          size: 150,
+          filter: 'name'
+        },
+        {
+            prop: 'status',
+            name: 'Status',
+            filter: 'status',
+            size: 150,
+            cellTemplate: VGridVueTemplate(ProductStatus)
+        },
+        {
+            prop: "price",
+            name: "Price",
+            filter: 'number',
+            columnType: 'numeric',
+        },
+        {
+            prop: "qty",
+            name: "Qty",
+            columnType: 'numeric',
+            sortable: true,
+            filter: false,
+            size: 90
+        },
+        {
+            name: 'Acions',
+            prop: 'vue',
+            cellTemplate: VGridVueTemplate(MyVue),
+            size: 130,
+            filter: false
+        }
+    ], 
+      rows
+    }
+  },
+  methods: {
+    beforeFocus(e) {
+      e.preventDefault();
     }
   }
 }
 </script>
 
 <style>
-
 </style>

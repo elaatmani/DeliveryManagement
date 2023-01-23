@@ -4,7 +4,7 @@
             v-model="drawer"
             location="left"
             :absolute="false"
-            class="tw-top-0 !tw-fixed"
+            class="!tw-top-0 !tw-fixed"
             
         >
             <!-- NavBar Logo  -->
@@ -55,6 +55,12 @@ export default {
     },
 
     methods: {
+    },
+
+    mounted() {
+        if (this.$vuetify.display.mdAndDown) {
+            this.drawer = false
+        }
     }
 }
 </script>

@@ -23,7 +23,7 @@ export default {
         const colors = {
           'orange': 'tw-bg-orange-500/10',
           'green': 'tw-bg-green-500/10',
-          'blue': 'tw-bg-green-500/10',
+          'blue': 'tw-bg-blue-500/10',
           'pink': 'tw-bg-pink-500/10'
         }
         return colors[this.dash.color]
