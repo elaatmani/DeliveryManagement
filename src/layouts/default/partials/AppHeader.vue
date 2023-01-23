@@ -21,7 +21,18 @@
 
         <!-- Right Part -->
         <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
+          <v-btn :ripple="false" class="mr-2"  icon>
+            <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
+          </v-btn>
+          <v-btn :ripple="false" class="mr-2" icon>
+            <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/notification-bing.svg'"></v-img>
+          </v-btn>
+          <v-btn  icon>
+            <v-avatar size="35">
+              <v-img :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>
+            </v-avatar>
+              <v-badge floating offset-y="-10" offset-x="5" color="primary-green" :bordered=true location="bottom right" dot></v-badge>
+          </v-btn>
         </template>
         <!-- /Right Part -->
 

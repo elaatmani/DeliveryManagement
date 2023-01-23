@@ -7,7 +7,7 @@ import subcategory from './routes/subcategory'
 import sales from './routes/sales'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
-import DashboardView from '../views/DashboardView.vue'
+import DashboardView from '../views/dashboard/DashboardView.vue'
 
 const routes = [
   product,
