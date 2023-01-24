@@ -6,7 +6,7 @@
 //   - module: should be same as meta.module in router
 //   - icon: 
 //     - type: icon/svg
-//     - value: icon name/ svg path **it should be in public folder** 
+//     - value: mdi icon name or svg path **it should be in public folder** 
 // 
 // Sublink structure
 //   - id
@@ -122,5 +122,17 @@ export const links = [
                 to: '/sales/new'
             }
         ]
-    }
+    },
+
+    {
+        id: 4,
+        title: 'Settings',
+        module: 'settings',
+        to: '/setings',
+        hasChildren: false,
+        icon: {
+            type: 'svg',
+            value: 'assets/img/icons/settings.svg'
+        }
+    },
 ]

@@ -41,15 +41,19 @@
 </template>
 
 <script>
-import { localUrl } from '@/config'
+import { localUrl } from '@/config/config'
 export default {
     emits: [ 'toggleSidebar' ],
 
-    computed: {
-        localUrl() {
-            return localUrl
-        }
+    data() {
+      return {
+        localUrl
+      }
     },
+
+    computed: {
+    },
+
     methods: {
         handleClick() {
             this.$emit('toggleSidebar');

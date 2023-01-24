@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { localUrl } from '@/config'
-import { links } from '@/variables/links'
+import { localUrl } from '@/config/config'
+import { links } from '@/config/links'
 
 // Components
 import SidebarItem from '@/layouts/default/partials/sidebar/SidebarItem'
@@ -37,15 +37,13 @@ export default {
 
     data() {
         return {
+            localUrl,
             drawer: true,
             links: links
         }
     },
 
     computed: {
-        localUrl() {
-            return localUrl
-        }
     },
 
     watch: {

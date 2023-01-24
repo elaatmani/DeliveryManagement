@@ -3,7 +3,7 @@
 
   <v-list-item
     class="mx-3 mb-2"
-    :class="{ 'bg-primary-indigo': isActive }"
+    :class="{ 'bg-secondary-color': isActive }"
     @click="handleClick()"
     density="comfortable"
     :active="false"
@@ -56,8 +56,8 @@
             <v-list density="compact">
                 <v-list-item v-for="child in link.children" :key="child.id" link exact :active="false" :to="child.to"  height="10" class="!tw-h-fit !tw-py-0">
                     <div class="tw-h-full py-2">
-                        <v-icon size="x-small" class="mr-2" :color="isSublinkActive(child) ? 'primary-orange': 'primary-indigo'" :icon="isSublinkActive(child) ? 'mdi-circle': 'mdi-circle-outline'"></v-icon>
-                        <span class="tw-text-sm" :class="{'text-primary-orange': isSublinkActive(child) }">{{ child.title }}</span>
+                        <v-icon size="x-small" class="mr-2" :color="isSublinkActive(child) ? 'primary-color' : 'secondary-color'" :icon="isSublinkActive(child) ? 'mdi-chevron-double-right': 'mdi-circle-medium'"></v-icon>
+                        <span class="tw-text-sm" :class="{'text-primary-color': isSublinkActive(child) }">{{ child.title }}</span>
                     </div>
                 </v-list-item>
             </v-list>
@@ -68,13 +68,14 @@
 </template>
 
 <script>
-import { localUrl } from '@/config'
+import { localUrl } from '@/config/config'
 
 export default {
   props: ["link"],
 
   data() {
     return {
+        localUrl,
         isActive: false
     }
   },
@@ -96,9 +97,6 @@ export default {
   },
 
   computed: {
-    localUrl() {
-      return localUrl
-    }
   },
 
   watch: {

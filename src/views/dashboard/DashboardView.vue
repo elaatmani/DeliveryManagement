@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { localUrl } from '@/config'
+import { localUrl } from '@/config/config'
 import DashItem from '@/views/dashboard/partials/DashItem'
 import DashItemFilled from '@/views/dashboard/partials/DashItemFilled'
 

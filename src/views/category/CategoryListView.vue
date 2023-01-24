@@ -6,7 +6,7 @@
         <h2 class="tw-text-gray-500 tw-text-sm">View/Search product category</h2>
       </div>
       <div>
-        <v-btn color="primary-orange" link :to="{name: 'category/add'}" variant="flat" class="text-capitalize">
+        <v-btn color="primary-color" link :to="{name: 'category/add'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white ">
             Add Category
