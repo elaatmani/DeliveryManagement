@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="tw-h-[500px]">
+      <div class="">
         <DataTable :rows="rows" :columns="columns" />
       </div>
     </div>
@@ -35,7 +35,7 @@
 
 <script>
 import { rows } from './config'
-import { VGridVueTemplate} from '@revolist/vue3-datagrid';
+import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import MyVue from '@/components/MyVue.vue';
 import ProductStatus from './ProductStatus.vue';
 import {localUrl} from '@/config/config'
@@ -49,9 +49,6 @@ export default {
       localUrl,
       columns: 
       [
-        {
-          
-        },
         {
             prop: 'id',
             name: '#',
