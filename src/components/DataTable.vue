@@ -12,7 +12,7 @@
                 :range="3"
                 :sortable="true"
                 @beforefiltertrimmed="aftertrimmed"
-                frameSize="2"
+                frame-size="20"
                 class="tw-border"
             >
             </v-grid>
@@ -22,7 +22,7 @@
         <!-- Pagination -->
         <div class="mt-5 tw-flex tw-justify-between">
             <div>
-
+                <v-btn variant="flat" @click="clearFilters" color="primary-color">Clear</v-btn>
             </div>
             <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
@@ -58,33 +58,43 @@ export default {
     data() {
         return {
             isFiltered: false,
-            // filtredItems: [],
-            // source: [],
             currentPage: 1,
-            paginationLimit: 7,
-            filtredProducts: [],
+            paginationLimit: 8,
             filtredOut: {}
         }
     },
 
     computed: {
         pageCount() {
+            return this.isFiltered ? this.pageCountWithFilter : this.pageCountNoFilter
+        },
+
+        pageCountWithFilter() {
+            return Math.ceil(this.filtredItems.length / this.paginationLimit)
+        },
+
+        pageCountNoFilter() {
             return Math.ceil(this.rows.length / this.paginationLimit)
         },
+
         prevRange() {
             return (this.currentPage - 1) * this.paginationLimit
         },
+
         nextRange() {
             return (this.currentPage) * this.paginationLimit
         },
-        source() {
-            return this.isFiltered ? [] : this.rows.slice(this.prevRange, this.nextRange);
-        },
+
+        // returns array with result from the filter
         filtredItems() {
-            return this.rows.filter((item, index) => this.filtredOut.includes(index))
+            const indexes = Object.keys(this.filtredOut);
+            return this.rows.filter((e, i) => {
+                return !indexes.includes(`${i}`);
+            })
         },
 
 
+        // returns object Items to be filtred out by index if filter is not active
         trimmedNoFilter() {
             const trimmed = {}
 
@@ -97,20 +107,41 @@ export default {
             return trimmed
         },
 
+        // returns object Items to be filtred out by index if filter is active
         trimmedWithFilter() {
-            let trimmed = {...this.filtredOut}
+            let toBeTrimmed = {}
 
-            return trimmed
+            this.rows.forEach((item, index) =>{
+                toBeTrimmed[index] = true
+            });
+
+            const currentVisibleItemsKeys = this.visibleItemsIndexes.slice(this.prevRange, this.nextRange);
+
+            currentVisibleItemsKeys.forEach(item => {
+                toBeTrimmed[item] = false
+            }) 
+
+            return toBeTrimmed
+        },
+
+
+        visibleItemsIndexes() {
+            
+            const visibleItemsIndexes = [];
+            this.filtredItems.forEach((item) => {
+                visibleItemsIndexes.push(this.rows.indexOf(item));
+            })
+            return visibleItemsIndexes
         }
     },
 
     watch: {
         currentPage() {
-            document.querySelector('revo-grid').addTrimmed(this.isFiltered ? this.trimmedWithFilter : this.trimmedNoFilter)
-            console.log(this.trimmedNoFilter);
+            this.updateDatatable()
         },
         filtredOut() {
-            document.querySelector('revo-grid').addTrimmed(this.isFiltered ? this.trimmedWithFilter : this.trimmedNoFilter)
+            this.currentPage = 1
+            this.updateDatatable()
         }
     },
 
@@ -125,21 +156,22 @@ export default {
                 this.filtredOut = {}
                 this.isFiltered = false
             }
-            // const newRows = Object.keys(source.detail.itemsToFilter);
             console.log(source);
-            // console.log(this.isFiltered);
-        
-            // console.log(Object.keys(source.detail.itemsToFilter));
-            // const filtredRows = this.rows.filter((e,i) => !newRows.includes(`${i}`));
+        },
+        clearFilters() {
+            document.querySelector('revo-grid')
+            .addTrimmed({'0': true, '2':false })
+        },
+
+        updateDatatable() {
+            document.querySelector('revo-grid')
+            .addTrimmed(this.isFiltered ? this.trimmedWithFilter : this.trimmedNoFilter)
         }
     },
 
     mounted() {
-        console.log(this.pageCount);
-        console.log(this.prevRange);
-        console.log(this.nextRange);
-            
-        document.querySelector('revo-grid').addTrimmed(this.isFiltered ? this.trimmedWithFilter : this.trimmedNoFilter)
+            this.updateDatatable()
+        
 
     }
 }

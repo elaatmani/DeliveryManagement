@@ -76,7 +76,7 @@ export const rows =
 
     {
         id: 9,
-        name: "Product name 1",
+        name: "Product name 9",
         price: 12.00,
         qty: 100,
         sku: 'P-121',
@@ -85,7 +85,7 @@ export const rows =
     },
     {
         id: 10,
-        name: "Product name 2",
+        name: "Product name 10",
         price: 22.00,
         qty: 130,
         sku: 'P-122',
@@ -94,7 +94,7 @@ export const rows =
     },
     {
         id: 11,
-        name: "Product name 3",
+        name: "Product name 11",
         price: 32.00,
         qty: 500,
         sku: 'P-123',
@@ -103,7 +103,7 @@ export const rows =
     },
     {
         id: 12,
-        name: "Product name 4",
+        name: "Product name 12",
         price: 42.00,
         qty: 230,
         sku: 'P-124',
@@ -112,7 +112,7 @@ export const rows =
     },
     {
         id: 13,
-        name: "Product name 5",
+        name: "Product name 13",
         price: 12.00,
         qty: 100,
         sku: 'P-125',
@@ -121,7 +121,7 @@ export const rows =
     },
     {
         id: 14,
-        name: "Product name 6",
+        name: "Product name 14",
         price: 22.00,
         qty: 130,
         sku: 'P-122',
@@ -130,7 +130,7 @@ export const rows =
     },
     {
         id: 15,
-        name: "Product name 7",
+        name: "Product name 15",
         price: 32.00,
         qty: 500,
         sku: 'P-123',
@@ -139,7 +139,7 @@ export const rows =
     },
     {
         id: 16,
-        name: "Product name 8",
+        name: "Product name 16",
         price: 42.00,
         qty: 230,
         sku: 'P-124',
@@ -149,7 +149,7 @@ export const rows =
 
     {
         id: 17,
-        name: "Product name 1",
+        name: "Product name 17",
         price: 12.00,
         qty: 100,
         sku: 'P-121',
@@ -158,7 +158,7 @@ export const rows =
     },
     {
         id: 18,
-        name: "Product name 2",
+        name: "Product name 18",
         price: 22.00,
         qty: 130,
         sku: 'P-122',
@@ -167,7 +167,7 @@ export const rows =
     },
     {
         id: 19,
-        name: "Product name 3",
+        name: "Product name 19",
         price: 32.00,
         qty: 500,
         sku: 'P-123',
@@ -176,7 +176,7 @@ export const rows =
     },
     {
         id: 20,
-        name: "Product name 4",
+        name: "Product name 20",
         price: 42.00,
         qty: 230,
         sku: 'P-124',
@@ -185,7 +185,7 @@ export const rows =
     },
     {
         id: 21,
-        name: "Product name 5",
+        name: "Product name 21",
         price: 12.00,
         qty: 100,
         sku: 'P-125',
@@ -194,7 +194,7 @@ export const rows =
     },
     {
         id: 22,
-        name: "Product name 6",
+        name: "Product name 22",
         price: 22.00,
         qty: 130,
         sku: 'P-122',
@@ -203,7 +203,7 @@ export const rows =
     },
     {
         id: 23,
-        name: "Product name 7",
+        name: "Product name 23",
         price: 32.00,
         qty: 500,
         sku: 'P-123',
@@ -212,7 +212,7 @@ export const rows =
     },
     {
         id: 24,
-        name: "Product name 8",
+        name: "Product name 24",
         price: 42.00,
         qty: 230,
         sku: 'P-124',
