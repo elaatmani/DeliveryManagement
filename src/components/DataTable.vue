@@ -10,8 +10,9 @@
                 :filter="filterConfig"
                 :resize="true"
                 :range="3"
-                :sortable="true"
+                :sortable="false"
                 @beforefiltertrimmed="aftertrimmed"
+                @beforesorting="beforesorting"
                 frame-size="20"
                 class="tw-border"
             >
@@ -22,7 +23,7 @@
         <!-- Pagination -->
         <div class="mt-5 tw-flex tw-justify-between">
             <div>
-                <v-btn variant="flat" @click="clearFilters" color="primary-color">Clear</v-btn>
+                <v-select v-model="paginationLimit" :items="[5, 10, 20]" variant="outlined" density="compact" color="primary-color"></v-select>
             </div>
             <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
@@ -57,9 +58,10 @@ export default {
 
     data() {
         return {
+            // by: 5,
             isFiltered: false,
             currentPage: 1,
-            paginationLimit: 8,
+            paginationLimit: 5,
             filtredOut: {}
         }
     },
@@ -140,7 +142,11 @@ export default {
             this.updateDatatable()
         },
         filtredOut() {
-            this.currentPage = 1
+            this.currentPage = 1;
+            this.updateDatatable()
+        },
+        paginationLimit() {
+            this.currentPage = 1;
             this.updateDatatable()
         }
     },
@@ -156,11 +162,15 @@ export default {
                 this.filtredOut = {}
                 this.isFiltered = false
             }
-            console.log(source);
+            // console.log(source);
         },
         clearFilters() {
             document.querySelector('revo-grid')
-            .addTrimmed({'0': true, '2':false })
+            .addTrimmed({})
+        },
+
+        beforesorting(source) {
+            console.log(source);
         },
 
         updateDatatable() {

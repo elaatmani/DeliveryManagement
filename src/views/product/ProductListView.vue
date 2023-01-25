@@ -53,8 +53,8 @@ export default {
             prop: 'id',
             name: '#',
             size: 50,
-            sortable: true,
-            filter: false
+            // sortable: true,
+            filter: false,
         },
         {
             prop: "name",
