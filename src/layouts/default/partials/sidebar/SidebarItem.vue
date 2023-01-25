@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="$can(link.gate)">
 
   <v-list-item
     class="mx-3 mb-2"
@@ -54,7 +54,7 @@
     <div v-if="link.hasChildren" :class="{'!tw-max-h-[1000px] mb-2 mt-n3': isActive}" class="tw-max-h-0 tw-w-auto mx-3 tw-overflow-hidden tw-duration-300">
         <div class="tw-rounded-md tw-bg-gray-50">
             <v-list density="compact">
-                <v-list-item v-for="child in link.children" :key="child.id" link exact :active="false" :to="child.to"  height="10" class="!tw-h-fit !tw-py-0">
+                <v-list-item   v-for="child in allowedChildren" :key="child.id" link exact :active="false" :to="child.to"  height="10" class="!tw-h-fit !tw-py-0">
                     <div class="tw-h-full py-2">
                         <v-icon size="x-small" class="mr-2" :color="isSublinkActive(child) ? 'primary-color' : 'secondary-color'" :icon="isSublinkActive(child) ? 'mdi-chevron-double-right': 'mdi-circle-medium'"></v-icon>
                         <span class="tw-text-sm" :class="{'text-primary-color': isSublinkActive(child) }">{{ child.title }}</span>
@@ -97,6 +97,9 @@ export default {
   },
 
   computed: {
+    allowedChildren() {
+      return this.link?.children.filter((item) => this.$can(item.gate))
+    }
   },
 
   watch: {

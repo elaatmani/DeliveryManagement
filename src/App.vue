@@ -5,13 +5,36 @@
 </template>
 
 <script>
-
+// import defineAbilityFor from '@/config/ability'
+// import user from '@/config/user'
+// import { AbilityBuilder } from '@casl/vue'
 export default {
   name: 'App',
 
   data: () => ({
     theme: 'light'
   }),
+
+  mounted() {
+    // console.log('I Can manage All: ', this.$can('manage', 'all'));
+    // console.log('I Can Add User: ', this.$can('add', 'User'));
+    // console.log('I Can Delete User: ', this.$can('delete', 'User'));
+    // console.log('I Can Delete Post: ', this.$can('delete', 'Post'));
+    // setTimeout(() => {
+    //   this.$ability.update([
+    //     {action: ['product_show']}
+    //   ])
+    //   console.log('ability updated');
+    // }, 3000)
+
+    // setTimeout(() => {
+    //   this.$ability.update([
+    //     {action: ['product_update', 'product_delete']}
+    //   ])
+    //   console.log('ability updated');
+    // }, 6000)
+  },
+  methods: {}
 }
 </script>
 

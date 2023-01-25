@@ -25,6 +25,7 @@ export const links = [
         module: 'dashboard',
         to: '/',
         hasChildren: false,
+        gate: 'dashboard_access',
         icon: {
             type: 'svg',
             value: 'assets/img/icons/dashboard.svg'
@@ -36,6 +37,7 @@ export const links = [
         module: 'product',
         title: 'Product',
         hasChildren: true,
+        gate: 'product_management', 
         icon: {
             type: 'svg',
             value: 'assets/img/icons/product.svg'
@@ -45,12 +47,14 @@ export const links = [
                 id: 1,
                 title: 'Product List',
                 subModule: 'product/list',
+                gate: 'product_show',
                 to: '/products'
             },
             {
                 id: 2,
                 title: 'Add Product',
                 subModule: 'product/add',
+                gate: 'product_create',
                 to: '/products/add'
             },
             // {
@@ -104,6 +108,7 @@ export const links = [
         module: 'orders',
         hasChildren: false,
         to: '/orders',
+        gate: 'order_management',
         icon: {
             type: 'icon',
             value: 'mdi-package-variant-closed'
@@ -115,6 +120,7 @@ export const links = [
         title: 'Sales',
         module: 'sales',
         hasChildren: true,
+        gate: 'sale_management',
         icon: {
             type: 'svg',
             value: 'assets/img/icons/sales1.svg'
@@ -124,12 +130,14 @@ export const links = [
                 id: 1,
                 title: 'Sales List',
                 subModule: 'sales/list',
+                gate: 'sale_show',
                 to: '/sales'
             },
             {
                 id: 2,
                 title: 'New Sales',
                 subModule: 'sales/new',
+                gate: 'sale_create',
                 to: '/sales/new'
             }
         ]
@@ -139,6 +147,7 @@ export const links = [
         id: 6,
         title: 'Users',
         module: 'users',
+        gate: 'user_management',
         hasChildren: true,
         icon: {
             type: 'svg',
@@ -149,12 +158,14 @@ export const links = [
                 id: 1,
                 title: 'Users List',
                 subModule: 'user/list',
+                gate: 'user_show',
                 to: '/user'
             },
             {
                 id: 2,
                 title: 'Add User',
                 subModule: 'user/new',
+                gate: 'user_create',
                 to: '/user/new'
             }
         ]
@@ -165,6 +176,7 @@ export const links = [
         title: 'Settings',
         module: 'settings',
         to: '/setings',
+        gate: 'settings_management',
         hasChildren: false,
         icon: {
             type: 'svg',

@@ -5,7 +5,7 @@
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Product List</h1>
         <h2 class="tw-text-gray-500 tw-text-sm">Manage your products</h2>
       </div>
-      <div>
+      <div v-if="$can('product_create')">
         <v-btn color="primary-color" link :to="{name: 'product/add'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white">
@@ -96,7 +96,7 @@ export default {
         },
         {
             name: 'Acions',
-            prop: 'vue',
+            prop: 'product',
             cellTemplate: VGridVueTemplate(MyVue),
             size: 130,
             filter: false
