@@ -37,7 +37,7 @@ export const links = [
         module: 'product',
         title: 'Product',
         hasChildren: true,
-        gate: 'product_management', 
+        gate: 'product_access', 
         icon: {
             type: 'svg',
             value: 'assets/img/icons/product.svg'

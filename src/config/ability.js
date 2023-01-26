@@ -9,7 +9,7 @@ export const abilities = [
     'category_show',
     'category_update',
     'category_create',
-    'product_management',
+    'product_access',
     'sale_management',
     'sale_create'
 ]
@@ -17,6 +17,6 @@ export const abilities = [
 
 const ability = defineAbility((can) => {
     can(abilities)
-})
+});
 
 export default ability

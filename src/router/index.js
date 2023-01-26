@@ -1,38 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Routes
+import auth from './routes/auth'
+import dashboard from './routes/dashboard'
 import product from './routes/product'
 import category from './routes/category'
 import subcategory from './routes/subcategory'
 import sales from './routes/sales'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
-import DashboardView from '../views/dashboard/DashboardView.vue'
 
 const routes = [
+  auth,
+  dashboard,
   product,
   category,
   subcategory,
   sales,
 
-  {
-    path: '/',
-    name: 'home',
-    component: DefaultLayout,
-    meta: {
-      module: 'dashboard'
-    },
-    children: [
-      {
-        path: '',
-        name: 'dashboard',
-        component: DashboardView,
-        meta: {
-          module: 'dashboard',
-        }
-      }
-    ]
-  },
+  
   {
     name: 'all',
     path: '/:pathMatch(.*)',
