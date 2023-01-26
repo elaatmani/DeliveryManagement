@@ -57,18 +57,20 @@ export const links = [
                 gate: 'product_create',
                 to: '/products/add'
             },
-            // {
-            //     id: 3,
-            //     title: 'Category List',
-            //     subModule: 'category/list',
-            //     to: '/categories'
-            // },
-            // {
-            //     id: 4,
-            //     title: 'Add Category',
-            //     subModule: 'category/add',
-            //     to: '/categories/add'
-            // },
+            {
+                id: 3,
+                title: 'Category List',
+                subModule: 'category/list',
+                gate: 'category_show',
+                to: '/categories'
+            },
+            {
+                id: 4,
+                title: 'Add Category',
+                gate: 'category_create',
+                subModule: 'category/add',
+                to: '/categories/add'
+            },
             // {
             //     id: 5,
             //     title: 'Sub Category List',

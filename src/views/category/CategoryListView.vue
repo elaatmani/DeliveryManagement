@@ -16,14 +16,80 @@
     </div>
 
     <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
-      <v-btn>Test</v-btn>
+
+        <div class="mb-5 tw-flex">
+        <v-btn icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
+          <v-icon color="white" size="xx-large">mdi-camera-control</v-icon>
+        </v-btn>
+        <div class="focus-within:tw-border-orange-400 tw-w-[250px] ml-2 px-2 tw-rounded-md tw-border tw-flex tw-items-center">
+          <v-img width="18" height="18" max-width="18" class="ma-0 pa-0" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
+          <input type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-w-full tw-text-sm" placeholder="Search by name">
+        </div>
+      </div>
+
+        <div class="">
+        <DataTable :rows="categories" :columns="columns" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import { VGridVueTemplate } from '@revolist/vue3-datagrid';
+import {localUrl} from '@/config/config'
+import { categories } from '@/config/testItems'
 
+import MyVue from '@/components/MyVue.vue';
+import DataTable from '@/components/DataTable'
+
+export default {
+  components: { DataTable },
+    data() {
+      return {
+        localUrl: localUrl,
+        categories: categories,
+
+        columns: [
+          {
+            prop: 'id',
+            name: '#',
+            size: 50,
+            filter: 'number'
+          },
+          {
+            prop: "name",
+            name: "Name",
+            size: 200,
+            filter: 'name'
+        },
+        {
+          prop: 'code',
+          name: 'Category Code',
+          filter: 'name',
+          size: 160
+        },
+        {
+          prop: 'description',
+          name: 'Description',
+          size: 200,
+          filter: 'name'
+        },
+        {
+            prop: "created_by",
+            name: "Created By",
+            filter: 'name',
+            size: 150
+        },
+        {
+            name: 'Acions',
+            prop: 'category',
+            cellTemplate: VGridVueTemplate(MyVue),
+            size: 130,
+            filter: false
+        }
+        ]
+      }
+    }
 }
 </script>
 

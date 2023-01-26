@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Datatable -->
-        <div class="tw-w-full tw-h-[400px]">
+        <div class="tw-w-full tw-h-[473px]">
             <v-grid
                 :can-focus="false"
                 theme="material"
@@ -15,6 +15,7 @@
                 @beforesorting="beforesorting"
                 frame-size="20"
                 class="tw-border"
+                :auto-size-column="true"
             >
             </v-grid>
         </div>
@@ -22,13 +23,17 @@
 
         <!-- Pagination -->
         <div class="mt-5 tw-flex tw-justify-between">
-            <div>
-                <v-select v-model="paginationLimit" :items="[5, 10, 20]" variant="outlined" density="compact" color="primary-color"></v-select>
+            <div class="d-flex align-center">
+                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700">Show per page: </div>
+                <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
             </div>
-            <div>
+            <div class="d-flex align-center">
+                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ? isFiltered ? filtredItems.length : rows.length : nextRange) }} of {{ isFiltered ? filtredItems.length : rows.length }} items </div>
+                <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
                     <span class="tw-text-white">{{ n }}</span>
                 </v-btn>
+                </div>
             </div>
         </div>
         <!-- /Pagination -->
@@ -58,10 +63,10 @@ export default {
 
     data() {
         return {
-            // by: 5,
+            allowedLimit: [5, 10, 20, 50, 100],
             isFiltered: false,
             currentPage: 1,
-            paginationLimit: 5,
+            paginationLimit: 10,
             filtredOut: {}
         }
     },

@@ -22,7 +22,7 @@
         </v-btn>
         <div class="focus-within:tw-border-orange-400 tw-w-[250px] ml-2 px-2 tw-rounded-md tw-border tw-flex tw-items-center">
           <v-img width="18" height="18" max-width="18" class="ma-0 pa-0" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
-          <input type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-text-sm" placeholder="Search">
+          <input type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
         </div>
       </div>
 
@@ -34,11 +34,12 @@
 </template>
 
 <script>
-import { rows } from './config'
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
+import {localUrl} from '@/config/config'
+import { products } from '@/config/testItems'
+
 import MyVue from '@/components/MyVue.vue';
 import ProductStatus from './ProductStatus.vue';
-import {localUrl} from '@/config/config'
 import DataTable from '@/components/DataTable'
 
 
@@ -47,6 +48,7 @@ export default {
   data() {
     return {
       localUrl,
+      rows: products,
       columns: 
       [
         {
@@ -90,7 +92,7 @@ export default {
             prop: "qty",
             name: "Qty",
             columnType: 'numeric',
-            sortable: true,
+            sortable: false,
             filter: 'number',
             size: 90
         },
@@ -101,8 +103,7 @@ export default {
             size: 130,
             filter: false
         }
-    ], 
-      rows
+    ]
     }
   },
   methods: {

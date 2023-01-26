@@ -33,6 +33,7 @@
       <!-- Item Title -->
       <v-list-item-title
         class="text-body-2 font-weight-regular"
+        :class="{'text-white': isActive}"
         v-text="link.title"
       ></v-list-item-title>
       <!-- /Item Title -->

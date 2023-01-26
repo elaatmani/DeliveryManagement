@@ -6,6 +6,9 @@ export const abilities = [
     'product_show',
     'product_delete',
     'product_update',
+    'category_show',
+    'category_update',
+    'category_create',
     'product_management',
     'sale_management',
     'sale_create'
