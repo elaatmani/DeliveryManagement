@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
 import SalesListView from '@/views/sales/SalesListView'
+import AddSaleView from '@/views/sales/AddSaleView'
 
 
 export default 
@@ -23,17 +24,21 @@ export default
                 component: SalesListView,
                 meta: {
                     module: 'sales',
-                    subModule: 'sales/list'
+                    subModule: 'sales/list',
+                    title: 'Sales List',
+                    gate: 'sale_show'
                 }
             },
 
             { 
                 name: 'sales/new',
                 path: '/sales/new',
-                component: SalesListView,
+                component: AddSaleView,
                 meta: {
                     module: 'sales',
-                    subModule: 'sales/new'
+                    subModule: 'sales/new',
+                    title: 'Add Sale',
+                    gate: 'sale_create'
                 }
             },
 

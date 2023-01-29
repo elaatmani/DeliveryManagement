@@ -24,7 +24,8 @@ export default
                 component: SubCategoryListView,
                 meta: {
                     module: 'product',
-                    subModule: 'subcategory/list'
+                    subModule: 'subcategory/list',
+                    title: 'Sub Categories List'
                 }
             },
 
@@ -34,7 +35,8 @@ export default
                 component: AddSubCategoryView,
                 meta: {
                     module: 'product',
-                    subModule: 'subcategory/add'
+                    subModule: 'subcategory/add',
+                    title: 'Add Sub Category'
                 }
             },
         ]

@@ -5,7 +5,7 @@
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Category List</h1>
         <h2 class="tw-text-gray-500 tw-text-sm">View/Search product category</h2>
       </div>
-      <div>
+      <div v-if="$can('category_create')">
         <v-btn color="primary-color" link :to="{name: 'category/add'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white ">

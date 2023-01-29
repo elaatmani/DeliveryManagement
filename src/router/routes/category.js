@@ -12,7 +12,7 @@ export default
         path: '/categories',
         component: DefaultLayout,
         meta: {
-            module: 'product'
+            module: 'product',
         },
 
         children: [
@@ -24,7 +24,9 @@ export default
                 component: CategoryListView,
                 meta: {
                     module: 'product',
-                    subModule: 'category/list'
+                    subModule: 'category/list',
+                    title: 'Categories List',
+                    gate: 'category_show'
                 }
             },
 
@@ -34,7 +36,9 @@ export default
                 component: AddCategoryView,
                 meta: {
                     module: 'product',
-                    subModule: 'category/add'
+                    subModule: 'category/add',
+                    title: 'Add Category',
+                    gate: 'category_create'
                 }
             },
         ]

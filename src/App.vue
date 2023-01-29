@@ -5,8 +5,10 @@
 </template>
 
 <script>
-// import defineAbilityFor from '@/config/ability'
-// import user from '@/config/user'
+// import Api from '@/api/Api'
+// import Csrf from '@/api/Csrf'
+import User from '@/api/User'
+import { mapActions } from 'vuex'
 // import { AbilityBuilder } from '@casl/vue'
 export default {
   name: 'App',
@@ -15,26 +17,76 @@ export default {
     theme: 'light'
   }),
 
-  mounted() {
-    // console.log('I Can manage All: ', this.$can('manage', 'all'));
-    // console.log('I Can Add User: ', this.$can('add', 'User'));
-    // console.log('I Can Delete User: ', this.$can('delete', 'User'));
-    // console.log('I Can Delete Post: ', this.$can('delete', 'Post'));
-    // setTimeout(() => {
-    //   this.$ability.update([
-    //     {action: ['product_show']}
-    //   ])
-    //   console.log('ability updated');
-    // }, 3000)
+  methods: {
+    ...mapActions('user', ['setIsLoggedIn']),
+    createTestUser() {
+      const user = {
+        firstname: 'Yassine',
+        lastname: 'El Aatmani',
+        phone: '12345',
+        email: 'Yassine@gmail',
+        password: '12345',
+        status: 1
+      }
 
-    // setTimeout(() => {
-    //   this.$ability.update([
-    //     {action: ['product_update', 'product_delete']}
-    //   ])
-    //   console.log('ability updated');
-    // }, 6000)
+      User.signup(user)
+      .then(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    },
+
+    getUserInfo() {
+      return User.getUser().then(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    },
+
+    logout() {
+      User.logout()
+      .then(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    },
+
+    login() {
+      const user = {
+        email: 'Yassine@gmail',
+        password: '12345',
+      }
+
+      User.login(user)
+      .then(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
   },
-  methods: {}
+
+  mounted() {
+    
+    // this.login()
+    this.logout()
+    // this.getUserInfo()
+  }
 }
 </script>
 

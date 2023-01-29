@@ -1,10 +1,10 @@
 <template>
     <div>
         <!-- Datatable -->
-        <div class="tw-w-full tw-h-[473px]">
+        <div class="tw-w-full tw-h-[475px]" :class="[{'tw-bg-gray-900': dark}]">
             <v-grid
                 :can-focus="false"
-                theme="material"
+                :theme="dark ? 'darkMaterial' : 'material'"
                 :source="rows"
                 :columns="columns"
                 :filter="filterConfig"
@@ -63,6 +63,7 @@ export default {
 
     data() {
         return {
+            dark: false,
             allowedLimit: [5, 10, 20, 50, 100],
             isFiltered: false,
             currentPage: 1,

@@ -5,6 +5,6 @@ export default {
     path: '/login',
     component: LoginView,
     meta: {
-
+        title: 'Login'
     }
 }

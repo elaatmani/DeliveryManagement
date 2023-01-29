@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import beforeEach from './beforeEach'
 
 // Routes
 import auth from './routes/auth'
@@ -9,6 +10,7 @@ import subcategory from './routes/subcategory'
 import sales from './routes/sales'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
+import NotFound from '@/views/NotFound'
 
 const routes = [
   auth,
@@ -18,17 +20,37 @@ const routes = [
   subcategory,
   sales,
 
-  
   {
-    name: 'all',
+    name: 'not-found',
+    path: '/404',
+    component: DefaultLayout,
+    meta: {
+      title: 'Not Found',
+      gate: ''
+    },
+    children: [
+      {
+        name: '404',
+        path: '',
+        component: NotFound
+      }
+    ]
+  },
+  {
+    name: 'catch-all',
     path: '/:pathMatch(.*)',
-    component: DefaultLayout
-  }
+    beforeEnter: (to, from, next) => {
+      return next({ name: '404' })
+    },
+  },
+
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
+
+router.beforeEach(beforeEach);
 
 export default router

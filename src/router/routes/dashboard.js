@@ -17,6 +17,8 @@ export default {
             component: DashboardView,
             meta: {
               module: 'dashboard',
+              title: 'Dashboard',
+              gate: 'dashboard_access'
             }
           }
         ]

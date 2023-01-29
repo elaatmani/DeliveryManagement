@@ -24,7 +24,9 @@ export default
                 component: ProductListView,
                 meta: {
                     module: 'product',
-                    subModule: 'product/list'
+                    subModule: 'product/list',
+                    title: 'Products List',
+                    gate: 'product_show'
                 }
             },
 
@@ -34,7 +36,9 @@ export default
                 component: AddProductView,
                 meta: {
                     module: 'product',
-                    subModule: 'product/add'
+                    subModule: 'product/add',
+                    title: 'Add Product',
+                    gate: 'product_create'
                 }
             },
 

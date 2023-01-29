@@ -18,6 +18,8 @@ Sidebar and routes:
 
     - To define routes link go to 'src/router/routes'
 
+    to be continue...
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

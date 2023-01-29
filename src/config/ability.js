@@ -8,11 +8,13 @@ export const abilities = [
     'product_update',
     'category_show',
     'category_update',
-    'category_create',
+    // 'category_create',
     'product_access',
     'sale_management',
-    'sale_create'
+    'sale_create',
+    'sale_show'
 ]
+
 
 
 const ability = defineAbility((can) => {
