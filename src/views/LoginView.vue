@@ -12,11 +12,12 @@
 
                         <h1 class="text-h5 font-weight-medium !tw-text-gray-600">Login</h1>
                         <p class="text-body-1 mt-2 !tw-text-gray-500">Please login to your account</p>
+                        <p v-if="error.active" class="text-body-2 mt-2 !tw-text-red-500">{{ error.message }}</p>
 
                         <div class="mt-5">
                             <div>
                                 <p class="mb-1">Email</p>
-                                <v-text-field :error="!emailStatus.valid" :error-messages="!emailStatus.valid ? emailStatus.message : ''" autofocus @blur="emailFocus = false" @focus="emailFocus = true"  color="primary-color" variant="outlined" class="tw-w-full" density="compact">
+                                <v-text-field @keyup="resetError('email')" v-model="email" :error="!emailStatus.valid" :error-messages="emailStatus.valid ? '' :  emailStatus.message" autofocus @blur="emailFocus = false" @focus="emailFocus = true"  color="primary-color" variant="outlined" class="tw-w-full" density="compact">
                                     <template v-slot:append-inner>
                                         <v-icon :color="emailFocus ? emailStatus.valid ? 'primary-color' : 'error': 'grey-darken-3'">mdi-email-outline</v-icon>
                                     </template>
@@ -25,15 +26,15 @@
 
                             <div>
                                 <p class="mb-1">Password</p>
-                                <v-text-field :type="showPassword ? 'text' : 'password'" @blur="passwordFocus = false" @focus="passwordFocus = true" color="primary-color" variant="outlined" class="tw-w-full" density="compact">
+                                <v-text-field @keyup="resetError('password')" v-model="password" :error="!passwordStatus.valid" :error-messages="passwordStatus.valid ? '' :  passwordStatus.message " :type="showPassword ? 'text' : 'password'" @blur="passwordFocus = false" @focus="passwordFocus = true" color="primary-color" variant="outlined" class="tw-w-full" density="compact">
                                     <template  v-slot:append-inner>
-                                        <v-icon @click="showPassword = !showPassword" class="tw-relative tw-z-50 tw-cursor-pointer" :color="passwordFocus ? 'primary-color': 'grey-darken-3'">{{ showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline' }}</v-icon>
+                                        <v-icon @click="showPassword = !showPassword" class="tw-relative tw-z-50 tw-cursor-pointer"  :color="passwordFocus ? passwordStatus.valid ? 'primary-color' : 'error': 'grey-darken-3'">{{ showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline' }}</v-icon>
                                     </template>
                                 </v-text-field>
                             </div>
 
                             <div class="mt-5">
-                                <v-btn @click="emailStatus.valid = true" block size="large" variant="flat" color="primary-color">
+                                <v-btn :loading="isLoading" @click="login" block size="large" color="primary-color" variant="flat"  class="!tw-text-white">
                                     <span class="text-capitalize text-white">Login</span>
                                 </v-btn>
                             </div>
@@ -53,20 +54,120 @@
 
 <script>
 import { localUrl } from '@/config/config'
+import { validateEmail, validatePassword } from '@/helpers/validators'
+import User from '@/api/User'
+import { mapActions } from 'vuex'
 
 export default {
     data() {
         return {
             localUrl,
-            emailStatus: {
-                valid: false,
-                message: 'Email is required'
+            isLoading: false,
+            error: {
+                active: false,
+                message: ''
             },
+
+            email: '',
+            password: '',
+
+            emailStatus: {
+                valid: true,
+                message: ''
+            },
+
+            passwordStatus: {
+                valid: true,
+                message: ''
+            },
+
             emailFocus: false,
             passwordFocus: false,
             showPassword: false
         }
-    }
+    },
+
+
+    methods: {
+        ...mapActions('user', ['setIsLoggedIn', 'setPermissions']),
+        validateForm() {
+            this.emailStatus = validateEmail(this.email)
+            this.passwordStatus = validatePassword(this.password)
+
+            return  this.passwordStatus.valid && this.emailStatus.valid
+        },
+
+        login() {
+            if(!this.validateForm()) {
+                return;
+            }
+
+            this.isLoading = true
+            this.error = {
+                            active: false,
+                            message: ''
+                        }
+            User.login({
+                email: this.email,
+                password: this.password
+            }).then(
+                res => {
+                    this.setIsLoggedIn(true)
+                    const permissions = res.data.data.permissions
+
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('permissions', JSON.stringify(permissions));
+
+                    
+                    this.setPermissions(permissions)
+
+
+                    this.$router.push('/')
+
+                }
+            ).catch(
+                err => {
+                    if (err.response.data.code == 'INVALID_CREDENTIALS') {
+                        this.error = {
+                            active: true,
+                            message: err.response.data.message
+                        }
+                    }
+
+                    if (err.response.data.code == 'NOT_ACTIVE_ERROR') {
+                        this.error = {
+                            active: true,
+                            message: err.response.data.message
+                        }
+                    }
+                }
+            ).finally(() => {
+                this.isLoading = false
+            })
+            console.log('login...');
+            
+        },
+
+        resetError(name) {
+
+            if (name == 'email') {
+                this.emailStatus = {
+                    valid: true,
+                message: ''
+                }
+            }
+
+            if (name == 'password') {
+                this.passwordStatus = {
+                valid: true,
+                message: ''
+            }
+            }
+
+            
+        }
+    },
+
 }
 </script>
 

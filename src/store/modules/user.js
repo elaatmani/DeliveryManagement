@@ -1,14 +1,15 @@
-import {abilities} from "@/config/ability"
+// import {abilities} from "@/config/ability"
+
+let initialState = {
+    isLoggedIn: localStorage.getItem('isLoggedIn') == 'true' ? true : false,
+    permissions: !localStorage.getItem('permissions') ? [] : JSON.parse(localStorage.getItem('permissions'))
+}
 
 export default {
     name: 'user',
     namespaced: true,
 
-    state: {
-        isLoggedIn: true,
-        permissions: abilities,
-        user: {}
-    },
+    state: initialState,
 
     getters: {
         isLoggedIn: (state) => state.isLoggedIn,

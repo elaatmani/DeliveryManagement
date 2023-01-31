@@ -13,7 +13,7 @@ class User {
     }
     
 
-    async signup(user) {
+    async register(user) {
         await Csrf.getCookie();
 
         return Api.post('api/auth/register', { 
@@ -37,9 +37,29 @@ class User {
     async logout() {
         await Csrf.getCookie();
 
-        return Api.post('api/auth/logout')
+        return Api.get('api/auth/logout')
+    }
+
+
+    async permession() {
+        await Csrf.getCookie();
+
+        return Api.get('api/auth/permission')
+    }
+
+    async roles() {
+        await Csrf.getCookie();
+
+        return Api.get('api/auth/roles')
+    }
+
+    async all() {
+        await Csrf.getCookie();
+
+        return Api.get('api/users')
     }
 }
+
 
 
 export default new User();

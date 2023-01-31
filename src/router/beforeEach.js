@@ -1,12 +1,11 @@
 import store from '@/store'
-import { defineAbility } from '@casl/ability';
 export default function (to) {
 
 
     // Changing page title
     document.title = to.meta?.title
     // return true
-
+    
     // handle if user is not logged
     if (!store.getters['user/isLoggedIn']) {
         if (to.path == '/login') {
@@ -24,18 +23,16 @@ export default function (to) {
     const { gate: permission } = to.meta;
     const permissions = store.getters['user/permissions'];
 
-    
+    if(permission === 'all') {
+        return true
+    }
 
     if (!permission && to.path !== '/404') {
         return { name: '404' }
     }
 
     // Check permission
-    const ability = defineAbility(can => {
-        can(permissions)
-    })
-
-    if (!ability.can(permission) && to.path !== '/404') {
+    if (!permissions.includes(permission) && to.path !== '/404') {
         return { name: '404' };
     }
 

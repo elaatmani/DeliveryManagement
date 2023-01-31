@@ -16,27 +16,27 @@
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Category</div>
-              <v-select :items="categories" v-model="categorie" variant="outlined" color="primary-color" density="compact"></v-select>            
+            <div class="tw-w-full">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
+              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+            </div>
+          </v-col>
+          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
+            <div class="tw-w-full">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
+              <v-text-field clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Sub Category</div>
-              <v-select :items="subcategories" v-model="subcategory" variant="outlined" color="primary-color" density="compact"></v-select>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Brand</div>
-              <v-select :items="brands" v-model="brand" variant="outlined" color="primary-color" density="compact"></v-select>
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Unit</div>
+              <v-select :items="units" v-model="unit" variant="outlined" color="primary-color" density="compact"></v-select>            
             </div>
           </v-col>
         </v-row>
       </div>
 
-      <div>
+      <div v-if="false">
         <v-row>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div>
@@ -125,8 +125,8 @@ export default {
         status: 'IN SHOP',
         discount: '0%',
         tax: '0%',
-        unit: 'Piece',
-        units: ['Piece', 'Kg'],
+        unit: '1 Piece',
+        units: ['1 Piece', '2 Pieces', '3 Pieces'],
         brand: 'brand 1',
         categorie: 'category 1',
         subcategory: 'subcategory 1',

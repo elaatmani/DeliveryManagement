@@ -5,8 +5,9 @@
 npm install
 ```
 
-Sidebar and routes:
-    - To define sidebar links and sublinks go to 'src/config/links.js'
+### Sidebar and routes:
+```
+To define sidebar links and sublinks go to 'src/config/links.js'
       each link is defined by id, title, module, gate, hasChildren, children, icon, to.
       * id     -> An id for the link
       * title  -> The name that will be displayed in the sidebar link
@@ -17,7 +18,7 @@ Sidebar and routes:
       * to  -> is the link has no children then this field is required and it takes a path
 
     - To define routes link go to 'src/router/routes'
-
+```
     to be continue...
 
 ### Compiles and hot-reloads for development

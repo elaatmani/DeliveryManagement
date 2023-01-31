@@ -254,3 +254,24 @@ export const categories = [
 export const sales = [
 
 ]
+
+export const users = [
+    {
+        id: 1,
+        firstname: 'Yassine',
+        lastname: 'El Aatmani',
+        email: 'yassine@gmail.com',
+        phone: '0606060606',
+        role: 'Agente',
+        status: 1
+    },
+    {
+        id: 2,
+        firstname: 'Abdelmounaim',
+        lastname: 'Oulaid',
+        email: 'oulaid@gmail.com',
+        phone: '0606060606',
+        role: 'Delivery',
+        status: 1
+    }
+]

@@ -18,7 +18,7 @@ export default {
             meta: {
               module: 'dashboard',
               title: 'Dashboard',
-              gate: 'dashboard_access'
+              gate: 'all'
             }
           }
         ]

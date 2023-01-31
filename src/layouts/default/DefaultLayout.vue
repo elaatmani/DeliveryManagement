@@ -8,6 +8,9 @@
         <!-- Application Header -->
         <AppHeader @toggleSidebar="toggleSidebar" />
 
+        <!-- Alert component -->
+        <Alert />
+
         <!-- Application container -->
         <v-main class="tw-bg-gray-50 tw-min-h-screen tw-overflow-y-auto">
             
@@ -22,9 +25,10 @@
 <script>
 import AppHeader from '@/layouts/default/partials/AppHeader'
 import AppSidebar from '@/layouts/default/partials/AppSidebar'
+import Alert from '@/components/AlertVue'
 
 export default {
-    components: { AppHeader, AppSidebar },
+    components: { AppHeader, AppSidebar, Alert },
 
     data() {
         return {

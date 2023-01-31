@@ -8,6 +8,7 @@ import product from './routes/product'
 import category from './routes/category'
 import subcategory from './routes/subcategory'
 import sales from './routes/sales'
+import user from './routes/user'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -19,6 +20,7 @@ const routes = [
   category,
   subcategory,
   sales,
+  user,
 
   {
     name: 'not-found',
@@ -26,7 +28,6 @@ const routes = [
     component: DefaultLayout,
     meta: {
       title: 'Not Found',
-      gate: ''
     },
     children: [
       {

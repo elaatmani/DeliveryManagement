@@ -1,5 +1,5 @@
 <template>
-<div v-if="$can(link.gate)">
+<div v-if="$can(link.gate) || link.gate == 'all'">
 
   <v-list-item
     class="mx-3 mb-2"
@@ -99,6 +99,7 @@ export default {
 
   computed: {
     allowedChildren() {
+      // return this.link?.children
       return this.link?.children.filter((item) => this.$can(item.gate))
     }
   },
