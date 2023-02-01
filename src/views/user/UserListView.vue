@@ -100,7 +100,7 @@ export default {
         {
             prop: 'status',
             name: 'Active',
-            filter: 'userStatus',
+            filter: false,
             size: 100,
             cellTemplate: VGridVueTemplate(UserStatus)
         },
@@ -143,6 +143,11 @@ export default {
                         type: 'error'
                     })
                 }
+
+                this.$alert({
+                        title: 'Something wrong happend. Please try again',
+                        type: 'error'
+                    })
             }
         )
   }

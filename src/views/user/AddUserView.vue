@@ -171,25 +171,29 @@ export default {
             ).catch(
                 err => {
                     const res = err?.response?.data
-                    if (res?.code == 'VALIDATION_ERROR') {
-                        for(let error in res.error) {
+
+                    switch (res?.code) {
+                        case 'VALIDATION_ERROR':
+                            for(let error in res.error) {
                             this.formStatus[error] = {
                                 valid: false,
                                 message: res.error[error][0]
+                                }
                             }
-                        }
+                        break;
+                        case 'NOT_AUTHENTICATED':
+                            this.$store.dispatch('user/setPermissions', [])
+                            this.$store.dispatch('user/setIsLoggedIn', false)
+                            this.$router.push('/login')
+                        break;
+                    
+                        default:
+                            this.$alert({
+                                type: 'error',
+                                title: 'Something wrong happened try again.'
+                            })
+                        break;
                     }
-
-                    if (res?.code == 'NOT_AUTHENTICATED') {
-                        this.$store.dispatch('user/setPermissions', [])
-                        this.$store.dispatch('user/setIsLoggedIn', false)
-                        this.$router.push('/login')
-                    }
-
-                    this.$alert({
-                        type: 'error',
-                        title: 'Something wrong happened try again.'
-                    })
                 }
             ).finally(() => {
                 this.isLoading = false
@@ -200,15 +204,17 @@ export default {
             this.formStatus['email'] = validateEmail(this.user.email)
             this.formStatus['firstname'] = validateName(this.user.firstname)
             this.formStatus['lastname'] = validateName(this.user.lastname)
+            this.formStatus['phone'] = validateName(this.user.phone)
             this.formStatus['password'] = validatePassword(this.user.password)
             this.formStatus['confirmPassword'] = validateConfirmPassword(this.user.password, this.user.confirmPassword)
 
             const emailValid = this.formStatus['email'].valid
             const firstnameValid = this.formStatus['firstname'].valid
             const lastnameValid = this.formStatus['lastname'].valid
+            const phoneValid = this.formStatus['phone'].valid
             const passwordValid = this.formStatus['password'].valid
             const confirmPasswordValid = this.formStatus['confirmPassword'].valid
-            return emailValid && firstnameValid && lastnameValid && passwordValid && confirmPasswordValid
+            return emailValid && firstnameValid && lastnameValid && passwordValid && confirmPasswordValid && phoneValid
 
         }
     },

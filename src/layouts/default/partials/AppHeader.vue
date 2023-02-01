@@ -5,7 +5,7 @@
         color="white"
         density="default"
         elevation="0"
-        class="tw-border-b-0 !tw-shadow-lg !tw-shadow-gray-400/10 tw-top-0 !tw-fixed"
+        class="tw-border-b-0 !tw-shadow-lg !tw-shadow-gray-400/10 tw-top-0 !tw-fixed tw-overflow-visible"
         :absolute="false"
       >
 
@@ -27,12 +27,10 @@
           <v-btn :ripple="false" class="mr-2" icon>
             <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/notification-bing.svg'"></v-img>
           </v-btn>
-          <v-btn  icon>
-            <v-avatar size="35">
-              <v-img :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>
-            </v-avatar>
-              <v-badge floating offset-y="-10" offset-x="5" color="primary-green" :bordered=true location="bottom right" dot></v-badge>
-          </v-btn>
+          
+          <!-- User Menu -->
+          <HeaderMenu />
+
         </template>
         <!-- /Right Part -->
 
@@ -42,8 +40,11 @@
 
 <script>
 import { localUrl } from '@/config/config'
+import HeaderMenu from '@/layouts/default/partials/header/HeaderMenu'
+
 export default {
     emits: [ 'toggleSidebar' ],
+    components: { HeaderMenu },
 
     data() {
       return {

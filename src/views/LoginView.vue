@@ -89,7 +89,7 @@ export default {
 
 
     methods: {
-        ...mapActions('user', ['setIsLoggedIn', 'setPermissions']),
+        ...mapActions('user', ['setIsLoggedIn', 'setPermissions', 'setUser']),
         validateForm() {
             this.emailStatus = validateEmail(this.email)
             this.passwordStatus = validatePassword(this.password)
@@ -112,17 +112,15 @@ export default {
                 password: this.password
             }).then(
                 res => {
-                    this.setIsLoggedIn(true)
-                    const permissions = res.data.data.permissions
+                    if(res.data.code == 'AUTHENTICATION_SUCCESSFUL') {
 
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('permissions', JSON.stringify(permissions));
-
-                    
-                    this.setPermissions(permissions)
-
-
-                    this.$router.push('/')
+                        this.setUser(res.data.data.user)
+                        this.setIsLoggedIn(true)
+                        
+                        const permissions = res.data.data.permissions
+                        this.setPermissions(permissions)
+                        this.$router.push('/')
+                    }
 
                 }
             ).catch(
@@ -138,6 +136,18 @@ export default {
                         this.error = {
                             active: true,
                             message: err.response.data.message
+                        }
+                    }
+
+                    if (err.response.data.code == 'VALIDATION_ERROR') {
+                        this.emailStatus = {
+                            valid: false,
+                            message: err.response.data.error['email'][0]
+                        }
+
+                        this.passwordStatus = {
+                            valid: false,
+                            message: err.response.data.error['password'][0]
                         }
                     }
                 }
