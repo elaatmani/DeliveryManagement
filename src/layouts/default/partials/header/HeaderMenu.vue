@@ -13,14 +13,14 @@
         <div  class="tw-absolute tw-bg-white tw-rounded-md tw-bordesr !tw-shadow-lg !tw-shadow-gray-400/10 tw-top-14 tw-right-0 tw-w-[200px] tw-min-h-[50px]">
             <div class="pa-2 d-flex tw-items-center tw-gap-2 tw-border-b tw-border-b-neutral-100">
                 <v-avatar size="35">
-                    <v-img :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>
+                    <v-img eager :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>
                 </v-avatar>
                 <div class="d-flex flex-column justify-center">
-                    <div class="tw-text-sm tw-text-neutral-800">
-                        Yassine El Aatmani
+                    <div class="tw-text-sm tw-text-neutral-800 text-capitalize">
+                        {{ user.firstname }} {{ user.lastname }}
                     </div>
-                    <div class="tw-text-xs tw-rounded-lg tw-text-green-500">
-                        Admin
+                    <div class="tw-text-xs tw-rounded-lg tw-text-green-500 text-capitalize">
+                        {{ user.role }}
                     </div>
                 </div>
             </div>
@@ -90,6 +90,12 @@ export default {
             })
         }
     },
+
+    computed: {
+        user() {
+            return this.$store.getters['user/user']
+        }
+    }
 }
 </script>
 

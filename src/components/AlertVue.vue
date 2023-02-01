@@ -1,6 +1,6 @@
 <template>
     <v-slide-y-reverse-transition>
-        <div v-if="state.active" class="pa-2">
+        <div v-if="state.active" class="pa-2 tw-absolute tw-z-50">
                 <v-alert closable density="compact" variant="flat" :type="state.alert.type" position="fixed" location="bottom right" class="ma-2">
                     <v-alert-title class="text-body-1">{{ state.alert.title }}</v-alert-title>
                 </v-alert>

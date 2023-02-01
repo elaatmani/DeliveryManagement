@@ -117,7 +117,7 @@ export default {
                         this.setUser(res.data.data.user)
                         this.setIsLoggedIn(true)
                         
-                        const permissions = res.data.data.permissions
+                        const permissions = res.data.data.user.permissions
                         this.setPermissions(permissions)
                         this.$router.push('/')
                     }

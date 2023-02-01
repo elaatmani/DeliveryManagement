@@ -169,7 +169,7 @@ export const links = [
         id: 6,
         title: 'Users',
         module: 'user',
-        gate: 'user_access',
+        gate: 'users_access',
         hasChildren: true,
         icon: {
             type: 'svg',

@@ -14,7 +14,8 @@ export default {
 
     getters: {
         isLoggedIn: (state) => state.isLoggedIn,
-        permissions: (state) => state.permissions
+        permissions: (state) => state.permissions,
+        user: (state) => state.user
     },
 
     mutations: {

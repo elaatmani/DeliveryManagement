@@ -8,6 +8,14 @@ const statusFilter = (cellValue, filter) => {
     return cellValue === filter;
 };
 
+const activeFilter = (cellValue, value) => {
+    if (!cellValue) {
+        return false;
+    }
+
+    return cellValue === value;
+};
+
 const byNameEqualsTo = (cellValue, extraValue) => {
     if (!cellValue) {
         return false;
@@ -83,6 +91,11 @@ export default  {
     'pending', 
     'outOfStock', 
     'inShop', 
+    'admin',
+    'agente',
+    'delivery',
+    'active',
+    'notActive',
     'nameEqualsTo',
     'nameContains',
     'nameStartsWith',
@@ -107,6 +120,39 @@ export default  {
         columnFilterType: 'status', // column filter type id
         name: 'In Shop',
         func: (cellValue) => statusFilter(cellValue, 'inShop')
+    },
+
+    // User Status
+    'active': {
+        columnFilterType: 'user_status', // column filter type id
+        name: 'Active',
+        func: (cellValue) => {
+            console.log(cellValue);
+            return activeFilter(cellValue, 1)}
+    },
+    'notActive': {
+        columnFilterType: 'user_status', // column filter type id
+        name: 'Not Active',
+        func: (cellValue) => {
+            console.log(cellValue == 0);
+            return cellValue == 0}
+    },
+
+    // Roles filter
+    'admin': {
+        columnFilterType: 'role', // column filter type id
+        name: 'Admin',
+        func: (cellValue) => statusFilter(cellValue, 'admin')
+    },
+    'agente': {
+        columnFilterType: 'role', // column filter type id
+        name: 'Agente',
+        func: (cellValue) => statusFilter(cellValue, 'agente')
+    },
+    'delivery': {
+        columnFilterType: 'role', // column filter type id
+        name: 'Delivery',
+        func: (cellValue) => statusFilter(cellValue, 'delivery')
     },
 
     // Name filter

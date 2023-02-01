@@ -58,6 +58,12 @@ class User {
 
         return Api.get('api/users')
     }
+
+    async updateStatus({id, status}) {
+        await Csrf.getCookie();
+
+        return Api.post('api/users/status/' + id, { status })
+    }
 }
 
 

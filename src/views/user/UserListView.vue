@@ -43,12 +43,12 @@
 <script>
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
-// import { users } from '@/config/testItems'
 
-import MyVue from '@/components/MyVue.vue';
 import UserStatus from './UserStatus.vue';
+import UserActions from './UserActions.vue';
 import DataTable from '@/components/DataTable'
 import User from '@/api/User';
+import RoleName from './RoleName.vue';
 
 
 export default {
@@ -80,10 +80,11 @@ export default {
           filter: 'name',
         },
         {
-          prop: 'role',
+          prop: 'role_name',
           name: 'Role',
-          size: 90,
-          filter: 'name',
+          size: 100,
+          filter: 'role',
+          cellTemplate: VGridVueTemplate(RoleName)
         },
         {
           prop: 'email',
@@ -106,8 +107,8 @@ export default {
         },
         {
             name: 'Acions',
-            prop: 'product',
-            cellTemplate: VGridVueTemplate(MyVue),
+            prop: 'users',
+            cellTemplate: VGridVueTemplate(UserActions),
             size: 130,
             filter: false
         }

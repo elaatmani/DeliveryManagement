@@ -83,7 +83,12 @@ export default {
 
   methods: {
     handleClick() {
-        this.isActive = !this.isActive
+      if(this.$route.path === this.link.to) {
+        this.isActive = true
+        return;
+      }
+
+      this.isActive = !this.isActive
     },
     isSublinkActive(sublink) {
       return this.$route.path == sublink.to
