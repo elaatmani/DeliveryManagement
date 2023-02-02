@@ -1,5 +1,6 @@
 <template>
   <div class="tw-min-h-screen tw-overflow-auto tw-bg-slate-50">
+    <Alert />
     <div class="tw-grid tw-h-fit tw-overflow-hidden  md:tw-grid-cols-2 tw-grid-cols-1">
         <div class="py-md-5 py-10 pb-0 tw-flex tw-justify-center md:tw-items-center">
             <v-container class="py-0">
@@ -56,9 +57,11 @@
 import { localUrl } from '@/config/config'
 import { validateEmail, validatePassword } from '@/helpers/validators'
 import User from '@/api/User'
+import Alert from '@/components/AlertVue'
 import { mapActions } from 'vuex'
 
 export default {
+    components: { Alert },
     data() {
         return {
             localUrl,
@@ -123,23 +126,28 @@ export default {
                     }
 
                 }
-            ).catch(
+            )
+            .catch(
                 err => {
-                    if (err.response.data.code == 'INVALID_CREDENTIALS') {
+
+                    this.$handleApiError(err);
+
+
+                    if (err.response?.data.code == 'INVALID_CREDENTIALS') {
                         this.error = {
                             active: true,
                             message: err.response.data.message
                         }
                     }
 
-                    if (err.response.data.code == 'NOT_ACTIVE_ERROR') {
+                    if (err.response?.data.code == 'NOT_ACTIVE_ERROR') {
                         this.error = {
                             active: true,
                             message: err.response.data.message
                         }
                     }
 
-                    if (err.response.data.code == 'VALIDATION_ERROR') {
+                    if (err.response?.data.code == 'VALIDATION_ERROR') {
                         this.emailStatus = {
                             valid: false,
                             message: err.response.data.error['email'][0]

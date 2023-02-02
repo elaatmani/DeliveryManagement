@@ -26,11 +26,19 @@ class User {
         })
     }
 
-
-    async getUser() {
+    async update(user, updatePassword) {
         await Csrf.getCookie();
 
-        return Api.get('api/user')
+        return Api.post('api/users/update/' + user.id, { 
+            email: user.email,
+            password: user.password,
+            phone: user.phone,
+            status: user.status,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            role: user.role,
+            updatePassword: updatePassword
+        })
     }
 
 
@@ -63,6 +71,12 @@ class User {
         await Csrf.getCookie();
 
         return Api.post('api/users/status/' + id, { status })
+    }
+
+    async getUser(id) {
+        await Csrf.getCookie();
+
+        return Api.get('api/users/' + id)
     }
 }
 

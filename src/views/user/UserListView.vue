@@ -130,27 +130,7 @@ export default {
             this.isLoaded = true
     }
             }
-        ).catch(
-            err => {
-                if (err?.response?.data?.code == "NOT_AUTHENTICATED") {
-                    this.$store.dispatch('user/setPermissions', [])
-                    this.$store.dispatch('user/setIsLoggedIn', false)
-                    this.$router.push('/login')
-                }
-
-                if (err?.response?.data?.code == 'SERVER_ERROR') {
-                    this.$alert({
-                        title: 'Something wrong happend. Please try again',
-                        type: 'error'
-                    })
-                }
-
-                this.$alert({
-                        title: 'Something wrong happend. Please try again',
-                        type: 'error'
-                    })
-            }
-        )
+        ).catch(this.$handleApiError)
   }
 }
 </script>

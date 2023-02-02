@@ -4,6 +4,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 // Views
 import UserListView from '@/views/user/UserListView'
 import AddUserView from '@/views/user/AddUserView'
+import UserUpdateView from '@/views/user/UserUpdateView'
 
 
 export default 
@@ -39,6 +40,18 @@ export default
                     subModule: 'user/add',
                     title: 'Add User',
                     gate: 'users_create'
+                }
+            },
+
+            { 
+                name: 'user/update',
+                path: '/users/update/:id',
+                component: UserUpdateView,
+                meta: {
+                    module: 'user',
+                    subModule: 'user/update',
+                    title: 'Update User',
+                    gate: 'users_update'
                 }
             },
 

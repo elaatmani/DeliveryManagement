@@ -5,6 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import ability from './plugins/ability'
 import alert from './plugins/alert'
+import apiErrorHandler from './plugins/apiErrorHandler'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
 
@@ -20,6 +21,7 @@ createApp(App)
   .use(vuetify)
   .use(ability)
   .use(alert)
+  .use(apiErrorHandler)
 
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)

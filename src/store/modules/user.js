@@ -1,6 +1,7 @@
 // import {abilities} from "@/config/ability"
 
 let initialState = {
+    roles: !localStorage.getItem('roles') ? [] : JSON.parse(localStorage.getItem('roles')),
     user: !localStorage.getItem('user') ? [] : JSON.parse(localStorage.getItem('user')),
     isLoggedIn: localStorage.getItem('isLoggedIn') == 'true' ? true : false,
     permissions: !localStorage.getItem('permissions') ? [] : JSON.parse(localStorage.getItem('permissions'))
@@ -15,7 +16,8 @@ export default {
     getters: {
         isLoggedIn: (state) => state.isLoggedIn,
         permissions: (state) => state.permissions,
-        user: (state) => state.user
+        user: (state) => state.user,
+        roles: (state) => state.roles
     },
 
     mutations: {
@@ -30,6 +32,10 @@ export default {
         SET_PERMISSIONS: (state, payload) => {
             localStorage.setItem('permissions', JSON.stringify(payload));
             state.permissions = payload
+        },
+        SET_ROLES: (state, payload) => {
+            localStorage.setItem('roles', JSON.stringify(payload));
+            state.roles = payload
         }
     },
 
@@ -43,10 +49,14 @@ export default {
         setPermissions: ({ commit }, payload) => {
             commit('SET_PERMISSIONS', payload)
         },
+        setRoles: ({ commit }, payload) => {
+            commit('SET_ROLES', payload)
+        },
         logout: ({commit}) => {
             commit('SET_USER', {})
             commit('SET_IS_LOGGED_IN', false)
             commit('SET_PERMISSIONS', [])
+            commit('SET_ROLES', [])
         }
     }
 }
