@@ -7,7 +7,12 @@ const ApiErrorHandler = {
             let type = 'error'
             let title = "Something wrong happened. Try again"
             let alert = true
-            // const errors = ['SERVER_ERROR', 'NOT_ALLOWED', 'NOT_AUTHENTICATED', 'NOT_FOUND'];
+            const errors = ['VALIDATION_ERROR', 'NOT_ACTIVE_ERROR', 'INVALID_CREDENTIALS'];
+
+            if (errors.includes(code)) {
+                alert = false;
+            }
+
             console.log(err);
             if (err.code == "ERR_NETWORK") {
                 title = 'Network error. Check your connection'
