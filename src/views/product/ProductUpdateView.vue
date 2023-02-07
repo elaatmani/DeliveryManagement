@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="mb-5">
-      <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Add Product</h1>
-      <h2 class="tw-text-gray-500 tw-text-sm">Create new product</h2>
+      <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Update Product</h1>
+      <h2 class="tw-text-gray-500 tw-text-sm">Update product informations</h2>
     </div>
 
-    <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="!isLoaded">
+          <LoadingAnimation />
+    </div>
+
+    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
       <div>
 
         <v-row>
@@ -73,11 +77,11 @@
 
       
       <div class="mt-8 tw-flex tw-justify-end tw-gap-3">
-        <v-btn color="grey-darken-2" variant="flat" size="large">
+        <v-btn :to="{ name: 'product/list' }" color="grey-darken-2" variant="flat" size="large">
           <span class="text-white text-capitalize">Cancel</span>
         </v-btn>
-        <v-btn @click="create" :loading="isLoading" color="primary-color" variant="flat" size="large">
-          <span class="text-white text-capitalize">Create</span>
+        <v-btn @click="update" :loading="isLoading" color="primary-color" variant="flat" size="large">
+          <span class="text-white text-capitalize">Update</span>
         </v-btn>
       </div>
     </div>
@@ -91,6 +95,7 @@ export default {
     data() {
       return {
         isLoading: false,
+        isLoaded: false,
 
         product: {  
           name: '',
@@ -137,29 +142,18 @@ export default {
     },
 
     methods: {
-      create() {
+      update() {
         if (!this.validate()) return false;
 
         this.isLoading = true
-        Product.create(this.product)
+        Product.update(this.$route.params.id, this.product)
         .then(
           res => {
-            if (res.data.code == "PRODUCT_CREATED") {
+            if (res.data.code == "PRODUCT_UPDATED") {
               this.$alert({
                 type: 'success',
                 title: res.data.message
               })
-
-              this.product = {  
-                name: '',
-                buyingPrice: '',
-                piece: '',
-                quantity: '',
-                size: '',
-                color: '',
-                image: '',
-                description: ''
-              }
             }
           }
         )
@@ -207,6 +201,19 @@ export default {
           size
         );
       }
+    },
+
+    mounted() {
+      Product.getProduct(this.$route.params.id)
+      .then(
+        res => {
+          if (res.data.code == 'SUCCESS') {
+            this.product = res.data.data.products
+            this.isLoaded = true
+          }
+        },
+        this.$handleApiError
+      )
     }
 }
 </script>

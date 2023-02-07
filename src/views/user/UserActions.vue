@@ -45,7 +45,7 @@ export default {
             if(res.data.code == 'SHOW_ALL_USERS') {
               this.$store.dispatch('user/setUsers', res.data.data.users)
             }
-          })
+          }).catch(this.$handleApiError)
 
         })
         .catch(this.$handleApiError)
@@ -56,7 +56,6 @@ export default {
       } else {
         this.showPopup = false
       }
-
     },
   },
 };

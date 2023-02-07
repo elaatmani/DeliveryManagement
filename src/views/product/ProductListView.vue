@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="products.length">
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Product List</h1>
@@ -14,7 +14,12 @@
         </v-btn>
       </div>
     </div>
-    <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+
+    <div v-if="!isLoaded">
+          <LoadingAnimation />
+    </div>
+
+    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-flex">
         <v-btn icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
@@ -27,7 +32,7 @@
       </div>
 
       <div class="">
-        <DataTable :rows="rows" :columns="columns" />
+        <DataTable :rows="products" :columns="columns" />
       </div>
     </div>
   </div>
@@ -36,11 +41,11 @@
 <script>
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
-import { products } from '@/config/testItems'
 
-import MyVue from '@/components/MyVue.vue';
+import MyVue from '@/views/product/ProductActions.vue';
 import ProductStatus from './ProductStatus.vue';
 import DataTable from '@/components/DataTable'
+import Product from '@/api/Product';
 
 
 export default {
@@ -48,7 +53,7 @@ export default {
   data() {
     return {
       localUrl,
-      rows: products,
+      isLoaded: false,
       columns: 
       [
         {
@@ -65,31 +70,25 @@ export default {
             filter: 'name'
         },
         {
-          prop: 'sku',
-          name: 'SKU',
-          filter: 'name',
+          prop: 'buying_price',
+          name: 'Price',
+          filter: 'number',
         },
         {
-          prop: 'category',
-          name: 'Category',
+          prop: 'size',
+          name: 'Size',
           size: 150,
-          filter: 'name'
+          filter: 'number'
         },
         {
-            prop: 'status',
-            name: 'Status',
-            filter: 'status',
+            prop: 'color',
+            name: 'Color',
+            filter: 'name',
             size: 150,
-            cellTemplate: VGridVueTemplate(ProductStatus)
+            cellTemplatep: VGridVueTemplate(ProductStatus)
         },
         {
-            prop: "price",
-            name: "Price",
-            filter: 'number',
-            columnType: 'numeric',
-        },
-        {
-            prop: "qty",
+            prop: "quantity",
             name: "Qty",
             columnType: 'numeric',
             sortable: false,
@@ -106,10 +105,24 @@ export default {
     ]
     }
   },
-  methods: {
-    beforeFocus(e) {
-      e.preventDefault();
+  computed: {
+    products() {
+      return this.$store.getters['product/products'];
     }
+  },
+  mounted() {
+    Product.all()
+    .then(
+      res => {
+        if (res.data.code == 'SUCCESS') {
+          this.$store.dispatch('product/setProducts', res.data.data.products)
+        }
+        
+      },
+      err => {
+        this.$handleApiError(err)
+      }
+    ).finally(() => this.isLoaded = true);
   }
 }
 </script>

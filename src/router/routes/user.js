@@ -33,7 +33,7 @@ export default
 
             { 
                 name: 'user/add',
-                path: '/users/add',
+                path: 'add',
                 component: AddUserView,
                 meta: {
                     module: 'user',
@@ -45,7 +45,7 @@ export default
 
             { 
                 name: 'user/update',
-                path: '/users/update/:id',
+                path: 'update/:id',
                 component: UserUpdateView,
                 meta: {
                     module: 'user',

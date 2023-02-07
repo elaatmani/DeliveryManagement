@@ -25,7 +25,9 @@
                     First Name
                   </div>
                   <v-text-field
-                    :error-messages="formStatus.firstname.message"
+                    :error="!formStatus.firstname.valid"
+                    :hide-details="true"
+                    @keyup="resetError('firstname')"
                     v-model="user.firstname"
                     clearable
                     clear-icon="mdi-close"
@@ -34,13 +36,16 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.firstname.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Last Name</div>
                   <v-text-field
-                    :error-messages="formStatus.lastname.message"
+                    :error="!formStatus.lastname.valid"
+                    :hide-details="true"
+                    @keyup="resetError('lastname')"
                     v-model="user.lastname"
                     clearable
                     clear-icon="mdi-close"
@@ -49,13 +54,16 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.lastname.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Email</div>
                   <v-text-field
-                    :error-messages="formStatus.email.message"
+                    :error="!formStatus.email.valid"
+                    :hide-details="true"
+                    @keyup="resetError('email')"
                     v-model="user.email"
                     clearable
                     clear-icon="mdi-close"
@@ -64,6 +72,7 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.email.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
@@ -72,7 +81,9 @@
                     Phone Number
                   </div>
                   <v-text-field
-                    :error-messages="formStatus.phone.message"
+                    :error="!formStatus.phone.valid"
+                    :hide-details="true"
+                    @keyup="resetError('phone')"
                     v-model="user.phone"
                     clearable
                     clear-icon="mdi-close"
@@ -81,13 +92,16 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.phone.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Password</div>
                   <v-text-field
-                    :error-messages="formStatus.password.message"
+                    :error="!formStatus.password.valid"
+                    :hide-details="true"
+                    @keyup="resetError('password')"
                     v-model="user.password"
                     clearable
                     clear-icon="mdi-close"
@@ -96,6 +110,7 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.password.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
@@ -104,7 +119,9 @@
                     Confirm Password
                   </div>
                   <v-text-field
-                    :error-messages="formStatus.confirmPassword.message"
+                    :error="!formStatus.confirmPassword.valid"
+                    :hide-details="true"
+                    @keyup="resetError('confirmPassword')"
                     v-model="user.confirmPassword"
                     clearable
                     clear-icon="mdi-close"
@@ -113,6 +130,7 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.confirmPassword.message }}</div>
                 </div>
               </v-col>
             </v-row>
@@ -124,7 +142,6 @@
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Role</div>
                   <v-select
                     class="text-capitalize"
-                    :error-messages="formStatus.role"
                     :items="roles"
                     item-title="name"
                     item-value="id"
@@ -297,23 +314,30 @@ export default {
         this.user.user_image = URL.createObjectURL(file)
     },
 
+    resetError(field) {
+      this.formStatus[field] = {
+        valid: true,
+        message: ''
+      }
+    },
+
     validate() {
-      this.formStatus["email"] = validateEmail(this.user.email);
-      this.formStatus["firstname"] = validateName(this.user.firstname);
-      this.formStatus["lastname"] = validateName(this.user.lastname);
-      this.formStatus["phone"] = validateName(this.user.phone);
-      this.formStatus["password"] = validatePassword(this.user.password);
-      this.formStatus["confirmPassword"] = validateConfirmPassword(
+      this.formStatus.email = validateEmail(this.user.email);
+      this.formStatus.firstname = validateName(this.user.firstname);
+      this.formStatus.lastname = validateName(this.user.lastname);
+      this.formStatus.phone = validateName(this.user.phone);
+      this.formStatus.password = validatePassword(this.user.password);
+      this.formStatus.confirmPassword = validateConfirmPassword(
         this.user.password,
         this.user.confirmPassword
       );
 
-      const emailValid = this.formStatus["email"].valid;
-      const firstnameValid = this.formStatus["firstname"].valid;
-      const lastnameValid = this.formStatus["lastname"].valid;
-      const phoneValid = this.formStatus["phone"].valid;
-      const passwordValid = this.formStatus["password"].valid;
-      const confirmPasswordValid = this.formStatus["confirmPassword"].valid;
+      const emailValid = this.formStatus.email.valid;
+      const firstnameValid = this.formStatus.firstname.valid;
+      const lastnameValid = this.formStatus.lastname.valid;
+      const phoneValid = this.formStatus.phone.valid;
+      const passwordValid = this.formStatus.password.valid;
+      const confirmPasswordValid = this.formStatus.confirmPassword.valid;
       return (
         emailValid &&
         firstnameValid &&

@@ -39,7 +39,7 @@ import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 import { categories } from '@/config/testItems'
 
-import MyVue from '@/components/MyVue.vue';
+import MyVue from '@/views/product/ProductActions.vue';
 import DataTable from '@/components/DataTable'
 
 export default {

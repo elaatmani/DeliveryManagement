@@ -49,6 +49,7 @@ import UserActions from './UserActions.vue';
 import DataTable from '@/components/DataTable'
 import User from '@/api/User';
 import RoleName from './RoleName.vue';
+import UserImage from './UserImage.vue';
 
 
 export default {
@@ -60,12 +61,19 @@ export default {
       columns: 
       [
         {
-            prop: 'id',
+          prop: 'id',
             name: '#',
             size: 50,
             // sortable: true,
             filter: false,
         },
+          {
+              prop: "photo",
+              name: "Profile",
+              size: 80,
+              filter: false,
+              cellTemplate: VGridVueTemplate(UserImage)
+          },
         {
             prop: "firstname",
             name: "First Name",

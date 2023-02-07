@@ -5,7 +5,6 @@ class User {
 
     async login(user) {
         await Csrf.getCookie();
-
         return Api.post('api/auth/login', { 
             email: user.email,
             password: user.password
@@ -46,44 +45,37 @@ class User {
 
     async logout() {
         await Csrf.getCookie();
-
         return Api.get('api/auth/logout')
     }
 
 
     async permession() {
         await Csrf.getCookie();
-
         return Api.get('api/auth/permission')
     }
 
     async roles() {
         await Csrf.getCookie();
-
         return Api.get('api/auth/roles')
     }
 
     async all() {
         await Csrf.getCookie();
-
         return Api.get('api/users')
     }
 
     async updateStatus({id, status}) {
         await Csrf.getCookie();
-
         return Api.post('api/users/status/' + id, { status })
     }
 
     async delete(id) {
         await Csrf.getCookie();
-
         return Api.delete('api/users/delete/' + id)
     }
 
     async getUser(id) {
         await Csrf.getCookie();
-
         return Api.get('api/users/' + id)
     }
 }

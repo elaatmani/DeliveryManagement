@@ -13,8 +13,11 @@
             name="body"
             class=" tw-z-[50999] tw-bg-white md:tw-min-w-[300px] tw-flex tw-flex-col md:tw-min-h-[170px] tw-shadow-lg tw-rounded-lg tw-p-5 tw-px-10"
           >
-            <div class="tw-font-bold tw-text-lg mb-5 tw-text-center">{{ title }}</div>
-            <div class="tw-text-center" v-html="body">
+            <div class="tw-font-medium tw-text-lg tw-text-orange-400 mb-5 tw-text-center">
+              <v-icon size="small" class="mr-1">mdi-alert-circle-outline</v-icon>
+              <span>{{ title }}</span>
+              </div>
+            <div class="tw-text-center tw-text-lg tw-text-gray-700" v-html="body">
             </div>
             <v-spacer></v-spacer>
             <div class="tw-flex tw-gap-3 tw-justify-center mt-10">
