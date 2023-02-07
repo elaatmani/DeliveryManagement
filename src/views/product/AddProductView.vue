@@ -12,54 +12,49 @@
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div class="tw-w-full">
               <div class="mb-1 text-body-2 tw-text-zinc-700">Product Name</div>
-              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+              <v-text-field v-model="name" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div class="tw-w-full">
               <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
-              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+              <v-text-field v-model="quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
-              <v-text-field clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Buying Price</div>
+              <v-text-field v-model="price" clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Unit</div>
-              <v-select :items="units" v-model="unit" variant="outlined" color="primary-color" density="compact"></v-select>            
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Selling Price</div>
+              <v-text-field v-model="piece" clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+
             </div>
           </v-col>
         </v-row>
       </div>
 
-      <div v-if="false">
+      <div>
         <v-row>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Unit</div>
-              <v-select :items="units" v-model="unit" variant="outlined" color="primary-color" density="compact"></v-select>            
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Unit (piece)</div>
+              <v-text-field v-model="size" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+            </div>
+          </v-col>
+          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
+            <div>
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Size</div>
+              <v-text-field v-model="size" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
           <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
             <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">SKU</div>
-              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Minumum Qty</div>
-              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
-              <v-text-field clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Color</div>
+              <v-text-field v-model="color" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
             </div>
           </v-col>
         </v-row>
@@ -76,36 +71,7 @@
         </v-row>
       </div>
 
-      <div>
-
-        <v-row>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Tax</div>
-              <v-select :items="['2%']" v-model="tax" variant="outlined" color="primary-color" density="compact"></v-select>            
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Discount Type</div>
-              <v-select :items="['10%', '20%']" v-model="discount" variant="outlined" color="primary-color" density="compact"></v-select>            
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
-              <v-text-field clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Status</div>
-              <v-select :items="['IN SHOP', 'OUT OF STOCK', 'PENDING']" v-model="status" variant="outlined" color="primary-color" density="compact"></v-select>            
-            </div>
-          </v-col>
-        </v-row>
-      </div>
-
+      
       <div class="mt-8 tw-flex tw-justify-end tw-gap-3">
         <v-btn color="grey-darken-2" variant="flat" size="large">
           <span class="text-white text-capitalize">Cancel</span>

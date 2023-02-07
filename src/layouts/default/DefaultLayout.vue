@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout :full-height="true">
+    <v-layout v-if="isLoggedIn" :full-height="true">
 
         <!-- Application Sidebar -->
         <AppSidebar :active="drawer" />
@@ -33,6 +33,12 @@ export default {
     data() {
         return {
             drawer: false
+        }
+    },
+
+    computed: {
+        isLoggedIn() {
+            return this.$store.getters['user/isLoggedIn']
         }
     },
 

@@ -155,8 +155,19 @@
                   ></v-switch>
                 </div>
               </v-col>
+              <v-col class="!tw-py-2" cols="12">
+                <div class="tw-h-full ">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">Profile Picture:</div>
+                    <div class="tw-h-[120px] tw-w-[120px] tw-border tw-rounded-full tw-relative tw-cursor-pointer !tw-overflow-hidden">
+                        <v-icon class="tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2" color="primary-color">mdi-camera</v-icon>
+                        <input accept="image/*" @change="handleImageChange" type="file" class="tw-w-full tw-h-full tw-rounded-full  tw-cursor-pointer tw-opacity-0">
+                        <img v-if="user_image" class="tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 tw-border-none -tw-translate-x-1/2 -tw-translate-y-1/2 tw-pointer-events-none tw-z-20 tw-h-full tw-object-cover" :src="user_image" alt="">
+                    </div>
+                </div>
+              </v-col>
             </v-row>
           </v-col>
+          
         </v-row>
       </div>
 
@@ -180,6 +191,7 @@
 
 <script>
 import User from "@/api/User";
+import { serverUrl } from '@/config/config'
 import {
   validateEmail,
   validateName,
@@ -191,6 +203,7 @@ import {
 export default {
   data() {
     return {
+      serverUrl,
       isRolesFetched: false,
       isUserFetched: false,
       isLoading: false,
@@ -232,6 +245,7 @@ export default {
       password: '',
       confirmPassword: '',
       role: '',
+      user_image: null,
       status: false,
 
     };
@@ -252,6 +266,7 @@ export default {
             phone: this.phone,
             email: this.email,
             password: this.password,
+            photo: this.user_imgae,
             role: this.role,
             status: this.status ? 1 : 0,
         }
@@ -296,6 +311,13 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
+    },
+
+    handleImageChange(event) {
+        const [file] = event.target.files
+        console.log(file);
+        console.log(event);
+        this.user_image = URL.createObjectURL(file)
     },
 
     validate() {
@@ -357,6 +379,7 @@ export default {
                   this.email = user.email
                   this.phone = user.phone
                   this.role = user.role
+                  this.user_image = user.photo
                   this.status = user.status == 1 ? true : false
                   this.isUserFetched = true
                 }

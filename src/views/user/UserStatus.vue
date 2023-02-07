@@ -12,8 +12,11 @@ export default {
     data() {
         return {
             isLoading: false,
-            checked: this.model.status == 1 ? true: false
+            checked: false
         }
+    },
+
+    watch: {
     },
 
     methods: {
@@ -32,26 +35,53 @@ export default {
                 type: 'success',
                 title: 'Status updated'
               })
+              this.setUpdatedUser(this.model.id, this.checked)
             }
           }
         ).catch(
           err => {
-            if (err.response.data.code == 'SERVER_ERROR') {
-              this.$alert({
-                type: 'error',
-                title: 'Something wrong happened. Try again'
-              })
-              this.checked = !this.checked
-            }
-
-            if (err.response.data.code == 'NOT_ALLOWED') {
-              this.$store.dispatch('user/logout')
-              this.$router.push('/login')
-            }
+            this.$handleApiError(err)
           }
         ).finally(() => {
           this.isLoading = false
         })
+      },
+
+      setUpdatedUser(id, status) {
+        let updatedUsers = localStorage.getItem('updatedUsers');
+        
+        let users = {}
+        if(!updatedUsers) {
+          users[id] = status
+        } else {
+          users = JSON.parse(updatedUsers);
+          users[id] = status
+        }
+
+
+        localStorage.setItem('updatedUsers', JSON.stringify(users))
+
+      },
+
+      getUpdatedUsers() {
+        let updatedUsers = localStorage.getItem('updatedUsers');
+
+        if(!updatedUsers) {
+          return {}
+        }
+
+        let users = JSON.parse(updatedUsers);
+        return users
+      }
+    },
+
+    mounted() {
+      const users = this.getUpdatedUsers()
+
+      if (Object.keys(users).includes(`${this.model.id}`)) {
+        this.checked = users[this.model.id] == 1 ? true : false;
+      } else {
+        this.checked = this.model.status == 1 ? true : false;
       }
     }
 

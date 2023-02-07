@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="users.length">
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Users List</h1>
@@ -44,7 +44,7 @@
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 
-import UserStatus from './UserStatus.vue';
+import UserStatusContainer from './UserStatusContainer.vue';
 import UserActions from './UserActions.vue';
 import DataTable from '@/components/DataTable'
 import User from '@/api/User';
@@ -57,7 +57,6 @@ export default {
     return {
       localUrl,
       isLoaded: false,
-      users: [],
       columns: 
       [
         {
@@ -103,7 +102,7 @@ export default {
             name: 'Active',
             filter: false,
             size: 100,
-            cellTemplate: VGridVueTemplate(UserStatus)
+            cellTemplate: VGridVueTemplate(UserStatusContainer)
         },
         {
             name: 'Acions',
@@ -115,21 +114,32 @@ export default {
     ]
     }
   },
+
+  computed: {
+    users() {
+      return this.$store.getters['user/users']
+    }
+  },
   methods: {
     beforeFocus(e) {
       e.preventDefault();
     }
   },
   mounted() {
+    
+    localStorage.removeItem('updatedUsers')
+
+    console.log('users list mounted');
+
     User.all().then(
       res => {
         if(res?.data.code == "SHOW_ALL_USERS") {
             const users = res.data.data.users
-            this.users = users;
+            this.$store.dispatch('user/setUsers', users);
             console.log(res);
             this.isLoaded = true
-    }
-            }
+          }
+        }
         ).catch(this.$handleApiError)
   }
 }

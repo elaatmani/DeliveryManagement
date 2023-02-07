@@ -21,8 +21,10 @@ class User {
             password: user.password,
             phone: user.phone,
             status: user.status,
+            role: user.role,
             firstname: user.firstname,
-            lastname: user.lastname
+            lastname: user.lastname,
+            user_image: user.user_image
         })
     }
 
@@ -71,6 +73,12 @@ class User {
         await Csrf.getCookie();
 
         return Api.post('api/users/status/' + id, { status })
+    }
+
+    async delete(id) {
+        await Csrf.getCookie();
+
+        return Api.delete('api/users/delete/' + id)
     }
 
     async getUser(id) {

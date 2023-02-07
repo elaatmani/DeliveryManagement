@@ -8,6 +8,7 @@ import alert from './plugins/alert'
 import apiErrorHandler from './plugins/apiErrorHandler'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
+import PopupVue from '@/components/PopupVue'
 
 // import styling and tailwind
 import '@/assets/style.css'
@@ -25,6 +26,7 @@ createApp(App)
 
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)
-
+  .component('Popup', PopupVue)
+  
 
   .mount('#app')
