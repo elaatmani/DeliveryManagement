@@ -78,6 +78,11 @@ class User {
         await Csrf.getCookie();
         return Api.get('api/users/' + id)
     }
+
+    async createRole({ roleName, permissions }) {
+        await Csrf.getCookie();
+        return Api.post('api/auth/roles/create', { roleName, permissions })
+    }
 }
 
 

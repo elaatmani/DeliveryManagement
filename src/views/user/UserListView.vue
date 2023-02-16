@@ -44,12 +44,12 @@
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 
-import UserStatusContainer from './UserStatusContainer.vue';
-import UserActions from './UserActions.vue';
+import UserStatusContainer from './partials/UserStatusContainer.vue';
+import UserActions from './partials/UserActions.vue';
 import DataTable from '@/components/DataTable'
 import User from '@/api/User';
-import RoleName from './RoleName.vue';
-import UserImage from './UserImage.vue';
+import RoleName from './partials/RoleName.vue';
+import UserImage from './partials/UserImage.vue';
 
 
 export default {

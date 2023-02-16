@@ -5,6 +5,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import UserListView from '@/views/user/UserListView'
 import AddUserView from '@/views/user/AddUserView'
 import UserUpdateView from '@/views/user/UserUpdateView'
+import AddRoleView from '@/views/user/AddRoleView'
 
 
 export default 
@@ -52,6 +53,18 @@ export default
                     subModule: 'user/update',
                     title: 'Update User',
                     gate: 'users_update'
+                }
+            },
+
+            { 
+                name: 'user/addRole',
+                path: 'addRole',
+                component: AddRoleView,
+                meta: {
+                    module: 'user',
+                    subModule: 'user/addRole',
+                    title: 'Add Role',
+                    gate: 'users_create'
                 }
             },
 

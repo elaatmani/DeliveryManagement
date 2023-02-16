@@ -9,65 +9,118 @@
       <div>
 
         <v-row>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Product Name</div>
-              <v-text-field :error="!formStatus.name.valid" @keyup="resetError('name')" :hide-details="true" v-model="product.name" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.name.message }}</div>
-            </div>
+          <v-col cols="12" md="6">
+            <v-row>
+              <v-col class="!tw-py-2" cols="12" sm="6" md="6">
+                <div class="tw-w-full">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Product Name</div>
+                  <v-text-field :error="!formStatus.name.valid" @keyup="resetError('name')" :hide-details="true" v-model="product.name" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.name.message }}</div>
+                </div>
+              </v-col>
+              <v-col class="!tw-py-2" cols="12" sm="6" md="6">
+                <div class="tw-w-full">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Reference</div>
+                  <v-text-field :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="product.quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.quantity.message }}</div>
+                </div>
+              </v-col>
+              <v-col class="!tw-py-2" cols="12" sm="6" md="6" >
+                <div class="tw-w-full">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Buying Price (DH)</div>
+                  <v-text-field :error="!formStatus.buyingPrice.valid" @keyup="resetError('buyingPrice')" :hide-details="true" v-model="product.buyingPrice" clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.buyingPrice.message }}</div>
+                </div>
+              </v-col>
+              <v-col class="!tw-py-2" cols="12" sm="6" md="6" >
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Selling Price</div>
+                  <v-text-field :error="!formStatus.sellingPrice.valid" @keyup="resetError('piece')" :hide-details="true" v-model="product.sellingPrice" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.sellingPrice.message }}</div>
+                </div>
+              </v-col>
+              <v-col class="!tw-py-2">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Description</div>
+                  <v-textarea :error="!formStatus.description.valid" @keyup="resetError('description')" :hide-details="true" v-model="product.description" variant="outlined" density="compact" color="primary-color"></v-textarea>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.description.message }}</div>
+                </div>
+              </v-col>
+            </v-row>
           </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
-              <v-text-field :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="product.quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.quantity.message }}</div>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Buying Price (DH)</div>
-              <v-text-field :error="!formStatus.buyingPrice.valid" @keyup="resetError('buyingPrice')" :hide-details="true" v-model="product.buyingPrice" clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.buyingPrice.message }}</div>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
+          <v-col cols="12" md="6" class="tw-border-l tw-border-r-neutral-700 tw-py-2">
             <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Unit (piece)</div>
-              <v-text-field :error="!formStatus.piece.valid" @keyup="resetError('piece')" :hide-details="true" v-model="product.piece" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.piece.message }}</div>
+              <div class="tw-grid tw-grid-cols-12 md:tw-gap-3">
+                <div class="md:tw-col-span-4 tw-col-span-12">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Size</div>
+                  <v-text-field  :error="!formStatus.size.valid" @keyup="resetError('size')" :hide-details="true" v-model="size" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.size.message }}</div>
+                </div>
+                <div class="md:tw-col-span-4 tw-col-span-12">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Color</div>
+                  <v-text-field :error="!formStatus.color.valid" @keyup="resetError('color')" :hide-details="true" v-model="color" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.color.message }}</div>
+                </div>
+                <div class="md:tw-col-span-4 tw-col-span-12">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
+                  <v-text-field  type="number" :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.quantity.message }}</div>
+                </div>
+              </div>
+              <div>
+                <div class="tw-col-span-12 tw-flex tw-justify-end">
+                  <button @click="addVariant" class="tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white bg-primary-color tw-rounded-md">
+                    <v-icon size="small" color="white">mdi-plus</v-icon>
+                    <span class="tw-text-white">Add</span>
+                  </button>
+                </div>
+              </div>
+              <div class="">
+                <div class="tw-flex tw-justify-between tw-items-center  tw-mt-5">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Variants</div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">
+                    Quantity Total: {{ 500 }}
+                  </div>
+                </div>
+                <div v-if="variants.length == 0" class="tw-text-center tw-mb-6 tw-bg-neutral-100 tw-text-neutral-500 tw-w-full tw-py-3 tw-rounded-lg">
+                  No Variants yet
+                </div>
+                <div v-else class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
+                  <div v-for="variant in variants" :key="variant.id">
+                    <div class="tw-grid tw-grid-cols-12 tw-text-md tw-gap-5 tw-items-center tw-my-2">
+                      <div class="tw-text-center tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-blue-500 tw-bg-blue-500/10">
+                        {{ variant.size }}
+                      </div>
+                      <div class="tw-text-center tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-neutral-500 tw-bg-neutral-500/10">
+                        {{ variant.color }}
+                      </div>
+                      <div class="tw-text-center tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-green-500 tw-bg-green-500/10">
+                        {{ variant.quantity }}
+                      </div>
+                      <div class="tw-col-span-1">
+                        <button @click="addVariant" class="tw-py-1 tw-px-2 tw-ml-auto tw-bg-red-500/10 hover:tw-bg-red-500/20 tw-duration-200 tw-rounded-md">
+                          <v-icon class="tw-text-red-500" size="small">mdi-delete</v-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
             </div>
           </v-col>
+        </v-row>
+
+        <v-row>
+          
+          
         </v-row>
       </div>
 
       <div>
         <v-row>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Size</div>
-              <v-text-field :error="!formStatus.size.valid" @keyup="resetError('size')" :hide-details="true" v-model="product.size" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.size.message }}</div>
-            </div>
-          </v-col>
-          <v-col class="!tw-py-2" cols="12" sm="6" md="6" lg="3">
-            <div class="tw-w-full">
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Color</div>
-              <v-text-field :error="!formStatus.color.valid" @keyup="resetError('color')" :hide-details="true" v-model="product.color" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.color.message }}</div>
-            </div>
-          </v-col>
-        </v-row>
-      </div>
-
-      <div>
-        <v-row>
-          <v-col class="!tw-py-2">
-            <div>
-              <div class="mb-1 text-body-2 tw-text-zinc-700">Description</div>
-              <v-textarea :error="!formStatus.description.valid" @keyup="resetError('description')" :hide-details="true" v-model="product.description" variant="outlined" density="compact" color="primary-color"></v-textarea>
-              <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.description.message }}</div>
-            </div>
-          </v-col>
+          
         </v-row>
       </div>
 
@@ -92,16 +145,20 @@ export default {
       return {
         isLoading: false,
 
+        variantId: 1,
+        variants: [],
+
+        color: '',
+        size: '',
+        quantity: 0,
+
         product: {  
           name: '',
-          buyingPrice: '',
-          piece: '',
-          quantity: '',
-          size: '',
-          color: '',
-          image: '',
+          reference: '',
+          buyingPrice: 0,
+          sellingPrice: 0,
           description: ''
-          },
+        },
 
         formStatus: {
           name: {
@@ -109,6 +166,10 @@ export default {
             message: "",
           },
           buyingPrice: {
+            valid: true,
+            message: "",
+          },
+          sellingPrice: {
             valid: true,
             message: "",
           },
@@ -121,10 +182,6 @@ export default {
             message: "",
           },
           color: {
-            valid: true,
-            message: "",
-          },
-          piece: {
             valid: true,
             message: "",
           },
@@ -152,12 +209,9 @@ export default {
 
               this.product = {  
                 name: '',
-                buyingPrice: '',
-                piece: '',
-                quantity: '',
-                size: '',
-                color: '',
-                image: '',
+                reference: '',
+                buyingPrice: 0,
+                sellingPrice: 0,
                 description: ''
               }
             }
@@ -183,31 +237,40 @@ export default {
       validate() {
         this.formStatus.name = validateName(this.product.name);
         this.formStatus.buyingPrice = validateName(this.product.buyingPrice);
-        this.formStatus.quantity = validateName(this.product.quantity);
-        this.formStatus.size = validateName(this.product.size);
-        this.formStatus.color = validateName(this.product.color);
+        this.formStatus.sellingPrice = validateName(this.product.sellingPrice);
+        this.formStatus.quantity = validateName(this.quantity);
+        this.formStatus.size = validateName(this.size);
+        this.formStatus.color = validateName(this.color);
         this.formStatus.description = validateName(this.product.description);
-        this.formStatus.piece = validateName(this.product.piece);
-
-        const name = this.formStatus.name.valid;
-        const buyingPrice = this.formStatus.buyingPrice.valid;
-        const quantity = this.formStatus.quantity.valid;
-        const color = this.formStatus.color.valid;
-        const description = this.formStatus.description.valid;
-        const piece = this.formStatus.piece.valid;
-        const size = this.formStatus.size.valid;
 
         return (
-          name &&
-          buyingPrice &&
-          quantity &&
-          color &&
-          description &&
-          piece &&
-          size
+          this.formStatus.name.valid &&
+          this.formStatus.buyingPrice.valid &&
+          this.formStatus.quantity.valid &&
+          this.formStatus.color.valid &&
+          this.formStatus.description.valid &&
+          this.formStatus.size.valid &&
+          this.formStatus.size.valid
         );
+      },
+
+      addVariant() {
+        this.formStatus.size
+
+        const variant = {
+          id: this.variantId,
+          color: this.color.toUpperCase(),
+          size: this.size.toUpperCase(),
+          quantity: this.quantity
+        }
+
+        this.variants.push(variant)
+
+        this.variantId++
+        console.log(this.variants);
       }
-    }
+    },
+
 }
 </script>
 

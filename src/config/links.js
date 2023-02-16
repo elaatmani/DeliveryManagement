@@ -189,6 +189,13 @@ export const links = [
                 subModule: 'user/add',
                 gate: 'users_create',
                 to: '/users/add'
+            },
+            {
+                id: 3,
+                title: 'Add Role',
+                subModule: 'user/addRole',
+                gate: 'users_create',
+                to: '/users/addRole'
             }
         ]
     },
