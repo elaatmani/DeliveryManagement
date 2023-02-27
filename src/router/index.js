@@ -12,6 +12,7 @@ import user from './routes/user'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
+import TestView from '@/views/TestView'
 
 const routes = [
   auth,
@@ -21,6 +22,24 @@ const routes = [
   subcategory,
   sales,
   user,
+
+  {
+    name: 'default',
+    path: '',
+    component: DefaultLayout,
+    children: [
+      {
+        name: 'test',
+        path: '/test',
+        component: TestView,
+        meta: {
+          title: 'Test abro m3a rasek',
+          module: 'test',
+          gate: 'all'
+        }
+      },
+    ]
+  },
 
   {
     name: 'not-found',

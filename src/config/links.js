@@ -211,5 +211,18 @@ export const links = [
             type: 'svg',
             value: 'assets/img/icons/settings.svg'
         }
+    },
+
+    {
+        id: 5,
+        title: 'Test',
+        module: 'test',
+        to: '/test',
+        hasChildren: false,
+        gate: 'all',
+        icon: {
+            type: 'icon',
+            value: 'mdi-hammer-wrench'
+        }
     }
 ]
