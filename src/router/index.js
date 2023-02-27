@@ -25,12 +25,12 @@ const routes = [
 
   {
     name: 'default',
-    path: '',
+    path: '/test',
     component: DefaultLayout,
     children: [
       {
         name: 'test',
-        path: '/test',
+        path: '',
         component: TestView,
         meta: {
           title: 'Test abro m3a rasek',

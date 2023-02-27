@@ -32,12 +32,15 @@ export default {
                     Api.get(path)
                     .then(
                         res => {
-                            console.log('----Success Response----');
-                            console.log(res);
+                            console.log('---- Success Response ----');
+                            console.log(`---- Code ${res.status} ----`);
+                            console.log(res.data);
                         },
                         err => {
-                            console.log('----Failed Response----');
-                            console.log(err);
+                            this.$handleApiError(err);
+                            console.log('---- Failed Response ----');
+                            console.log(`---- Code ${err?.response.status} ----`);
+                            console.log(err?.response?.data);
                         }
                     )
                     .finally(() => this.isLoading = false)
@@ -46,12 +49,15 @@ export default {
                     Api.post(path, test)
                     .then(
                         res => {
-                            console.log('----Success Response----');
-                            console.log(res);
+                            console.log('---- Success Response ----');
+                            console.log(`---- Code ${res.status} ----`);
+                            console.log(res.data);
                         },
                         err => {
-                            console.log('----Failed Response----');
-                            console.log(err);
+                            this.$handleApiError(err);
+                            console.log('---- Failed Response ----');
+                            console.log(`---- Code ${err?.response.status} ----`);
+                            console.log(err?.response?.data);
                         }
                     )
                     .finally(() => this.isLoading = false)
@@ -60,12 +66,15 @@ export default {
                     Api.delete(path)
                     .then(
                         res => {
-                            console.log('----Success Response----');
-                            console.log(res);
+                            console.log('---- Success Response ----');
+                            console.log(`---- Code ${res.status} ----`);
+                            console.log(res.data);
                         },
                         err => {
-                            console.log('----Failed Response----');
-                            console.log(err);
+                            this.$handleApiError(err);
+                            console.log('---- Failed Response ----');
+                            console.log(`---- Code ${err?.response.status} ----`);
+                            console.log(err?.response?.data);
                         }
                     )
                     .finally(() => this.isLoading = false)
