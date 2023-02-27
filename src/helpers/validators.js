@@ -44,11 +44,11 @@ export function validatePassword(password) {
 }
 
 
-export function validateName(value) {
+export function validateName(value, fieldName = 'This field') {
     if(!value) {
         return {
             valid: false,
-            message: 'This field is required'
+            message: `${fieldName} is required`
         }
     }
 
@@ -70,6 +70,20 @@ export function validateConfirmPassword(password, confirmPasswrd) {
         return {
             valid: false,
             message: "Passwords doesn't match"
+        }
+    }
+
+    return {
+        valid: true
+    }
+}
+
+
+export function validateVariants(variants) {
+    if(!variants.length) {
+        return {
+            valid: false,
+            message: "You need at least one variant to create a product !"
         }
     }
 

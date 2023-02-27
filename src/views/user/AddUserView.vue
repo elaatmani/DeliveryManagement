@@ -95,6 +95,37 @@
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.phone.message }}</div>
                 </div>
               </v-col>
+              
+            </v-row>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-row>
+              <v-col class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Role</div>
+                  <v-select
+                    class="text-capitalize"
+                    :items="roles"
+                    item-title="name"
+                    item-value="id"
+                    v-model="user.role"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-select>
+                </div>
+              </v-col>
+              <v-col class="!tw-py-2" cols="12" md="6">
+                <div class="tw-flex tw-gap-10 tw-h-full tw-items-center">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Status:</div>
+                  <v-switch
+                    v-model="user.status"
+                    color="primary-color"
+                    :hide-details="true"
+                    flat
+                  ></v-switch>
+                </div>
+              </v-col>
               <v-col class="!tw-py-2" cols="12" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Password</div>
@@ -131,46 +162,6 @@
                     density="compact"
                   ></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.confirmPassword.message }}</div>
-                </div>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-row>
-              <v-col class="!tw-py-2" cols="12" md="6">
-                <div>
-                  <div class="mb-1 text-body-2 tw-text-zinc-700">Role</div>
-                  <v-select
-                    class="text-capitalize"
-                    :items="roles"
-                    item-title="name"
-                    item-value="id"
-                    v-model="user.role"
-                    variant="outlined"
-                    color="primary-color"
-                    density="compact"
-                  ></v-select>
-                </div>
-              </v-col>
-              <v-col class="!tw-py-2" cols="12" md="6">
-                <div class="tw-flex tw-gap-10 tw-h-full tw-items-center">
-                  <div class="mb-1 text-body-2 tw-text-zinc-700">Status:</div>
-                  <v-switch
-                    v-model="user.status"
-                    color="primary-color"
-                    :hide-details="true"
-                    flat
-                  ></v-switch>
-                </div>
-              </v-col>
-              <v-col class="!tw-py-2" cols="12">
-                <div class="tw-h-full ">
-                  <div class="mb-1 text-body-2 tw-text-zinc-700">Profile Picture:</div>
-                    <div class="tw-h-[120px] tw-w-[120px] tw-border tw-rounded-full tw-relative tw-cursor-pointer !tw-overflow-hidden">
-                        <v-icon class="tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2" color="primary-color">mdi-camera</v-icon>
-                        <input accept="image/*" @change="handleImageChange" type="file" class="tw-w-full tw-h-full tw-rounded-full  tw-cursor-pointer tw-opacity-0">
-                        <img v-if="user.user_image" class="tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 tw-border-none -tw-translate-x-1/2 -tw-translate-y-1/2 tw-pointer-events-none tw-z-20 tw-h-full tw-object-cover" :src="user.user_image" alt="">
-                    </div>
                 </div>
               </v-col>
             </v-row>
@@ -250,7 +241,6 @@ export default {
         confirmPassword: "",
         role: 2,
         status: true,
-        user_image: null,
       },
     };
   },
@@ -285,7 +275,6 @@ export default {
               confirmPassword: "",
               role: 2,
               status: true,
-              user_image: null
             };
           }
         })
@@ -307,12 +296,6 @@ export default {
         });
     },
 
-    handleImageChange(event) {
-        const [file] = event.target.files
-        console.log(file);
-        console.log(event);
-        this.user.user_image = URL.createObjectURL(file)
-    },
 
     resetError(field) {
       this.formStatus[field] = {

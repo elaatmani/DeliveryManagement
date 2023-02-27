@@ -21,21 +21,21 @@
               <v-col class="!tw-py-2" cols="12" sm="6" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Reference</div>
-                  <v-text-field :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="product.quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <v-text-field :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="product.reference" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.quantity.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" sm="6" md="6" >
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Buying Price (DH)</div>
-                  <v-text-field :error="!formStatus.buyingPrice.valid" @keyup="resetError('buyingPrice')" :hide-details="true" v-model="product.buyingPrice" clearable clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <v-text-field type="number" @change="handleBuyingPriceChange" :error="!formStatus.buyingPrice.valid" @keyup="resetError('buyingPrice')" :hide-details="true" v-model="product.buyingPrice" clear-icon="mdi-close"  class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.buyingPrice.message }}</div>
                 </div>
               </v-col>
               <v-col class="!tw-py-2" cols="12" sm="6" md="6" >
                 <div>
-                  <div class="mb-1 text-body-2 tw-text-zinc-700">Selling Price</div>
-                  <v-text-field :error="!formStatus.sellingPrice.valid" @keyup="resetError('piece')" :hide-details="true" v-model="product.sellingPrice" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Selling Price (DH)</div>
+                  <v-text-field type="number" @change="handleSellingPriceChange" :error="!formStatus.sellingPrice.valid" @keyup="resetError('piece')" :hide-details="true" v-model="product.sellingPrice" clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.sellingPrice.message }}</div>
                 </div>
               </v-col>
@@ -63,13 +63,13 @@
                 </div>
                 <div class="md:tw-col-span-4 tw-col-span-12">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
-                  <v-text-field  type="number" :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <v-text-field @change="handleQuantityChange" type="number" :error="!formStatus.quantity.valid" @keyup="resetError('quantity')" :hide-details="true" v-model="quantity" clearable clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.quantity.message }}</div>
                 </div>
               </div>
               <div>
                 <div class="tw-col-span-12 tw-flex tw-justify-end">
-                  <button @click="addVariant" class="tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white bg-primary-color tw-rounded-md">
+                  <button :disabled="!size || !color || !quantity" :class="{'bg-primary-color': size && color && quantity}" @click="addVariant" class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md">
                     <v-icon size="small" color="white">mdi-plus</v-icon>
                     <span class="tw-text-white">Add</span>
                   </button>
@@ -79,28 +79,31 @@
                 <div class="tw-flex tw-justify-between tw-items-center  tw-mt-5">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Variants</div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">
-                    Quantity Total: {{ 500 }}
+                    Quantity Total: {{ qtyTotal }}
                   </div>
                 </div>
-                <div v-if="variants.length == 0" class="tw-text-center tw-mb-6 tw-bg-neutral-100 tw-text-neutral-500 tw-w-full tw-py-3 tw-rounded-lg">
-                  No Variants yet
+                <div v-if="variants.length == 0" :class="{'tw-bg-neutral-100 tw-text-neutral-500': formStatus.variants.valid, 'tw-bg-red-100 tw-text-red-500': !formStatus.variants.valid}" class="tw-text-center tw-mb-6  tw-w-full tw-py-3 tw-rounded-lg">
+                  {{ formStatus.variants.valid ? 'No Variants yet' : formStatus.variants.message }}
                 </div>
                 <div v-else class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
                   <div v-for="variant in variants" :key="variant.id">
                     <div class="tw-grid tw-grid-cols-12 tw-text-md tw-gap-5 tw-items-center tw-my-2">
-                      <div class="tw-text-center tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-blue-500 tw-bg-blue-500/10">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-pink-500 tw-bg-blue-500/10">
+                        <v-icon size="x-small">mdi-format-size</v-icon>
                         {{ variant.size }}
                       </div>
-                      <div class="tw-text-center tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-neutral-500 tw-bg-neutral-500/10">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-emerald-500 tw-bg-blue-500/10">
+                        <v-icon size="x-small">mdi-palette</v-icon>
                         {{ variant.color }}
                       </div>
-                      <div class="tw-text-center tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-green-500 tw-bg-green-500/10">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-purple-500 tw-bg-blue-500/10">
+                        <v-icon size="x-small">mdi-inbox-multiple-outline</v-icon>
                         {{ variant.quantity }}
                       </div>
                       <div class="tw-col-span-1">
-                        <button @click="addVariant" class="tw-py-1 tw-px-2 tw-ml-auto tw-bg-red-500/10 hover:tw-bg-red-500/20 tw-duration-200 tw-rounded-md">
-                          <v-icon class="tw-text-red-500" size="small">mdi-delete</v-icon>
-                        </button>
+                          <button @click="deleteVatiant(variant.id)" class="tw-py-1 tw-px-2 tw-ml-auto  tw-duration-200">
+                            <v-icon class="tw-text-red-500 hover:tw-scale-125 tw-duration-300" size="small">mdi-delete</v-icon>
+                          </button>
                       </div>
                     </div>
                   </div>
@@ -138,7 +141,7 @@
 </template>
 
 <script>
-import { validateName } from '@/helpers/validators'
+import { validateName, validateVariants } from '@/helpers/validators'
 import Product from '@/api/Product';
 export default {
     data() {
@@ -146,7 +149,14 @@ export default {
         isLoading: false,
 
         variantId: 1,
-        variants: [],
+        variants: [
+        //   {
+        //   id: 0,
+        //   color: 'RED',
+        //   size: 'XXL',
+        //   quantity: 200
+        // }
+        ],
 
         color: '',
         size: '',
@@ -189,7 +199,19 @@ export default {
             valid: true,
             message: "",
           },
+          variants: {
+            valid: true,
+            message: ""
+          }
         },
+      }
+    },
+
+    computed: {
+      qtyTotal() {
+        let total = 0;
+        this.variants.forEach((variant) => total += parseInt(variant.quantity))
+        return total
       }
     },
 
@@ -198,7 +220,11 @@ export default {
         if (!this.validate()) return false;
 
         this.isLoading = true
-        Product.create(this.product)
+
+        let product = this.product
+        product.variants = this.variants
+
+        Product.create(product)
         .then(
           res => {
             if (res.data.code == "PRODUCT_CREATED") {
@@ -214,6 +240,8 @@ export default {
                 sellingPrice: 0,
                 description: ''
               }
+
+              this.variants = []
             }
           }
         )
@@ -235,22 +263,18 @@ export default {
       },
 
       validate() {
-        this.formStatus.name = validateName(this.product.name);
-        this.formStatus.buyingPrice = validateName(this.product.buyingPrice);
-        this.formStatus.sellingPrice = validateName(this.product.sellingPrice);
-        this.formStatus.quantity = validateName(this.quantity);
-        this.formStatus.size = validateName(this.size);
-        this.formStatus.color = validateName(this.color);
-        this.formStatus.description = validateName(this.product.description);
+        this.formStatus.name = validateName(this.product.name, 'Product name');
+        this.formStatus.buyingPrice = validateName(this.product.buyingPrice, 'Buying price');
+        this.formStatus.sellingPrice = validateName(this.product.sellingPrice, 'Selling price');
+        this.formStatus.description = validateName(this.product.description, 'Description');
+        this.formStatus.variants = validateVariants(this.variants)
 
         return (
           this.formStatus.name.valid &&
           this.formStatus.buyingPrice.valid &&
-          this.formStatus.quantity.valid &&
-          this.formStatus.color.valid &&
+          this.formStatus.sellingPrice &&
           this.formStatus.description.valid &&
-          this.formStatus.size.valid &&
-          this.formStatus.size.valid
+          this.formStatus.variants.valid
         );
       },
 
@@ -267,8 +291,33 @@ export default {
         this.variants.push(variant)
 
         this.variantId++
-        console.log(this.variants);
-      }
+        
+        this.color = ''
+        this.size = ''
+        this.quantity = 0;
+      },
+
+      deleteVatiant(id) {
+        this.variants = this.variants.filter(item => item.id !== id)
+      },
+
+      handleQuantityChange() {
+        if (this.quantity <= 0) {
+          this.quantity = 0
+        }
+      },
+
+      handleSellingPriceChange() {
+        if (this.product.sellingPrice <= 0) {
+          this.product.sellingPrice = 0
+        }
+      },
+
+      handleBuyingPriceChange() {
+        if (this.product.buyingPrice <= 0) {
+          this.product.buyingPrice = 0
+        }
+      },
     },
 
 }

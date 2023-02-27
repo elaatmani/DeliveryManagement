@@ -81,7 +81,7 @@ class User {
 
     async createRole({ roleName, permissions }) {
         await Csrf.getCookie();
-        return Api.post('api/auth/roles/create', { roleName, permissions })
+        return Api.post('api/roles/add', { name: roleName, permissions })
     }
 }
 
