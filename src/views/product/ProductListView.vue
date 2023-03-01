@@ -43,7 +43,6 @@ import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 
 import MyVue from '@/views/product/ProductActions.vue';
-import ProductStatus from './ProductStatus.vue';
 import DataTable from '@/components/DataTable'
 import Product from '@/api/Product';
 
@@ -64,28 +63,31 @@ export default {
             filter: false,
         },
         {
+            prop: 'ref',
+            name: 'Ref',
+            size: 80,
+            // sortable: true,
+            filter: false,
+        },
+        {
             prop: "name",
             name: "Name",
-            size: 200,
+            size: 150,
             filter: 'name'
         },
         {
           prop: 'buying_price',
-          name: 'Price',
+          name: 'Buying Price',
           filter: 'number',
-        },
-        {
-          prop: 'size',
-          name: 'Size',
           size: 150,
-          filter: 'number'
+          cellTemplate: (createElement, props) => props.model[props.prop] + ' DH'
         },
         {
-            prop: 'color',
-            name: 'Color',
-            filter: 'name',
-            size: 150,
-            cellTemplatep: VGridVueTemplate(ProductStatus)
+          prop: 'selling_price',
+          name: 'Selling Price',
+          size: 150,
+          filter: 'number',
+          cellTemplate: (createElement, props) => props.model[props.prop] + ' DH'
         },
         {
             prop: "quantity",
@@ -93,8 +95,24 @@ export default {
             columnType: 'numeric',
             sortable: false,
             filter: 'number',
-            size: 90
+            size: 90,
+            cellTemplate: (createElement, props) => {
+              let qty = 0;
+              props.model.variations.forEach(element => {
+                qty += element.quantity
+              });
+              return qty
+            }
         },
+        {
+            prop: 'created_at',
+            name: 'Created at',
+            filter: false,
+            // autoSize: true,
+            size: 150,
+            cellTemplate: (createElement, props) => props.model[props.prop].split('T')[0]
+        },
+        
         {
             name: 'Acions',
             prop: 'product',

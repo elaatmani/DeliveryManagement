@@ -23,10 +23,9 @@ class Product {
         return Api.post('api/products/update/' + id, {
             name: product.name,
             buying_price: product.buyingPrice,
-            quantity: product.quantity,
-            size: product.size,
-            color: product.color,
-            image: product.image,
+            selling_price: product.sellingPrice,
+            ref: product.reference,
+            variants: product.variants,
             description: product.description,
             status: 1
         });

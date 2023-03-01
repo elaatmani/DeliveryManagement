@@ -1,4 +1,4 @@
-export const path = 'api/products'
+export const path = 'api/products/1'
 export const method = 'get'
 
 export default {
