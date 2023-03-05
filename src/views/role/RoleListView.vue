@@ -1,17 +1,17 @@
 <template>
-  <div :key="users.length">
+  <div :key="roles.length">
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
-        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Users List</h1>
-        <h2 class="tw-text-gray-500 tw-text-sm">Manage all users</h2>
+        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Roles List</h1>
+        <h2 class="tw-text-gray-500 tw-text-sm">Manage all Roles</h2>
       </div>
 
 
       <div v-if="$can('users_create')">
-        <v-btn color="primary-color" link :to="{name: 'user/add'}" variant="flat" class="text-capitalize">
+        <v-btn color="primary-color" link :to="{name: 'user/addRole'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white">
-            Add User
+            Add Role
           </span>
         </v-btn>
       </div>
@@ -34,7 +34,7 @@
       </div>
 
       <div class="">
-        <DataTable :rows="users" :columns="columns" />
+        <DataTable :rows="roles" :columns="columns" />
       </div>
     </div>
   </div>
@@ -44,11 +44,9 @@
 import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 
-import UserStatusContainer from './partials/UserStatusContainer.vue';
-import UserActions from './partials/UserActions.vue';
+import RoleActions from './partials/RoleActions.vue';
 import DataTable from '@/components/DataTable'
 import User from '@/api/User';
-import RoleName from './partials/RoleName.vue';
 
 
 export default {
@@ -67,47 +65,15 @@ export default {
             filter: false,
         },
         {
-            prop: "firstname",
-            name: "First Name",
+            prop: "name",
+            name: "Role Name",
             size: 140,
             filter: 'name'
         },
         {
-          prop: 'lastname',
-          name: 'Last Name',
-          size: 130,
-          filter: 'name',
-        },
-        {
-          prop: 'role_name',
-          name: 'Role',
-          size: 100,
-          filter: 'role',
-          cellTemplate: VGridVueTemplate(RoleName)
-        },
-        {
-          prop: 'email',
-          name: 'Email',
-          size: 170,
-          filter: 'name'
-        },
-        {
-            prop: "phone",
-            name: "Phone Number",
-            filter: 'number',
-            size: 160
-        },
-        {
-            prop: 'status',
-            name: 'Active',
-            filter: false,
-            size: 100,
-            cellTemplate: VGridVueTemplate(UserStatusContainer)
-        },
-        {
             name: 'Acions',
-            prop: 'users',
-            cellTemplate: VGridVueTemplate(UserActions),
+            prop: 'roles',
+            cellTemplate: VGridVueTemplate(RoleActions),
             size: 130,
             filter: false
         }
@@ -116,8 +82,8 @@ export default {
   },
 
   computed: {
-    users() {
-      return this.$store.getters['user/users']
+    roles() {
+      return this.$store.getters['user/roles']
     }
   },
   methods: {
@@ -126,16 +92,12 @@ export default {
     }
   },
   mounted() {
-    
-    localStorage.removeItem('updatedUsers')
 
-    console.log('users list mounted');
-
-    User.all().then(
+    User.roles().then(
       res => {
-        if(res?.data.code == "SHOW_ALL_USERS") {
-            const users = res.data.data.users
-            this.$store.dispatch('user/setUsers', users);
+        if(res?.data.code == "SUCCESS") {
+            const roles = res.data.data.roles
+            this.$store.dispatch('user/setRoles', roles);
             console.log(res);
             this.isLoaded = true
           }

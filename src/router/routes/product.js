@@ -5,6 +5,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import ProductListView from '@/views/product/ProductListView'
 import AddProductView from '@/views/product/AddProductView'
 import UpdateProductView from '@/views/product/UpdateProductView'
+import ShowProductView from '@/views/product/ShowProductView'
 
 
 export default 
@@ -52,6 +53,18 @@ export default
                     subModule: 'product/update',
                     title: 'Update Product',
                     gate: 'product_update'
+                }
+            },
+
+            { 
+                name: 'product/show',
+                path: ':id',
+                component: ShowProductView,
+                meta: {
+                    module: 'product',
+                    subModule: 'product/show',
+                    title: 'Product Informations',
+                    gate: 'product_show'
                 }
             },
 

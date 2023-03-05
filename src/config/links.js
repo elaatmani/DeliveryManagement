@@ -192,6 +192,13 @@ export const links = [
             },
             {
                 id: 3,
+                title: 'Roles List',
+                subModule: 'user/roles',
+                gate: 'users_create',
+                to: '/users/roles'
+            },
+            {
+                id: 4,
                 title: 'Add Role',
                 subModule: 'user/addRole',
                 gate: 'users_create',

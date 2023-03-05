@@ -25,10 +25,10 @@
                     Role Name
                   </div>
                   <v-text-field
-                    :error="!formStatus.roleName.valid"
+                    :error="!formStatus.name.valid"
                     :hide-details="true"
                     @keyup="resetError('firstname')"
-                    v-model="roleName"
+                    v-model="name"
                     clearable
                     clear-icon="mdi-close"
                     class="tw-w-full"
@@ -36,15 +36,17 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
-                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.roleName.message }}</div>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.name.message }}</div>
                 </div>
               </v-col>
               <v-col cols="12">
                 <div>
                   <div class="mb-3 text-body-2 tw-text-zinc-700">
                     Select Permissions:
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-text-xs">{{ formStatus.permissions.message }}</div>
+
                   </div>
-                  <div class="tw-flex tw-flex-wrap tw-gap-2">
+                  <div class="tw-flex tw-flex-wrap tw-gap-2 tw-mt-5" >
                     <div @click="handleClick(permission)" :class="{'!tw-bg-orange-500 !tw-text-white': selectedPermissions.includes(permission)}" class="tw-py-1 tw-px-2 tw-bg-gray-900/10 tw-text-gray-900 tw-rounded-lg tw-cursor-pointer" v-for="permission in permissions" :key="permission">{{ permission }}</div>
                   </div>
                 </div>
@@ -80,6 +82,7 @@
 <script>
 import User from "@/api/User";
 import { localUrl } from '@/config/config'
+import { validateName, validatePermissions } from '@/helpers/validators';
 
 export default {
   data() {
@@ -91,13 +94,17 @@ export default {
       
 
       formStatus: {
-        roleName: {
+        name: {
           valid: true,
           message: "",
         },
+        permissions: {
+          valid: true,
+          message: ''
+        }
       },
 
-      roleName: '',
+      name: '',
       permissions: [],
       selectedPermissions: [],
     };
@@ -118,13 +125,23 @@ export default {
       this.isLoading = true;
       User.createRole(
         {
-          roleName: this.roleName,
+          name: this.name,
           permissions: this.selectedPermissions
 
         }
       )
         .then((res) => {
-          console.log(res.data);
+          if (res.data.code === 'ROLE_ADDED') {
+            this.$alert({
+              type: "success",
+              title: res.data.message,
+            })
+
+            this.getRoles();
+
+            this.name = ''
+            this.selectedPermissions = []
+          }
         })
         .catch((err) => {
             this.$handleApiError(err);
@@ -160,7 +177,10 @@ export default {
     },
 
     validate() {
-      return true
+      this.formStatus.name = validateName(this.name, 'Name')
+      this.formStatus.permissions = validatePermissions(this.selectedPermissions)
+
+      return this.formStatus.name.valid && this.formStatus.permissions.valid
     },
 
     getRoles() {

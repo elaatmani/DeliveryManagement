@@ -4,7 +4,7 @@
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
-    <v-btn v-if="$can(`${prop}_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/products/' + model.id"  v-if="$can(`${prop}_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>

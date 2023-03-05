@@ -157,14 +157,7 @@ export default {
         isLoaded: false,
 
         variantId: 1,
-        variants: [
-        //   {
-        //   id: 0,
-        //   color: 'RED',
-        //   size: 'XXL',
-        //   quantity: 200
-        // }
-        ],
+        variants: [],
 
         color: '',
         size: '',
@@ -263,6 +256,16 @@ export default {
         }
       },
 
+      getLastVariantId(variants) {
+        let id = 0;
+        variants.forEach(item => {
+          if(item.id > id) {
+            id = item.id + 2
+          }
+        })
+        return id;
+      },
+
       validate() {
         this.formStatus.name = validateName(this.product.name, 'Product name');
         this.formStatus.buyingPrice = validateName(this.product.buyingPrice, 'Buying price');
@@ -333,6 +336,7 @@ export default {
             this.product.name = name
             this.product.reference = ref
             this.product.description = description
+            this.variantId = this.getLastVariantId(variations);
             this.isLoaded = true
           }
         },

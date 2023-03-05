@@ -79,9 +79,24 @@ class User {
         return Api.get('api/users/' + id)
     }
 
-    async createRole({ roleName, permissions }) {
+    async createRole({ name, permissions }) {
         await Csrf.getCookie();
-        return Api.post('api/roles/add', { name: roleName, permissions })
+        return Api.post('api/roles/add', { name , permissions })
+    }
+
+    async updateRole(id, { name, permissions }) {
+        await Csrf.getCookie();
+        return Api.post('api/roles/update/' + id, { name , permissions })
+    }
+
+    async deleteRole(id) {
+        await Csrf.getCookie();
+        return Api.delete('api/roles/delete/' + id)
+    }
+
+    async getRole(id) {
+        await Csrf.getCookie();
+        return Api.get('api/roles/' + id);
     }
 }
 

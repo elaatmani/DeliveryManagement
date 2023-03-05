@@ -91,3 +91,16 @@ export function validateVariants(variants) {
         valid: true
     }
 }
+
+export function validatePermissions(variants) {
+    if(!variants.length) {
+        return {
+            valid: false,
+            message: "You need at least one permission to create a role !"
+        }
+    }
+
+    return {
+        valid: true
+    }
+}
