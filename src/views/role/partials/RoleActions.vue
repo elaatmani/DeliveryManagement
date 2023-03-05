@@ -1,5 +1,5 @@
 <template>
-  <div v-if="model.name !== 'admin'">
+  <div v-if="!['admin', 'agente', 'delivery'].includes(model.name)">
     <v-btn v-if="$can(`users_update`)" :to="'/users/roles/update/' + model.id" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>

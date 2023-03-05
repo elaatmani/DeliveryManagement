@@ -62,7 +62,7 @@
       </div>
 
       <div class="mt-8 tw-flex tw-justify-end tw-gap-3">
-        <v-btn link to="/" color="grey-darken-2" variant="flat" size="large">
+        <v-btn link to="/users/roles" color="grey-darken-2" variant="flat" size="large">
           <span class="text-white text-capitalize">Cancel</span>
         </v-btn>
         <v-btn
