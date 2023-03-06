@@ -11,18 +11,21 @@
         >
           <div
             name="body"
-            class=" tw-z-[50999] tw-bg-white md:tw-min-w-[300px] tw-flex tw-flex-col md:tw-min-h-[170px] tw-shadow-lg tw-rounded-lg tw-p-5 tw-px-10"
+            class=" tw-z-[50999] tw-bg-white md:tw-min-w-[300px] md:tw-max-w-[800px] tw-flex tw-flex-col md:tw-min-h-[170px] tw-shadow-lg tw-rounded-lg tw-p-5 tw-px-10"
           >
-            <div class="tw-font-medium tw-text-lg tw-text-orange-400 mb-5 tw-text-center">
-              <v-icon size="small" class="mr-1">mdi-alert-circle-outline</v-icon>
+            <div class="tw-font-medium tw-text-lg  mb-5 tw-text-center" :class="currentType.class">
+              <v-icon size="small" class="mr-1">{{ currentType.icon }}</v-icon>
               <span>{{ title }}</span>
               </div>
-            <div class="tw-text-center tw-text-lg tw-text-gray-700" v-html="body">
+            <div v-if="body" class="tw-text-center tw-text-lg tw-text-gray-700" v-html="body">
+            </div>
+            <div class="tw-text-lg tw-text-gray-700" v-else>
+              <slot></slot>
             </div>
             <v-spacer></v-spacer>
             <div class="tw-flex tw-gap-3 tw-justify-center mt-10">
               <v-btn  variant="flat" color="grey" @click="resolve(false)">Cancel</v-btn>
-              <v-btn :loading="loading" variant="flat" color="red" @click="resolve(true)">Confirm</v-btn>
+              <v-btn v-if="!noConfirm" :loading="loading" variant="flat" color="red" @click="resolve(true)">Confirm</v-btn>
             </div>
           </div>
 
@@ -48,10 +51,20 @@
 
 <script>
 export default {
-  props: ["visible", "loading", "title", "body"],
+  props: ["visible", "loading", "title", "body", "type", 'noConfirm'],
   data() {
     return {
       show: true,
+      types: {
+        warning: {
+          class: 'tw-text-orange-400',
+          icon: 'mdi-alert-circle-outline'
+        },
+        info: {
+          class: 'tw-text-blue-400',
+          icon: 'mdi-info-circle'
+        }
+      }
     };
   },
   watch: {
@@ -64,6 +77,11 @@ export default {
       this.$emit("resolved", value);
     },
   },
+  computed: {
+    currentType() {
+      return this.types[this.type]
+    }
+  }
 };
 </script>
 

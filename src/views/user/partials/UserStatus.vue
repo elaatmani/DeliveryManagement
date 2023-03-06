@@ -1,6 +1,6 @@
 
 <template>
-  <div v-if="model.role_name !== 'admin'" class="tw-flex tw-items-center">
+  <div v-if="user.role_name !== 'admin'" class="tw-flex tw-items-center">
     <v-switch :disabled="isLoading" :loading="isLoading" @change="handleChange" color="primary-color" :flat="true" v-model="checked" density="compact" :hide-details="true"></v-switch>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import User from '@/api/User'
 export default {
-    props: ["rowIndex", "prop", "model"],
+    props: ["rowIndex", "prop", "user"],
     data() {
         return {
             isLoading: false,
@@ -22,7 +22,7 @@ export default {
     methods: {
       handleChange() {
         const data = {
-          id: this.model.id,
+          id: this.user.id,
           status: this.checked ? 'true' : 'false'
         }
 
@@ -35,7 +35,7 @@ export default {
                 type: 'success',
                 title: 'Status updated'
               })
-              this.setUpdatedUser(this.model.id, this.checked)
+              this.setUpdatedUser(this.user.id, this.checked)
             }
           }
         ).catch(
@@ -78,10 +78,10 @@ export default {
     mounted() {
       const users = this.getUpdatedUsers()
 
-      if (Object.keys(users).includes(`${this.model.id}`)) {
+      if (Object.keys(users).includes(`${this.user.id}`)) {
         this.checked = users[this.model.id] == 1 ? true : false;
       } else {
-        this.checked = this.model.status == 1 ? true : false;
+        this.checked = this.user.status == 1 ? true : false;
       }
     }
 

@@ -34,23 +34,20 @@
       </div>
 
       <div class="">
-        <DataTable :rows="roles" :columns="columns" />
+        <RolesTable :roles="roles" :columns="columns" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
-
-import RoleActions from './partials/RoleActions.vue';
-import DataTable from '@/components/DataTable'
 import User from '@/api/User';
+import RolesTable from '@/views/role/RolesTable'
 
 
 export default {
-  components: { DataTable },
+  components: { RolesTable },
   data() {
     return {
       localUrl,
@@ -60,22 +57,19 @@ export default {
         {
           prop: 'id',
             name: '#',
-            size: 50,
-            // sortable: true,
-            filter: false,
         },
         {
             prop: "name",
             name: "Role Name",
-            size: 140,
-            filter: 'name'
         },
+        {
+            prop: "permissions",
+            name: "Permissions",
+        },
+
         {
             name: 'Acions',
             prop: 'roles',
-            cellTemplate: VGridVueTemplate(RoleActions),
-            size: 130,
-            filter: false
         }
     ]
     }
@@ -98,7 +92,6 @@ export default {
         if(res?.data.code == "SUCCESS") {
             const roles = res.data.data.roles
             this.$store.dispatch('user/setRoles', roles);
-            console.log(res);
             this.isLoaded = true
           }
         }

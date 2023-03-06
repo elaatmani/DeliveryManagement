@@ -1,12 +1,12 @@
 <template>
   <div>
-    <v-btn v-if="$can(`${prop}_update`)" :to="'/users/update/' + model.id" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="$can(`users_update`)" :to="'/users/update/' + user.id" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>
-    <v-btn v-if="$can(`${prop}_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="$can(`users_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
     </v-btn>
-    <v-btn @click="showPopup = true" v-if="$can(`${prop}_delete`) && model.role_name !== 'admin'" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="showPopup = true" v-if="$can(`users_delete`) && user.role_name !== 'admin'" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
     </v-btn>
     <!--  -->
@@ -20,7 +20,7 @@ import User from '@/api/User';
 // your vue component
 export default {
   // access any cell properties here
-  props: ["rowIndex", "prop", "model"],
+  props: ["rowIndex",  "user"],
   name: "userActions",
   data() {
     return {
@@ -32,7 +32,7 @@ export default {
     handleResolved(response) {
       if(response) {
         this.isLoading = true
-        User.delete(this.model.id)
+        User.delete(this.user.id)
         .then((res) => {
           if (res.data.code == 'USER_DELETED') {
             this.isLoading = false

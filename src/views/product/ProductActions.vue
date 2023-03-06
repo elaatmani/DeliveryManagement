@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <v-btn :to="'/products/update/' + model.id" v-if="$can(`${prop}_update`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+  <div class="tw-flex tw-items-center tw-gap-1">
+    <v-btn :to="'/products/update/' + product.id" v-if="$can(`product_update`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
-    <v-btn :to="'/products/' + model.id"  v-if="$can(`${prop}_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/products/' + product.id"  v-if="$can(`product_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>
-    <v-btn @click="showPopup = true" v-if="$can(`${prop}_delete`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="showPopup = true" v-if="$can(`product_delete`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Delete</span> -->
     </v-btn>
@@ -23,7 +23,7 @@ import Product from '@/api/Product';
 // your vue component
 export default {
   // access any cell properties here
-  props: ["rowIndex", "prop", "model"],
+  props: ["rowIndex", "product"],
   name: "productActions",
   data() {
     return {
@@ -35,7 +35,7 @@ export default {
     handleResolved(response) {
       if(response) {
         this.isLoading = true
-        Product.delete(this.model.id)
+        Product.delete(this.product.id)
         .then((res) => {
           if (res.data.code == 'PRODUCT_DELETED') {
             this.isLoading = false

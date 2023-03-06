@@ -15,7 +15,7 @@
                 @beforesorting="beforesorting"
                 frame-size="20"
                 class="tw-border"
-                :auto-size-column="{mode: 'autoSizeAll'}"
+                :auto-size-column="true"
             >
             </v-grid>
         </div>

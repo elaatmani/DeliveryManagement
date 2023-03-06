@@ -34,25 +34,20 @@
       </div>
 
       <div class="">
-        <DataTable :rows="users" :columns="columns" />
+        <UsersTable :users="users" :columns="columns" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
-
-import UserStatusContainer from './partials/UserStatusContainer.vue';
-import UserActions from './partials/UserActions.vue';
-import DataTable from '@/components/DataTable'
 import User from '@/api/User';
-import RoleName from './partials/RoleName.vue';
+import UsersTable from '@/views/user/UsersTable'
 
 
 export default {
-  components: { DataTable },
+  components: { UsersTable },
   data() {
     return {
       localUrl,
@@ -62,54 +57,30 @@ export default {
         {
           prop: 'id',
             name: '#',
-            size: 50,
-            // sortable: true,
-            filter: false,
         },
         {
-            prop: "firstname",
-            name: "First Name",
-            size: 140,
-            filter: 'name'
-        },
-        {
-          prop: 'lastname',
-          name: 'Last Name',
-          size: 130,
-          filter: 'name',
+            prop: "fullname",
+            name: "Name",
         },
         {
           prop: 'role_name',
           name: 'Role',
-          size: 100,
-          filter: 'role',
-          cellTemplate: VGridVueTemplate(RoleName)
         },
         {
           prop: 'email',
           name: 'Email',
-          size: 170,
-          filter: 'name'
         },
         {
             prop: "phone",
             name: "Phone Number",
-            filter: 'number',
-            size: 160
         },
         {
             prop: 'status',
             name: 'Active',
-            filter: false,
-            size: 100,
-            cellTemplate: VGridVueTemplate(UserStatusContainer)
         },
         {
             name: 'Acions',
             prop: 'users',
-            cellTemplate: VGridVueTemplate(UserActions),
-            size: 130,
-            filter: false
         }
     ]
     }

@@ -32,23 +32,21 @@
       </div>
 
       <div class="">
-        <DataTable :rows="products" :columns="columns" />
+        <ProductsTable :columns="columns" :products="products" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { VGridVueTemplate } from '@revolist/vue3-datagrid';
 import {localUrl} from '@/config/config'
 
-import MyVue from '@/views/product/ProductActions.vue';
-import DataTable from '@/components/DataTable'
 import Product from '@/api/Product';
+import ProductsTable from './ProductsTable.vue'
 
 
 export default {
-  components: { DataTable },
+  components: {  ProductsTable },
   data() {
     return {
       localUrl,
@@ -58,69 +56,37 @@ export default {
         {
             prop: 'id',
             name: '#',
-            size: 50,
-            // sortable: true,
-            filter: false,
         },
         {
             prop: 'ref',
             name: 'Ref',
-            size: 80,
-            // sortable: true,
-            filter: false,
         },
         {
             prop: "name",
             name: "Name",
-            size: 150,
-            filter: 'name'
         },
         {
           prop: 'buying_price',
           name: 'Buying Price',
-          filter: 'number',
-          size: 150,
-          cellTemplate: (createElement, props) => props.model[props.prop] + ' DH'
         },
         {
           prop: 'selling_price',
           name: 'Selling Price',
-          size: 150,
-          filter: 'number',
-          cellTemplate: (createElement, props) => props.model[props.prop] + ' DH'
         },
         {
             prop: "quantity",
             name: "Qty",
-            columnType: 'numeric',
-            sortable: false,
-            filter: 'number',
-            size: 90,
-            cellTemplate: (createElement, props) => {
-              let qty = 0;
-              props.model.variations.forEach(element => {
-                qty += element.quantity
-              });
-              return qty
-            }
         },
         {
             prop: 'created_at',
             name: 'Created at',
-            filter: false,
-            // autoSize: true,
-            size: 150,
-            cellTemplate: (createElement, props) => props.model[props.prop].split('T')[0]
+        },
+        {
+            prop: 'actions',
+            name: 'Actions',
         },
         
-        {
-            name: 'Acions',
-            prop: 'product',
-            cellTemplate: VGridVueTemplate(MyVue),
-            size: 130,
-            filter: false
-        }
-    ]
+    ],
     }
   },
   computed: {
