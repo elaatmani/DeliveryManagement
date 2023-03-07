@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <div class="tw-relative tw-overflow-x-auto  sm:tw-rounded-lg">
+    <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
         <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
             <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
                 <tr>
@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(order, i) in orders" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,28 +27,34 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ product.id }}
+                        {{ order.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.ref }}
+                        {{ order.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.name }}
+                        {{ order.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.buying_price }} DH
+                        <OrderUpsell />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.selling_price }} DH
+                        <OrderStatus />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ calculQty(product.variations) }}
+                        <OrderAffectation />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.created_at.split('T')[0] }}
+                        {{ order.quantity }}
                     </td>
-                    <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
-                        <ProductActions :product="product" />
+                    <td class="tw-px-6 tw-py-4">
+                        - DH
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ order.city }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ order.created_at.split('T')[0] }}
                     </td>
                 </tr>
                 
@@ -60,21 +66,15 @@
 </template>
 
 <script>
-import ProductActions from '@/views/product/ProductActions'
+import OrderStatus from '@/views/order/partials/OrderStatus'
+import OrderUpsell from '@/views/order/partials/OrderUpsell'
+import OrderAffectation from '@/views/order/partials/OrderAffectation'
 
 export default {
-    props: [ 'columns', 'products' ],
-    components: { ProductActions },
+    props: [ 'columns', 'orders' ],
+    components: { OrderStatus, OrderUpsell, OrderAffectation },
 
     methods: {
-        calculQty(variants) {
-            let total = 0;
-            variants.forEach(item => {
-                total += item.quantity
-            });
-
-            return total
-        }
     }
 }
 </script>

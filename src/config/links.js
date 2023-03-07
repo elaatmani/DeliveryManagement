@@ -45,7 +45,7 @@ export const links = [
         children: [
             {
                 id: 1,
-                title: 'Product List',
+                title: 'Products List',
                 subModule: 'product/list',
                 gate: 'product_show',
                 to: '/products'
@@ -75,7 +75,28 @@ export const links = [
     },
 
     {
-        id: 2,
+        id: 10,
+        module: 'order',
+        title: 'Orders',
+        hasChildren: true,
+        gate: 'all', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-tray-full'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Orders list',
+                subModule: 'order/list',
+                gate: 'all',
+                to: '/orders'
+            },
+        ]
+    },
+
+    {
+        id: 7,
         module: 'inventory',
         title: 'Inventory',
         hasChildren: true,

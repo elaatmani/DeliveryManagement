@@ -105,7 +105,7 @@ export default {
   computed: {
     allowedChildren() {
       // return this.link?.children
-      return this.link?.children.filter((item) => this.$can(item.gate))
+      return this.link?.children.filter((item) => this.$can(item.gate) || item.gate === 'all')
     }
   },
 
