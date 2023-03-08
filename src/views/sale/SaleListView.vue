@@ -2,8 +2,8 @@
   <div>
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
-        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Orders List</h1>
-        <h2 class="tw-text-gray-500 tw-text-sm">Manage your orders</h2>
+        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Sales List</h1>
+        <h2 class="tw-text-gray-500 tw-text-sm">Manage your sales</h2>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
       </div>
 
       <div class="">
-        <OrdersTable :columns="columns" :orders="orders" />
+        <SalesTable :columns="columns" :sales="sales" />
       </div>
     </div>
   </div>
@@ -33,17 +33,17 @@
 <script>
 import {localUrl} from '@/config/config'
 
-import OrdersTable from './OrdersTable.vue'
-import Order from '@/api/Order'
+import SalesTable from './SalesTable.vue'
+import Sale from '@/api/Sale'
 
 
 export default {
-  components: {  OrdersTable },
+  components: {  SalesTable },
   data() {
     return {
       localUrl,
       isLoaded: false,
-      orders: [1, 2, 3],
+      sales: [1, 2, 3],
       columns: 
       [
         {
@@ -94,10 +94,10 @@ export default {
   mounted() {
     
     
-    Order.all().then(
+    Sale.all().then(
       res => {
         if(res?.data.code == "SUCCESS") {
-            this.orders = res.data.data.orders
+            this.sales = res.data.data.orders
             console.log(res.data);
             this.isLoaded = true
           }

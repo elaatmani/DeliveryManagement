@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(order, i) in orders" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(sale, i) in sales" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,34 +27,34 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ order.id }}
+                        {{ sale.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.fullname }}
+                        {{ sale.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.product_name }}
+                        {{ sale.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderUpsell />
+                        <SaleUpsell />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderStatus />
+                        <SaleConfirmation />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderAffectation />
+                        <SaleAffectation />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.quantity }}
+                        {{ sale.quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         - DH
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.city }}
+                        {{ sale.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.created_at.split('T')[0] }}
+                        {{ sale.created_at.split('T')[0] }}
                     </td>
                 </tr>
                 
@@ -66,13 +66,13 @@
 </template>
 
 <script>
-import OrderStatus from '@/views/order/partials/OrderStatus'
-import OrderUpsell from '@/views/order/partials/OrderUpsell'
-import OrderAffectation from '@/views/order/partials/OrderAffectation'
+import SaleConfirmation from '@/views/sale/partials/SaleConfirmation'
+import SaleUpsell from '@/views/sale/partials/SaleUpsell'
+import SaleAffectation from '@/views/sale/partials/SaleAffectation'
 
 export default {
-    props: [ 'columns', 'orders' ],
-    components: { OrderStatus, OrderUpsell, OrderAffectation },
+    props: [ 'columns', 'sales' ],
+    components: { SaleConfirmation, SaleUpsell, SaleAffectation },
 
     methods: {
     }

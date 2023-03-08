@@ -95,7 +95,21 @@
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.phone.message }}</div>
                 </div>
               </v-col>
-              
+              <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
+                  <v-select
+                    class="text-capitalize"
+                    :items="products"
+                    item-title="name"
+                    item-value="id"
+                    v-model="product"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-select>
+                </div>
+              </v-col>
             </v-row>
           </v-col>
           <v-col cols="12" md="6">
@@ -108,7 +122,7 @@
                     :items="roles"
                     item-title="name"
                     item-value="id"
-                    v-model="user.role"
+                    v-model="role"
                     variant="outlined"
                     color="primary-color"
                     density="compact"
@@ -196,6 +210,7 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from "@/helpers/validators";
+import Product from '@/api/Product';
 
 export default {
   data() {
@@ -204,6 +219,8 @@ export default {
       isFormReady: false,
       isLoading: false,
       
+      products: [],
+      product: 1,
 
       formStatus: {
         firstname: {
@@ -239,9 +256,9 @@ export default {
         email: "",
         password: "",
         confirmPassword: "",
-        role: 2,
         status: true,
       },
+      role: 3
     };
   },
 
@@ -249,6 +266,30 @@ export default {
     roles() {
       return this.$store.getters["user/roles"];
     },
+    isAgente() {
+      return this.role === 2;
+    }
+  },
+
+  watch: {
+    role(newValue) {
+      console.log('changed');
+      if((newValue === 2 && this.products.length === 0)) {
+        this.isFormReady = false
+        Product.all().then(
+          res => {
+            this.products = res.data.data.products
+            if(this.products.length > 0) {
+              this.product = this.products[0].id
+            } else {
+              this.product = null
+            }
+            this.isFormReady = true
+          },
+          err => this.$handleApiError(err)
+        )
+      }
+    }
   },
 
   methods: {
@@ -258,7 +299,8 @@ export default {
       }
 
       this.isLoading = true;
-      User.register(this.user)
+      const user = {...this.user, role: this.role, product_id: this.product};
+      User.register(user)
         .then((res) => {
           if (res.data.code == "USER_CREATED") {
             this.$alert({
@@ -273,9 +315,11 @@ export default {
               email: "",
               password: "",
               confirmPassword: "",
-              role: 2,
               status: true,
             };
+
+            this.role = 3;
+            this.product_id = null
           }
         })
         .catch((err) => {

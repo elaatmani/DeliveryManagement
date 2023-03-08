@@ -23,7 +23,7 @@ class User {
             role: user.role,
             firstname: user.firstname,
             lastname: user.lastname,
-            user_image: user.user_image
+            product_id: user.product_id
         })
     }
 
@@ -37,6 +37,7 @@ class User {
             status: user.status,
             firstname: user.firstname,
             lastname: user.lastname,
+            product_id: user.product_id,
             role: user.role,
             updatePassword: updatePassword
         })

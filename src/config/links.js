@@ -76,21 +76,21 @@ export const links = [
 
     {
         id: 10,
-        module: 'order',
-        title: 'Orders',
+        module: 'sale',
+        title: 'Sales',
         hasChildren: true,
         gate: 'all', 
         icon: {
             type: 'icon',
-            value: 'mdi-tray-full'
+            value: 'mdi-sale'
         },
         children: [
             {
                 id: 1,
-                title: 'Orders list',
-                subModule: 'order/list',
+                title: 'Sales list',
+                subModule: 'sale/list',
                 gate: 'all',
-                to: '/orders'
+                to: '/sales'
             },
         ]
     },
@@ -130,61 +130,7 @@ export const links = [
         ]
     },
 
-    {
-        id: 8,
-        title: 'Orders',
-        module: 'orders',
-        hasChildren: true,
-        gate: 'order_access',
-        icon: {
-            type: 'icon',
-            value: 'mdi-package-variant-closed'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Orders List',
-                subModule: 'order/list',
-                gate: 'order_show',
-                to: '/orders'
-            },
-            {
-                id: 2,
-                title: 'Add Order',
-                subModule: 'order/add',
-                gate: 'order_create',
-                to: '/order/add'
-            },
-        ]
-    },
 
-    {
-        id: 3,
-        title: 'Sales',
-        module: 'sales',
-        hasChildren: true,
-        gate: 'sale_access',
-        icon: {
-            type: 'svg',
-            value: 'assets/img/icons/sales1.svg'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Sales List',
-                subModule: 'sales/list',
-                gate: 'sale_show',
-                to: '/sales'
-            },
-            {
-                id: 2,
-                title: 'New Sales',
-                subModule: 'sales/add',
-                gate: 'sale_create',
-                to: '/sales/add'
-            }
-        ]
-    },
 
     {
         id: 6,

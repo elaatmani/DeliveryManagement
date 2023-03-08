@@ -155,14 +155,19 @@
                   ></v-switch>
                 </div>
               </v-col>
-              <v-col class="!tw-py-2" cols="12">
-                <div class="tw-h-full ">
-                    <div class="mb-1 text-body-2 tw-text-zinc-700">Profile Picture:</div>
-                    <div class="tw-h-[120px] tw-w-[120px] tw-border tw-rounded-full tw-relative tw-cursor-pointer !tw-overflow-hidden">
-                        <v-icon class="tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2" color="primary-color">mdi-camera</v-icon>
-                        <input accept="image/*" @change="handleImageChange" type="file" class="tw-w-full tw-h-full tw-rounded-full  tw-cursor-pointer tw-opacity-0">
-                        <img v-if="user_image" class="tw-w-full tw-absolute tw-top-1/2 tw-left-1/2 tw-border-none -tw-translate-x-1/2 -tw-translate-y-1/2 tw-pointer-events-none tw-z-20 tw-h-full tw-object-cover" :src="user_image" alt="">
-                    </div>
+              <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
+                  <v-select
+                    class="text-capitalize"
+                    :items="products"
+                    item-title="name"
+                    item-value="id"
+                    v-model="product"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-select>
                 </div>
               </v-col>
             </v-row>
@@ -198,6 +203,7 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from "@/helpers/validators";
+import Product from '@/api/Product';
 // import apiErrorHandler from '@/helpers/apiErrorHandler'
 
 export default {
@@ -206,6 +212,7 @@ export default {
       serverUrl,
       isRolesFetched: false,
       isUserFetched: false,
+      isProductsFetched: false,
       isLoading: false,
 
       updatePassword: false,
@@ -247,6 +254,10 @@ export default {
       role: '',
       user_image: null,
       status: false,
+      product: null,
+
+      products: []
+
 
     };
   },
@@ -256,7 +267,10 @@ export default {
       return this.$store.getters["user/roles"];
     },
     isFormReady() {
-        return this.isRolesFetched && this.isUserFetched
+        return this.isRolesFetched && this.isUserFetched && this.isProductsFetched
+    },
+    isAgente() {
+      return this.role === 2;
     },
     user() {
         return {
@@ -266,10 +280,20 @@ export default {
             phone: this.phone,
             email: this.email,
             password: this.password,
-            photo: this.user_imgae,
+            product_id: this.product,
             role: this.role,
             status: this.status ? 1 : 0,
         }
+    }
+  },
+
+  watch: {
+    role(newValue) {
+      console.log('changed');
+      if((newValue === 2 && this.products.length === 0)) {
+        this.isProductsFetched = false
+        
+      }
     }
   },
 
@@ -311,13 +335,6 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-    },
-
-    handleImageChange(event) {
-        const [file] = event.target.files
-        console.log(file);
-        console.log(event);
-        this.user_image = URL.createObjectURL(file)
     },
 
     validate() {
@@ -387,6 +404,21 @@ export default {
             .catch(this.$handleApiError)
             
     },
+
+    getProducts() {
+      Product.all().then(
+        res => {
+          this.products = res.data.data.products
+          if(this.products.length > 0) {
+            this.product = this.products[0].id
+          } else {
+            this.product = null
+          }
+          this.isProductsFetched = true
+        },
+        err => this.$handleApiError(err)
+      )
+    }
   },
 
   async mounted() {
@@ -396,6 +428,7 @@ export default {
       this.isRolesFetched = true
     }
     this.getUser();
+    this.getProducts();
   },
 };
 </script>

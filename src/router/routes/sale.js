@@ -2,29 +2,29 @@
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
-import OrderListView from '@/views/order/OrderListView'
+import SaleListView from '@/views/sale/SaleListView'
 
 
 export default 
     {
-        name: 'orders',
-        path: '/orders',
+        name: 'sales',
+        path: '/sales',
         component: DefaultLayout,
         meta: {
-            module: 'order'
+            module: 'sale'
         },
 
         children: [
 
             // Product routes
             { 
-                name: 'order/list',
+                name: 'sale/list',
                 path: '',
-                component: OrderListView,
+                component: SaleListView,
                 meta: {
-                    module: 'order',
-                    subModule: 'order/list',
-                    title: 'Orders List',
+                    module: 'sale',
+                    subModule: 'sale/list',
+                    title: 'Sales List',
                     gate: 'all'
                 }
             },

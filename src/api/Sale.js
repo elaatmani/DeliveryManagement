@@ -1,7 +1,7 @@
 import Api from './Api'
 import Csrf from './Csrf'
 
-class Order {
+class Sale {
 
     async all() {
         await Csrf.getCookie();
@@ -11,4 +11,4 @@ class Order {
 
 
 
-export default new Order();
+export default new Sale();

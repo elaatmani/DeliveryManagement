@@ -7,9 +7,8 @@ import dashboard from './routes/dashboard'
 import product from './routes/product'
 import category from './routes/category'
 import subcategory from './routes/subcategory'
-import sales from './routes/sales'
 import user from './routes/user'
-import order from './routes/order'
+import sale from './routes/sale'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -21,9 +20,8 @@ const routes = [
   product,
   category,
   subcategory,
-  sales,
   user,
-  order,
+  sale,
 
   {
     name: 'default',
