@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(order, i) in order" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(order, i) in orders" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -36,7 +36,7 @@
                         {{ order.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderUpsell />
+                        <OrderUpsell :upsell="order.upsell" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderConfirmation />
@@ -54,7 +54,7 @@
                         {{ order.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.created_at.split('T')[0] }}
+                        {{ order?.created_at?.split('T')[0] }}
                     </td>
                 </tr>
                 
@@ -71,7 +71,7 @@ import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import OrderAffectation from '@/views/order/partials/OrderAffectation'
 
 export default {
-    props: [ 'columns', 'sales' ],
+    props: [ 'columns', 'orders' ],
     components: { OrderConfirmation, OrderUpsell, OrderAffectation },
 
     methods: {

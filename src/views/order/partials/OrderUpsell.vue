@@ -33,6 +33,7 @@
 
 <script>
 export default {
+  props: ['upsell'],
     data() {
         return {
             isOpen: false,
@@ -59,6 +60,11 @@ export default {
             this.selected = option
             this.close()
         }
+    },
+    mounted() {
+      if(!this.upsell || this.upsell == 'no') {
+        this.selected = { id: 2, name: 'No', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+      }
     }
 };
 </script>

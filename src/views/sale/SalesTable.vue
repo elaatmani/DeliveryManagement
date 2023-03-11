@@ -54,7 +54,7 @@
                         {{ sale.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.created_at.split('T')[0] }}
+                        {{ sale?.created_at?.split('T')[0] }}
                     </td>
                 </tr>
                 

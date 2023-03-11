@@ -1,9 +1,9 @@
 <template>
-  <div v-click-outside="close" class="tw-relative tw-w-[100px]">
+  <div v-click-outside="close" class="tw-relative tw-w-[100px] tw-min-w-fit">
     <button
         @click="toggle"
         
-      class=" focus:tw-ring-4 tw-ring-neutral-200 tw-bg-neutral-600/10 tw-text-neutral-800 focus:tw-outline-none  tw-font-medium tw-rounded-lg tw-text-sm tw-px-2 tw-py-1 tw-text-center tw-inline-flex tw-items-center"
+      class="tw-whitespace-nowrap focus:tw-ring-4 tw-ring-neutral-200 tw-bg-neutral-600/10 tw-text-neutral-800 focus:tw-outline-none  tw-font-medium tw-rounded-lg tw-text-sm tw-px-2 tw-py-1 tw-text-center tw-inline-flex tw-items-center"
       type="button"
     >
       {{ selected.name }} 

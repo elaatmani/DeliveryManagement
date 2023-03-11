@@ -3,7 +3,7 @@
     <button
         @click="toggle"
         :class="[selected.text, selected.bg, selected.ring]"
-      class=" focus:tw-ring-4 focus:tw-outline-none  tw-font-medium tw-rounded-lg tw-text-sm tw-px-2 tw-py-1 tw-text-center tw-inline-flex tw-items-center"
+      class=" focus:tw-ring-4 tw-min-w-[100px] focus:tw-outline-none  tw-font-medium tw-rounded-lg tw-text-sm tw-px-2 tw-py-1 tw-text-center tw-inline-flex tw-items-center tw-justify-between"
       type="button"
     >
       {{ selected.name }} 
@@ -33,11 +33,13 @@
 
 <script>
 export default {
+    props: ['confirmation'],
     data() {
         return {
             isOpen: false,
-            selected: { id: 1, name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
+            selected: { id: 0, name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
             allOptions: [
+                { id: 0, name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
                 { id: 1, name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
                 { id: 2, name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
                 { id: 4, name: 'Reporter', text: 'tw-text-orange-500', bg: 'tw-bg-orange-500/10', ring: 'tw-ring-orange-300' },

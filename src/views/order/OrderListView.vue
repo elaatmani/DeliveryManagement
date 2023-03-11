@@ -63,8 +63,8 @@ export default {
           name: 'Upsell',
         },
         {
-          prop: 'status',
-          name: 'Status',
+          prop: 'confirmation',
+          name: 'Confirmation',
         },
         {
           prop: 'affectation',
@@ -97,7 +97,7 @@ export default {
     Sale.agenteOrders().then(
       res => {
         if(res?.data.code == "SUCCESS") {
-            this.sales = res.data.data.orders
+            this.orders = res.data.data.orders
             console.log(res.data);
             this.isLoaded = true
           }
