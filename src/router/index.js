@@ -9,6 +9,7 @@ import category from './routes/category'
 import subcategory from './routes/subcategory'
 import user from './routes/user'
 import sale from './routes/sale'
+import order from './routes/order'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -22,6 +23,7 @@ const routes = [
   subcategory,
   user,
   sale,
+  order,
 
   {
     name: 'default',

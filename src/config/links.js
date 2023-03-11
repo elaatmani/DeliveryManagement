@@ -96,6 +96,41 @@ export const links = [
     },
 
     {
+        id: 11,
+        module: 'order',
+        title: 'Orders',
+        hasChildren: true,
+        gate: 'all', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-barcode-scan'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Order',
+                subModule: 'order/show',
+                gate: 'all',
+                to: '/order'
+            },
+            {
+                id: 2,
+                title: 'My Orders',
+                subModule: 'order/list',
+                gate: 'all',
+                to: '/orders'
+            },
+            {
+                id: 3,
+                title: 'Confirmed Orders',
+                subModule: 'order/confirmed',
+                gate: 'all',
+                to: '/orders/confirmed'
+            },
+        ]
+    },
+
+    {
         id: 7,
         module: 'inventory',
         title: 'Inventory',
