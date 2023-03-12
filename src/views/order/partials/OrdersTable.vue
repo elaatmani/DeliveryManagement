@@ -39,7 +39,7 @@
                         <OrderUpsell :upsell="order.upsell" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderConfirmation />
+                        <OrderConfirmation :confirmation="order?.confirmation" :id="order?.id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderAffectation />

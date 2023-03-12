@@ -46,7 +46,7 @@
                     </div>
                     <div class="tw-col-span-3 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation</p>
-                        <OrderConfirmation :confirmation="confirmation" />
+                        <OrderConfirmation :confirmation="confirmation" :id="id" />
                     </div>
                     <div class="tw-col-span-3 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affecté</p>
@@ -121,8 +121,37 @@ export default {
                         title: 'Order was not confirmed'
                     })
                 }
+
+                if (res.data.code === "SUCCESS") {
+                    console.log('order exists...');
+                    if(res.data.data?.orders) {
+                        console.log('order set');
+                        const order = res.data.data.orders
+                        this.id = order?.id
+                        this.fullname = order?.fullname
+                        this.product_name = order?.product_name
+                        this.agente_id = order?.agente_id
+                        this.upsell = order?.upsell
+                        this.phone = order?.phone
+                        this.adresse = order?.adresse
+                        this.quantity = order?.quantity
+                        this.confirmation = order?.confirmation
+                        this.affectation = order?.affectation
+                        this.delivery = order?.delivery
+                        this.note = order?.note
+
+                        this.isLoaded = true
+                        this.isOrderExists = true
+                    }
+                }
+
+                if (res.data.code == 'NO_ORDERS') {
+                    this.isOrderExists = false;
+                }
             }
-        ).finally(() => {
+        )
+        .catch(this.$handleApiError)
+        .finally(() => {
             this.isLoaded = true
         });
     },
@@ -131,6 +160,7 @@ export default {
             res => {
                 if (res.data.code === "SUCCESS") {
                     const order = res.data.data.orders[0]
+                    console.log(order);
                     this.id = order?.id
                     this.fullname = order?.fullname
                     this.product_name = order?.product_name
@@ -146,6 +176,10 @@ export default {
 
                     this.isLoaded = true
                     this.isOrderExists = true
+                }
+
+                if (res.data.code === 'NO_ORDER') {
+                    this.isLoaded = true;
                 }
             },
             err => {
