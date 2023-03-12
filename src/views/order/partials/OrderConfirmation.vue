@@ -104,6 +104,8 @@ export default {
         }
     },
         async handleChange(option) {
+
+          if (option.id === this.selectedId) return false;
           
           if (option.value !== 'confirmer'){
             this.selectedId = option.id

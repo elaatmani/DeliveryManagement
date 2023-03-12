@@ -41,6 +41,7 @@ export default {
             isOpen: false,
             selected: { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
             allOptions: [
+                { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' },
                 { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
                 { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
             ]
@@ -59,6 +60,7 @@ export default {
             this.isOpen = !this.isOpen
         },
         handleChange(option) {
+          if(option == this.selected) return false;
             this.selected = option
             this.isLoading = true
             this.updateOrder()
@@ -81,10 +83,16 @@ export default {
         }
     },
     mounted() {
-      if(!this.upsell || this.upsell == 'non') {
-        this.selected = { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
-      } else if (this.upsell == 'oui') {
-        this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
+      switch (this.upsell) {
+        case 'oui':
+          this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
+          break;
+        case 'non':
+          this.selected = { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+          break;
+        default:
+          this.selected = { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' }
+          break;
       }
     }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div :key="deliveries.length" v-if="deliveries.length > 0" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
+  <div :key="affectation" v-if="deliveries.length > 0" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
     <button
         @click="toggle"
         
@@ -46,15 +46,22 @@ export default {
     },
     computed: {
         options() {
-            return this.deliveries
+            return [{ id: null, firstname: 'select', lastname: '' }, ...this.deliveries]
         },
         selected() {
-            if (this.selectedId == null) {
-                return { id: null, firstname: 'Select', lastname: '' }
+            // Check if the delivery id is exists if not return null
+                const ids = [...this.deliveries.map(i => parseInt(i.id))]
+
+            if(this.selectedId == null || !ids.includes(parseInt(this.selectedId))) {
+                return { id: null, firstname: 'select', lastname: '' }
             }
-            return this.deliveries.filter(i => i.id == this.selectedId)[0]
+            
+
+            return this.options.filter(i => i.id == this.selectedId)[0]
+            
         },
         deliveries() {
+            
             return this.$store.getters['user/deliveries']
         }
     },
@@ -66,6 +73,7 @@ export default {
             this.isOpen = !this.isOpen
         },
         handleChange(option) {
+            if(option.id === this.selectedId) return false;
             this.selectedId = option.id
             this.isLoading = true
             this.updateOrder();
@@ -86,6 +94,10 @@ export default {
             err => this.$handleApiError(err)
           )
         }
+    },
+    updated() {
+        console.log('changed');
+        this.selectedId = this.affectation
     },
     mounted() {
         this.selectedId = this.affectation
