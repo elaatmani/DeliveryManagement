@@ -22,7 +22,7 @@
                         <OrderConfirmation @update="updateConfirmation" :confirmation="confirmation" :key="confirmation" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderAffectation v-if="confirmation === 'confirmer'" />
+                        <OrderAffectation v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ quantity }}

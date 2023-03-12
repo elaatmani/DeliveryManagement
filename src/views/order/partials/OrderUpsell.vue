@@ -21,7 +21,6 @@
       >
         <li @click="handleChange(option)" v-for="option in options" :key="option.id">
           <a
-            href="#"
             class="tw-block tw-px-4 tw-py-2 hover:tw-bg-gray-100"
             :class="[option.text, option.bg]"
             >{{ option.name }}</a

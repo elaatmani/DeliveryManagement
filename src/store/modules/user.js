@@ -5,7 +5,8 @@ let initialState = {
     user: !localStorage.getItem('user') ? [] : JSON.parse(localStorage.getItem('user')),
     isLoggedIn: localStorage.getItem('isLoggedIn') == 'true' ? true : false,
     permissions: !localStorage.getItem('permissions') ? [] : JSON.parse(localStorage.getItem('permissions')),
-    users: []
+    users: [],
+    deliveries: []
 }
 
 export default {
@@ -19,7 +20,8 @@ export default {
         permissions: (state) => state.permissions,
         user: (state) => state.user,
         users: (state) => state.users,
-        roles: (state) => state.roles
+        roles: (state) => state.roles,
+        deliveries: (state) => state.deliveries
     },
 
     mutations: {
@@ -41,7 +43,10 @@ export default {
         SET_ROLES: (state, payload) => {
             localStorage.setItem('roles', JSON.stringify(payload));
             state.roles = payload
-        }
+        },
+        SET_DELIVERIES: (state, payload) => {
+            state.deliveries = payload
+        },
     },
 
     actions: {
@@ -50,6 +55,9 @@ export default {
         },
         setUsers: ({ commit }, payload) => {
             commit('SET_USERS', payload)
+        },
+        setDeliveries: ({ commit }, payload) => {
+            commit('SET_DELIVERIES', payload)
         },
         setIsLoggedIn: ({ commit }, payload) => {
             commit('SET_IS_LOGGED_IN', payload)

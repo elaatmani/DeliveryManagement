@@ -99,6 +99,11 @@ class User {
         await Csrf.getCookie();
         return Api.get('api/roles/' + id);
     }
+
+    async deliveries() {
+        await Csrf.getCookie()
+        return Api.get('api/delevries')
+    }
 }
 
 

@@ -82,6 +82,7 @@ import OrderConfirmation from '@/views/order/partials/OrderConfirmation'
 import OrderAffectation from '@/views/order/partials/OrderAffectation'
 import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import Sale from '@/api/Sale';
+import User from '@/api/User';
 
 export default {
     components: { OrderConfirmation, OrderAffectation, OrderUpsell },
@@ -107,7 +108,9 @@ export default {
   },
 
   computed: {
-    
+    deliveries() {
+        return this.$store.getters['user/deliveries']
+    }
   },
 
   methods: {
@@ -190,11 +193,24 @@ export default {
                 this.isLoaded = true
             }
         );
+    },
+    getDeliveries() {
+        User.deliveries()
+        .then(
+            res => {
+                console.log(res.data.data);
+                this.$store.dispatch('user/setDeliveries', res.data.data);
+            },
+            this.$handleApiError
+        )
     }
   },
 
   async mounted() {
     this.getOrder()
+    if(this.deliveries.length == 0) {
+        this.getDeliveries()
+    }
   },
 };
 </script>

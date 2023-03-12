@@ -30,11 +30,32 @@
 
 <script>
 import OrderRow from '@/views/order/partials/OrderRow'
+import User from '@/api/User'
 
 export default {
     props: [ 'columns', 'orders' ],
     components: { OrderRow },
     methods: {
+        getDeliveries() {
+            User.deliveries()
+            .then(
+                res => {
+                    console.log(res.data.data);
+                    this.$store.dispatch('user/setDeliveries', res.data.data);
+                },
+                this.$handleApiError
+            )
+        }
+    },
+    computed: {
+        deliveries() {
+            return this.$store.getters['user/deliveries'];
+        }
+    },
+    mounted() {
+        if(this.deliveries.length == 0) {
+            this.getDeliveries()
+        }
     }
 }
 </script>
