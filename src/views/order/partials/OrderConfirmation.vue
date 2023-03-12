@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="close" class="tw-relative tw-min-w-[100px]">
+  <div :key="confirmation" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
     <button
         @click="toggle"
         :class="[selected.text, selected.bg, selected.ring]"
@@ -29,6 +29,15 @@
         </li>
       </ul>
     </div>
+    <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
+      <div class="tw-min-w-[300px]">
+        <p>Enter note</p>
+        <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
+
+        </v-textarea>
+      </div>
+    </popup>
+    
   </div>
 </template>
 
@@ -40,7 +49,16 @@ export default {
         return {
             isLoading: false,
             isOpen: false,
-            selected: { id: 0, value: null, name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
+            showPopup: false,
+            nextOption: null,
+            note: '',
+            selectedId: 0,
+            availableOptions: [
+              null, 'reporter', 'annuler', 'expidier', 'livre', 'confirmer',
+            'day-one-call-one', 'day-one-call-two', 'day-one-call-three', 
+            'day-two-call-one', 'day-two-call-two', 'day-two-call-three', 
+            'day-three-call-one', 'day-three-call-two', 'day-three-call-three'
+            ],
             allOptions: [
                 { id: 0, value: null , name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
                 { id: 1, value: 'day-one-call-one' , name: 'Day-1 / 1ér appel', text: 'tw-text-rose-500', bg: 'tw-bg-rose-200/10', ring: 'tw-ring-rose-200' },
@@ -62,8 +80,11 @@ export default {
     },
     computed: {
         options() {
-            return this.allOptions.filter(i => i.id !== this.selected.id)
-        }
+            return this.allOptions.filter(i => i.id !== this.selectedId)
+        },
+        selected() {
+          return this.allOptions.filter((item) => item.id == this.selectedId)[0]
+        },
     },
     methods: {
         close() {
@@ -72,15 +93,32 @@ export default {
         toggle() {
             this.isOpen = !this.isOpen
         },
-        handleChange(option) {
-            this.selected = option
-
-            this.isLoading = true
-            this.updateOrder();
+        handleResolved(response) {
+        if(response) {
+          this.selectedId = this.nextOption
+          this.showPopup = false
+          this.updateOrderWithNote()
+          .catch(this.$handleApiError)
+          .finally(() => this.showPopup = false)
+        } else {
+          this.showPopup = false
+        }
+    },
+        async handleChange(option) {
+          
+          if (option.value !== 'confirmer'){
+            this.selectedId = option.id
+            this.updateOrder()
+            } else {
+              this.nextOption = option.id
+              this.showPopup = true
+            }
+            
             this.close()
         },
-        updateOrder() {
-          Sale.agenteUpdateConfirmation(this.id, this.selected.value)
+        async updateOrder() {
+          this.isLoading = true
+          return Sale.agenteUpdateConfirmation(this.id, this.selected.value)
           .then(
             res => {
               if (res.data.code === 'SUCCESS') {
@@ -93,18 +131,39 @@ export default {
             },
             err => this.$handleApiError(err)
           )
+          .then(
+            () => this.$emit('update', this.selected.value)
+          );
+        },
+        async updateOrderWithNote() {
+          this.isLoading = true
+          return Sale.agenteUpdateConfirmationWithNote(this.id, this.selected.value, this.note)
+          .then(
+            res => {
+              if (res.data.code === 'SUCCESS') {
+                this.$alert({
+                  type: 'success',
+                  title: res.data.data
+                })
+                this.isLoading = false
+              }
+            },
+            err => this.$handleApiError(err)
+          )
+          .then(
+            () => this.$emit('update', this.selected.value)
+          );
         }
     },
     mounted() {
-      if(this.confirmation == null) {
-        this.selected = { id: 0, value: null, name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' };
+      if (this.availableOptions.includes(this.confirmation)) {
+        console.log('found');
+        this.selectedId = this.allOptions.find(option => option.value == this.confirmation).id;
+        // this.selectedId = this.options.find(option => option.value == this.confirmation).id;
       } else {
-        this.options.forEach(option => {
-          if(option.value === this.confirmation) {
-            this.selected = option
-          }
-        });
+        this.selectedId = 0;
       }
+      console.log(this.confirmation);
     }
 };
 </script>

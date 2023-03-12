@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="orders.length">
     
     <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
         <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
@@ -19,44 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(order, i) in orders" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
-                    <td class="tw-w-4 tw-p-4">
-                        <div class="tw-flex tw-items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
-                            <label for="checkbox-table-search-1" class="tw-sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ order.id }}
-                    </th>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order.fullname }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order.product_name }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <OrderUpsell :upsell="order.upsell" :id="order.id" />
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <OrderConfirmation :confirmation="order?.confirmation" :id="order?.id" />
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <OrderAffectation />
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order.quantity }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        - DH
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order.city }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order?.created_at?.split('T')[0] }}
-                    </td>
-                </tr>
+                <OrderRow v-for="(order) in orders" :key="order.id" :order="order" />
                 
             </tbody>
         </table>
@@ -66,14 +29,11 @@
 </template>
 
 <script>
-import OrderConfirmation from '@/views/order/partials/OrderConfirmation'
-import OrderUpsell from '@/views/order/partials/OrderUpsell'
-import OrderAffectation from '@/views/order/partials/OrderAffectation'
+import OrderRow from '@/views/order/partials/OrderRow'
 
 export default {
     props: [ 'columns', 'orders' ],
-    components: { OrderConfirmation, OrderUpsell, OrderAffectation },
-
+    components: { OrderRow },
     methods: {
     }
 }

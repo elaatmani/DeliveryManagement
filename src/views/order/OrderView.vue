@@ -23,37 +23,37 @@
 
             <div class="mt-5">
                 <div class="tw-grid tw-grid-cols-12 mt-">
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Client Name</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Client: </p>
                         <p class="tw-text-neutral-700">{{ fullname }}</p>
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Phone</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Phone: </p>
                         <p class="tw-text-neutral-700">{{ phone }}</p>
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Product Name</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Nom de produit: </p>
                         <p class="tw-text-neutral-700">{{ product_name }}</p>
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Quantity</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Quantité:</p>
                         <p class="tw-text-neutral-700">{{ quantity }}</p>
                     </div>
                     
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Address</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Adresse: </p>
                         <p class="tw-text-neutral-700">{{ adresse }}</p>
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation</p>
-                        <OrderConfirmation :confirmation="confirmation" :id="id" />
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation: </p>
+                        <OrderConfirmation @update="updateConfirmation" :confirmation="confirmation" :id="id" />
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affecté</p>
+                    <div v-if="confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affectation: </p>
                         <OrderAffectation :affectation="affectation" :id="id" />
                     </div>
-                    <div class="tw-col-span-3 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell</p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell: </p>
                         <OrderUpsell :upsell="upsell" :id="id" />
                     </div>
                 </div>
@@ -111,6 +111,9 @@ export default {
   },
 
   methods: {
+    updateConfirmation(newValue) {
+        this.confirmation = newValue
+    },
     addOrder() {
         this.isLoaded = false
         Sale.agenteAddOrder().then(
