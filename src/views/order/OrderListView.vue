@@ -23,8 +23,12 @@
         </div>
       </div>
 
-      <div class="">
+      <div v-if="orders.length > 0">
         <OrdersTable :columns="columns" :orders="orders" />
+      </div>
+
+      <div v-else class="">
+        <p class="tw-text-neutral-400 tw-py-5">Your order liste is empty !</p>
       </div>
     </div>
   </div>
@@ -43,7 +47,7 @@ export default {
     return {
       localUrl,
       isLoaded: false,
-      orders: [1, 2, 3],
+      orders: [],
       columns: 
       [
         {

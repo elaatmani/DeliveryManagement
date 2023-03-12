@@ -8,7 +8,8 @@
     >
       {{ selected.name }} 
       
-      <v-icon>{{ isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'}}</v-icon>
+      <v-icon v-if="!isLoading" class="tw-ml-1">{{ isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'}}</v-icon>
+      <v-icon v-if="isLoading" class="tw-animate-spin tw-ml-1">mdi-loading</v-icon>
     </button>
     <!-- Dropdown menu -->
     <div
@@ -32,15 +33,17 @@
 </template>
 
 <script>
+import Sale from '@/api/Sale';
 export default {
-  props: ['upsell'],
+  props: ['upsell', 'id'],
     data() {
         return {
+            isLoading: false,
             isOpen: false,
-            selected: { id: 1, name: 'Yes', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+            selected: { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
             allOptions: [
-                { id: 1, name: 'Yes', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-                { id: 2, name: 'No', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
+                { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+                { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
             ]
         }
     },
@@ -58,12 +61,31 @@ export default {
         },
         handleChange(option) {
             this.selected = option
+            this.isLoading = true
+            this.updateOrder()
             this.close()
+        },
+        updateOrder() {
+          Sale.agenteUpdateUpsell(this.id, this.selected.value)
+          .then(
+            res => {
+              if (res.data.code === 'SUCCESS') {
+                this.$alert({
+                  type: 'success',
+                  title: res.data.data
+                })
+                this.isLoading = false
+              }
+            },
+            err => this.$handleApiError(err)
+          )
         }
     },
     mounted() {
-      if(!this.upsell || this.upsell == 'no') {
-        this.selected = { id: 2, name: 'No', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+      if(!this.upsell || this.upsell == 'non') {
+        this.selected = { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+      } else if (this.upsell == 'oui') {
+        this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
       }
     }
 };

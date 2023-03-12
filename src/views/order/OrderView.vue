@@ -50,16 +50,16 @@
                     </div>
                     <div class="tw-col-span-3 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affecté</p>
-                        <OrderAffectation />
+                        <OrderAffectation :affectation="affectation" :id="id" />
                     </div>
                     <div class="tw-col-span-3 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell</p>
-                        <OrderUpsell upsell="true" />
+                        <OrderUpsell :upsell="upsell" :id="id" />
                     </div>
                 </div>
             </div>
 
-            <div class="tw-flex tw-justify-end">
+            <div v-if="false" class="tw-flex tw-justify-end">
                 <v-btn @click="getOrder" color="primary-color" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Confirm
@@ -90,7 +90,7 @@ export default {
         isOrderExists: false,
         isLoaded: false,
 
-        "id": 9,
+        "id": null,
         "fullname": null,
         "product_name": null,
         "agente_id": null,
@@ -98,7 +98,7 @@ export default {
         "phone": null,
         "city": null,
         "adresse": null,
-        "quantity": 0,
+        "quantity": null,
         "confirmation": null,
         "affectation": null,
         "delivery": null,

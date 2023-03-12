@@ -1,4 +1,4 @@
-export const path = 'api/roles/1'
+export const path = 'api/users'
 export const method = 'get'
 
 export default {

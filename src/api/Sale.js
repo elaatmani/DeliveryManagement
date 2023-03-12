@@ -32,6 +32,11 @@ class Sale {
         await Csrf.getCookie();
         return Api.post('api/orders/update/confirmation/' + id, {confirmation});
     }
+
+    async agenteUpdateUpsell(id, upsell) {
+        await Csrf.getCookie();
+        return Api.post('api/orders/update/upsell/' + id, {upsell});
+    }
 }
 
 

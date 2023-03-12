@@ -23,8 +23,12 @@
         </div>
       </div>
 
-      <div class="">
+      <div v-if="orders.length > 0">
         <OrdersTable :columns="columns" :orders="orders" />
+      </div>
+
+      <div v-else class="">
+        <p class="tw-text-neutral-400 tw-py-5">Your order's list is empty !</p>
       </div>
     </div>
   </div>
@@ -43,7 +47,7 @@ export default {
     return {
       localUrl,
       isLoaded: false,
-      orders: [1, 2, 3],
+      orders: [],
       columns: 
       [
         {
@@ -97,9 +101,14 @@ export default {
     Sale.agenteConfirmedOrders().then(
       res => {
         if(res?.data.code == "SUCCESS") {
+          if (res?.data.data == "No Order Confirmed Yet !") {
+            this.orders = []
+            this.isLoaded = true
+          } else {
             this.orders = res.data.data.orders
             console.log(res.data);
             this.isLoaded = true
+          }
           }
         }
         ).catch(this.$handleApiError)

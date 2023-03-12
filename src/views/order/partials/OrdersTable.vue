@@ -36,7 +36,7 @@
                         {{ order.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderUpsell :upsell="order.upsell" />
+                        <OrderUpsell :upsell="order.upsell" :id="order.id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderConfirmation :confirmation="order?.confirmation" :id="order?.id" />
