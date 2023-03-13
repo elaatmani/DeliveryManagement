@@ -42,7 +42,7 @@
               <v-col class="!tw-py-2" cols="12" sm="6" md="6" >
                 <div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Selling Price (DH)</div>
-                  <v-text-field type="number" @change="handleSellingPriceChange" :error="!formStatus.sellingPrice.valid" @keyup="resetError('piece')" :hide-details="true" v-model="product.sellingPrice" clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
+                  <v-text-field type="number" @change="handleSellingPriceChange" :error="!formStatus.sellingPrice.valid" @keyup="resetError('sellingPrice')" :hide-details="true" v-model="product.sellingPrice" clear-icon="mdi-close" class="tw-w-full"  variant="outlined" color="primary-color" density="compact"></v-text-field>
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.sellingPrice.message }}</div>
                 </div>
               </v-col>

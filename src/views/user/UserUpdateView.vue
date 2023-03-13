@@ -374,8 +374,8 @@ export default {
       );
     },
 
-    getRoles() {
-        User.roles()
+    async getRoles() {
+        await User.roles()
             .then((res) => {
             if (res?.data.code == "SUCCESS") {
                 const roles = res.data.data.roles;
@@ -385,8 +385,8 @@ export default {
             }).catch(this.$handleApiError)
     },
 
-    getUser() {
-            User.getUser(this.$route.params.id)
+    async getUser() {
+            await User.getUser(this.$route.params.id)
               .then((res) => {
                 if (res?.data.code == "USER_SUCCESS") {
                   const user = res.data.data.user;
@@ -396,6 +396,7 @@ export default {
                   this.email = user.email
                   this.phone = user.phone
                   this.role = user.role
+                  this.product = user?.product
                   this.user_image = user.photo
                   this.status = user.status == 1 ? true : false
                   this.isUserFetched = true
@@ -410,7 +411,7 @@ export default {
         res => {
           this.products = res.data.data.products
           if(this.products.length > 0) {
-            this.product = this.products[0].id
+            this.product = this.user.product_id
           } else {
             this.product = null
           }
@@ -427,8 +428,10 @@ export default {
     } else {
       this.isRolesFetched = true
     }
-    this.getUser();
-    this.getProducts();
+    await this.getUser().then(
+      () => this.getProducts() 
+    );
+    
   },
 };
 </script>
