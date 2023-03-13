@@ -158,13 +158,10 @@ export default {
     },
     mounted() {
       if (this.availableOptions.includes(this.confirmation)) {
-        console.log('found');
         this.selectedId = this.allOptions.find(option => option.value == this.confirmation).id;
-        // this.selectedId = this.options.find(option => option.value == this.confirmation).id;
       } else {
         this.selectedId = 0;
       }
-      console.log(this.confirmation);
     }
 };
 </script>

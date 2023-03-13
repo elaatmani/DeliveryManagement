@@ -24,7 +24,7 @@
       </div>
 
       <div v-if="orders.length > 0">
-        <OrdersTable :columns="columns" :orders="orders" />
+        <OrdersTable :note="true" :columns="columns" :orders="orders" />
       </div>
 
       <div v-else class="">
@@ -85,6 +85,10 @@ export default {
         {
             prop: 'city',
             name: 'City',
+        },
+        {
+            prop: 'note',
+            name: 'Note',
         },
         {
             prop: 'date',

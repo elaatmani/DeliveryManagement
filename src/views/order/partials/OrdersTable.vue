@@ -16,10 +16,11 @@
                             {{ column.name }}
                         </div>
                     </th>
+
                 </tr>
             </thead>
             <tbody>
-                <OrderRow v-for="(order) in orders" :key="order.id" :order="order" />
+                <OrderRow :showNote="!!note" v-for="(order) in orders" :key="order.id" :order="order" />
                 
             </tbody>
         </table>
@@ -33,7 +34,7 @@ import OrderRow from '@/views/order/partials/OrderRow'
 import User from '@/api/User'
 
 export default {
-    props: [ 'columns', 'orders' ],
+    props: [ 'columns', 'orders', 'note' ],
     components: { OrderRow },
     methods: {
         getDeliveries() {

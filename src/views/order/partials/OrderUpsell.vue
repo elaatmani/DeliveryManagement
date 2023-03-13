@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="close" class="tw-relative tw-w-[60px]">
+  <div v-click-outside="close" :key="upsell" class="tw-relative tw-w-[60px]">
     <button
         @click="toggle"
         :class="[selected.text, selected.bg, selected.ring]"
@@ -49,7 +49,7 @@ export default {
     },
     computed: {
         options() {
-            return this.allOptions.filter(i => i.id !== this.selected.id)
+            return this.allOptions
         }
     },
     methods: {
@@ -82,7 +82,12 @@ export default {
           )
         }
     },
+    updated() {
+      // this.selected = this.options.find(i => i.value == this.upsell)
+      // console.log(this.selected);
+    },
     mounted() {
+      console.log(this.upsell);
       switch (this.upsell) {
         case 'oui':
           this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
