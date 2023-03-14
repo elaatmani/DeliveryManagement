@@ -25,7 +25,7 @@ export default
                     module: 'sale',
                     subModule: 'sale/list',
                     title: 'Sales List',
-                    gate: 'all'
+                    gate: 'show_all_sales'
                 }
             },
 

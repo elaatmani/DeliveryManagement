@@ -15,7 +15,7 @@ class User {
     async register(user) {
         await Csrf.getCookie();
 
-        return Api.post('api/auth/register', { 
+        return Api.post('api/users/new', { 
             email: user.email,
             password: user.password,
             phone: user.phone,
@@ -82,7 +82,7 @@ class User {
 
     async createRole({ name, permissions }) {
         await Csrf.getCookie();
-        return Api.post('api/roles/add', { name , permissions })
+        return Api.post('api/roles/new', { name , permissions })
     }
 
     async updateRole(id, { name, permissions }) {

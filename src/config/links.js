@@ -37,7 +37,7 @@ export const links = [
         module: 'product',
         title: 'Product',
         hasChildren: true,
-        gate: 'product_access', 
+        gate: 'access_to_products', 
         icon: {
             type: 'svg',
             value: 'assets/img/icons/product.svg'
@@ -47,29 +47,15 @@ export const links = [
                 id: 1,
                 title: 'Products List',
                 subModule: 'product/list',
-                gate: 'product_show',
+                gate: 'show_all_products',
                 to: '/products'
             },
             {
                 id: 2,
                 title: 'Add Product',
                 subModule: 'product/add',
-                gate: 'product_create',
+                gate: 'create_product',
                 to: '/products/add'
-            },
-            {
-                id: 3,
-                title: 'Category List',
-                subModule: 'category/list',
-                gate: 'category_show',
-                to: '/categories'
-            },
-            {
-                id: 4,
-                title: 'Add Category',
-                gate: 'category_create',
-                subModule: 'category/add',
-                to: '/categories/add'
             },
         ]
     },
@@ -79,7 +65,7 @@ export const links = [
         module: 'sale',
         title: 'Sales',
         hasChildren: true,
-        gate: 'all', 
+        gate: 'access_to_sales', 
         icon: {
             type: 'icon',
             value: 'mdi-sale'
@@ -89,7 +75,7 @@ export const links = [
                 id: 1,
                 title: 'Sales list',
                 subModule: 'sale/list',
-                gate: 'all',
+                gate: 'show_all_sales',
                 to: '/sales'
             },
         ]
@@ -100,7 +86,7 @@ export const links = [
         module: 'order',
         title: 'Orders',
         hasChildren: true,
-        gate: 'all', 
+        gate: 'access_to_orders', 
         icon: {
             type: 'icon',
             value: 'mdi-barcode-scan'
@@ -110,21 +96,21 @@ export const links = [
                 id: 1,
                 title: 'Order',
                 subModule: 'order/show',
-                gate: 'all',
+                gate: 'show_all_orders',
                 to: '/order'
             },
             {
                 id: 2,
                 title: 'My Orders',
                 subModule: 'order/list',
-                gate: 'all',
+                gate: 'show_all_orders',
                 to: '/orders'
             },
             {
                 id: 3,
                 title: 'Confirmed Orders',
                 subModule: 'order/confirmed',
-                gate: 'all',
+                gate: 'show_all_orders',
                 to: '/orders/confirmed'
             },
         ]
@@ -163,7 +149,7 @@ export const links = [
         module: 'inventory',
         title: 'Inventory',
         hasChildren: true,
-        gate: 'inventory_state_access', 
+        gate: 'access_to_inventory', 
         icon: {
             type: 'icon',
             value: 'mdi-warehouse'
@@ -172,21 +158,21 @@ export const links = [
             {
                 id: 1,
                 title: 'Inventory List',
-                gate: 'inventory_state_show',
+                gate: 'show_all_inventory_states',
                 subModule: 'inventory/list',
                 to: '/inventories'
             },
             {
                 id: 2,
                 title: 'Inventory State',
-                gate: 'inventory_state_show',
+                gate: 'show_all_inventory_states',
                 subModule: 'inventory/list',
                 to: '/inventories/state'
             },
             {
                 id: 3,
                 title: 'Inventory Movements',
-                gate: 'inventory_movement_show',
+                gate: 'show_all_inventory_movements',
                 subModule: 'inventory/movements',
                 to: '/inventories/movements'
             }
@@ -199,7 +185,7 @@ export const links = [
         id: 6,
         title: 'Users',
         module: 'user',
-        gate: 'users_access',
+        gate: 'access_to_users',
         hasChildren: true,
         icon: {
             type: 'svg',
@@ -210,28 +196,28 @@ export const links = [
                 id: 1,
                 title: 'Users List',
                 subModule: 'user/list',
-                gate: 'users_show',
+                gate: 'show_all_users',
                 to: '/users'
             },
             {
                 id: 2,
                 title: 'Add User',
                 subModule: 'user/add',
-                gate: 'users_create',
+                gate: 'create_user',
                 to: '/users/add'
             },
             {
                 id: 3,
                 title: 'Roles List',
                 subModule: 'user/roles',
-                gate: 'users_create',
+                gate: 'show_all_roles',
                 to: '/users/roles'
             },
             {
                 id: 4,
                 title: 'Add Role',
                 subModule: 'user/addRole',
-                gate: 'users_create',
+                gate: 'create_role',
                 to: '/users/addRole'
             }
         ]
@@ -242,7 +228,7 @@ export const links = [
         title: 'Settings',
         module: 'settings',
         to: '/setings',
-        gate: 'settings_access',
+        gate: 'all',
         hasChildren: false,
         icon: {
             type: 'svg',
