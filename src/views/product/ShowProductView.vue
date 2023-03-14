@@ -63,10 +63,7 @@
                     Quantity Total: {{ qtyTotal }}
                   </div>
                 </div>
-                <div v-if="variants.length == 0" :class="{'tw-bg-neutral-100 tw-text-neutral-500': formStatus.variants.valid, 'tw-bg-red-100 tw-text-red-500': !formStatus.variants.valid}" class="tw-text-center tw-mb-6  tw-w-full tw-py-3 tw-rounded-lg">
-                  {{ formStatus.variants.valid ? 'No Variants yet' : formStatus.variants.message }}
-                </div>
-                <div v-else class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
+                <div class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
                   <div v-for="variant in variants" :key="variant.id" class="tw-bg-neutral-200/30 tw-rounded-lg">
                     <div class="tw-grid tw-grid-cols-12 tw-text-md tw-gap-5 tw-items-center tw-my-2">
                       <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
@@ -160,7 +157,8 @@ export default {
                     this.variants = product.variations
 
                     this.isLoaded = true
-                }
+                },
+                this.$handleApiError
             )
         }
     },

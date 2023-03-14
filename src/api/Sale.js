@@ -52,6 +52,21 @@ class Sale {
         await Csrf.getCookie();
         return Api.post('api/orders/update/note/' + id, {note});
     }
+
+    async deliveryOrders() {
+        await Csrf.getCookie();
+        return Api.get('api/orders/todelivery')
+    }
+
+    async deliveryDeliveredOrders() {
+        await Csrf.getCookie();
+        return Api.get('api/orders/delivred')
+    }
+
+    async deliveryUpdateDelivery(id, delivery) {
+        await Csrf.getCookie();
+        return Api.post('api/orders/update/delivery/' + id, {delivery});
+    }
 }
 
 

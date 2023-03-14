@@ -1,12 +1,12 @@
 <template>
   <div v-if="!['admin', 'agente', 'delivery'].includes(role.name)">
-    <v-btn v-if="!$can(`roles_update`)" :to="'/users/roles/update/' + role.id" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="$can(`update_role`)" :to="'/users/roles/update/' + role.id" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>
-    <v-btn @click="showPopupShow = true" v-if="!$can(`roles_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <!-- <v-btn @click="showPopupShow = true" v-if="$can(`view_role`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
-    </v-btn>
-    <v-btn @click="showPopupDelete = true" v-if="!$can(`roles_delete`) && role.name !== 'admin'" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    </v-btn> -->
+    <v-btn @click="showPopupDelete = true" v-if="$can(`delete_role`) && role.name !== 'admin'" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
     </v-btn>
     <!--  -->

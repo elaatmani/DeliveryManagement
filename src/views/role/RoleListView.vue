@@ -7,7 +7,7 @@
       </div>
 
 
-      <div v-if="$can('users_create')">
+      <div v-if="$can('create_role')">
         <v-btn color="primary-color" link :to="{name: 'user/addRole'}" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white">

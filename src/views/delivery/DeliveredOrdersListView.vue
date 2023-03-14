@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     getOrders() {
-      Sale.deliveryOrders()
+      Sale.deliveryDeliveredOrders()
       .then(
         res => {
           console.log(res.data);

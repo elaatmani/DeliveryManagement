@@ -33,7 +33,7 @@
                         {{ role.name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <RolePermissions v-if="false" :role="role" />
+                        <RolePermissions :role="role" />
                     </td>
                     <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
                         <RoleActions :role="role" />
