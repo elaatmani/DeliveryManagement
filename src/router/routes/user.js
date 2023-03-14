@@ -30,7 +30,7 @@ export default
                     module: 'user',
                     subModule: 'user/list',
                     title: 'Users List',
-                    gate: 'users_show'
+                    gate: 'show_all_users'
                 }
             },
 
@@ -42,7 +42,7 @@ export default
                     module: 'user',
                     subModule: 'user/add',
                     title: 'Add User',
-                    gate: 'users_create'
+                    gate: 'create_user'
                 }
             },
 
@@ -54,7 +54,7 @@ export default
                     module: 'user',
                     subModule: 'user/update',
                     title: 'Update User',
-                    gate: 'users_update'
+                    gate: 'update_user'
                 }
             },
 
@@ -66,7 +66,7 @@ export default
                     module: 'user',
                     subModule: 'user/addRole',
                     title: 'Add Role',
-                    gate: 'users_create'
+                    gate: 'create_role'
                 }
             },
 
@@ -78,7 +78,7 @@ export default
                     module: 'user',
                     subModule: 'user/roles',
                     title: 'Roles List',
-                    gate: 'users_create'
+                    gate: 'show_all_roles'
                 }
             },
 
@@ -90,7 +90,7 @@ export default
                     module: 'user',
                     subModule: 'user/updateRole',
                     title: 'Update Role',
-                    gate: 'users_update'
+                    gate: 'view_role'
                 }
             },
 

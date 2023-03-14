@@ -1,14 +1,14 @@
 <template>
   <div class="tw-flex tw-items-center tw-gap-1">
-    <v-btn :to="'/products/update/' + product.id" v-if="$can(`product_update`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/products/update/' + product.id" v-if="$can(`update_product`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
-    <v-btn :to="'/products/' + product.id"  v-if="$can(`product_show`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/products/' + product.id"  v-if="$can(`view_product`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>
-    <v-btn @click="showPopup = true" v-if="$can(`product_delete`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="showPopup = true" v-if="$can(`delete_product`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Delete</span> -->
     </v-btn>

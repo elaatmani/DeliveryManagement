@@ -27,7 +27,7 @@ export default
                     module: 'order',
                     subModule: 'order/list',
                     title: 'Orders List',
-                    gate: 'all'
+                    gate: 'show_all_orders'
                 }
             },
 
@@ -39,7 +39,7 @@ export default
                     module: 'order',
                     subModule: 'order/show',
                     title: 'Current Order',
-                    gate: 'all'
+                    gate: 'show_all_orders'
                 }
             },
 
@@ -51,7 +51,7 @@ export default
                     module: 'order',
                     subModule: 'order/confirmed',
                     title: 'Confirmed Orders',
-                    gate: 'all'
+                    gate: 'show_all_orders'
                 }
             },
 
