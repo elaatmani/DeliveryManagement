@@ -131,6 +131,34 @@ export const links = [
     },
 
     {
+        id: 16,
+        module: 'delivery',
+        title: 'Orders',
+        hasChildren: true,
+        gate: 'all', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-bike'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Orders List',
+                subModule: 'delivery/list',
+                gate: 'all',
+                to: '/deliveries'
+            },
+            {
+                id: 2,
+                title: 'Orders Delivered',
+                subModule: 'delivery/delivered',
+                gate: 'all',
+                to: '/delivered'
+            },
+        ]
+    },
+
+    {
         id: 7,
         module: 'inventory',
         title: 'Inventory',
