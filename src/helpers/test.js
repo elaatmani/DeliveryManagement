@@ -1,13 +1,9 @@
-export const path = 'api/users'
+export const path = 'api/orders/add'
 export const method = 'get'
 
 export default {
-    name: 'Product',
-    variants: [
-        {
-            size: 'XXL',
-            color: 'RED',
-            quantity: 20
-        }
+    name: 'agente',
+    permissions:[
+        'access_to_roles'
     ]
 }

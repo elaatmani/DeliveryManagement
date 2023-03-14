@@ -28,7 +28,7 @@ export default
                     module: 'product',
                     subModule: 'product/list',
                     title: 'Products List',
-                    gate: 'product_show'
+                    gate: 'show_all_products'
                 }
             },
 
@@ -40,7 +40,7 @@ export default
                     module: 'product',
                     subModule: 'product/add',
                     title: 'Add Product',
-                    gate: 'product_create'
+                    gate: 'create_product'
                 }
             },
 
@@ -52,7 +52,7 @@ export default
                     module: 'product',
                     subModule: 'product/update',
                     title: 'Update Product',
-                    gate: 'product_update'
+                    gate: 'update_product'
                 }
             },
 
@@ -64,7 +64,7 @@ export default
                     module: 'product',
                     subModule: 'product/show',
                     title: 'Product Informations',
-                    gate: 'product_show'
+                    gate: 'view_product'
                 }
             },
 
