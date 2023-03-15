@@ -36,7 +36,6 @@
                     <td class="tw-px-6 tw-py-4 ">
                         <div class="tw-max-w-[300px] tw-min-w-[150px] tw-whitespace-normal">
                             {{ note }}
-                            <v-icon @click="handleClick" size="x-small" class="tw-ml-2 tw-text-blue-500 tw-cursor-pointer hover:tw-bg-neutral-900/10 tw-rounded-full tw-p-3" :class="{'tw-animate-spin': isLoading}">{{ isLoading ? 'mdi-loading' : 'mdi-pencil' }}</v-icon>
 
                         </div>
                     </td>
@@ -44,18 +43,9 @@
                         {{ created_at?.split('T')[0] }}
                     </td>
                 </tr>
-                <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
-                    <div class="tw-min-w-[300px]">
-                        <p>Edit note</p>
-                        <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
-
-                        </v-textarea>
-                    </div>
-                </popup>
 </template>
 
 <script>
-import Sale from '@/api/Sale'
 import OrderDelivery from './OrderDelivery.vue'
 
 export default {
@@ -87,30 +77,6 @@ export default {
     methods: {
         handleClick() {
             this.showPopup = true
-        },
-        handleResolved(response) {
-            if(!response) {
-                this.showPopup = false;
-                return;
-            }
-
-            this.showPopup = false
-            this.isLoading = true
-            Sale.agenteUpdateNote(this.id, this.note)
-            .then(
-                res => {
-                    if (res.data.code == "SUCCESS") {
-                        this.$alert({
-                            type: 'success',
-                            title: res.data.data
-                        })
-                    }
-                },
-                this.$handleApiError
-            )
-            .finally(
-                () => this.isLoading = false
-            )
         },
 
 
