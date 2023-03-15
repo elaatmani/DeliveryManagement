@@ -27,7 +27,10 @@
         <OrdersTable :columns="columns" :orders="orders" />
       </div>
       <div v-else>
-        <p>No orders for now</p>
+        <div class="tw-min-h-[400px] tw-flex tw-flex-col tw-justify-center tw-items-center">
+          <p class="tw-font-medium tw-text-neutral-400 tw-text-lg tw-mb-n3">No Confirmed orders for now.</p>
+          <img :src="localUrl + 'images/delivery.jpg'" class="tw-mt-0 tw-mx-auto tw-max-w-[600px] tw-w-full" alt="">
+        </div>
       </div>
     </div>
   </div>

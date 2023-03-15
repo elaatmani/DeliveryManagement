@@ -24,7 +24,7 @@
       </div>
 
       <div class="">
-        <SalesTable :columns="columns" :sales="sales" />
+        <SalesTable :key="sales.length" :columns="columns" :sales="sales" />
       </div>
     </div>
   </div>
@@ -35,6 +35,7 @@ import {localUrl} from '@/config/config'
 
 import SalesTable from './SalesTable.vue'
 import Sale from '@/api/Sale'
+import User from '@/api/User'
 
 
 export default {
@@ -90,9 +91,29 @@ export default {
     ],
     }
   },
-  computed: {},
-  mounted() {
+  computed: {
+    deliveries() {
+        return this.$store.getters['user/deliveries']
+    }
+  },
+  methods: {
+    async getDeliveries() {
+      
+        await User.deliveries()
+        .then(
+            res => {
+                console.log(res.data.data);
+                this.$store.dispatch('user/setDeliveries', res.data.data);
+            },
+            this.$handleApiError
+        )
+    }
+  },
+  async mounted() {
     
+    if(this.deliveries.length == 0) {
+        await this.getDeliveries()
+    }
     
     Sale.all().then(
       res => {

@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="close" class="tw-relative tw-w-[60px]">
+  <div v-click-outside="close" :key="upsell" class="tw-relative tw-w-[60px]">
     <button
         @click="toggle"
         :class="[selected.text, selected.bg, selected.ring]"
@@ -8,7 +8,8 @@
     >
       {{ selected.name }} 
       
-      <v-icon>{{ isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'}}</v-icon>
+      <v-icon v-if="!isLoading" class="tw-ml-1">{{ isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'}}</v-icon>
+      <v-icon v-if="isLoading" class="tw-animate-spin tw-ml-1">mdi-loading</v-icon>
     </button>
     <!-- Dropdown menu -->
     <div
@@ -20,7 +21,6 @@
       >
         <li @click="handleChange(option)" v-for="option in options" :key="option.id">
           <a
-            href="#"
             class="tw-block tw-px-4 tw-py-2 hover:tw-bg-gray-100"
             :class="[option.text, option.bg]"
             >{{ option.name }}</a
@@ -32,20 +32,24 @@
 </template>
 
 <script>
+import Sale from '@/api/Sale';
 export default {
+  props: ['upsell', 'id'],
     data() {
         return {
+            isLoading: false,
             isOpen: false,
-            selected: { id: 1, name: 'Yes', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+            selected: { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
             allOptions: [
-                { id: 1, name: 'Yes', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-                { id: 2, name: 'No', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
+                { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' },
+                { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+                { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
             ]
         }
     },
     computed: {
         options() {
-            return this.allOptions.filter(i => i.id !== this.selected.id)
+            return this.allOptions
         }
     },
     methods: {
@@ -56,9 +60,45 @@ export default {
             this.isOpen = !this.isOpen
         },
         handleChange(option) {
+          if(option == this.selected) return false;
             this.selected = option
+            this.isLoading = true
+            this.updateOrder()
             this.close()
+        },
+        updateOrder() {
+          Sale.agenteUpdateUpsell(this.id, this.selected.value)
+          .then(
+            res => {
+              if (res.data.code === 'SUCCESS') {
+                this.$alert({
+                  type: 'success',
+                  title: res.data.data
+                })
+                this.isLoading = false
+              }
+            },
+            err => this.$handleApiError(err)
+          )
         }
+    },
+    updated() {
+      // this.selected = this.options.find(i => i.value == this.upsell)
+      // console.log(this.selected);
+    },
+    mounted() {
+      console.log(this.upsell);
+      switch (this.upsell) {
+        case 'oui':
+          this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
+          break;
+        case 'non':
+          this.selected = { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+          break;
+        default:
+          this.selected = { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' }
+          break;
+      }
     }
 };
 </script>
