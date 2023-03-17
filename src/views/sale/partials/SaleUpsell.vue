@@ -75,11 +75,15 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateUpsell(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
             err => this.$handleApiError(err)
           )
+        },
+        updateUpsell(id, upsell) {
+          this.$store.dispatch('sale/updateUpsell', {id, upsell})
         }
     },
     updated() {
@@ -87,7 +91,7 @@ export default {
       // console.log(this.selected);
     },
     mounted() {
-      console.log(this.upsell);
+      // console.log(this.upsell);
       switch (this.upsell) {
         case 'oui':
           this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }

@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(sale, i) in items" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(state, i) in items" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,37 +27,19 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ sale.id }}
+                        {{ state.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.fullname }}
+                        {{ state.product.name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.product_name }}
+                        {{ state.product.buying_price }} DH
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleUpsell :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
+                        {{ state.product.selling_price }} DH
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleConfirmation :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <SaleAffectation :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale.delivery }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale.quantity }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        - DH
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale.city }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale?.created_at?.split('T')[0] }}
+                        {{ state.quantity }}
                     </td>
                 </tr>
                 
@@ -72,7 +54,7 @@
                 <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
             </div>
             <div class="d-flex align-center">
-                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  sales.length : nextRange) }} of {{  sales.length }} items </div>
+                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  states.length : nextRange) }} of {{  states.length }} items </div>
                 <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
                     <span class="tw-text-white">{{ n }}</span>
@@ -85,13 +67,9 @@
 </template>
 
 <script>
-import SaleConfirmation from '@/views/sale/partials/SaleConfirmation'
-import SaleUpsell from '@/views/sale/partials/SaleUpsell'
-import SaleAffectation from '@/views/sale/partials/SaleAffectation'
 
 export default {
-    props: [ 'columns', 'sales' ],
-    components: { SaleConfirmation, SaleUpsell, SaleAffectation },
+    props: [ 'columns', 'states' ],
 
     data() {
         return {
@@ -110,15 +88,10 @@ export default {
             return (this.currentPage) * this.paginationLimit
         },
         pageCount() {
-            return Math.ceil(this.sales.length / this.paginationLimit)
+            return Math.ceil(this.states.length / this.paginationLimit)
         },
         items() {
-            return this.sales.slice(this.prevRange, this.nextRange)
-        }
-    },
-    watch: {
-        paginationLimit() {
-            this.currentPage = 1
+            return this.states.slice(this.prevRange, this.nextRange)
         }
     }
 }

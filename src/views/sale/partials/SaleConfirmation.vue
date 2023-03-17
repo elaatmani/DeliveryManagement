@@ -127,6 +127,7 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateConfirmation(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
@@ -146,6 +147,7 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateConfirmation(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
@@ -154,6 +156,9 @@ export default {
           .then(
             () => this.$emit('update', this.selected.value)
           );
+        },
+        updateConfirmation(id, confirmation) {
+          this.$store.dispatch('sale/updateConfirmation', {id, confirmation})
         }
     },
     mounted() {

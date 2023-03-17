@@ -11,6 +11,7 @@ import user from './routes/user'
 import sale from './routes/sale'
 import order from './routes/order'
 import delivery from './routes/delivery'
+import inventory from './routes/inventory'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -26,6 +27,7 @@ const routes = [
   sale,
   order,
   delivery,
+  inventory,
 
   {
     name: 'default',

@@ -87,16 +87,20 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateAffectation(this.id, this.selected.id)
                 this.isLoading = false
               }
             },
             err => this.$handleApiError(err)
           )
+        },
+        updateAffectation(id, affectation) {
+          this.$store.dispatch('sale/updateAffectation', {id, affectation})
         }
     },
     mounted() {
         this.selectedId = this.affectation
-        console.log('id: ', this.id, ' affecte: ', this.affectation);
+        // console.log('id: ', this.id, ' affecte: ', this.affectation);
     }
 };
 </script>
