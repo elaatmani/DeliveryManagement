@@ -188,12 +188,9 @@ export default {
             },
             this.$handleApiError
         )
-    }
-  },
-  mounted() {
-    
-    this.getDeliveries()
-    Sale.agenteOrders().then(
+    },
+    getOrders() {
+      Sale.agenteOrders().then(
       res => {
         if(res?.data.code == "SUCCESS") {
             const orders = res.data.data.orders
@@ -203,6 +200,13 @@ export default {
           }
         }
         ).catch(this.$handleApiError)
+    }
+
+  },
+  mounted() {
+    this.$store.dispatch('order/setOrders', []);
+    this.getDeliveries()
+    this.getOrders()
   }
 }
 </script>

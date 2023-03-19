@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <div class="tw-relative tw-overflow-x-auto  sm:tw-rounded-lg">
+    <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
         <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
             <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
                 <tr>
@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(movement, i) in movements" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,28 +27,25 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ product.id }}
+                        {{ movement.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.ref }}
+                        {{ movement.delivery.firstname + ' ' + movement.delivery.lastname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.name }}
+                        {{ movement.product.name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.buying_price }} DH
+                        {{ movement.qty_to_delivery }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.selling_price }} DH
+                        {{ movement.delivery.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ calculQty(product.variations) }}
+                        {{ movement.created_at?.split('T')[0] }} <br/> {{ movement.created_at?.split('T')[1].split('.')[0] }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.created_at.split('T')[0] }}
-                    </td>
-                    <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
-                        <ProductActions :product="product" />
+                        <InventoryMovementsActions :movement="movement" />
                     </td>
                 </tr>
                 
@@ -63,7 +60,7 @@
                 <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
             </div>
             <div class="d-flex align-center">
-                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  products.length : nextRange) }} of {{  products.length }} items </div>
+                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  movements.length : nextRange) }} of {{  movements.length }} items </div>
                 <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
                     <span class="tw-text-white">{{ n }}</span>
@@ -72,16 +69,16 @@
             </div>
         </div>
         <!-- /Pagination -->
-
   </div>
 </template>
 
 <script>
-import ProductActions from '@/views/product/ProductActions'
-
+import InventoryMovementsActions from './InventoryMovementsActions.vue'
+InventoryMovementsActions
 export default {
-    props: [ 'columns', 'products' ],
-    components: { ProductActions },
+    props: [ 'columns', 'movements' ],
+
+    components: { InventoryMovementsActions },
 
     data() {
         return {
@@ -100,21 +97,10 @@ export default {
             return (this.currentPage) * this.paginationLimit
         },
         pageCount() {
-            return Math.ceil(this.products.length / this.paginationLimit)
+            return Math.ceil(this.movements.length / this.paginationLimit)
         },
         items() {
-            return this.products.slice(this.prevRange, this.nextRange)
-        }
-    },
-
-    methods: {
-        calculQty(variants) {
-            let total = 0;
-            variants.forEach(item => {
-                total += item.quantity
-            });
-
-            return total
+            return this.movements.slice(this.prevRange, this.nextRange)
         }
     }
 }

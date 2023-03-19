@@ -23,8 +23,8 @@
         </div>
       </div>
 
-      <div v-if="inventoryState.length > 0" class="">
-        <InventoryStateTable :columns="columns" :states="filteredInventoryState" />
+      <div v-if="inventoryMovements.length > 0" class="">
+        <InventoryMovementsTable :columns="columns" :movements="inventoryMovements" />
       </div>
     </div>
   </div>
@@ -33,11 +33,9 @@
 <script>
 import {localUrl} from '@/config/config'
 import Inventory from '@/api/Inventory'
-import InventoryStateTable from '@/views/inventory/partials/InventoryStateTable'
-
-
+import InventoryMovementsTable from './partials/InventoryMovementsTable.vue'
 export default {
-    components: { InventoryStateTable },
+    components: { InventoryMovementsTable },
   data() {
     return {
       localUrl,
@@ -51,56 +49,65 @@ export default {
             name: '#',
         },
         {
-            prop: "producy_name",
-            name: "Product Name",
+            prop: "delivery",
+            name: "Delivery",
         },
         {
-          prop: 'buying_price',
-          name: 'Buying Price',
-        },
-        {
-          prop: 'selling_price',
-          name: 'Selling Price',
+          prop: 'product',
+          name: 'Product',
         },
         {
           prop: 'quantity',
           name: 'Quantity',
+        },
+        {
+          prop: 'city',
+          name: 'City',
+        },
+        {
+          prop: 'created_at',
+          name: 'Date',
+        },
+        {
+          prop: 'actions',
+          name: 'Actions',
         },
         
     ],
     }
   },
   computed: {
-    inventoryState() {
-      return this.$store.getters['inventory/inventoryState']
+    inventoryMovements() {
+      return this.$store.getters['inventory/inventoryMovements']
     },
     filteredInventoryState() {
-      return this.inventoryState.filter(item => {
+      return this.inventoryMovements.filter(() => {
 
-        if(
-          !item.product.ref.toLowerCase().includes(this.search.toLowerCase()) 
-          && !item.product.name.toLowerCase().includes(this.search.toLowerCase())
-          && !item.product.description.toLowerCase().includes(this.search.toLowerCase())
+        // if(
+        //   !item.product.ref.toLowerCase().includes(this.search.toLowerCase()) 
+        //   && !item.product.name.toLowerCase().includes(this.search.toLowerCase())
+        //   && !item.product.description.toLowerCase().includes(this.search.toLowerCase())
         
-        ) {
-          return false;
-        }
+        // ) {
+        //   return false;
+        // }
 
         return true;
       })
     }
   },
   methods: {
-    async getInventoryStates() {
+    async getInventoryMovements() {
       
         
-        await Inventory.inventoryStates()
+        await Inventory.inventoryMovements()
         .then(
             res => {
                 console.log(res.data.data);
-                if (res.data.code == 'SHOW_ALL_INVENTORY_STATES') {
-                    const state = res.data.data
-                    this.$store.dispatch('inventory/setInventoryState', state)
+                if (res.data.code == 'SHOW_ALL_INVENTORY_MOVEMENTS') {
+                    const movements = res.data.data
+                    this.$store.dispatch('inventory/setInventoryMovements', movements)
+                    console.log(movements);
                 }
             },
             this.$handleApiError
@@ -110,7 +117,7 @@ export default {
     }
   },
   async mounted() {
-    this.getInventoryStates()
+    this.getInventoryMovements()
   }
 }
 </script>

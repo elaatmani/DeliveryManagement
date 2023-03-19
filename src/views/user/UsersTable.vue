@@ -42,7 +42,7 @@
                         {{ user.phone }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <UserStatus :user="user" />
+                        <UserStatus v-if="$can('update_user_status')" :user="user" />
                     </td>
                     <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
                         <UserActions :user="user" />

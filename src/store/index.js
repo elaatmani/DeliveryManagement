@@ -4,6 +4,7 @@ import alert from './modules/alert'
 import product from './modules/product'
 import sale from './modules/sale'
 import order from './modules/order'
+import inventory from './modules/inventory'
 
 export default createStore({
   state: {
@@ -19,6 +20,7 @@ export default createStore({
     product,
     alert,
     sale,
-    order
+    order,
+    inventory
   }
 })

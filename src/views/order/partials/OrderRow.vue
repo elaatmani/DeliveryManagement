@@ -1,5 +1,5 @@
 <template>
-  <tr :key="order" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+  <tr :key="order.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -19,7 +19,7 @@
                         <OrderUpsell :key="upsell" :upsell="upsell" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderConfirmation @update="updateConfirmation" :confirmation="confirmation" :key="confirmation" :id="id" />
+                        <OrderConfirmation :confirmation="confirmation" :key="confirmation" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderAffectation v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
@@ -69,27 +69,55 @@ export default {
             showPopup: false,
             isLoading: false,
 
-            "id": null,
-            "fullname": null,
-            "product_name": null,
-            "agente_id": null,
-            "upsell": null,
-            "phone": null,
-            "city": null,
-            "adresse": null,
-            "quantity": null,
-            "confirmation": null,
-            "affectation": null,
-            "delivery": null,
-            "note": null,
-            "created_at": null
         }
     },
 
-    methods: {
-        updateConfirmation(newValue) {
-            this.confirmation = newValue
+    computed: {
+        id() {
+            return this.order.id;
         },
+        fullname() {
+            return this.order.fullname;
+        },
+        product_name() {
+            return this.order.product_name;
+        },
+        agente_id() {
+            return this.order.agente_id;
+        },
+        upsell() {
+            return this.order.upsell;
+        },
+        phone() {
+            return this.order.phone;
+        },
+        city() {
+            return this.order.city;
+        },
+        adresse() {
+            return this.order.adresse;
+        },
+        quantity() {
+            return this.order.quantity;
+        },
+        confirmation() {
+            return this.order.confirmation;
+        },
+        affectation() {
+            return this.order.affectation;
+        },
+        delivery() {
+            return this.order.delivery;
+        },
+        note() {
+            return this.order.note;
+        },
+        created_at() {
+            return this.order?.created_at;
+        },
+    },
+
+    methods: {
         handleClick() {
             this.showPopup = true
         },
@@ -109,6 +137,7 @@ export default {
                             type: 'success',
                             title: res.data.data
                         })
+                        this.$store.dispatch('order/updateNote', {note: this.note, id: this.id})
                     }
                 },
                 this.$handleApiError
@@ -117,25 +146,9 @@ export default {
                 () => this.isLoading = false
             )
         },
-
-
     },
-
     mounted() {
-        this.id = this.order.id
-        this.fullname = this.order.fullname
-        this.product_name = this.order.product_name
-        this.agente_id = this.order.agente_id
-        this.upsell = this.order.upsell
-        this.phone = this.order.phone
-        this.city = this.order.city
-        this.adresse = this.order.adresse
-        this.quantity = this.order.quantity
-        this.confirmation = this.order.confirmation
-        this.affectation = this.order.affectation
-        this.delivery = this.order.delivery
-        this.note = this.order.note
-        this.created_at = this.order?.created_at
+        // console.log(this.order);
     }
 
 }

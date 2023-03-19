@@ -26,6 +26,23 @@
         </table>
     </div>
 
+    <!-- Pagination -->
+        <div class="mt-5 tw-flex tw-justify-between">
+            <div class="d-flex align-center">
+                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700">Show per page: </div>
+                <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
+            </div>
+            <div class="d-flex align-center">
+                <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  orders.length : nextRange) }} of {{  orders.length }} items </div>
+                <div>
+                <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
+                    <span class="tw-text-white">{{ n }}</span>
+                </v-btn>
+                </div>
+            </div>
+        </div>
+        <!-- /Pagination -->
+
   </div>
 </template>
 
@@ -35,9 +52,32 @@ import OrderRow from '@/views/delivery/partials/OrderRow'
 export default {
     props: [ 'columns', 'orders' ],
     components: { OrderRow },
+    data() {
+        return {
+            allowedLimit: [5, 10, 20, 50, 100],
+            currentPage: 1,
+            paginationLimit: 10,
+        }
+    },
     methods: {
     },
     computed: {
+        deliveries() {
+            return this.$store.getters['user/deliveries'];
+        },
+        prevRange() {
+            return (this.currentPage - 1) * this.paginationLimit
+        },
+
+        nextRange() {
+            return (this.currentPage) * this.paginationLimit
+        },
+        pageCount() {
+            return Math.ceil(this.orders.length / this.paginationLimit)
+        },
+        items() {
+            return this.orders.slice(this.prevRange, this.nextRange)
+        }
     },
     mounted() {
     }

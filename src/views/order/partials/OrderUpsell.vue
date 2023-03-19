@@ -33,23 +33,23 @@
 
 <script>
 import Sale from '@/api/Sale';
+import { upsells } from '@/config/orders';
 export default {
   props: ['upsell', 'id'],
     data() {
         return {
             isLoading: false,
             isOpen: false,
-            selected: { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-            allOptions: [
-                { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' },
-                { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-                { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
-            ]
+            selectedId: 0,
+            allOptions: upsells
         }
     },
     computed: {
         options() {
             return this.allOptions
+        },
+        selected() {
+          return this.allOptions.filter((item) => item.id == this.selectedId)[0]
         }
     },
     methods: {
@@ -60,8 +60,8 @@ export default {
             this.isOpen = !this.isOpen
         },
         handleChange(option) {
-          if(option == this.selected) return false;
-            this.selected = option
+          if(option.id == this.selectedId) return false;
+            this.selectedId = option.id
             this.isLoading = true
             this.updateOrder()
             this.close()
@@ -75,28 +75,31 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateUpsell(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
             err => this.$handleApiError(err)
           )
+        },
+        updateUpsell(id, upsell) {
+          this.$store.dispatch('order/updateUpsell', { id, upsell })
         }
-    },
-    updated() {
-      // this.selected = this.options.find(i => i.value == this.upsell)
-      // console.log(this.selected);
     },
     mounted() {
       console.log(this.upsell);
       switch (this.upsell) {
         case 'oui':
-          this.selected = { id: 1, value: 'oui', name: 'Oui', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' }
+          console.log('found oui');
+          this.selectedId = 1
           break;
         case 'non':
-          this.selected = { id: 2, value: 'non', name: 'Non', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' }
+          console.log('found non');
+          this.selectedId = 2
           break;
         default:
-          this.selected = { id: 0, value: null, name: 'select', text: 'tw-text-neutral-600', bg: 'tw-bg-neutral-500/10', ring: 'tw-ring-neutral-300' }
+          console.log('found nothing');
+          this.selectedId = 0
           break;
       }
     }

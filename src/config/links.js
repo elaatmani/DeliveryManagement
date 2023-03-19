@@ -121,7 +121,7 @@ export const links = [
         module: 'delivery',
         title: 'Orders',
         hasChildren: true,
-        gate: 'all', 
+        gate: 'access_to_delivery', 
         icon: {
             type: 'icon',
             value: 'mdi-bike'
@@ -131,14 +131,14 @@ export const links = [
                 id: 1,
                 title: 'Orders List',
                 subModule: 'delivery/list',
-                gate: 'all',
+                gate: 'show_all_deliveries',
                 to: '/deliveries'
             },
             {
                 id: 2,
                 title: 'Orders Delivered',
                 subModule: 'delivery/delivered',
-                gate: 'all',
+                gate: 'show_all_deliveries',
                 to: '/delivered'
             },
         ]
@@ -157,24 +157,24 @@ export const links = [
         children: [
             {
                 id: 1,
-                title: 'Inventory List',
+                title: 'Inventory State',
                 gate: 'show_all_inventory_states',
-                subModule: 'inventory/list',
+                subModule: 'inventory/state',
                 to: '/inventories'
             },
             {
                 id: 2,
-                title: 'Inventory State',
-                gate: 'show_all_inventory_states',
-                subModule: 'inventory/list',
-                to: '/inventories/state'
-            },
-            {
-                id: 3,
                 title: 'Inventory Movements',
                 gate: 'show_all_inventory_movements',
                 subModule: 'inventory/movements',
                 to: '/inventories/movements'
+            },
+            {
+                id: 4,
+                title: 'Add Movement',
+                gate: 'create_inventory_movement',
+                subModule: 'inventory/add',
+                to: '/inventories/add'
             }
         ]
     },

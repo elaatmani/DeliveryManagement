@@ -99,10 +99,6 @@ export default {
           this.$store.dispatch('order/updateAffectation', {id, affectation})
         }
     },
-    updated() {
-        console.log('changed');
-        this.selectedId = this.affectation
-    },
     mounted() {
         this.selectedId = this.affectation
         console.log('id: ', this.id, ' affecte: ', this.affectation);

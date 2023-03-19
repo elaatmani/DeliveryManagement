@@ -22,17 +22,30 @@
     <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-flex">
-        <v-btn icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
+        <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
           <v-icon color="white" size="xx-large">mdi-camera-control</v-icon>
         </v-btn>
         <div class="focus-within:tw-border-orange-400 tw-w-[250px] ml-2 px-2 tw-rounded-md tw-border tw-flex tw-items-center">
           <v-img width="18" height="18" max-width="18" class="ma-0 pa-0" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
-          <input type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
+          <input v-model="search" type="text" class="ml-2 tw-border-0 tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
+        </div>
+      </div>
+
+      <div class="tw-max-h-0 tw-duration-500 tw-overflow-hidden" :class="{'!tw-max-h-[500px]': showFilters}">
+        <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4">
+          
+
+          <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"> 
+            <span class="tw-text-sm tw-text-neutral-600">Date</span>
+            <div class="tw-relative">
+              <input type="date" v-model="date" class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm" />
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="">
-        <ProductsTable :columns="columns" :products="products" />
+        <ProductsTable :columns="columns" :products="filteredProducts" />
       </div>
     </div>
   </div>
@@ -43,14 +56,18 @@ import {localUrl} from '@/config/config'
 
 import Product from '@/api/Product';
 import ProductsTable from './ProductsTable.vue'
-
+import { confirmations } from '@/config/orders';
 
 export default {
   components: {  ProductsTable },
   data() {
     return {
       localUrl,
+      confirmations,
       isLoaded: false,
+      showFilters: false,
+      date: null,
+      search: '',
       columns: 
       [
         {
@@ -92,6 +109,29 @@ export default {
   computed: {
     products() {
       return this.$store.getters['product/products'];
+    },
+    filteredProducts() {
+      const date = this.date;
+      
+      return this.products.filter(item => {
+        // filter by confirmation
+        if (!!date  && item?.created_at.split('T')[0] !== date) {
+          return false;
+        }
+
+        if(
+          !item.ref.toLowerCase().includes(this.search.toLowerCase()) 
+          && !item.name.toLowerCase().includes(this.search.toLowerCase())
+          && !item.description.toLowerCase().includes(this.search.toLowerCase())
+        
+        ) {
+          return false;
+        }
+        
+
+        // if item passes all filters, include it in the filtered data
+        return true;
+      });
     }
   },
   mounted() {

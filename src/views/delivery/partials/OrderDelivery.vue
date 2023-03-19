@@ -42,6 +42,7 @@
 
 <script>
 import Sale from '@/api/Sale';
+import { deliveryStatus } from '@/config/orders';
 export default {
     props: ['delivery', 'id'],
     data() {
@@ -52,22 +53,7 @@ export default {
             nextOption: null,
             note: '',
             selectedId: 0,
-            availableOptions: [
-              null, 'reporter', 'annuler', 'reconfirmer', 'livrer',
-              'refuser', 'hors-zone', 'pas-de-reponse', 'retourner'
-            
-            ],
-            allOptions: [
-                { id: 0, value: null , name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
-                { id: 1, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
-                { id: 2, value:'livrer', name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-                { id: 4, value:'reporter', name: 'Reporter', text: 'tw-text-orange-500', bg: 'tw-bg-orange-500/10', ring: 'tw-ring-orange-300' },
-                { id: 6, value:'refuser', name: 'Refuser', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', ring: 'tw-ring-pink-300' },
-                { id: 5, value:'annuler', name: 'Annuler', text: 'tw-text-red-500', bg: 'tw-bg-red-500/10', ring: 'tw-ring-red-300' },
-                { id: 7, value:'hors-zone', name: 'Hors zone', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
-                { id: 3, value:'pas-de-reponse', name: 'Pas de reponse', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', ring: 'tw-ring-yellow-300' },
-                { id: 8, value:'retourner', name: 'Retourné', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' }
-            ]
+            allOptions: deliveryStatus
         }
     },
     computed: {
@@ -77,6 +63,9 @@ export default {
         selected() {
           return this.allOptions.filter((item) => item.id == this.selectedId)[0]
         },
+        availableOptions() {
+          return this.allOptions.map(i => i.value)
+        }
     },
     methods: {
         close() {

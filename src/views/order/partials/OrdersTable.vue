@@ -1,5 +1,5 @@
 <template>
-  <div :key="orders.length">
+  <div v-if="orders.length > 0" :key="orders.length">
     
     <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
         <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
@@ -94,6 +94,7 @@ export default {
         if(this.deliveries.length == 0) {
             this.getDeliveries()
         }
+        console.log(this.orders);
     }
 }
 </script>
