@@ -110,6 +110,55 @@
                   ></v-select>
                 </div>
               </v-col>
+              <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">City</div>
+                  <v-select
+                    class="text-capitalize"
+                    :items="cities"
+                    item-title="name"
+                    item-value="id"
+                    v-model="city"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-select>
+                </div>
+              </v-col>
+              <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
+                  <v-select
+                    class="text-capitalize"
+                    :items="cities"
+                    item-title="name"
+                    item-value="id"
+                    v-model="deliveryCity"
+                    variant="outlined"
+                    color="primary-color"
+                    :hide-details="true"
+                    density="compact"
+                  ></v-select>
+                  <div class="mb-1 my-2 text-body-2 tw-text-zinc-700">Fee</div>
+                  <v-text-field
+                    :hide-details="true"
+                    v-model="deliveryCityFee"
+                    clearable
+                    type="number"
+                    clear-icon="mdi-close"
+                    class="tw-w-full"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-text-field>
+                  <v-btn @click="handleAddCity" class="tw-text-white tw-my-3" variant="flat" color="primary-color" block>
+                    <span class="text-white">Add</span>
+                  </v-btn>
+                </div>
+              </v-col>
+
+              
+              
             </v-row>
           </v-col>
           <v-col cols="12" md="6">
@@ -178,6 +227,24 @@
                   <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.confirmPassword.message }}</div>
                 </div>
               </v-col>
+              <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
+                  <div>
+                    <div class="tw-flex tw-items-center tw-gap-2" v-for="c in deliveryCities" :key="c">
+                      <div>
+                      {{  cities.filter(i => i.id == c.city_id)[0]?.name }}
+                      </div>
+                      <div>
+                        {{ c.fee }} DH
+                      </div>
+                      <div>
+                        <v-icon color="red" @click="removeCity(c.id)" size="x-small">mdi-delete</v-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </v-col>
             </v-row>
           </v-col>
         </v-row>
@@ -218,6 +285,15 @@ export default {
       localUrl,
       isFormReady: false,
       isLoading: false,
+
+      cities: [],
+      city: 1,
+
+      id: 1,
+      deliveryCity: 1,
+      deliveryCityFee: 0,
+      deliveryCities: [
+      ],
       
       products: [],
       product: 1,
@@ -268,38 +344,43 @@ export default {
     },
     isAgente() {
       return this.role === 2;
+    },
+    isDelivery() {
+      return this.role === 3;
     }
   },
 
   watch: {
-    role(newValue) {
-      console.log('changed');
-      if((newValue === 2 && this.products.length === 0)) {
-        this.isFormReady = false
-        Product.all().then(
-          res => {
-            this.products = res.data.data.products
-            if(this.products.length > 0) {
-              this.product = this.products[0].id
-            } else {
-              this.product = null
-            }
-            this.isFormReady = true
-          },
-          err => this.$handleApiError(err)
-        )
-      }
-    }
   },
 
   methods: {
+
+    removeCity(id) {
+      this.deliveryCities = this.deliveryCities.filter(i => i.id !== id)
+    },
+
+    handleAddCity() {
+      if(this.deliveryCityFee <= 0) return false;
+
+      this.deliveryCities.push(
+        {
+          id: this.id,
+          city_id: this.deliveryCity,
+          fee: this.deliveryCityFee
+        }
+      )
+      this.id += 1;
+
+      this.city = 1;
+      this.deliveryCityFee = 0;
+    },
     create() {
       if (!this.validate()) {
         return false;
       }
 
       this.isLoading = true;
-      const user = {...this.user, role: this.role, product_id: this.product};
+      const user = {...this.user, role: this.role, product_id: this.product, city: this.city, deliveryCities: this.deliveryCities};
       User.register(user)
         .then((res) => {
           if (res.data.code == "USER_CREATED") {
@@ -320,6 +401,8 @@ export default {
 
             this.role = 3;
             this.product_id = null
+            this.deliveryCities = []
+            this.id = 1;
           }
         })
         .catch((err) => {
@@ -376,24 +459,47 @@ export default {
     },
 
     getRoles() {
-      User.roles()
+      return User.roles()
         .then((res) => {
           if (res?.data.code == "SUCCESS") {
             const roles = res.data.data.roles;
             this.$store.dispatch("user/setRoles", roles);
-            this.isFormReady = true
           }
         })
         .catch(this.$handleApiError);
     },
+    getCities() {
+       return User.cities().then(
+          res => {
+            console.log(res.data);
+            this.cities = res.data.data
+          }
+        )
+    },
+    getProducts() {
+        return Product.all().then(
+          res => {
+            this.products = res.data.data.products
+            if(this.products.length > 0) {
+              this.product = this.products[0].id
+            } else {
+              this.product = null
+            }
+          },
+          err => this.$handleApiError(err)
+        )
+    }
   },
 
-  async mounted() {
-    if (this.roles.length == 0) {
-      await this.getRoles();
-    } else {
-      this.isFormReady = true
-    }
+  mounted() {
+    Promise.allSettled([this.getRoles(), this.getCities(), this.getProducts()])
+    .then(
+      res => {
+        console.log(res)
+        this.isFormReady = true
+        },
+      err => this.$handleApiError(err)
+    )
   },
 };
 </script>

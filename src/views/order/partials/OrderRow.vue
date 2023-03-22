@@ -47,7 +47,7 @@
                 <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
                     <div class="tw-min-w-[300px]">
                         <p>Edit note</p>
-                        <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
+                        <v-textarea v-model="newNote" variant="outlined" class="rounded-md" color="primary-color">
 
                         </v-textarea>
                     </div>
@@ -68,6 +68,7 @@ export default {
         return {
             showPopup: false,
             isLoading: false,
+            newNote: ''
 
         }
     },
@@ -120,6 +121,7 @@ export default {
     methods: {
         handleClick() {
             this.showPopup = true
+            this.newNote = this.note
         },
         handleResolved(response) {
             if(!response) {
@@ -129,7 +131,7 @@ export default {
 
             this.showPopup = false
             this.isLoading = true
-            Sale.agenteUpdateNote(this.id, this.note)
+            Sale.agenteUpdateNote(this.id, this.newNote)
             .then(
                 res => {
                     if (res.data.code == "SUCCESS") {
@@ -137,7 +139,7 @@ export default {
                             type: 'success',
                             title: res.data.data
                         })
-                        this.$store.dispatch('order/updateNote', {note: this.note, id: this.id})
+                        this.$store.dispatch('order/updateNote', {note: this.newNote, id: this.id})
                     }
                 },
                 this.$handleApiError
@@ -148,7 +150,7 @@ export default {
         },
     },
     mounted() {
-        // console.log(this.order);
+        
     }
 
 }

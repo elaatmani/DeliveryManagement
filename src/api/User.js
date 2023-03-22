@@ -23,7 +23,9 @@ class User {
             role: user.role,
             firstname: user.firstname,
             lastname: user.lastname,
-            product_id: user.product_id
+            product_id: user.product_id,
+            city: user?.city,
+            deliverycity: user?.deliveryCities
         })
     }
 
@@ -39,6 +41,8 @@ class User {
             lastname: user.lastname,
             product_id: user.product_id,
             role: user.role,
+            city: user?.city,
+            deliverycity: user?.deliveryCities,
             updatePassword: updatePassword
         })
     }
@@ -103,6 +107,11 @@ class User {
     async deliveries() {
         await Csrf.getCookie()
         return Api.get('api/delevries')
+    }
+
+    async cities() {
+        await Csrf.getCookie()
+        return Api.get('api/cities')
     }
 }
 
