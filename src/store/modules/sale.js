@@ -50,7 +50,41 @@ export default {
                     return item
                 }
             )
-        }
+        },
+        UPDATE_NOTE: (state, payload) => {
+            state.sales = state.sales.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.note = payload.note
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
+        },
+        UPDATE_CONFIRMATION_WITH_NOTE: (state, payload) => {
+            state.sales = state.sales.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.confirmation = payload.confirmation
+                        item.note = payload.note        
+                        console.log('order updated');
+                    }
+                    return item
+                }
+            )
+        },
+        UPDATE_DELIVERY: (state, payload) => {
+            state.sales = state.sales.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.delivery = payload.delivery
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
+        },
     },
 
     actions: {
@@ -65,6 +99,15 @@ export default {
         },
         updateAffectation: ({ commit }, payload) => {
             commit('UPDATE_AFFECTATION', payload)
+        },
+        updateNote: ({ commit }, payload) => {
+            commit('UPDATE_NOTE', payload)
+        },
+        updateConfirmationWithNote: ({ commit }, payload) => {
+            commit('UPDATE_CONFIRMATION_WITH_NOTE', payload)
+        },
+        updateDelivery: ({ commit }, payload) => {
+            commit('UPDATE_DELIVERY', payload)
         },
     }
 }

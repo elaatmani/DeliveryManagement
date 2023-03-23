@@ -76,6 +76,17 @@ export default {
                 }
             )
         },
+        UPDATE_DELIVERY: (state, payload) => {
+            state.orders = state.orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.delivery = payload.delivery
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
+        },
     },
 
     actions: {
@@ -96,6 +107,9 @@ export default {
         },
         updateNote: ({ commit }, payload) => {
             commit('UPDATE_NOTE', payload)
+        },
+        updateDelivery: ({ commit }, payload) => {
+            commit('UPDATE_DELIVERY', payload)
         },
     }
 }

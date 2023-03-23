@@ -113,32 +113,23 @@
               <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
                 <div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">City</div>
-                  <v-select
-                    class="text-capitalize"
-                    :items="cities"
-                    item-title="name"
-                    item-value="id"
-                    v-model="city"
-                    variant="outlined"
-                    color="primary-color"
-                    density="compact"
-                  ></v-select>
+                  <select v-model="city" class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                    
+                    <option :value="c.id" v-for="c in cities" :key="c.id">
+                      {{ c.name }}
+                    </option>
+                  </select>
                 </div>
               </v-col>
               <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
                 <div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
-                  <v-select
-                    class="text-capitalize"
-                    :items="cities"
-                    item-title="name"
-                    item-value="id"
-                    v-model="deliveryCity"
-                    variant="outlined"
-                    color="primary-color"
-                    :hide-details="true"
-                    density="compact"
-                  ></v-select>
+                  <select v-model="deliveryCity" class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                    
+                    <option :value="c.id" v-for="c in cities" :key="c.id">
+                      {{ c.name }}
+                    </option>
+                  </select>
                   <div class="mb-1 my-2 text-body-2 tw-text-zinc-700">Fee</div>
                   <v-text-field
                     :hide-details="true"

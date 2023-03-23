@@ -1,5 +1,5 @@
 <template>
-  <div :key="confirmation" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
+  <div :key="delivery" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
     <button
         @click="toggle"
         :class="[selected.text, selected.bg, selected.ring]"
@@ -28,23 +28,23 @@
         </li>
       </ul>
     </div>
-    <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
+    <!-- <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
       <div class="tw-min-w-[300px]">
         <p>Enter note</p>
         <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
 
         </v-textarea>
       </div>
-    </popup>
+    </popup> -->
     
   </div>
 </template>
 
 <script>
 import Sale from '@/api/Sale';
-import { confirmations } from '@/config/orders';
+import { deliveryStatus } from '@/config/orders';
 export default {
-    props: ['confirmation', 'id'],
+    props: ['delivery', 'id'],
     data() {
         return {
             isLoading: false,
@@ -53,7 +53,7 @@ export default {
             nextOption: null,
             note: '',
             selectedId: 0,
-            allOptions: confirmations
+            allOptions: deliveryStatus
         }
     },
     computed: {
@@ -74,34 +74,17 @@ export default {
         toggle() {
             this.isOpen = !this.isOpen
         },
-        handleResolved(response) {
-        if(response) {
-          this.selectedId = this.nextOption
-          this.showPopup = false
-          this.updateOrderWithNote()
-          .catch(this.$handleApiError)
-          .finally(() => this.showPopup = false)
-        } else {
-          this.showPopup = false
-        }
-    },
-        async handleChange(option) {
+        handleChange(option) {
 
           if (option.id === this.selectedId) return false;
           
-          if (option.value !== 'confirmer'){
             this.selectedId = option.id
             this.updateOrder()
-            } else {
-              this.nextOption = option.id
-              this.showPopup = true
-            }
-            
             this.close()
         },
         async updateOrder() {
           this.isLoading = true
-          return Sale.agenteUpdateConfirmation(this.id, this.selected.value)
+          return Sale.deliveryUpdateDelivery(this.id, this.selected.value)
           .then(
             res => {
               if (res.data.code === 'SUCCESS') {
@@ -109,7 +92,7 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
-                this.updateConfirmation(this.id, this.selected.value)
+                this.updateDelivery(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
@@ -119,36 +102,14 @@ export default {
             () => this.$emit('update', this.selected.value)
           );
         },
-        async updateOrderWithNote() {
-          this.isLoading = true
-          return Sale.agenteUpdateConfirmationWithNote(this.id, this.selected.value, this.note)
-          .then(
-            res => {
-              if (res.data.code === 'SUCCESS') {
-                this.$alert({
-                  type: 'success',
-                  title: res.data.data
-                })
-                this.updateConfirmationNote(this.id, this.selected.value, this.note)
-                this.isLoading = false
-              }
-            },
-            err => this.$handleApiError(err)
-          )
-          .then(
-            () => this.$emit('update', this.selected.value)
-          );
+        
+        updateDelivery(id, delivery) {
+            this.$store.dispatch('sale/updateDelivery', {id, delivery})
         },
-        updateConfirmation(id, confirmation) {
-          this.$store.dispatch('sale/updateConfirmation', {id, confirmation})
-        },
-        updateConfirmationNote(id, confirmation, note) {
-          this.$store.dispatch('sale/updateConfirmationWithNote', {id, confirmation, note})
-        }
     },
     mounted() {
-      if (this.availableOptions.includes(this.confirmation)) {
-        this.selectedId = this.allOptions.find(option => option.value == this.confirmation).id;
+      if (this.availableOptions.includes(this.delivery)) {
+        this.selectedId = this.allOptions.find(option => option.value == this.delivery).id;
       } else {
         this.selectedId = 0;
       }

@@ -56,6 +56,17 @@
               <v-icon class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
             </div>
           </div>
+          <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"> 
+            <span class="tw-text-sm tw-text-neutral-600">Delivery</span>
+            <div  class="tw-relative">
+              <select v-model="deliveryFilter" class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
+                <option :value="!delivery.value ? 'all' : delivery.value" :key="delivery.id" v-for="delivery in deliveryStatus">
+                  {{ !delivery.value ? 'Select' : delivery.value }}
+                </option>
+              </select>
+              <v-icon class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
+            </div>
+          </div>
         </div>
       </div>
       <div class="">
@@ -71,7 +82,7 @@ import {localUrl} from '@/config/config'
 import SalesTable from './SalesTable.vue'
 import Sale from '@/api/Sale'
 import User from '@/api/User'
-import { confirmations } from '@/config/orders'
+import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 export default {
@@ -80,11 +91,13 @@ export default {
     return {
       localUrl,
       confirmations,
+      deliveryStatus,
       isLoaded: false,
       showFilters: false,
       confirmationFilter: 'all',
       affectationFilter: 'all',
       upsellFilter: 'all',
+      deliveryFilter: 'all',
       search: '',
       columns: 
       [
@@ -147,6 +160,7 @@ export default {
       const confirmationFilter = this.confirmationFilter;
       const affectationFilter = this.affectationFilter;
       const upsellFilter = this.upsellFilter;
+      const deliveryFilter = this.deliveryFilter;
 
       return this.sales.filter(item => {
         // filter by confirmation
@@ -161,6 +175,11 @@ export default {
 
         // filter by upsell
         if (upsellFilter !== 'all' && item.upsell !== upsellFilter) {
+          return false;
+        }
+
+        // filter by delivery
+        if (deliveryFilter !== 'all' && item.delivery !== deliveryFilter) {
           return false;
         }
 

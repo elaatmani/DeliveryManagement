@@ -210,6 +210,7 @@ export default {
   data() {
     return {
       serverUrl,
+      isFetched: false,
       isRolesFetched: false,
       isUserFetched: false,
       isProductsFetched: false,
@@ -267,7 +268,7 @@ export default {
       return this.$store.getters["user/roles"];
     },
     isFormReady() {
-        return this.isRolesFetched && this.isUserFetched && this.isProductsFetched
+        return this.isFetched
     },
     isAgente() {
       return this.role === 2;
@@ -385,8 +386,8 @@ export default {
             }).catch(this.$handleApiError)
     },
 
-    async getUser() {
-            await User.getUser(this.$route.params.id)
+    getUser() {
+            return User.getUser(this.$route.params.id)
               .then((res) => {
                 if (res?.data.code == "USER_SUCCESS") {
                   const user = res.data.data.user;
@@ -407,7 +408,7 @@ export default {
     },
 
     getProducts() {
-      Product.all().then(
+      return Product.all().then(
         res => {
           this.products = res.data.data.products
           if(this.products.length > 0) {
@@ -419,6 +420,14 @@ export default {
         },
         err => this.$handleApiError(err)
       )
+    },
+    getCities() {
+      return User.cities().then(
+          res => {
+            console.log(res.data);
+            this.cities = res.data.data
+          }
+        )
     }
   },
 
@@ -428,9 +437,12 @@ export default {
     } else {
       this.isRolesFetched = true
     }
-    await this.getUser().then(
-      () => this.getProducts() 
-    );
+
+    Promise.allSettled([this.getRoles(), this.getUser(), this.getProducts()])
+    .then(
+      () => this.isFetched = true,
+      err => this.$handleApiError(err)
+    )
     
   },
 };

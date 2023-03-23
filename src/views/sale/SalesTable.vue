@@ -45,7 +45,7 @@
                         <SaleAffectation :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.delivery }}
+                        <SaleDelivery :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.quantity }}
@@ -88,10 +88,11 @@
 import SaleConfirmation from '@/views/sale/partials/SaleConfirmation'
 import SaleUpsell from '@/views/sale/partials/SaleUpsell'
 import SaleAffectation from '@/views/sale/partials/SaleAffectation'
+import SaleDelivery from '@/views/sale/partials/SaleDelivery'
 
 export default {
     props: [ 'columns', 'sales' ],
-    components: { SaleConfirmation, SaleUpsell, SaleAffectation },
+    components: { SaleConfirmation, SaleUpsell, SaleAffectation, SaleDelivery },
 
     data() {
         return {

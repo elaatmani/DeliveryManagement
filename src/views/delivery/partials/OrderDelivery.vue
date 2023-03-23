@@ -92,6 +92,7 @@ export default {
                   type: 'success',
                   title: res.data.data
                 })
+                this.updateDelivery(this.id, this.selected.value)
                 this.isLoading = false
               }
             },
@@ -100,6 +101,10 @@ export default {
           .then(
             () => this.$emit('update', this.selected.value)
           );
+        },
+
+        updateDelivery(id, delivery) {
+            this.$store.dispatch('order/updateDelivery', {id, delivery})
         },
         
     },
