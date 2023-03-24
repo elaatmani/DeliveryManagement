@@ -362,7 +362,7 @@ export default {
       )
       this.id += 1;
 
-      this.city = 1;
+      this.deliveryCity = 1;
       this.deliveryCityFee = 0;
     },
     create() {

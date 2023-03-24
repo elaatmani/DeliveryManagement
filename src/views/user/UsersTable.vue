@@ -3,7 +3,7 @@
     
     <div class="tw-relative tw-overflow-x-auto  sm:tw-rounded-lg">
         <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
-            <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
+            <thead class="tw-text-xs tw-text-gray-700 tw- tw-bg-gray-50">
                 <tr>
                     <th scope="col" class="tw-p-4">
                         <div class="tw-flex tw-items-center">
@@ -33,7 +33,7 @@
                         {{ user.firstname }} {{ user.lastname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ user.role_name }}
+                        <RoleName :role="user.role_name" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ user.email }}
@@ -59,10 +59,11 @@
 <script>
 import UserActions from '@/views/user/partials/UserActions'
 import UserStatus from '@/views/user/partials/UserStatus'
+import RoleName from '@/views/user/partials/RoleName'
 
 export default {
     props: [ 'columns', 'users' ],
-    components: { UserActions, UserStatus },
+    components: { UserActions, UserStatus, RoleName },
 
     methods: {
     }

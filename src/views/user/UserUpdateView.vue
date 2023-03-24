@@ -86,6 +86,9 @@
                   ></v-text-field>
                 </div>
               </v-col>
+
+              
+
               <v-col class="!tw-py-0" cols="12">
                 <div class="tw-w-full tw-flex tw-gap-10 tw-items-center">
                     <span>Update Password: </span>
@@ -124,6 +127,7 @@
                   ></v-text-field>
                 </div>
               </v-col>
+              
             </v-row>
           </v-col>
           <v-col cols="12" md="6">
@@ -170,9 +174,66 @@
                   ></v-select>
                 </div>
               </v-col>
+              <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="12">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">City</div>
+                  <select v-model="city" class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                    
+                    <option :value="c.id" v-for="c in cities" :key="c.id">
+                      {{ c.name }}
+                    </option>
+                  </select>
+                </div>
+              </v-col>
+
+              
             </v-row>
           </v-col>
-          
+          <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
+                  <select v-model="deliveryCity" class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                    
+                    <option :value="c.id" v-for="c in cities" :key="c.id">
+                      {{ c.name }}
+                    </option>
+                  </select>
+                  <div class="mb-1 my-2 text-body-2 tw-text-zinc-700">Fee</div>
+                  <v-text-field
+                    :hide-details="true"
+                    v-model="deliveryCityFee"
+                    clearable
+                    type="number"
+                    clear-icon="mdi-close"
+                    class="tw-w-full"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-text-field>
+                  <v-btn @click="handleAddCity" class="tw-text-white tw-my-3" variant="flat" color="primary-color" block>
+                    <span class="text-white">Add</span>
+                  </v-btn>
+                </div>
+              </v-col>
+
+              <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
+                  <div>
+                    <div class="tw-flex tw-items-center tw-gap-2" v-for="c in deliveryCities" :key="c">
+                      <div>
+                      {{  cities.filter(i => i.id == c.city_id)[0]?.name }}
+                      </div>
+                      <div>
+                        {{ c.fee }} DH
+                      </div>
+                      <div>
+                        <v-icon color="red" @click="removeCity(c.id)" size="x-small">mdi-delete</v-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </v-col>
         </v-row>
       </div>
 
@@ -217,6 +278,15 @@ export default {
       isLoading: false,
 
       updatePassword: false,
+
+      autoId: 1,
+      cities: [],
+      deliveryCity: 1,
+      deliveryCityFee: 0,
+      city: 1,
+      deliveryCities: [
+      ],
+
 
       formStatus: {
         firstname: {
@@ -273,6 +343,9 @@ export default {
     isAgente() {
       return this.role === 2;
     },
+    isDelivery() {
+      return this.role === 3;
+    },
     user() {
         return {
             id: this.id,
@@ -282,6 +355,8 @@ export default {
             email: this.email,
             password: this.password,
             product_id: this.product,
+            deliveryCities: this.deliveryCities,
+            city: this.city,
             role: this.role,
             status: this.status ? 1 : 0,
         }
@@ -375,6 +450,26 @@ export default {
       );
     },
 
+    removeCity(id) {
+      this.deliveryCities = this.deliveryCities.filter(i => i.id !== id)
+    },
+
+    handleAddCity() {
+      if(this.deliveryCityFee <= 0) return false;
+
+      this.deliveryCities.push(
+        {
+          id: this.autoId,
+          city_id: this.deliveryCity,
+          fee: this.deliveryCityFee
+        }
+      )
+      this.autoId += 1;
+
+      this.deliveryCity = 1;
+      this.deliveryCityFee = 0;
+    },
+
     async getRoles() {
         await User.roles()
             .then((res) => {
@@ -386,7 +481,7 @@ export default {
             }).catch(this.$handleApiError)
     },
 
-    getUser() {
+    async getUser() {
             return User.getUser(this.$route.params.id)
               .then((res) => {
                 if (res?.data.code == "USER_SUCCESS") {
@@ -401,13 +496,28 @@ export default {
                   this.user_image = user.photo
                   this.status = user.status == 1 ? true : false
                   this.isUserFetched = true
+                  if (user.role == 3) {
+                    console.log('this is delivery');
+                    this.city = user.city.id
+                    let id = 0;
+                    this.deliveryCities = user.deliveryPlaces.map(
+                      item =>  {
+                        if (parseInt(item.id) >= id) {
+                          id = parseInt(item.id) + 1
+                        }
+                        return { id: item.id, city_id: item.city_id, fee: parseInt(item.fee) }
+                      }
+                    );
+
+                    this.autoId = id;
+                  }
                 }
             })
             .catch(this.$handleApiError)
             
     },
 
-    getProducts() {
+    async getProducts() {
       return Product.all().then(
         res => {
           this.products = res.data.data.products
@@ -421,7 +531,7 @@ export default {
         err => this.$handleApiError(err)
       )
     },
-    getCities() {
+    async getCities() {
       return User.cities().then(
           res => {
             console.log(res.data);
@@ -438,7 +548,7 @@ export default {
       this.isRolesFetched = true
     }
 
-    Promise.allSettled([this.getRoles(), this.getUser(), this.getProducts()])
+    Promise.allSettled([this.getRoles(), this.getUser(), this.getProducts(), this.getCities()])
     .then(
       () => this.isFetched = true,
       err => this.$handleApiError(err)

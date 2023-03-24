@@ -1,8 +1,8 @@
 <template>
   <div class="tw-flex tw-items-center  tw-h-full">
     <div :class="current.bg" class="tw-px-2 tw-py-1 tw-rounded-lg">
-        <div :class="current.text" class=" tw-text-sm tw-font-bold">
-            {{ model.role_name }}
+        <div :class="current.text" class=" tw-text-sm tw-uppercase">
+            {{ role }}
         </div>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    props: ["rowIndex", "prop", "model"],
+    props: ["role"],
     data() {
         return {
             variants: {
@@ -36,8 +36,8 @@ export default {
 
     computed: {
         current() {
-            if (['admin', 'delivery', 'agente'].includes(this.model.role_name)){
-                return this.variants[this.model.role_name]
+            if (['admin', 'delivery', 'agente'].includes(this.role)){
+                return this.variants[this.role]
             }
 
             return this.variants['default']
