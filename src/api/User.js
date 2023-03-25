@@ -47,6 +47,24 @@ class User {
         })
     }
 
+    async updateProfile(user, updatePassword) {
+        await Csrf.getCookie();
+
+        return Api.post('api/users/profile', { 
+            password: user.password,
+            phone: user.phone,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            updatePassword: updatePassword
+        })
+    }
+
+    async profile() {
+        await Csrf.getCookie();
+
+        return Api.get('api/users/profile')
+    }
+
 
     async logout() {
         await Csrf.getCookie();

@@ -227,7 +227,7 @@ export const links = [
         id: 4,
         title: 'Settings',
         module: 'settings',
-        to: '/setings',
+        to: '/settings',
         gate: 'all',
         hasChildren: false,
         icon: {

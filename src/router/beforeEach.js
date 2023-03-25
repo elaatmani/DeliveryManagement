@@ -5,6 +5,8 @@ export default function (to) {
     // Changing page title
     document.title = to.meta?.title
     // return true
+
+    console.log(to);
     
     // handle if user is not logged
     if (!store.getters['user/isLoggedIn']) {

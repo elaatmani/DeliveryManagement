@@ -3,7 +3,7 @@ import beforeEach from './beforeEach'
 
 // Routes
 import auth from './routes/auth'
-import dashboard from './routes/dashboard'
+import main from './routes/main'
 import product from './routes/product'
 import category from './routes/category'
 import subcategory from './routes/subcategory'
@@ -19,7 +19,7 @@ import TestView from '@/views/TestView'
 
 const routes = [
   auth,
-  dashboard,
+  main,
   product,
   category,
   subcategory,
@@ -43,7 +43,7 @@ const routes = [
           module: 'test',
           gate: 'all'
         }
-      },
+      }
     ]
   },
 
@@ -68,6 +68,9 @@ const routes = [
     beforeEnter: (to, from, next) => {
       return next({ name: '404' })
     },
+    meta: {
+      title: 'Not Found'
+    }
   },
 
 ]
