@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import ability from './plugins/ability'
 import alert from './plugins/alert'
 import apiErrorHandler from './plugins/apiErrorHandler'
+import VueNumber from 'vue-number-animation'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
 import PopupVue from '@/components/PopupVue'
@@ -23,6 +24,7 @@ createApp(App)
   .use(ability)
   .use(alert)
   .use(apiErrorHandler)
+  .use(VueNumber)
 
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)

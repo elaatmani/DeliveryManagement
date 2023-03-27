@@ -13,6 +13,41 @@
 
     <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
+      <div class="mb-5">
+        <div class="tw-grid tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
+                <DashItem :dash="newSales" />
+          </div>
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
+                <DashItem :dash="toProcess" />
+          </div>
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
+                <DashItem :dash="confirmedSales" />
+          </div>
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
+                <DashItem :dash="deliveredSales" />
+          </div>
+
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-5">
+                <DashItem :dash="shippedSales" />
+          </div>
+
+        </div>
+        <!-- <v-row >
+            <v-col
+            cols="12" sm="6" md="3"
+            v-for="dash in filledDashItems"
+            :key="dash.id"
+            >
+            </v-col>
+        </v-row> -->
+      </div>
+
       <div class="mb-5 tw-flex">
         <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
           <v-icon color="white" size="xx-large">mdi-camera-control</v-icon>
@@ -80,13 +115,14 @@
 import {localUrl} from '@/config/config'
 
 import SalesTable from './SalesTable.vue'
+import DashItem from '@/views/sale/partials/DashItem'
 import Sale from '@/api/Sale'
 import User from '@/api/User'
 import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 export default {
-  components: {  SalesTable },
+  components: {  SalesTable, DashItem },
   data() {
     return {
       localUrl,
@@ -99,6 +135,49 @@ export default {
       upsellFilter: 'all',
       deliveryFilter: 'all',
       search: '',
+
+      filledDashItems: [
+
+                {
+                    id: 1,
+                    title: 'Customers',
+                    value: 2300,
+                    color: 'primary-orange',
+                    icon: 'mdi-account-outline'
+                },
+
+                {
+                    id: 2,
+                    title: 'Suppliers',
+                    value: 300,
+                    color: 'primary-blue',
+                    icon: 'mdi-account-check-outline'
+                },
+
+                {
+                    id: 3,
+                    title: 'Purchase Invoice',
+                    value: 1100,
+                    color: 'primary-indigo',
+                    icon: 'mdi-file-document-outline'
+                },
+
+                {
+                    id: 4,
+                    title: 'Agents',
+                    value: 10,
+                    color: 'primary-green',
+                    icon: 'mdi-moped-outline'
+                },
+                {
+                    id: 5,
+                    title: 'Returns',
+                    value: 10,
+                    color: 'red',
+                    icon: 'mdi-moped-outline'
+                },
+      ],
+
       columns: 
       [
         {
@@ -155,6 +234,59 @@ export default {
     },
     sales() {
       return this.$store.getters['sale/sales']
+    },
+    newSales() {
+      return {
+        id: 1,
+        title: 'New',
+        value: this.sales.filter(i => !i.confirmation).length,
+        // value: 35,
+        color: 'primary-green',
+        icon: 'mdi mdi-new-box'
+      }
+    },
+    toProcess() {
+      return {
+        id: 2,
+        title: 'Process',
+        value: this.sales.filter(
+          i => (!!i.confirmation)
+          && (['confirmer, livre', 'expidier'].includes(i.confirmation))
+        ).length,
+        // value: 231,
+        color: 'primary-orange',
+        icon: 'mdi-reload'
+      }
+    },
+    confirmedSales() {
+      return {
+        id: 3,
+        title: 'Confirmed',
+        value: this.sales.filter(i => i.confirmation == 'confirmer').length,
+        // value: 112,
+        color: 'deep-purple-accent-2',
+        icon: 'mdi-phone-check'
+      }
+    },
+    deliveredSales() {
+      return {
+        id: 4,
+        title: 'Delivered',
+        value: this.sales.filter(i => i.confirmation == 'livre').length,
+        // value: 412,
+        color: 'primary-blue',
+        icon: 'mdi-account-check-outline'
+      }
+    },
+    shippedSales() {
+      return {
+        id: 5,
+        title: 'Shipped',
+        value: this.sales.filter(i => i.confirmation == 'expidier').length,
+        // value: 112,
+        color: 'red',
+        icon: 'mdi-truck'
+      }
     },
     filteredSales() {
       const confirmationFilter = this.confirmationFilter;
