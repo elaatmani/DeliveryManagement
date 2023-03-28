@@ -18,6 +18,7 @@
     "core-js": "^3.8.3",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
+    "last-seen-ago": "^1.1.0",
     "roboto-fontface": "*",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",

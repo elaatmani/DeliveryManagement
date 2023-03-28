@@ -42,6 +42,19 @@
                         {{ user.phone }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
+                        <div class="tw-text-red-500" v-if="!user.last_action">
+                            Never Connected
+                        </div>
+                        <div v-else>
+                            <div class="tw-text-green-500 tw-flex tw-items-center tw-gap-2" v-if="isOnline(lastSeen(user.last_action)) == true">
+                                 <div class="tw-p-1 tw-rounded-full tw-bg-green-500"></div> Online
+                            </div>
+                            <div class="tw-text-neutral-700" v-else>
+                                {{ lastSeen(user.last_action) }}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
                         <UserStatus v-if="$can('update_user_status')" :user="user" />
                     </td>
                     <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
@@ -61,11 +74,22 @@ import UserActions from '@/views/user/partials/UserActions'
 import UserStatus from '@/views/user/partials/UserStatus'
 import RoleName from '@/views/user/partials/RoleName'
 
+import { getLastSeen } from 'last-seen-ago'
+
 export default {
     props: [ 'columns', 'users' ],
     components: { UserActions, UserStatus, RoleName },
 
     methods: {
+        lastSeen(last_action) {
+            let t = Date.parse(last_action.replace('-', '/')) / 1000;
+            return getLastSeen(t) 
+        },
+        isOnline(time) {
+            let times = ['Just Now', 'one minute ago', '2 minutes ago', '3 minutes ago']
+
+            return times.includes(time)
+        }
     }
 }
 </script>

@@ -251,7 +251,7 @@ export default {
         title: 'Process',
         value: this.sales.filter(
           i => (!!i.confirmation)
-          && (['confirmer, livre', 'expidier'].includes(i.confirmation))
+          && !(['confirmer', 'livre', 'expidier'].includes(i.confirmation))
         ).length,
         // value: 231,
         color: 'primary-orange',

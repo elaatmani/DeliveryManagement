@@ -95,6 +95,10 @@ export default {
             name: "Phone Number",
         },
         {
+            prop: "last_seen",
+            name: "Last Seen",
+        },
+        {
             prop: 'status',
             name: 'Active',
         },
@@ -168,7 +172,6 @@ export default {
   mounted() {
     
     localStorage.removeItem('updatedUsers')
-
     this.getUsers()
 
     

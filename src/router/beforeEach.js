@@ -1,4 +1,5 @@
 import store from '@/store'
+import User from '@/api/User';
 export default function (to) {
 
 
@@ -16,6 +17,9 @@ export default function (to) {
 
         return { name: 'login' }
     }
+
+    // Update user's last action
+    User.online();
 
     // handle if user is logged and want to show login
     if (to.path == '/login') {

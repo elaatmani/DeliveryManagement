@@ -25,6 +25,12 @@
     </v-row>
     <!-- /Second Section -->
 
+    <v-row v-if="isAdmin">
+        <v-col cols="12" md="6">
+            <UsersTable />
+        </v-col>
+    </v-row>
+
     <div class="tw-min-h-[1000px]">
 
     </div>
@@ -35,9 +41,10 @@
 import { localUrl } from '@/config/config'
 import DashItem from '@/views/dashboard/partials/DashItem'
 import DashItemFilled from '@/views/dashboard/partials/DashItemFilled'
+import UsersTable from '@/views/dashboard/partials/UsersTable'
 
 export default {
-    components: { DashItem, DashItemFilled },
+    components: { DashItem, DashItemFilled, UsersTable },
 
     data() {
         return {
@@ -108,6 +115,14 @@ export default {
                     icon: 'mdi-moped-outline'
                 },
             ]
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.getters['user/user']
+        },
+        isAdmin() {
+            return this.user.role == "admin"
         }
     }
 

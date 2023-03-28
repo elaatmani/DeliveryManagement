@@ -59,6 +59,12 @@ class User {
         })
     }
 
+    async online() {
+        await Csrf.getCookie();
+
+        return Api.get('api/user')
+    }
+
     async profile() {
         await Csrf.getCookie();
 
