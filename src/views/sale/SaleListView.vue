@@ -136,47 +136,6 @@ export default {
       deliveryFilter: 'all',
       search: '',
 
-      filledDashItems: [
-
-                {
-                    id: 1,
-                    title: 'Customers',
-                    value: 2300,
-                    color: 'primary-orange',
-                    icon: 'mdi-account-outline'
-                },
-
-                {
-                    id: 2,
-                    title: 'Suppliers',
-                    value: 300,
-                    color: 'primary-blue',
-                    icon: 'mdi-account-check-outline'
-                },
-
-                {
-                    id: 3,
-                    title: 'Purchase Invoice',
-                    value: 1100,
-                    color: 'primary-indigo',
-                    icon: 'mdi-file-document-outline'
-                },
-
-                {
-                    id: 4,
-                    title: 'Agents',
-                    value: 10,
-                    color: 'primary-green',
-                    icon: 'mdi-moped-outline'
-                },
-                {
-                    id: 5,
-                    title: 'Returns',
-                    value: 10,
-                    color: 'red',
-                    icon: 'mdi-moped-outline'
-                },
-      ],
 
       columns: 
       [
