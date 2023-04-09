@@ -14,7 +14,7 @@
     <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5">
-        <div class="tw-grid tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
+        <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
 
           <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
                 <DashItem :dash="newSales" />
@@ -33,7 +33,7 @@
           </div>
 
 
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-5">
+          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-4">
                 <DashItem :dash="shippedSales" />
           </div>
 
@@ -156,12 +156,12 @@ export default {
           name: 'Upsell',
         },
         {
-          prop: 'status',
-          name: 'Status',
+          prop: 'confirmation',
+          name: 'Confirmation',
         },
         {
           prop: 'affectation',
-          name: 'Affecté',
+          name: 'Affected',
         },
         {
           prop: 'delivery',
@@ -182,6 +182,10 @@ export default {
         {
             prop: 'date',
             name: 'Date',
+        },
+        {
+            prop: 'actions',
+            name: 'Actions',
         },
         
     ],

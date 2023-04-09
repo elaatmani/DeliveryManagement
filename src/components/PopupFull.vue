@@ -11,22 +11,11 @@
         >
           <div
             name="body"
-            class=" tw-z-[50999] tw-bg-white md:tw-min-w-[300px] md:tw-max-w-[800px] tw-flex tw-flex-col md:tw-min-h-[170px] tw-shadow-lg tw-rounded-lg tw-py-3 tw-px-5"
+            @click.self="resolve(false)"
+            class="tw-z-[50999] tw-w-full md:tw-min-w-[300px] tw-overflow-y-auto tw-max-h-screen   tw-flex tw-flex-col md:tw-min-h-[170px]"
           >
-            <div class="tw-font-medium tw-text-lg  mb-5 tw-text-start" :class="currentType.class">
-              <v-icon size="small" class="mr-1">{{ currentType.icon }}</v-icon>
-              <span>{{ title }}</span>
-              </div>
-            <div v-if="body" class="tw-text-center tw-text-lg tw-text-gray-700" v-html="body">
-            </div>
-            <div class="tw-text-lg tw-text-gray-700" v-else>
-              <slot></slot>
-            </div>
-            <v-spacer></v-spacer>
-            <div class="tw-flex tw-gap-3 tw-justify-end mt-5">
-              <v-btn  variant="flat" color="grey" @click="resolve(false)">Cancel</v-btn>
-              <v-btn v-if="!noConfirm" :loading="loading" variant="flat" :color="!!btnColor ? btnColor : 'red'" @click="resolve(true)">Confirm</v-btn>
-            </div>
+            <slot></slot>
+            
           </div>
 
           <div
@@ -74,7 +63,7 @@ export default {
   },
   methods: {
     resolve(value) {
-      this.$emit("resolved", value);
+      this.$emit("cancel", value);
     },
   },
   computed: {

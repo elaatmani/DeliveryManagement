@@ -59,10 +59,15 @@
                 </div>
             </div>
 
-            <div v-if="false" class="tw-flex tw-justify-end">
+            <div  class="tw-flex tw-gap-2 tw-justify-end">
+                <v-btn @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
+                    <span class="text-white">
+                        Edit
+                    </span>
+                </v-btn>
                 <v-btn @click="getOrder" color="primary-color" variant="flat" class="text-capitalize">
                     <span class="text-white">
-                        Confirm
+                        Save
                     </span>
                 </v-btn>
             </div>
@@ -74,6 +79,63 @@
 
       </div>
     </div>
+
+    <popup-full :visible="showUpdatePopup" @cancel="showUpdatePopup = false">
+        <div class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5">
+            <h1 class="tw-text-lg">Update Order</h1>
+            
+            <div class="tw-grid tw-grid-cols-12 tw-gap-y-1 tw-gap-x-3 mt-5">
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Client
+                    </div>
+                    <input v-model="fullname" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-0 tw-text-xs">{{ 'Client name could not be empty' }}</div>
+                </div>
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Phone
+                    </div>
+                    <input v-model="phone" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                </div>
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        City
+                    </div>
+                    <input v-model="city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                </div>
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Address
+                    </div>
+                    <input v-model="adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                </div>
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Quantity
+                    </div>
+                    <input v-model="quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                </div>
+            </div>
+
+            <div  class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
+                <v-btn :loading="isLoading" @click="updateOrder" color="primary-color" variant="flat" class="text-capitalize">
+                    <span class="text-white">
+                        Save
+                    </span>
+                </v-btn>
+            </div>
+        </div>
+    </popup-full>
   </div>
 </template>
 
@@ -90,6 +152,8 @@ export default {
     return {
         isOrderExists: false,
         isLoaded: false,
+        isLoading: false,
+        showUpdatePopup: false,
 
         "id": null,
         "fullname": null,
@@ -117,6 +181,17 @@ export default {
     updateConfirmation(newValue) {
         this.confirmation = newValue
     },
+    updateOrder() {
+        this.isLoading = true
+        setTimeout(() => {
+            this.isLoading = false
+            this.showUpdatePopup = false
+            this.$alert({
+                type: 'success',
+                title: 'Order updated'
+            })
+        }, 1000)
+    },
     addOrder() {
         this.isLoaded = false
         Sale.agenteAddOrder().then(
@@ -138,6 +213,7 @@ export default {
                         this.product_name = order?.product_name
                         this.agente_id = order?.agente_id
                         this.upsell = order?.upsell
+                        this.city = order?.city
                         this.phone = order?.phone
                         this.adresse = order?.adresse
                         this.quantity = order?.quantity
@@ -173,6 +249,7 @@ export default {
                     this.agente_id = order?.agente_id
                     this.upsell = order?.upsell
                     this.phone = order?.phone
+                    this.city = order?.city
                     this.adresse = order?.adresse
                     this.quantity = order?.quantity
                     this.confirmation = order?.confirmation

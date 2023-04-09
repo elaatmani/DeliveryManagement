@@ -56,13 +56,15 @@
         </table>
     </div>
 
-    <!-- Pagination -->
-        <div class="mt-5 tw-flex tw-justify-between">
-            <div class="d-flex align-center">
-                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700">Show per page: </div>
-                <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
+        <!-- Pagination -->
+        <div class="mt-5 tw-grid tw-grid-cols-12 tw-gap-5">
+            <div class="tw-col-span-12 md:tw-col-span-6 d-flex align-center">
+                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700 tw-whitespace-nowrap">Show per page: </div>
+                <select v-model="paginationLimit" class="focus:tw-border-orange-400 tw-border-solid tw-w-[70px] ml-2 px-2 tw-py-2 tw-rounded-md tw-border tw-flex tw-items-center">
+                    <option :value="o" :key="o" v-for="o in allowedLimit">{{ o }}</option>
+                </select>
             </div>
-            <div class="d-flex align-center">
+            <div class="tw-col-span-12 md:tw-col-span-6 d-flex tw-justify-end tw-flex-wrap align-center">
                 <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  products.length : nextRange) }} of {{  products.length }} items </div>
                 <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">

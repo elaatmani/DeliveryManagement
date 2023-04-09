@@ -28,14 +28,27 @@
         </li>
       </ul>
     </div>
-    <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
+    <!-- <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
       <div class="tw-min-w-[300px]">
         <p>Enter note</p>
         <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
 
         </v-textarea>
       </div>
-    </popup>
+    </popup> -->
+    <popup-full type="info" title="Add Note" btn-color="blue" @cancel="showPopup = false"  :visible="showPopup">
+      <div class="md:tw-min-w-[300px] tw-bg-white tw-shadow-lg tw-rounded-lg tw-py-3 tw-px-5 !tw-w-[95%] tw-mx-auto">
+        <p class="tw-text-neutral-600 mb-2">Enter note</p>
+        <textarea v-model="note" cols="30" rows="3" class="tw-rounded-lg tw-px-3 tw-py-1 tw-outline-none tw-w-full tw-border tw-border-solid tw-border-neutral-600 focus:tw-border-orange-500">
+
+        </textarea>
+        
+        <div class="tw-flex tw-justify-end tw-mt-2">
+          <v-btn class="tw-capitalize" :loading="isLoading" variant="flat" color="green" @click="handleClick">Confirm</v-btn>
+        </div>
+        
+      </div>
+    </popup-full>
     
   </div>
 </template>
@@ -86,6 +99,13 @@ export default {
           this.showPopup = false
         }
     },
+        handleClick() {
+          this.selectedId = this.nextOption
+          this.showPopup = false
+          this.updateOrderWithNote()
+          .catch(this.$handleApiError)
+          .finally(() => this.showPopup = false)
+        },
         async handleChange(option) {
 
           if (option.id === this.selectedId) return false;

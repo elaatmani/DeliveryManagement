@@ -10,6 +10,7 @@ import VueNumber from 'vue-number-animation'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
 import PopupVue from '@/components/PopupVue'
+import PopupFull from '@/components/PopupFull'
 
 // import styling and tailwind
 import '@/assets/style.css'
@@ -29,6 +30,7 @@ createApp(App)
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)
   .component('Popup', PopupVue)
+  .component('PopupFull', PopupFull)
   
 
   .mount('#app')

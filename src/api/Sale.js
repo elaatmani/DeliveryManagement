@@ -8,6 +8,11 @@ class Sale {
         return Api.get('api/sales');
     }
 
+    async delete(id) {
+        await Csrf.getCookie();
+        return Api.get('api/sales/delete/' + id);
+    }
+
     async agenteOrders() {
         await Csrf.getCookie();
         return Api.get('api/orders');

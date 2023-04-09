@@ -42,7 +42,7 @@
                         <SaleConfirmation :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleAffectation :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
+                        <SaleAffectation v-if="sale.confirmation == 'confirmer'" :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <SaleDelivery :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
@@ -59,6 +59,9 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale?.created_at?.split('T')[0] }}
                     </td>
+                    <td class="tw-px-6 tw-py-4">
+                        <SaleActions :id="sale.id" :key="sale.delivery" :sale="sale" />
+                    </td>
                 </tr>
                 
             </tbody>
@@ -66,12 +69,14 @@
     </div>
 
     <!-- Pagination -->
-        <div class="mt-5 tw-flex tw-justify-between">
-            <div class="d-flex align-center">
-                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700">Show per page: </div>
-                <v-select :hide-details="true" v-model="paginationLimit" :items="allowedLimit" variant="outlined" density="compact" color="primary-color"></v-select>
+        <div class="mt-5 tw-grid tw-grid-cols-12 tw-gap-5">
+            <div class="tw-col-span-12 md:tw-col-span-6 d-flex align-center">
+                <div class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700 tw-whitespace-nowrap">Show per page: </div>
+                <select v-model="paginationLimit" class="focus:tw-border-orange-400 tw-border-solid tw-w-[70px] ml-2 px-2 tw-py-2 tw-rounded-md tw-border tw-flex tw-items-center">
+                    <option :value="o" :key="o" v-for="o in allowedLimit">{{ o }}</option>
+                </select>
             </div>
-            <div class="d-flex align-center">
+            <div class="tw-col-span-12 md:tw-col-span-6 d-flex tw-justify-end tw-flex-wrap align-center">
                 <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  sales.length : nextRange) }} of {{  sales.length }} items </div>
                 <div>
                 <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
@@ -89,10 +94,11 @@ import SaleConfirmation from '@/views/sale/partials/SaleConfirmation'
 import SaleUpsell from '@/views/sale/partials/SaleUpsell'
 import SaleAffectation from '@/views/sale/partials/SaleAffectation'
 import SaleDelivery from '@/views/sale/partials/SaleDelivery'
+import SaleActions from '@/views/sale/partials/SaleActions'
 
 export default {
     props: [ 'columns', 'sales' ],
-    components: { SaleConfirmation, SaleUpsell, SaleAffectation, SaleDelivery },
+    components: { SaleConfirmation, SaleUpsell, SaleAffectation, SaleDelivery, SaleActions },
 
     data() {
         return {
