@@ -6,5 +6,8 @@
 
 A Dashboard where you can manage Products, Sales, Deliveries, Agents and More `ls` this project was built using `Vue js` and `Laravel`. Here are the screenshot of working example.
 
-Not completed yet.
+ ![image](https://raw.githubusercontent.com/devYa9/DeliveryManagement/main/public/images/deliveryManagement.png)
+
+
+# The project is not completed yet.
 
