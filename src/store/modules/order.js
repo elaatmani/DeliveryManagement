@@ -2,6 +2,7 @@
 
 let initialState = {
     orders: [],
+    order: null
 }
 
 export default {
@@ -12,11 +13,25 @@ export default {
 
     getters: {
         orders: (state) => state.orders,
+        order: (state) => state.order,
     },
 
     mutations: {
         SET_ORDERS: (state, payload) => {
             state.orders = payload
+        },
+        SET_ORDER: (state, payload) => {
+            state.order = payload
+        },
+        UPDATE_ORDER: (state, payload) => {
+            state.orders = state.orders.map(
+                item => {
+                    if(item.id === payload.id) {
+                        return payload.order
+                    }
+                    return item
+                }
+            )
         },
         UPDATE_CONFIRMATION: (state, payload) => {
             state.orders = state.orders.map(
@@ -92,6 +107,12 @@ export default {
     actions: {
         setOrders: ({ commit }, payload) => {
             commit('SET_ORDERS', payload)
+        },
+        setOrder: ({ commit }, payload) => {
+            commit('SET_ORDER', payload)
+        },
+        update: ({ commit }, payload) => {
+            commit('UPDATE_ORDER', payload)
         },
         updateConfirmation: ({ commit }, payload) => {
             commit('UPDATE_CONFIRMATION', payload)

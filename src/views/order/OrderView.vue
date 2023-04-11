@@ -25,42 +25,47 @@
                 <div class="tw-grid tw-grid-cols-12 mt-">
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Client: </p>
-                        <p class="tw-text-neutral-700">{{ fullname }}</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.fullname }}</p>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Phone: </p>
-                        <p class="tw-text-neutral-700">{{ phone }}</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.phone }}</p>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Nom de produit: </p>
-                        <p class="tw-text-neutral-700">{{ product_name }}</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.product_name }}</p>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Quantité:</p>
-                        <p class="tw-text-neutral-700">{{ quantity }}</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.quantity }}</p>
                     </div>
                     
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">City: </p>
+                        <p class="tw-text-neutral-700">{{ newOrder.city }}</p>
+                    </div>
+
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Adresse: </p>
-                        <p class="tw-text-neutral-700">{{ adresse }}</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.adresse }}</p>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation: </p>
-                        <OrderConfirmation @update="updateConfirmation" :confirmation="confirmation" :id="id" />
+                        <OrderConfirmation @update="updateConfirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
                     </div>
-                    <div v-if="confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                    <div v-if="newOrder.confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affectation: </p>
-                        <OrderAffectation :affectation="affectation" :id="id" />
+                        <OrderAffectation :affectation="newOrder.affectation" :id="newOrder.id" />
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell: </p>
-                        <OrderUpsell :upsell="upsell" :id="id" />
+                        <OrderUpsell @update="updateUpsell" :upsell="newOrder.upsell" :id="newOrder.id" />
                     </div>
                 </div>
             </div>
 
             <div  class="tw-flex tw-gap-2 tw-justify-end">
-                <v-btn @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
+                <v-btn v-if="newOrder.upsell == 'oui'" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Edit
                     </span>
@@ -80,7 +85,7 @@
       </div>
     </div>
 
-    <popup-full :visible="showUpdatePopup" @cancel="showUpdatePopup = false">
+    <popup-full  :visible="showUpdatePopup" @cancel="handleCancel">
         <div class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5">
             <h1 class="tw-text-lg">Update Order</h1>
             
@@ -89,41 +94,41 @@
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Client
                     </div>
-                    <input v-model="fullname" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="popupOrder.fullname" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-0 tw-text-xs">{{ 'Client name could not be empty' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-0 tw-text-xs">{{ form.fullname.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Phone
                     </div>
-                    <input v-model="phone" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="popupOrder.phone" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.phone.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         City
                     </div>
-                    <input v-model="city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="popupOrder.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.city.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Address
                     </div>
-                    <input v-model="adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="popupOrder.adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.adresse.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Quantity
                     </div>
-                    <input v-model="quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="popupOrder.quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.quantity.message }}</div>
                 </div>
             </div>
 
@@ -145,6 +150,7 @@ import OrderAffectation from '@/views/order/partials/OrderAffectation'
 import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import Sale from '@/api/Sale';
 import User from '@/api/User';
+import { validateName } from '@/helpers/validators';
 
 export default {
     components: { OrderConfirmation, OrderAffectation, OrderUpsell },
@@ -155,42 +161,94 @@ export default {
         isLoading: false,
         showUpdatePopup: false,
 
-        "id": null,
-        "fullname": null,
-        "product_name": null,
-        "agente_id": null,
-        "upsell": null,
-        "phone": null,
-        "city": null,
-        "adresse": null,
-        "quantity": null,
-        "confirmation": null,
-        "affectation": null,
-        "delivery": null,
-        "note": null,
+        form: {
+            fullname: {
+                valid: true,
+                message: ''
+            },
+            phone: {
+                valid: true,
+                message: ''
+            },
+            city: {
+                valid: true,
+                message: ''
+            },
+            adresse: {
+                valid: true,
+                message: ''
+            },
+            quantity: {
+                valid: true,
+                message: ''
+            }
+        },
+        
+        newOrder: null,
+        popupOrder: null
     };
   },
 
   computed: {
     deliveries() {
         return this.$store.getters['user/deliveries']
+    },
+    isFormValid() {
+        return this.form.fullname.valid
+        && this.form.phone.valid
+        && this.form.city.valid
+        && this.form.adresse.valid
+        && this.form.quantity.valid
     }
   },
 
   methods: {
     updateConfirmation(newValue) {
-        this.confirmation = newValue
+        this.newOrder.confirmation = newValue
+    },
+    updateUpsell(newValue) {
+        this.newOrder.upsell = newValue
+    },
+    handleCancel() {
+        this.showUpdatePopup = false
+        this.popupOrder = {...this.newOrder}
+    },
+    validateForm() {
+        this.form.fullname = validateName(this.popupOrder.fullname, 'Client')
+        this.form.phone = validateName(this.popupOrder.phone, 'Phone')
+        this.form.city = validateName(this.popupOrder.city, 'City')
+        this.form.adresse = validateName(this.popupOrder.adresse, 'Address')
+        this.form.quantity = validateName(this.popupOrder.quantity, 'Quantity')
     },
     updateOrder() {
+        this.validateForm()
+        if(!this.isFormValid) return false;
         this.isLoading = true
-        setTimeout(() => {
+        this.newOrder = {...this.popupOrder}
+        Sale.update(this.newOrder.id, this.newOrder)
+        .then(
+            res => {
+            if(res.data.code == 'SUCCESS') {
+                
+                this.showUpdatePopup = false
+                this.$alert({
+                    type: 'success',
+                    title: 'Order updated'
+                })
+
+                this.$store.dispatch('order/setOrder', this.newOrder)
+            }
+            }
+        )
+        .catch(
+            (err) => {
+            this.$handleApiError(err)
+        })
+        .finally(
+            () => {
             this.isLoading = false
-            this.showUpdatePopup = false
-            this.$alert({
-                type: 'success',
-                title: 'Order updated'
-            })
-        }, 1000)
+            }
+        )
     },
     addOrder() {
         this.isLoaded = false
@@ -208,20 +266,9 @@ export default {
                     if(res.data.data?.orders) {
                         console.log('order set');
                         const order = res.data.data.orders
-                        this.id = order?.id
-                        this.fullname = order?.fullname
-                        this.product_name = order?.product_name
-                        this.agente_id = order?.agente_id
-                        this.upsell = order?.upsell
-                        this.city = order?.city
-                        this.phone = order?.phone
-                        this.adresse = order?.adresse
-                        this.quantity = order?.quantity
-                        this.confirmation = order?.confirmation
-                        this.affectation = order?.affectation
-                        this.delivery = order?.delivery
-                        this.note = order?.note
-
+                        this.newOrder = order;
+                        this.popupOrder = {...order};
+                        this.$store.dispatch('order/setOrder', this.order)
                         this.isLoaded = true
                         this.isOrderExists = true
                     }
@@ -243,19 +290,9 @@ export default {
                 if (res.data.code === "SUCCESS") {
                     const order = res.data.data.orders[0]
                     console.log(order);
-                    this.id = order?.id
-                    this.fullname = order?.fullname
-                    this.product_name = order?.product_name
-                    this.agente_id = order?.agente_id
-                    this.upsell = order?.upsell
-                    this.phone = order?.phone
-                    this.city = order?.city
-                    this.adresse = order?.adresse
-                    this.quantity = order?.quantity
-                    this.confirmation = order?.confirmation
-                    this.affectation = order?.affectation
-                    this.delivery = order?.delivery
-                    this.note = order?.note
+                    this.newOrder = order;
+                    this.popupOrder = {...order};
+                    this.$store.dispatch('order/setOrder', this.order)
 
                     this.isLoaded = true
                     this.isOrderExists = true

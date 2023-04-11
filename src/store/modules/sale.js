@@ -18,6 +18,16 @@ export default {
         SET_SALES: (state, payload) => {
             state.sales = payload
         },
+        UPDATE_SALE: (state, payload) => {
+            state.sales = state.sales.map(
+                item => {
+                    if(item.id === payload.id) {
+                        return payload.sale
+                    }
+                    return item
+                }
+            )
+        },
         UPDATE_CONFIRMATION: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -90,6 +100,9 @@ export default {
     actions: {
         setSales: ({ commit }, payload) => {
             commit('SET_SALES', payload)
+        },
+        update: ({ commit }, payload) => {
+            commit('UPDATE_SALE', payload)
         },
         updateConfirmation: ({ commit }, payload) => {
             commit('UPDATE_CONFIRMATION', payload)

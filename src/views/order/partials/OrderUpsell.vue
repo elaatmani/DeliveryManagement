@@ -76,6 +76,7 @@ export default {
                   title: res.data.data
                 })
                 this.updateUpsell(this.id, this.selected.value)
+                this.$emit('update', this.selected.value)
                 this.isLoading = false
               }
             },

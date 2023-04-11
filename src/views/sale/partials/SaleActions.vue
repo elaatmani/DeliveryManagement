@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-btn v-if="$can(`update_sale`) || true" @click="showUpdatePopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+  <div v-if="newSale">
+    <v-btn v-if="$can(`update_sale`)" @click="showUpdatePopup = true" :class="[newSale.upsell !== 'oui' && '!tw-pointer-events-none !tw-opacity-0']" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>
     <v-btn v-if="$can(`view_sale`) || true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
@@ -18,41 +18,41 @@
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Client
                     </div>
-                    <input v-model="fullname" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="newSale.fullname" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-0 tw-text-xs">{{ 'Client name could not be empty' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-0 tw-text-xs">{{ form.fullname.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Phone
                     </div>
-                    <input v-model="phone" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="newSale.phone" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.phone.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         City
                     </div>
-                    <input v-model="city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="newSale.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.city.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Address
                     </div>
-                    <input v-model="adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="newSale.adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.address.message }}</div>
                 </div>
                 <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Quantity
                     </div>
-                    <input v-model="quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <input v-model="newSale.quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ '' }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.quantity.message }}</div>
                 </div>
             </div>
 
@@ -71,6 +71,7 @@
 </template>
 <script>
 import Sale from '@/api/Sale';
+import { validateName } from '@/helpers/validators';
 
 
 // your vue component
@@ -84,24 +85,49 @@ export default {
       showUpdatePopup: false,
       isLoading: false,
 
-      fullname: '',
-        phone: '',
-        city: '',
-        adresse: '',
-        quantity: 1
+      newSale: null,
+
+      form: {
+            fullname: {
+                valid: true,
+                message: ''
+            },
+            phone: {
+                valid: true,
+                message: ''
+            },
+            city: {
+                valid: true,
+                message: ''
+            },
+            address: {
+                valid: true,
+                message: ''
+            },
+            quantity: {
+                valid: true,
+                message: ''
+            }
+        },
+
     };
   },
+  computed: {
+    isFormValid() {
+        return this.form.fullname.valid
+        && this.form.phone.valid
+        && this.form.city.valid
+        && this.form.address.valid
+        && this.form.quantity.valid
+    }
+  },
   methods: {
-    updateOrder() {
-        this.isLoading = true
-        setTimeout(() => {
-            this.isLoading = false
-            this.showUpdatePopup = false
-            this.$alert({
-                type: 'success',
-                title: 'Order updated'
-            })
-        }, 1000)
+    validateForm() {
+        this.form.fullname = validateName(this.newSale.fullname, 'Client')
+        this.form.phone = validateName(this.newSale.phone, 'Phone')
+        this.form.city = validateName(this.newSale.city, 'City')
+        this.form.address = validateName(this.newSale.address, 'Address')
+        this.form.quantity = validateName(this.newSale.quantity, 'Quantity')
     },
     handleResolved(response) {
       if(response) {
@@ -132,14 +158,39 @@ export default {
         this.showPopup = false
       }
     },
+    updateOrder() {
+      this.validateForm()
+        if(!this.isFormValid) return false;
+      this.isLoading = true
+      Sale.update(this.newSale.id, this.newSale)
+      .then(
+        res => {
+          if(res.data.code == 'SUCCESS') {
+            
+            this.showUpdatePopup = false
+            this.$alert({
+                type: 'success',
+                title: 'Order updated'
+            })
+
+            this.$store.dispatch('sale/update', { id: this.newSale.id, sale: this.newSale })
+          }
+        }
+      )
+      .catch(
+        (err) => {
+          this.$handleApiError(err)
+      })
+      .finally(
+        () => {
+          this.isLoading = false
+          }
+      )
+    }
   },
 
   mounted() {
-    this.fullname = this.sale.fullname
-    this.city = this.sale.city
-    this.adresse = this.sale.adresse
-    this.quantity = this.sale.quantity
-    this.phone = this.sale.phone
+    this.newSale = this.sale;
   }
 };
 </script>
