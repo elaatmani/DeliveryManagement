@@ -3,10 +3,10 @@
     <v-btn v-if="$can(`update_sale`)" @click="showUpdatePopup = true" :class="[newSale.upsell !== 'oui' && '!tw-pointer-events-none !tw-opacity-0']" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>
-    <v-btn v-if="$can(`view_sale`) || true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="$can(`view_sale`) && false" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
     </v-btn>
-    <v-btn @click="showPopup = true" v-if="$can(`delete_sale`) || true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="showPopup = true" v-if="$can(`delete_sale`) && false" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
     </v-btn>
     <popup-full @cancel="showUpdatePopup = false" :visible="showUpdatePopup" >
@@ -57,6 +57,11 @@
             </div>
 
             <div  class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
+              <v-btn @click="showUpdatePopup = false" color="grey-darken-2" variant="flat" class="text-capitalize">
+                    <span class="text-white">
+                        Cancel
+                    </span>
+                </v-btn>
                 <v-btn :loading="isLoading" @click="updateOrder" color="primary-color" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Save

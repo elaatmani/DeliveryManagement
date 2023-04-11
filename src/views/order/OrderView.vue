@@ -70,7 +70,7 @@
                         Edit
                     </span>
                 </v-btn>
-                <v-btn @click="getOrder" color="primary-color" variant="flat" class="text-capitalize">
+                <v-btn @click="clearOrder" color="primary-color" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Save
                     </span>
@@ -133,6 +133,11 @@
             </div>
 
             <div  class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
+                <v-btn @click="handleCancel" color="grey-darken-2" variant="flat" class="text-capitalize">
+                    <span class="text-white">
+                        Cancel
+                    </span>
+                </v-btn>
                 <v-btn :loading="isLoading" @click="updateOrder" color="primary-color" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Save
@@ -204,6 +209,7 @@ export default {
 
   methods: {
     updateConfirmation(newValue) {
+        console.log(newValue);
         this.newOrder.confirmation = newValue
     },
     updateUpsell(newValue) {
@@ -219,6 +225,16 @@ export default {
         this.form.city = validateName(this.popupOrder.city, 'City')
         this.form.adresse = validateName(this.popupOrder.adresse, 'Address')
         this.form.quantity = validateName(this.popupOrder.quantity, 'Quantity')
+    },
+    clearOrder() {
+        if(!this.newOrder.confirmation) {
+            this.$alert({
+                type: 'warning',
+                title: 'Order confirmation not changed'
+            })
+            return false
+        }
+        this.isOrderExists = false;
     },
     updateOrder() {
         this.validateForm()

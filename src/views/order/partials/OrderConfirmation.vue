@@ -159,9 +159,11 @@ export default {
         },
         updateConfirmation(id, confirmation) {
           this.$store.dispatch('order/updateConfirmation', {id, confirmation})
+          this.$emit('update', confirmation)
         },
         updateConfirmationWithNote(id, confirmation, note) {
           this.$store.dispatch('order/updateConfirmationWithNote', {id, confirmation, note})
+          this.$emit('update', confirmation)
         }
     },
     mounted() {
