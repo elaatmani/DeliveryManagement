@@ -2,8 +2,8 @@
   <div>
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
-        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Orders List</h1>
-        <h2 class="tw-text-gray-500 tw-text-sm">Orders need to be delivered</h2>
+        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Delivered Orders</h1>
+        <h2 class="tw-text-gray-500 tw-text-sm">Delivered orders list</h2>
       </div>
     </div>
 
@@ -134,6 +134,10 @@ export default {
         {
             prop: 'date',
             name: 'Date',
+        },
+        {
+            prop: 'actions',
+            name: 'Actions',
         },
         
     ],

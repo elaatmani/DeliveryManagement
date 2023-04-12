@@ -49,6 +49,9 @@
       </div>
 
       <div class="mb-5 tw-flex">
+        <v-btn @click="getSales" icon rounded="lg" variant="flat" size="small" color="blue" class="text-white tw-mr-2">
+          <v-icon color="white" icon="mdi-autorenew" size="xx-large"></v-icon>
+        </v-btn>
         <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
           <v-icon color="white" size="xx-large">mdi-camera-control</v-icon>
         </v-btn>
@@ -144,6 +147,14 @@ export default {
             name: '#',
         },
         {
+            prop: 'city',
+            name: 'City',
+        },
+        {
+            prop: 'date',
+            name: 'Date',
+        },
+        {
             prop: "client",
             name: "Client",
         },
@@ -175,14 +186,7 @@ export default {
             prop: 'price',
             name: 'Price',
         },
-        {
-            prop: 'city',
-            name: 'City',
-        },
-        {
-            prop: 'date',
-            name: 'Date',
-        },
+        
         {
             prop: 'actions',
             name: 'Actions',
@@ -299,15 +303,10 @@ export default {
             },
             this.$handleApiError
         )
-    }
-  },
-  async mounted() {
-    
-    if(this.deliveries.length == 0) {
-        await this.getDeliveries()
-    }
-    
-    Sale.all().then(
+    },
+    getSales() {
+      this.isLoaded = false
+      Sale.all().then(
       res => {
         if(res?.data.code == "SUCCESS") {
             const sales = res.data.data.orders
@@ -317,6 +316,15 @@ export default {
           }
         }
         ).catch(this.$handleApiError)
+    }
+  },
+  async mounted() {
+    
+    if(this.deliveries.length == 0) {
+        await this.getDeliveries()
+    }
+    this.getSales()
+    
   }
 }
 </script>

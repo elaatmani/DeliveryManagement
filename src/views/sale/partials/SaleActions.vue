@@ -1,5 +1,8 @@
 <template>
   <div v-if="newSale">
+    <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + sale.phone" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="flat" density="comfortable" :ripple="false" size="small">
+      <v-icon color="white">mdi-whatsapp</v-icon>
+    </v-btn>
     <v-btn v-if="$can(`update_sale`)" @click="showUpdatePopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>

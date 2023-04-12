@@ -139,6 +139,10 @@ export default {
             prop: 'date',
             name: 'Date',
         },
+        {
+            prop: 'actions',
+            name: 'Actions',
+        },
         
     ],
     }

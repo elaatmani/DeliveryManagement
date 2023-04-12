@@ -42,15 +42,19 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ created_at?.split('T')[0] }}
                     </td>
+                    <td class="tw-px-6 tw-py-4">
+                        <OrderActions :key="id" :order="order" />
+                    </td>
                 </tr>
 </template>
 
 <script>
 import OrderDelivery from './OrderDelivery.vue'
+import OrderActions from '@/views/delivery/partials/OrderActions'
 
 export default {
     props: ['order', 'showNote'],
-    components: { OrderDelivery },
+    components: { OrderDelivery, OrderActions },
 
     data() {
         return {

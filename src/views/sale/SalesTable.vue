@@ -30,6 +30,12 @@
                         {{ sale.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
+                        {{ sale.city }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ sale?.created_at?.split('T')[0] }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
@@ -53,12 +59,7 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.price }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale.city }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale?.created_at?.split('T')[0] }}
-                    </td>
+                    
                     <td class="tw-px-6 tw-py-4">
                         <SaleActions :id="sale.id" :key="sale.delivery" :sale="sale" />
                     </td>
