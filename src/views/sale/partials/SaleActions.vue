@@ -1,6 +1,6 @@
 <template>
   <div v-if="newSale">
-    <v-btn v-if="$can(`update_sale`)" @click="showUpdatePopup = true" :class="[newSale.upsell !== 'oui' && '!tw-pointer-events-none !tw-opacity-0']" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="$can(`update_sale`)" @click="showUpdatePopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
     </v-btn>
     <v-btn v-if="$can(`view_sale`) && false" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
@@ -44,15 +44,23 @@
                     </div>
                     <input v-model="newSale.adresse" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
-                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.address.message }}</div>
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.adresse.message }}</div>
                 </div>
-                <div class="md:tw-col-span-6 tw-col-span-12">
+                <div v-if="newSale.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Quantity
                     </div>
                     <input v-model="newSale.quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.quantity.message }}</div>
+                </div>
+                <div v-if="newSale.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Price
+                    </div>
+                      <input v-model="newSale.price" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.price.message }}</div>
                 </div>
             </div>
 
@@ -105,11 +113,15 @@ export default {
                 valid: true,
                 message: ''
             },
-            address: {
+            adresse: {
                 valid: true,
                 message: ''
             },
             quantity: {
+                valid: true,
+                message: ''
+            },
+            price: {
                 valid: true,
                 message: ''
             }
@@ -122,8 +134,9 @@ export default {
         return this.form.fullname.valid
         && this.form.phone.valid
         && this.form.city.valid
-        && this.form.address.valid
+        && this.form.adresse.valid
         && this.form.quantity.valid
+        && this.form.price.valid
     }
   },
   methods: {
@@ -131,8 +144,9 @@ export default {
         this.form.fullname = validateName(this.newSale.fullname, 'Client')
         this.form.phone = validateName(this.newSale.phone, 'Phone')
         this.form.city = validateName(this.newSale.city, 'City')
-        this.form.address = validateName(this.newSale.address, 'Address')
+        this.form.adresse = validateName(this.newSale.adresse, 'Address')
         this.form.quantity = validateName(this.newSale.quantity, 'Quantity')
+        this.form.price = validateName(this.newSale.price, 'Price')
     },
     handleResolved(response) {
       if(response) {
