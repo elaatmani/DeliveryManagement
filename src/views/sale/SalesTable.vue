@@ -51,7 +51,7 @@
                         {{ sale.quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        - DH
+                        {{ sale.price }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.city }}

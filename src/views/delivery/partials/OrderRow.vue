@@ -28,7 +28,7 @@
                         {{ quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        - DH
+                        {{ price }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ city }}
@@ -66,6 +66,7 @@ export default {
             "city": null,
             "adresse": null,
             "quantity": null,
+            "price": null,
             "confirmation": null,
             "affectation": null,
             "delivery": null,
@@ -92,6 +93,7 @@ export default {
         this.city = this.order.city
         this.adresse = this.order.adresse
         this.quantity = this.order.quantity
+        this.price = this.order.price
         this.confirmation = this.order.confirmation
         this.affectation = this.order.affectation
         this.delivery = this.order.delivery

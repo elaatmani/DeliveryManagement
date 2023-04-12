@@ -28,7 +28,7 @@
                         {{ quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        - DH
+                        {{ price }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ city }}
@@ -42,6 +42,9 @@
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ created_at?.split('T')[0] }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        <OrderActions :order="order" />
                     </td>
                 </tr>
                 <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
@@ -58,11 +61,12 @@
 import OrderConfirmation from '@/views/order/partials/OrderConfirmation'
 import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import OrderAffectation from '@/views/order/partials/OrderAffectation'
+import OrderActions from '@/views/order/partials/OrderActions'
 import Sale from '@/api/Sale'
 
 export default {
     props: ['order', 'showNote'],
-    components: { OrderConfirmation, OrderUpsell, OrderAffectation },
+    components: { OrderConfirmation, OrderUpsell, OrderAffectation, OrderActions },
 
     data() {
         return {
@@ -100,6 +104,9 @@ export default {
         },
         quantity() {
             return this.order.quantity;
+        },
+        price() {
+            return this.order.price;
         },
         confirmation() {
             return this.order.confirmation;

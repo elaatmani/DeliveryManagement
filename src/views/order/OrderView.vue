@@ -39,6 +39,10 @@
                         <p class="tw-text-neutral-400 tw-text-md">Quantité:</p>
                         <p class="tw-text-neutral-700">{{ newOrder.quantity }}</p>
                     </div>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Price:</p>
+                        <p class="tw-text-neutral-700">{{ newOrder.price }}</p>
+                    </div>
                     
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">City: </p>
@@ -65,7 +69,7 @@
             </div>
 
             <div  class="tw-flex tw-gap-2 tw-justify-end">
-                <v-btn v-if="newOrder.upsell == 'oui'" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
+                <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
                     <span class="text-white">
                         Edit
                     </span>
@@ -122,13 +126,21 @@
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.adresse.message }}</div>
                 </div>
-                <div class="md:tw-col-span-6 tw-col-span-12">
+                <div v-if="newOrder.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Quantity
                     </div>
                     <input v-model="popupOrder.quantity" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.quantity.message }}</div>
+                </div>
+                <div v-if="newOrder.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Price
+                    </div>
+                    <input v-model="popupOrder.price" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.price.message }}</div>
                 </div>
             </div>
 
@@ -186,6 +198,10 @@ export default {
             quantity: {
                 valid: true,
                 message: ''
+            },
+            price: {
+                valid: true,
+                message: ''
             }
         },
         
@@ -204,6 +220,7 @@ export default {
         && this.form.city.valid
         && this.form.adresse.valid
         && this.form.quantity.valid
+        && this.form.price.valid
     }
   },
 
@@ -214,6 +231,7 @@ export default {
     },
     updateUpsell(newValue) {
         this.newOrder.upsell = newValue
+        this.popupOrder.upsell = newValue
     },
     handleCancel() {
         this.showUpdatePopup = false
@@ -225,6 +243,7 @@ export default {
         this.form.city = validateName(this.popupOrder.city, 'City')
         this.form.adresse = validateName(this.popupOrder.adresse, 'Address')
         this.form.quantity = validateName(this.popupOrder.quantity, 'Quantity')
+        this.form.price = validateName(this.popupOrder.price, 'Price')
     },
     clearOrder() {
         if(!this.newOrder.confirmation) {
