@@ -97,17 +97,33 @@
               </v-col>
               <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
                 <div>
+                  <div>
+                    <v-switch v-model="isMultipleProducts" color="primary-color" label="Multiple Products"></v-switch>
+                  </div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-                  <v-select
-                    class="text-capitalize"
-                    :items="products"
-                    item-title="name"
-                    item-value="id"
-                    v-model="product"
-                    variant="outlined"
-                    color="primary-color"
-                    density="compact"
-                  ></v-select>
+                  <div v-if="!isMultipleProducts">
+                    <select v-model="product" 
+                    class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                      
+                      <option :value="p.id" v-for="p in selectProducts" :key="p.id">
+                        {{ p.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div v-else>
+                    <v-select
+                      v-model="selectedProducts"
+                      :items="selectProducts"
+                      density="compact"
+                      item-value="id"
+                      item-title="name"
+                      variant="outlined"
+                      color="primary-color"
+                      chips
+                      :hide-details="true"
+                      multiple
+                    ></v-select>
+                  </div>
                 </div>
               </v-col>
               <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
@@ -280,6 +296,8 @@ export default {
       cities: [],
       city: 1,
 
+      isMultipleProducts: false,
+
       id: 1,
       deliveryCity: 1,
       deliveryCityFee: 0,
@@ -287,7 +305,8 @@ export default {
       ],
       
       products: [],
-      product: 1,
+      product: 0,
+      selectedProducts: [],
 
       formStatus: {
         firstname: {
@@ -338,6 +357,18 @@ export default {
     },
     isDelivery() {
       return this.role === 3;
+    },
+    selectProducts() {
+      if(this.isMultipleProducts) {
+        return [...this.products]
+      }
+      return [{ id: 0, name: 'All' },...this.products]
+    },
+    userProducts() {
+      if(this.isMultipleProducts) {
+        return this.selectedProducts
+      }
+      return [this.product]
     }
   },
 
@@ -371,7 +402,12 @@ export default {
       }
 
       this.isLoading = true;
-      const user = {...this.user, role: this.role, product_id: this.product, city: this.city, deliveryCities: this.deliveryCities};
+      const user = {
+        ...this.user, 
+        role: this.role, 
+        product_id: this.userProducts, 
+        city: this.city, 
+        deliveryCities: this.deliveryCities};
       User.register(user)
         .then((res) => {
           if (res.data.code == "USER_CREATED") {
@@ -471,11 +507,6 @@ export default {
         return Product.all().then(
           res => {
             this.products = res.data.data.products
-            if(this.products.length > 0) {
-              this.product = this.products[0].id
-            } else {
-              this.product = null
-            }
           },
           err => this.$handleApiError(err)
         )

@@ -161,17 +161,33 @@
               </v-col>
               <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
                 <div>
+                  <div>
+                    <v-switch v-model="isMultipleProducts" color="primary-color" label="Multiple Products"></v-switch>
+                  </div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-                  <v-select
-                    class="text-capitalize"
-                    :items="products"
-                    item-title="name"
-                    item-value="id"
-                    v-model="product"
-                    variant="outlined"
-                    color="primary-color"
-                    density="compact"
-                  ></v-select>
+                  <div v-if="!isMultipleProducts">
+                    <select v-model="product" 
+                    class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
+                      
+                      <option :value="p.id" v-for="p in selectProducts" :key="p.id">
+                        {{ p.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div v-else>
+                    <v-select
+                      v-model="selectedProducts"
+                      :items="selectProducts"
+                      density="compact"
+                      item-value="id"
+                      item-title="name"
+                      variant="outlined"
+                      color="primary-color"
+                      chips
+                      :hide-details="true"
+                      multiple
+                    ></v-select>
+                  </div>
                 </div>
               </v-col>
               <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="12">
@@ -327,7 +343,9 @@ export default {
       status: false,
       product: null,
 
-      products: []
+      products: [],
+      selectedProducts: [],
+      isMultipleProducts: false,
 
 
     };
@@ -360,6 +378,18 @@ export default {
             role: this.role,
             status: this.status ? 1 : 0,
         }
+    },
+    selectProducts() {
+      if(this.isMultipleProducts) {
+        return [...this.products]
+      }
+      return [{ id: 0, name: 'All' },...this.products]
+    },
+    userProducts() {
+      if(this.isMultipleProducts) {
+        return this.selectedProducts
+      }
+      return [this.product]
     }
   },
 
@@ -378,9 +408,15 @@ export default {
       if (!this.validate()) {
         return false;
       }
+      const user = {
+        ...this.user, 
+        role: this.role, 
+        product_id: this.userProducts, 
+        city: this.city, 
+        deliveryCities: this.deliveryCities};
 
       this.isLoading = true;
-      User.update(this.user, this.updatePassword)
+      User.update(user, this.updatePassword)
         .then((res) => {
           if (res.data.code == "USER_UPDATED") {
             this.$alert({
@@ -492,7 +528,17 @@ export default {
                   this.email = user.email
                   this.phone = user.phone
                   this.role = user.role
-                  this.product = user?.product
+
+                  if(user?.product.length >= 1) {
+                    if(user?.product.length == 1) {
+                      this.product = user?.product[0]
+                      this.isMultipleProducts = false
+                    } else {
+                      this.selectedProducts = user?.product
+                      this.isMultipleProducts = true
+                    }
+                  }
+
                   this.user_image = user.photo
                   this.status = user.status == 1 ? true : false
                   this.isUserFetched = true
@@ -548,9 +594,15 @@ export default {
       this.isRolesFetched = true
     }
 
-    Promise.allSettled([this.getRoles(), this.getUser(), this.getProducts(), this.getCities()])
+    Promise.allSettled([this.getRoles(), this.getProducts(), this.getCities(), this.getUser()])
     .then(
-      () => this.isFetched = true,
+      () => {
+        if(this.selectedProducts.length == this.products.length) {
+          this.product = 0
+          this.isMultipleProducts = false
+        }
+        this.isFetched = true
+        },
       err => this.$handleApiError(err)
     )
     
