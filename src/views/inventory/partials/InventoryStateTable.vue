@@ -41,6 +41,9 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ state.quantity }}
                     </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ state.updated_at?.split('T')[0] }} <br/> {{ state.updated_at?.split('T')[1].split('.')[0] }}
+                    </td>
                 </tr>
                 
             </tbody>
