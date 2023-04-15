@@ -49,6 +49,10 @@ export default {
             name: '#',
         },
         {
+          prop: 'created_at',
+          name: 'Date',
+        },
+        {
             prop: "delivery",
             name: "Delivery",
         },
@@ -61,12 +65,16 @@ export default {
           name: 'Quantity',
         },
         {
-          prop: 'city',
-          name: 'City',
+          prop: 'received',
+          name: 'Received',
         },
         {
-          prop: 'created_at',
-          name: 'Date',
+          prop: 'note',
+          name: 'Note',
+        },
+        {
+          prop: 'city',
+          name: 'City',
         },
         {
           prop: 'actions',

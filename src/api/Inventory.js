@@ -32,6 +32,11 @@ class Inventory {
         return Api.post('api/inventorymovements/update/' + id, { product_id, delivery_id, quantity })
     }
 
+    async deliveryUpdateMovement(id, is_received, note) {
+        await Csrf.getCookie()
+        return Api.post('api/delivery/inventorymovements/update/' + id, { is_received, note })
+    }
+
     async delete(id) {
         await Csrf.getCookie();
         return Api.delete('api/inventorymovements/delete/' + id)

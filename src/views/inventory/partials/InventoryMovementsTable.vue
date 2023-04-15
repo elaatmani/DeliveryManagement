@@ -30,6 +30,9 @@
                         {{ movement.id }}
                     </th>
                     <td class="tw-px-6 tw-py-4">
+                        {{ movement.created_at?.split('T')[0] }} <br/> {{ movement.created_at?.split('T')[1].split('.')[0] }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
                         {{ movement.delivery.firstname + ' ' + movement.delivery.lastname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
@@ -39,11 +42,19 @@
                         {{ movement.qty_to_delivery }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ movement.delivery.city }}
+                        <div :class="[movement.is_received ? 'tw-text-green-500 tw-bg-green-500/10' : 'tw-text-red-500 tw-bg-red-500/10' ]" class="tw-flex tw-justify-center tw-py-1 tw-rounded-lg tw-items-center">
+                            <span>{{ movement.is_received ? 'Yes' : 'No' }}</span>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ movement.created_at?.split('T')[0] }} <br/> {{ movement.created_at?.split('T')[1].split('.')[0] }}
+                        <div class="tw-w-[200px] !tw-whitespace-normal">
+                            {{ !!movement.note ? movement.note : '-' }}
+                        </div>
                     </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ movement.delivery.city }}
+                    </td>
+                    
                     <td class="tw-px-6 tw-py-4">
                         <InventoryMovementsActions :movement="movement" />
                     </td>
@@ -105,6 +116,9 @@ export default {
         items() {
             return this.movements.slice(this.prevRange, this.nextRange)
         }
+    },
+
+    methods: {
     }
 }
 </script>

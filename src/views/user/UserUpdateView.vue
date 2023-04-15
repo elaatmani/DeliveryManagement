@@ -541,13 +541,16 @@ export default {
                   this.phone = user.phone
                   this.role = user.role
 
-                  if(user?.product.length >= 1) {
-                    if(user?.product.length == 1) {
-                      this.product = user?.product[0]
-                      this.isMultipleProducts = false
-                    } else {
-                      this.selectedProducts = user?.product
-                      this.isMultipleProducts = true
+                  if (user.role == 2) {
+
+                      if(user?.product.length >= 1) {
+                        if(user?.product.length == 1) {
+                        this.product = user?.product[0]
+                        this.isMultipleProducts = false
+                      } else {
+                        this.selectedProducts = user?.product
+                        this.isMultipleProducts = true
+                      }
                     }
                   }
 
@@ -556,7 +559,7 @@ export default {
                   this.isUserFetched = true
                   if (user.role == 3) {
                     console.log('this is delivery');
-                    this.city = user.city.id
+                    this.city = user?.city?.id
                     let id = 0;
                     this.deliveryCities = user.deliveryPlaces.map(
                       item =>  {
