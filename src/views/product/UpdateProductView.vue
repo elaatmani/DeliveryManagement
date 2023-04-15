@@ -237,6 +237,13 @@ export default {
                 title: res.data.message
               })
             }
+
+            if (res.data.code == "PRODUCT_NOT_UPDATED") {
+              this.$alert({
+                type: 'warning',
+                title: res.data.message
+              })
+            }
           }
         )
         .catch(

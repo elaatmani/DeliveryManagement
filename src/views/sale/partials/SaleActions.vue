@@ -12,6 +12,9 @@
     <v-btn @click="showPopup = true" v-if="$can(`delete_sale`) && false" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
     </v-btn>
+    <v-btn @click="showHistoryPopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="teal" variant="flat" density="comfortable" :ripple="false" size="small">
+      <v-icon color="white">mdi-sort-clock-ascending-outline</v-icon>
+    </v-btn>
     <popup-full @cancel="showUpdatePopup = false" :visible="showUpdatePopup" >
         <div class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5">
             <h1 class="tw-text-lg">Update Order</h1>
@@ -90,12 +93,17 @@
             </div>
         </div>
     </popup-full>
+
+    <popup-full :visible="showHistoryPopup" @cancel="showHistoryPopup = false">
+      <SaleHistory v-if="showHistoryPopup" :sale="sale" />
+    </popup-full>
     <!--  -->
     <popup type="warning" title="Warning" body="<p>Are you sure you want to delete this sale?</p> You won't be able to revert this!" :loading="isLoading" :visible="showPopup" @resolved="handleResolved" />
   </div>
 </template>
 <script>
 import Sale from '@/api/Sale';
+import SaleHistory from '@/views/sale/partials/SaleHistory'
 import { validateName } from '@/helpers/validators';
 
 
@@ -104,10 +112,12 @@ export default {
   // access any cell properties here
   props: [ "sale"],
   name: "saleActions",
+  components: { SaleHistory },
   data() {
     return {
       showPopup: false,
       showUpdatePopup: false,
+      showHistoryPopup: false,
       isLoading: false,
 
       newSale: null,

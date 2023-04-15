@@ -77,6 +77,11 @@ class Sale {
         await Csrf.getCookie();
         return Api.post('api/orders/update/delivery/' + id, {delivery});
     }
+
+    async history(id) {
+        await Csrf.getCookie();
+        return Api.get('api/orders/history/show/' + id)
+    }
 }
 
 

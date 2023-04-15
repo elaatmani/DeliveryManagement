@@ -15,8 +15,10 @@ export default {
 
 <style scoped>
 .loading {
-    border-bottom-color: rgb(var(--v-theme-primary-color));
-    border-right-color: rgb(var(--v-theme-primary-color)) !important;
+    /* border-bottom-color: rgb(var(--v-theme-primary-color)); */
+    /* border-right-color: rgb(var(--v-theme-primary-color)) !important; */
+    border-bottom-color: #FF9F43 !important;
+    border-right-color: #FF9F43 !important;
 }
 
 
