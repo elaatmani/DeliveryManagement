@@ -1,4 +1,4 @@
-export const path = 'api/orders/history/show/3'
+export const path = 'api/auth/roles'
 export const method = 'get'
 
 export default {
