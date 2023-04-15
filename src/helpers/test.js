@@ -1,4 +1,4 @@
-export const path = 'api/orders/add'
+export const path = 'api/inventorystates'
 export const method = 'get'
 
 export default {
