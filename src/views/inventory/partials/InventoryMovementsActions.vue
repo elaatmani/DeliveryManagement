@@ -4,7 +4,7 @@
       <v-icon color="white">mdi-checkbox-marked-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>
-    <v-btn :to="'/inventories/update/'+ movement.id"  v-if="$can(`update_inventory_movement`) && user.role == 'admin'" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/inventories/update/'+ movement.id"  v-if="$can(`update_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
@@ -17,7 +17,7 @@
       <!-- <span class="text-white text-capitalize">Delete</span> -->
     </v-btn>
 
-    <popup-full :visible="confirmPopup" @cancel="confirmPopup = false">
+    <popup-full v-if="$can(`confirmation_inventory_movement`)" :visible="confirmPopup" @cancel="confirmPopup = false">
       <div class="md:tw-w-[50%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5">
             <h1 class="tw-text-lg tw-font-medium tw-text-blue-500">Confirmation</h1>
 
