@@ -52,7 +52,7 @@
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ movement.delivery.city }}
+                        {{ movement.delivery.city?.name }}
                     </td>
                     
                     <td class="tw-px-6 tw-py-4">
