@@ -37,7 +37,16 @@
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         City
                     </div>
-                    <input v-model="newOrder.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <select
+                    v-model="newOrder.city"
+                    class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                    >
+                      <option selected disabled :value="newOrder.city">{{ newOrder.city }}</option>
+                      <option :value="c.name" v-for="c in cities" :key="c.id">
+                        {{ c.name }}
+                      </option>
+                    </select>
+                    <!-- <input v-model="newOrder.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.city.message }}</div>
                 </div>
@@ -88,6 +97,7 @@
 <script>
 import Sale from '@/api/Sale';
 import { validateName } from '@/helpers/validators';
+import User from '@/api/User';
 
 
 // your vue component
@@ -140,6 +150,9 @@ export default {
         && this.form.adresse.valid
         && this.form.quantity.valid
         && this.form.price.valid
+    },
+    cities() {
+      return this.$store.getters['city/cities']
     }
   },
   methods: {
@@ -179,12 +192,23 @@ export default {
           this.isLoading = false
           }
       )
+    },
+    getCities() {
+      
+      if(this.cities.length == 0) {
+        return User.cities().then(
+            res => {
+                const cities = res.data.data
+                this.$store.dispatch('city/setCities', cities)
+            }
+        )
+      }
     }
   },
 
   mounted() {
     this.newOrder = {...this.order};
-
+    this.getCities()
     console.log(this.order);
     console.log(this.newOrder);
   }

@@ -5,11 +5,8 @@
 </template>
 
 <script>
-// import Api from '@/api/Api'
-// import Csrf from '@/api/Csrf'
-import User from '@/api/User'
 import { mapActions } from 'vuex'
-// import { AbilityBuilder } from '@casl/vue'
+
 export default {
   name: 'App',
 
@@ -19,89 +16,11 @@ export default {
 
   methods: {
     ...mapActions('user', ['setIsLoggedIn', 'setPermissions']),
-    createTestUser() {
-      const user = {
-        firstname: 'Yassine',
-        lastname: 'El Aatmani',
-        phone: '12345',
-        email: 'admin@gmail.com',
-        password: 'admin',
-        status: 1
-      }
 
-      User.signup(user)
-      .then(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    },
 
-    getUserInfo() {
-      return User.getUser().then(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    },
-
-    logout() {
-      User.logout()
-      .then(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    },
-
-    login() {
-      const user = {
-        email: 'admin@gmail.com',
-        password: 'admin',
-      }
-
-      User.login(user)
-      .then(
-        res => {
-          console.log(res);
-          if (res.data.code == 'AUTHENTICATION_SUCCESSFUL') {
-            this.setIsLoggedIn(true)
-            this.$router.push('/')
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    }
   },
 
   mounted() {
-    // this.createTestUser()
-    // this.logi
-    // this.logout()
-    // this.getUserInfo()
-
-    this.$can('say test')
-
-    // console.log( this.$can('product_update'))
-    // this.$ability.update(['product_update'])
-    // console.log(this.$ability);
-    // console.log( this.$can('product_update'))
-
-    // setTimeout(() => {
-    //   this.setIsLoggedIn(false)
-    //   this.$router.push('/login')
-    // },4000)
   },
 }
 </script>

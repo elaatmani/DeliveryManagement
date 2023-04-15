@@ -26,6 +26,7 @@
 import AppHeader from '@/layouts/default/partials/AppHeader'
 import AppSidebar from '@/layouts/default/partials/AppSidebar'
 import Alert from '@/components/AlertVue'
+import User from '@/api/User'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
@@ -39,13 +40,30 @@ export default {
     computed: {
         isLoggedIn() {
             return this.$store.getters['user/isLoggedIn']
+        },
+        cities() {
+            return this.$store.getters['city/cities']
         }
     },
 
     methods: {
         toggleSidebar() {
             this.drawer = !this.drawer
+        },
+        getCities() {
+            if(this.cities.length == 0) {
+                return User.cities().then(
+                    res => {
+                        const cities = res.data.data
+                        this.$store.dispatch('city/setCities', cities)
+                    }
+                )
+            }
         }
+    },
+
+    mounted() {
+        this.getCities()
     }
 }
 </script>

@@ -175,7 +175,19 @@
                     </select>
                   </div>
                   <div v-else>
-                    <v-select
+                    <v-autocomplete
+                    v-model="selectedProducts"
+                    filter-keys="name"
+                      density="compact"
+                      item-value="id"
+                      item-title="name"
+                      variant="outlined"
+                      color="primary-color"
+                      chips
+                      :items="selectProducts"
+                      multiple
+                    ></v-autocomplete>
+                    <!-- <v-select
                       v-model="selectedProducts"
                       :items="selectProducts"
                       density="compact"
@@ -186,7 +198,7 @@
                       chips
                       :hide-details="true"
                       multiple
-                    ></v-select>
+                    ></v-select> -->
                   </div>
                 </div>
               </v-col>

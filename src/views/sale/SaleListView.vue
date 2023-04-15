@@ -202,6 +202,9 @@ export default {
     sales() {
       return this.$store.getters['sale/sales']
     },
+    cities() {
+      return this.$store.getters['city/cities']
+    },
     newSales() {
       return {
         id: 1,
@@ -306,7 +309,7 @@ export default {
     },
     getSales() {
       this.isLoaded = false
-      Sale.all().then(
+      return Sale.all().then(
       res => {
         if(res?.data.code == "SUCCESS") {
             const sales = res.data.data.orders
@@ -316,6 +319,17 @@ export default {
           }
         }
         ).catch(this.$handleApiError)
+    },
+
+    getCities() {
+      if(this.cities.length == 0) {
+        return User.cities().then(
+            res => {
+                const cities = res.data.data
+                this.$store.dispatch('city/setCities', cities)
+            }
+        )
+      }
     }
   },
   async mounted() {
@@ -324,7 +338,7 @@ export default {
         await this.getDeliveries()
     }
     this.getSales()
-    
+    this.getCities()
   }
 }
 </script>

@@ -5,6 +5,7 @@ import product from './modules/product'
 import sale from './modules/sale'
 import order from './modules/order'
 import inventory from './modules/inventory'
+import city from './modules/city'
 
 export default createStore({
   state: {
@@ -21,6 +22,7 @@ export default createStore({
     alert,
     sale,
     order,
-    inventory
+    inventory,
+    city
   }
 })

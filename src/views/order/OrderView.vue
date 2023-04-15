@@ -114,7 +114,16 @@
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         City
                     </div>
-                    <input v-model="popupOrder.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+                    <select
+                    v-model="popupOrder.city"
+                    class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                    >
+                      <option selected disabled :value="popupOrder.city">{{ popupOrder.city }}</option>
+                      <option :value="c.name" v-for="c in cities" :key="c.id">
+                        {{ c.name }}
+                      </option>
+                    </select>
+                    <!-- <input v-model="popupOrder.city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.city.message }}</div>
                 </div>
@@ -221,6 +230,9 @@ export default {
         && this.form.adresse.valid
         && this.form.quantity.valid
         && this.form.price.valid
+    },
+    cities() {
+      return this.$store.getters['city/cities']
     }
   },
 
