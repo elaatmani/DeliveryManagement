@@ -95,7 +95,7 @@
     </popup-full>
 
     <popup-full :visible="showHistoryPopup" @cancel="showHistoryPopup = false">
-      <SaleHistory v-if="showHistoryPopup" :sale="sale" />
+      <SaleHistory @cancel="showHistoryPopup = false" v-if="showHistoryPopup" :sale="sale" />
     </popup-full>
     <!--  -->
     <popup type="warning" title="Warning" body="<p>Are you sure you want to delete this sale?</p> You won't be able to revert this!" :loading="isLoading" :visible="showPopup" @resolved="handleResolved" />

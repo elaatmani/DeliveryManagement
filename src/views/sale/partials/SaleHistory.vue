@@ -1,9 +1,13 @@
 <template>
-  <div class="md:tw-w-[50%] tw-max-h-full tw-w-[95%] tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg ">
+  <div class="md:tw-w-[50%] tw-max-h-full tw-relative tw-w-[95%] tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg ">
     <div v-if="!isLoaded" class="tw-w-full tw-h-full">
         <LoadingAnimation class="text-primary-color" />
     </div>
     
+    <v-btn @click="cancel" icon="mdi-close" variant="flat" size="w-small" color="red"
+    class="tw-absolute tw-top-3 tw-z-10 tw-right-3"
+    ></v-btn>
+
     <div v-if="isLoaded" class="tw-p-5">
 
         <v-timeline
@@ -109,6 +113,9 @@ export default {
     },
 
     methods: {
+      cancel() {
+        this.$emit('cancel')
+      },
         getHistory() {
             this.isLoaded = false
             Sale.history(this.sale.id)

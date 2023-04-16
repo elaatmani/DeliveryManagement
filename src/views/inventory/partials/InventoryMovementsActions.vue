@@ -8,7 +8,7 @@
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
-    <v-btn  v-if="$can(`view_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="detailsPopup = true" v-if="$can(`view_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>
@@ -47,6 +47,10 @@
       </div>
     </popup-full>
 
+    <popup-full :visible="detailsPopup" @cancel="detailsPopup = false">
+      <MovementDetails @cancel="detailsPopup = false" v-if="detailsPopup" :movement="movement" />
+    </popup-full>
+
     <popup type="warning" title="Warning" 
     body="<p>Are you sure you want to delete this movement?</p> You won't be able to revert this!" 
     :loading="isLoading" :visible="showPopup" @resolved="handleResolved" />
@@ -55,17 +59,20 @@
 </template>
 <script>
 import Inventory from '@/api/Inventory';
+import MovementDetails from './MovementDetails.vue';
 // myVue.vue
 
 // your vue component
 export default {
   // access any cell properties here
   props: ["rowIndex", "movement"],
+  components: {MovementDetails},
   name: "inventoryActions",
   data() {
     return {
       showPopup: false,
       confirmPopup: false,
+      detailsPopup: false,
       isConfirmed: false,
       note: '',
       isLoading: false
