@@ -44,6 +44,9 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ state.updated_at?.split('T')[0] }} <br/> {{ state.updated_at?.split('T')[1].split('.')[0] }}
                     </td>
+                    <td class="tw-px-6 tw-py-4">
+                        <InventoryStateActions :state="state" />
+                    </td>
                 </tr>
                 
             </tbody>
@@ -70,9 +73,11 @@
 </template>
 
 <script>
+import InventoryStateActions from '@/views/inventory/partials/InventoryStateActions'
 
 export default {
     props: [ 'columns', 'states' ],
+    components: {InventoryStateActions},
 
     data() {
         return {

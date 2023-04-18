@@ -96,6 +96,10 @@ export default {
         {
           prop: "updated_at",
           name: "Updated At",
+        },
+        {
+          prop: "actions",
+          name: "Actions",
         }
       ],
     };
