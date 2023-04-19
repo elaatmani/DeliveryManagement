@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(state, i) in items" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(product, i) in items" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,25 +27,30 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ state.id }}
+                        {{ product.id }}
                     </th>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ state.product.name }}
+                    <td class="tw-px-6 tw-py-4 tw-underline tw-underline-offset-1 tw-font-medium">
+                        <router-link :to="'products/' + product.id">
+                            {{ product.name }}
+                        </router-link>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ state.product.buying_price }} DH
+                        {{ product.buying_price }} DH
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ state.product.selling_price }} DH
+                        {{ product.selling_price }} DH
+                    </td>
+                    <td class="tw-px-6 tw-py-4 tw-font-bold tw-text-green-500">
+                        {{ availableQuantity(product) }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ state.quantity }}
+                        {{ product.total_quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ state.updated_at?.split('T')[0] }} <br/> {{ state.updated_at?.split('T')[1].split('.')[0] }}
+                        {{ product.updated_at?.split('T')[0] }} <br/> {{ product.updated_at?.split('T')[1].split('.')[0] }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <InventoryStateActions :state="state" />
+                        <InventoryStateActions :state="product" />
                     </td>
                 </tr>
                 
@@ -100,6 +105,16 @@ export default {
         },
         items() {
             return this.states.slice(this.prevRange, this.nextRange)
+        },
+    },
+
+    methods: {
+        availableQuantity(product) {
+            let count = 0;
+            product.variations.forEach(v => {
+                count += v.available_quantity
+            });
+            return count
         }
     }
 }

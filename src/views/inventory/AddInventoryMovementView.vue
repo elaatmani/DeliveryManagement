@@ -57,7 +57,7 @@
                     class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-cursor-pointer tw-border-neutral-400 focus:tw-border-orange-500"
                     >
                       <option :value="v.id" v-for="v in variations" :key="v.id">
-                        {{ v.color + ' / ' + v.size + ' / ' + v.quantity  }}
+                        {{ v.color + ' - ' + v.size + '  (' + v.available_quantity + ' items)'  }}
                       </option>
                     </select>
                     <v-icon size="small" class="tw-absolute tw-right-3 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
@@ -152,7 +152,6 @@
 
 <script>
 import User from '@/api/User'
-import Product from '@/api/Product'
 import Inventory from '@/api/Inventory'
 export default {
     data() {
@@ -188,7 +187,11 @@ export default {
                 check =  false;
               }
             });
-
+            
+            if(i.quantity == 0) {
+              return false;
+            }
+            
             return check
           }
         )
@@ -213,10 +216,10 @@ export default {
 
         if(!selectedVariation) return false;
 
-        if((this.quantity > selectedVariation.quantity) || this.quantity == 0) {
+        if((this.quantity > selectedVariation.available_quantity) || this.quantity == 0) {
           this.$alert({
             type: 'warning',
-            title: 'Quantity should be between 1 and ' + selectedVariation.quantity
+            title: 'Quantity should be between 1 and ' + selectedVariation.available_quantity
           })
           return false;
         }
@@ -316,11 +319,11 @@ export default {
           )
       },
       getProducts() {
-        return Product.all()
+        return Inventory.inventoryStates()
         .then(
           res => {
-            if (res.data.code == 'SUCCESS') {
-              const products = res.data.data.products
+            if (res.data.code == 'SHOW_ALL_INVENTORY_STATES') {
+              const products = res.data.data
               this.$store.dispatch('product/setProducts', products)
 
               if(products.length > 0) {

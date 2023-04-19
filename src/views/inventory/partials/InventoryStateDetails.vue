@@ -22,7 +22,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr v-for="(item) in state.inventory_state_variations" :key="item.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                          <tr v-for="(item) in state.variations" :key="item.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                               <td class="tw-w-4 tw-p-4">
                                 {{ item.id }}
                               </td>
@@ -33,12 +33,34 @@
                                 {{ item.color }}
                               </td>
                               <td class="tw-w-4 tw-p-4">
-                                {{ item.quantity }}
+                                  <div class=" tw-flex tw-items-center tw-gap-1">
+                                    <span class="tw-text-green-500">{{ item.available_quantity }} </span>
+                                    <span>/ {{ item.quantity }}</span>
+                                    <span v-if="item.on_hold > 0">
+                                      / <span class="tw-text-red-400 ">{{ item.on_hold }}</span>
+                                    </span>
+                                  </div> 
                               </td>
                           </tr>
                           
                       </tbody>
                   </table>
+
+                  <div class="tw-flex tw-flex-col tw-gap-1 mt-5">
+                    <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
+                      <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-green-500"></div>
+                      <span>Available quantity</span>
+                    </div>
+                    <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
+                      <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-neutral-700"></div>
+                      <span>Initial quantity</span>
+                    </div>
+                    <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
+                      <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-red-400"></div>
+                      <span>Not Received quantity</span>
+                    </div>
+
+                  </div>
     </div>
   </div>
 </template>
@@ -63,6 +85,7 @@ export default {
     },
 
     mounted() {
+      console.log(this.state);
     }
 }
 </script>

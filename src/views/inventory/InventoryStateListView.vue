@@ -90,6 +90,10 @@ export default {
           name: "Selling Price",
         },
         {
+          prop: "available",
+          name: "Available",
+        },
+        {
           prop: "quantity",
           name: "Quantity",
         },
@@ -111,11 +115,11 @@ export default {
     filteredInventoryState() {
       return this.inventoryState.filter((item) => {
         if (
-          !item.product.ref.toLowerCase().includes(this.search.toLowerCase()) &&
-          !item.product.name
+          !item.ref.toLowerCase().includes(this.search.toLowerCase()) &&
+          !item.name
             .toLowerCase()
             .includes(this.search.toLowerCase()) &&
-          !item.product.description
+          !item.description
             .toLowerCase()
             .includes(this.search.toLowerCase())
         ) {
