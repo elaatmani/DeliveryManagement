@@ -19,10 +19,10 @@ class Inventory {
     }
 
     async inventoryMovementCreate({
-        product_id, delivery_id, variants,  quantity
+        product_id, delivery_id, variants
     }) {
         await Csrf.getCookie()
-        return Api.post('api/inventorymovements/new', { product_id, delivery_id, variants, quantity })
+        return Api.post('api/inventorymovements/new', { product_id, delivery_id, variations: variants })
     }
 
     async inventoryMovementUpdate(id, {
