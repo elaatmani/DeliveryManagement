@@ -61,7 +61,7 @@
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.adresse.message }}</div>
                 </div>
-                <div v-if="newSale.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
+                <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Quantity
                     </div>
@@ -69,13 +69,21 @@
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.quantity.message }}</div>
                 </div>
-                <div v-if="newSale.upsell == 'oui'" class="md:tw-col-span-6 tw-col-span-12">
+                <div class="md:tw-col-span-6 tw-col-span-12">
                     <div class="mb-1 text-body-2 tw-text-zinc-700">
                         Price
                     </div>
                       <input v-model="newSale.price" type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
                     
                     <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.price.message }}</div>
+                </div>
+                <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div class="mb-1 text-body-2 tw-text-zinc-700">
+                        Note
+                    </div>
+                    <textarea v-model="newSale.note" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"></textarea>
+                    
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ form.note.message }}</div>
                 </div>
             </div>
 
@@ -144,6 +152,10 @@ export default {
                 message: ''
             },
             price: {
+                valid: true,
+                message: ''
+            },
+            note: {
                 valid: true,
                 message: ''
             }

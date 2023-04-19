@@ -92,29 +92,37 @@
                 <div v-if="variants.length == 0" :class="{'tw-bg-neutral-100 tw-text-neutral-500': formStatus.variants.valid, 'tw-bg-red-100 tw-text-red-500': !formStatus.variants.valid}" class="tw-text-center tw-mb-6  tw-w-full tw-py-3 tw-rounded-lg">
                   {{ formStatus.variants.valid ? 'No Variants yet' : formStatus.variants.message }}
                 </div>
-                <div v-else class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
-                  <div v-for="variant in variants" :key="variant.id">
-                    <div class="tw-grid tw-grid-cols-12 tw-text-md tw-gap-5 tw-items-center tw-my-2">
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-pink-500 tw-bg-blue-500/10">
-                        <v-icon size="x-small">mdi-format-size</v-icon>
-                        {{ variant.size }}
-                      </div>
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-emerald-500 tw-bg-blue-500/10">
-                        <v-icon size="x-small">mdi-palette</v-icon>
-                        {{ variant.color }}
-                      </div>
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md tw-text-purple-500 tw-bg-blue-500/10">
-                        <v-icon size="x-small">mdi-inbox-multiple-outline</v-icon>
-                        {{ variant.quantity }}
-                      </div>
-                      <div class="tw-col-span-1">
-                          <button @click="deleteVatiant(variant.id)" class="tw-py-1 tw-px-2 tw-ml-auto  tw-duration-200">
-                            <v-icon class="tw-text-red-500 hover:tw-scale-125 tw-duration-300" size="small">mdi-delete</v-icon>
-                          </button>
-                      </div>
-                    </div>
-                  </div>
-                  
+                <div class="tw-max-w-full tw-overflow-x-auto" v-else>
+                  <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
+                    <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
+                        <tr>
+                            <th v-for="column in ['size', 'color', 'qty', 'actions']" :class="[column == 'actions' && '!tw-w-[40px]']" :key="column" scope="col" class="tw-px-6 tw-py-3 text-truncate">
+                                <div class="tw-w-fit tw-flex tw-whitespace-nowrap tw-capitalize">
+                                    {{ column }}
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="variant in variants" :key="variant.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                            <th scope="row" class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900">
+                                {{ variant.size }}
+                            </th>
+                            <td class="tw-px-6 tw-py-2">
+                                {{ variant.color }}
+                            </td>
+                            <td class="tw-px-6 tw-py-2">
+                                {{ variant.quantity }}
+                            </td>
+                            
+                            <td class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
+                                <div>
+                                  <VariantActions @delete="deleteVariant" :variant="variant" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 </div>
               </div>
               
@@ -122,16 +130,6 @@
           </v-col>
         </v-row>
 
-        <v-row>
-          
-          
-        </v-row>
-      </div>
-
-      <div>
-        <v-row>
-          
-        </v-row>
       </div>
 
       
@@ -150,7 +148,10 @@
 <script>
 import { validateName, validateVariants } from '@/helpers/validators'
 import Product from '@/api/Product';
+import VariantActions from '@/views/product/VariantActions'
+
 export default {
+  components: {VariantActions},
     data() {
       return {
         isLoading: false,
@@ -290,7 +291,6 @@ export default {
       },
 
       addVariant() {
-        this.formStatus.size
 
         const variant = {
           id: this.variantId,
@@ -308,7 +308,7 @@ export default {
         this.quantity = 0;
       },
 
-      deleteVatiant(id) {
+      deleteVariant(id) {
         this.variants = this.variants.filter(item => item.id !== id)
       },
 

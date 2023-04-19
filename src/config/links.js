@@ -60,8 +60,29 @@ export const links = [
         ]
     },
 
+    // {
+    //     id: 3,
+    //     module: 'track',
+    //     title: 'Tracking',
+    //     hasChildren: true,
+    //     gate: 'all', 
+    //     icon: {
+    //         type: 'svg',
+    //         value: 'assets/img/icons/product.svg'
+    //     },
+    //     children: [
+    //         {
+    //             id: 1,
+    //             title: 'Tracking Deliveries',
+    //             subModule: 'track/delivery',
+    //             gate: 'all',
+    //             to: '/tracking/delivery'
+    //         },
+    //     ]
+    // },
+
     {
-        id: 10,
+        id: 4,
         module: 'sale',
         title: 'Sales',
         hasChildren: true,
@@ -82,7 +103,7 @@ export const links = [
     },
 
     {
-        id: 11,
+        id: 5,
         module: 'order',
         title: 'Orders',
         hasChildren: true,
@@ -117,7 +138,7 @@ export const links = [
     },
 
     {
-        id: 16,
+        id: 6,
         module: 'delivery',
         title: 'Orders',
         hasChildren: true,
@@ -182,7 +203,7 @@ export const links = [
 
 
     {
-        id: 6,
+        id: 8,
         title: 'Users',
         module: 'user',
         gate: 'access_to_users',
@@ -224,7 +245,7 @@ export const links = [
     },
 
     {
-        id: 4,
+        id: 9,
         title: 'Settings',
         module: 'settings',
         to: '/settings',
@@ -237,7 +258,7 @@ export const links = [
     },
 
     {
-        id: 5,
+        id: 10,
         title: 'Test',
         module: 'test',
         to: '/test',
