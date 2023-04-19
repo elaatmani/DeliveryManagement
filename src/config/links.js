@@ -60,26 +60,26 @@ export const links = [
         ]
     },
 
-    // {
-    //     id: 3,
-    //     module: 'track',
-    //     title: 'Tracking',
-    //     hasChildren: true,
-    //     gate: 'all', 
-    //     icon: {
-    //         type: 'svg',
-    //         value: 'assets/img/icons/product.svg'
-    //     },
-    //     children: [
-    //         {
-    //             id: 1,
-    //             title: 'Tracking Deliveries',
-    //             subModule: 'track/delivery',
-    //             gate: 'all',
-    //             to: '/tracking/delivery'
-    //         },
-    //     ]
-    // },
+    {
+        id: 3,
+        module: 'track',
+        title: 'Tracking',
+        hasChildren: true,
+        gate: 'all', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-radar'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Deliveries',
+                subModule: 'track/delivery',
+                gate: 'all',
+                to: '/tracking/delivery'
+            },
+        ]
+    },
 
     {
         id: 4,
