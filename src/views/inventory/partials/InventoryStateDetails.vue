@@ -46,18 +46,20 @@
                       </tbody>
                   </table>
 
-                  <div class="tw-flex tw-flex-col tw-gap-1 mt-5">
+                  <div class="tw-flex  tw-gap-3 mt-5">
                     <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
                       <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-green-500"></div>
-                      <span>Available quantity</span>
+                      <span>Available</span>
                     </div>
+                    
                     <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
                       <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-neutral-700"></div>
-                      <span>Initial quantity</span>
+                      <span>Initial</span>
                     </div>
+                    
                     <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
                       <div class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-red-400"></div>
-                      <span>Not Received quantity</span>
+                      <span>Not Received</span>
                     </div>
 
                   </div>

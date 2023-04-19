@@ -182,15 +182,16 @@ export default {
         ?.variations.filter(
           i => {
             let check = true;
+            // if(i.available_quantity == 0) {
+            //   return false;
+            // }
             this.selectedVariations.forEach(element => {
               if(i.id == element.id) {
                 check =  false;
               }
             });
             
-            if(i.quantity == 0) {
-              return false;
-            }
+            
             
             return check
           }
@@ -327,7 +328,11 @@ export default {
               this.$store.dispatch('product/setProducts', products)
 
               if(products.length > 0) {
-                this.product = products[0].id
+                const product = products[0]
+                this.product = product.id
+                if(this.variations.length > 0) {
+                  this.variation = this.variations[0].id
+                }
               } else {
                 this.product = null
               }
