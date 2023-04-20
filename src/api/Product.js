@@ -11,7 +11,7 @@ class Product {
             buying_price: product.buyingPrice,
             selling_price: product.sellingPrice,
             ref: product.reference,
-            variants: product.variants,
+            variations: product.variants,
             description: product.description,
             status: 1
         });
@@ -25,7 +25,7 @@ class Product {
             buying_price: product.buyingPrice,
             selling_price: product.sellingPrice,
             ref: product.reference,
-            variants: product.variants,
+            variations: product.variants,
             description: product.description,
             status: 1
         });

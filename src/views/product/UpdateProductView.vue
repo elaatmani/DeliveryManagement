@@ -112,12 +112,15 @@
                                 {{ variant.color }}
                             </td>
                             <td class="tw-px-6 tw-py-2">
-                                {{ variant.quantity }}
+                                <div class="tw-flex tw-flex-col">
+                                  <span>{{ variant.quantity }}</span>
+                                  <span v-if="!!variant.created_at" class="tw-text-xs tw-text-green-500">{{ variant.available_quantity }}</span>
+                                </div>
                             </td>
                             
                             <td class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
                                 <div>
-                                  <VariantActions @delete="deleteVariant" :variant="variant" />
+                                  <UpdateVariantActions @delete="deleteVariant" :variant="variant" />
                                 </div>
                             </td>
                         </tr>
@@ -148,10 +151,10 @@
 <script>
 import { validateName, validateVariants } from '@/helpers/validators'
 import Product from '@/api/Product';
-import VariantActions from '@/views/product/VariantActions'
+import UpdateVariantActions from '@/views/product/UpdateVariantActions'
 
 export default {
-  components: {VariantActions},
+  components: {UpdateVariantActions},
     data() {
       return {
         isLoading: false,
