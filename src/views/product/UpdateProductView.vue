@@ -248,6 +248,13 @@ export default {
                 title: res.data.message
               })
             }
+
+            if (res.data.code == "QUANTITY_ERROR") {
+              this.$alert({
+                type: 'warning',
+                title: res.data.message
+              })
+            }
           }
         )
         .catch(

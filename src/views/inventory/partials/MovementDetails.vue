@@ -27,10 +27,10 @@
                                 {{ item.id }}
                               </td>
                               <td class="tw-w-4 tw-p-4">
-                                {{ item.size }}
+                                {{ item.product_variation.size }}
                               </td>
                               <td class="tw-w-4 tw-p-4">
-                                {{ item.color }}
+                                {{ item.product_variation.color }}
                               </td>
                               <td class="tw-w-4 tw-p-4">
                                 {{ item.quantity }}

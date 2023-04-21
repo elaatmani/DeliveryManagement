@@ -36,10 +36,12 @@
                         {{ movement.delivery.firstname + ' ' + movement.delivery.lastname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ movement.product.name }}
+                        <router-link :to="'products/' + movement.product.id">
+                            {{ movement.product.name }}
+                        </router-link>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ quantityTotal(movement.inventory_movement_variations) }}
+                        {{ movement.quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <div :class="[movement.is_received ? 'tw-text-green-500 tw-bg-green-500/10' : 'tw-text-red-500 tw-bg-red-500/10' ]" class="tw-flex tw-justify-center tw-py-1 tw-rounded-lg tw-items-center">
