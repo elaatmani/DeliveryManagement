@@ -89,8 +89,8 @@ export default {
         },
 
         addQuantity() {
-            this.newVariant.quantity += parseInt(this.quantity)
-            this.newVariant.available_quantity += parseInt(this.quantity)
+            this.newVariant.quantity = parseInt(this.newVariant.quantity) + parseInt(this.quantity)
+            this.newVariant.available_quantity = parseInt(this.newVariant.available_quantity) + parseInt(this.quantity)
             this.quantity = 1
             this.cancelAdd()
         },
