@@ -4,7 +4,7 @@
         <v-icon color="white">mdi-plus</v-icon>
     </v-btn>
 
-    <v-btn v-if="!variant.available_quantity || (variant.available_quantity == variant.quantity)" @click="deletePopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn v-if="(variant.on_hold === undefined) || (variant.available_quantity == variant.quantity)" @click="deletePopup = true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-delete-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Delete</span> -->
     </v-btn>

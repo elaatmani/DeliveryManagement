@@ -41,7 +41,7 @@
                         </router-link>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ movement.quantity }}
+                        {{ quantityTotal(movement.inventory_movement_variations) }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <div :class="[movement.is_received ? 'tw-text-green-500 tw-bg-green-500/10' : 'tw-text-red-500 tw-bg-red-500/10' ]" class="tw-flex tw-justify-center tw-py-1 tw-rounded-lg tw-items-center">
@@ -121,9 +121,9 @@ export default {
     },
 
     methods: {
-        quantityTotal(selectedVariations) {
+        quantityTotal(variations) {
             let qty = 0;
-            selectedVariations.forEach(
+            variations.forEach(
                 i => {
                 qty += i.quantity
                 }

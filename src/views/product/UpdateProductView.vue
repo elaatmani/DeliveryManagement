@@ -278,9 +278,10 @@ export default {
         let id = 0;
         variants.forEach(item => {
           if(item.id > id) {
-            id = item.id + 2
+            id = item.id + 1
           }
         })
+        console.log('latest id: ', id);
         return id;
       },
 

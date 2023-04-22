@@ -1,14 +1,14 @@
 <template>
   <div :key="movement.id" class="tw-flex tw-items-center ">
-    <v-btn @click="confirmPopup = true"  v-if="['delivery', 'admin'].includes(user.role)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="confirmPopup = true"  v-if="['delivery', 'admin'].includes(user.role)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-checkbox-marked-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>
-    <v-btn :to="'/inventories/update/'+ movement.id"  v-if="$can(`update_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn :to="'/inventories/update/'+ movement.id"  v-if="false && $can(`update_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-pencil-outline</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
-    <v-btn @click="detailsPopup = true" v-if="$can(`view_inventory_movement`)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
+    <v-btn @click="detailsPopup = true" v-if="$can(`view_inventory_movement`) || true" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="blue" variant="flat" density="comfortable" :ripple="false" size="small">
       <v-icon color="white">mdi-eye-outline</v-icon>
       <!-- <span class="text-white text-capitalize">View</span> -->
     </v-btn>

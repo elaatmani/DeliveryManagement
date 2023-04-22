@@ -114,8 +114,8 @@ export default {
     updateVariant() {
         console.log('updated');
         const diffrent = this.quantity - this.newVariant.quantity
-        this.newVariant.size = this.size
-        this.newVariant.color = this.color
+        this.newVariant.size = this.size.toLocaleUpperCase()
+        this.newVariant.color = this.color.toLocaleUpperCase()
         this.newVariant.quantity = this.quantity
 
         this.newVariant.available_quantity = parseInt(this.newVariant.available_quantity) + parseInt(diffrent)
