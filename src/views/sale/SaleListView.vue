@@ -5,6 +5,18 @@
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Sales List</h1>
         <h2 class="tw-text-gray-500 tw-text-sm">Manage your sales</h2>
       </div>
+
+      <!-- New Line -->
+      <div v-if="$can('create_sale')">
+        <v-btn color="primary-color" @click="showPopup = true" variant="flat" class="text-capitalize">
+          <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
+          <span class="text-white">
+            Add Sale
+          </span>
+        </v-btn>
+      </div>
+
+
     </div>
 
     <div v-if="!isLoaded">
@@ -112,6 +124,111 @@
       </div>
     </div>
   </div>
+
+
+
+
+<!-- new lane -->
+
+  <popup-full @cancel="showPopup = false"  :visible="showPopup">
+    <div class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5">
+      <h1 class="tw-text-lg">Create Order</h1>
+      
+      <div class="tw-grid tw-grid-cols-12 tw-gap-y-1 tw-gap-x-3 mt-5">
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  Client
+              </div>
+              <input  type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+              
+              
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">
+                Product
+            </div>
+            <select
+            
+            class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            >
+              <!-- <option selected disabled :value="newSale.city">{{ newSale.city }}</option>
+              <option :value="c.name" v-for="c in cities" :key="c.id">
+                {{ c.name }}
+              </option> -->
+            </select>
+            <!-- <input city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
+            
+    
+        </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  Phone
+              </div>
+              <input  type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+              
+        
+          </div>
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  City
+              </div>
+              <select
+              
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+              >
+                <!-- <option selected disabled :value="newSale.city">{{ newSale.city }}</option>
+                <option :value="c.name" v-for="c in cities" :key="c.id">
+                  {{ c.name }}
+                </option> -->
+              </select>
+              <!-- <input city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
+              
+      
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  Address
+              </div>
+              <input  type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+              
+            
+          </div>
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  Quantity
+              </div>
+              <input  type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+              
+              
+          </div>
+          <div class="md:tw-col-span-6 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                  Price
+              </div>
+                <input  type="number" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500">
+          </div>
+      </div>
+
+      <div  class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
+        <v-btn @click="showUpdatePopup = false" color="grey-darken-2" variant="flat" class="text-capitalize">
+              <span class="text-white">
+                  Cancel
+              </span>
+          </v-btn>
+          <v-btn :loading="isLoading" @click="updateOrder" color="primary-color" variant="flat" class="text-capitalize">
+              <span class="text-white">
+                  Save
+              </span>
+          </v-btn>
+      </div>
+  </div>
+  </popup-full>
+
+
+  
 </template>
 
 <script>
@@ -138,7 +255,9 @@ export default {
       upsellFilter: 'all',
       deliveryFilter: 'all',
       search: '',
-
+      
+      // new lane
+      showPopup: false,
 
       columns: 
       [
