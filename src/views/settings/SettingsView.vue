@@ -141,6 +141,7 @@
           color="primary-color"
           variant="flat"
           size="large"
+          v-if="$can('update_account')"
         >
           <span class="text-white text-capitalize">Update</span>
         </v-btn>

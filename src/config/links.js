@@ -249,7 +249,7 @@ export const links = [
         title: 'Settings',
         module: 'settings',
         to: '/settings',
-        gate: 'all',
+        gate: 'access_to_account',
         hasChildren: false,
         icon: {
             type: 'svg',
