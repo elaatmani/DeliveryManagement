@@ -11,6 +11,8 @@ import VueNumber from 'vue-number-animation'
 import LoadingAnimation from '@/components/LoadingAnimation'
 import PopupVue from '@/components/PopupVue'
 import PopupFull from '@/components/PopupFull'
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 // import styling and tailwind
 import '@/assets/style.css'
@@ -31,6 +33,6 @@ createApp(App)
   .component('LoadingAnimation', LoadingAnimation)
   .component('Popup', PopupVue)
   .component('PopupFull', PopupFull)
-  
+  .component('VueDatePicker', VueDatePicker)
 
   .mount('#app')
