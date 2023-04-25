@@ -1,6 +1,6 @@
 
 export const confirmations = [
-    { id: 0, value: null , name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
+    { id: 0, value: null , name: 'New', text: 'tw-text-white', bg: 'tw-bg-green-500', ring: 'tw-ring-green-300' },
     { id: 1, value: 'day-one-call-one' , name: 'Day-1 / 1ér appel', text: 'tw-text-rose-500', bg: 'tw-bg-rose-200/10', ring: 'tw-ring-rose-200' },
     { id: 2, value: 'day-one-call-two' , name: 'Day-1 / 2éme appel', text: 'tw-text-rose-500', bg: 'tw-bg-rose-400/10', ring: 'tw-ring-rose-300' },
     { id: 3, value: 'day-one-call-three' , name: 'Day-1 / 3éme appel', text: 'tw-text-rose-500', bg: 'tw-bg-rose-600/10', ring: 'tw-ring-rose-400' },
