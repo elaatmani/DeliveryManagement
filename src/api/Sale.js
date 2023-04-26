@@ -78,9 +78,9 @@ class Sale {
         return Api.get('api/orders/delivred')
     }
 
-    async deliveryUpdateDelivery(id, delivery) {
+    async deliveryUpdateDelivery(id, delivery, order) {
         await Csrf.getCookie();
-        return Api.post('api/orders/update/delivery/' + id, {delivery});
+        return Api.post('api/orders/update/delivery/' + id, {delivery, ...order});
     }
 
     async history(id) {

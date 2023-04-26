@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div :key="items.length">
     
     <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
-        <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
+        <table :key="reportedForToday.length" class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
             <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
                 <tr>
                     <th scope="col" class="tw-p-4">
@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(sale, i) in items" :key="i" :class="[sale.confirmation == 'reporter' && 'tw-relative', sale.id == 1 && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                <tr v-for="(sale) in items" :key="sale.id" :class="[[sale.confirmation, sale.delivery].includes('reporter') && 'tw-relative', isReportedToday(sale) && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4 tw-relative">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -34,13 +34,9 @@
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
                         {{ sale?.created_at?.split('T')[0] }}
-                        <div v-if="sale.confirmation == 'reporter'" :class="sale.id == 1 && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
-                             <span v-if="sale.id == 1">
+                        <div v-if="sale.confirmation == 'reporter' || sale.delivery == 'reporter'" :class="isReportedToday(sale) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                             <span v-if="isReportedToday(sale)">
                                 Reported for today
-                             </span>
-                             <span v-else>
-                                 <v-icon size="x-small">mdi-autorenew</v-icon>
-                                 2023-05-23
                              </span>
                         </div>
                     </td>
@@ -53,14 +49,40 @@
                     <td class="tw-px-6 tw-py-4">
                         <SaleUpsell :sale="sale" :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <SaleConfirmation :sale="sale" :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-flex tw-items-center tw-justify-center">
+                            <SaleConfirmation :class="sale.confirmation == 'reporter' && 'tw-mb-1'" :sale="sale" :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
+                            <div v-if="sale.confirmation == 'reporter'" :class="isReportedToday(sale) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                                
+                                <span class="tw-flex tw-gap-1">
+                                    <span v-if="sale.confirmation == 'reporter'">
+                                        <v-icon size="x-small">mdi-autorenew</v-icon>
+                                        <span >
+                                        {{ sale.reported_agente_date  }}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <SaleAffectation :sale="sale" v-if="sale.confirmation == 'confirmer'" :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <SaleDelivery :sale="sale" :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-flex tw-items-center tw-justify-center">
+                            <SaleDelivery :class="sale.delivery == 'reporter' && 'tw-mb-1'" :sale="sale" :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
+                            <div v-if="sale.delivery == 'reporter'" :class="isReportedToday(sale) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                                
+                                <span class="tw-flex tw-gap-1">
+                                    <span v-if="sale.delivery == 'reporter'">
+                                        <v-icon size="x-small">mdi-autorenew</v-icon>
+                                        <span >
+                                        {{ sale.reported_delivery_date  }}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.quantity }}
@@ -115,6 +137,7 @@ export default {
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
+            todayDate: null
         }
     },
 
@@ -130,13 +153,65 @@ export default {
             return Math.ceil(this.sales.length / this.paginationLimit)
         },
         items() {
-            return this.sales.slice(this.prevRange, this.nextRange)
+            const sales = [...this.reportedForToday,...this.sales.filter(sale => !this.isReportedToday(sale))]
+            return sales.slice(this.prevRange, this.nextRange)
+        },
+        reportedForToday() {
+            return this.sales.filter(this.isReportedToday)
         }
     },
     watch: {
         paginationLimit() {
             this.currentPage = 1
         }
+    },
+
+    methods: {
+        isReportedToday(sale) {
+            
+
+            return this.isConfirmationReportedToday(sale) || this.isDeliveryReportedToday(sale)
+        },
+
+        isDeliveryReportedToday(sale) {
+            if(sale.delivery != "reporter") {
+                return false
+            }
+
+            if(sale.reported_delivery_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        },
+
+        isConfirmationReportedToday(sale) {
+            if(sale.confirmation != "reporter") {
+                return false
+            }
+
+            if(sale.reported_agente_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        }
+    },
+
+    mounted() {
+        const date = new Date();
+        const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
+        const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
+        const year = date.getFullYear();
+        this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
     }
 }
 </script>

@@ -233,7 +233,7 @@ export default {
       return {
         id: 1,
         title: 'New',
-        value: this.sales.filter(i => !i.confirmation).length,
+        value: this.sales.filter(i => !i.confirmation || i.confirmation == 'new').length,
         // value: 35,
         color: 'primary-green',
         icon: 'mdi mdi-new-box'

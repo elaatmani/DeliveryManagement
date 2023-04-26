@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :key="order.id">
     <!-- new line -->
     <popup-full
       type="info"
@@ -64,14 +64,18 @@ export default {
             return false
         }
 
-        
-        this.newOrder.reported_agente_date = this.realDate;
-        this.newOrder.reported_agente_note = this.note;
-        this.newOrder.confirmation = "reporter";
+        // this.$alert({
+        //         type: "info",
+        //         title: "clicked",
+        //     });
+        const order = {...this.order}
+
+        order.reported_delivery_date = this.realDate;
+        order.reported_delivery_note = this.note;
+        order.delivery = "reporter";
 
         this.isLoading = true;
-
-        Sale.agenteUpdateConfirmation(this.newOrder.id, "reporter", this.newOrder)
+        Sale.deliveryUpdateDelivery(order.id, "reporter", order)
         .then(
             res => {
                 console.log(res.data);
@@ -79,6 +83,9 @@ export default {
                     type: "success",
                     title: "Order reported successfully",
                 });
+
+                this.$store.dispatch('sale/update', { id: order.id, sale: order });
+                this.cancel()
             },
             this.$handleApiError
         )
@@ -86,23 +93,23 @@ export default {
             () => this.isLoading = false
         )
 
-        // setTimeout(() => {
-        //     this.$alert({
-        //         type: "success",
-        //         title: "Order reported successfully",
-        //     });
-        //     this.isLoading = false
-        //     this.cancel()
-        // })
     },
 
     format(date) {
         const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
         const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
         const year = date.getFullYear();
 
-        this.realDate = `${year}-${month}-${day}`;
-        return `${day}/${month}/${year}`;
+        this.realDate = `${year}-${monthFormated}-${dayFormated}`;
+        return `${dayFormated}/${monthFormated}/${year}`;
     },
 
     cancel() {
@@ -112,7 +119,6 @@ export default {
 
   },
     mounted() {
-        this.newOrder = this.order
         console.log(this.order);
     },
 };

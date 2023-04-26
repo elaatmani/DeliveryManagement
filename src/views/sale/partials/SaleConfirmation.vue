@@ -34,7 +34,7 @@
       </div>
     </popup-full>
 
-      <SaleReporting :order="sale" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
+      <SaleConfirmationReporting :order="sale" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
 
   </div>
 </template>
@@ -42,12 +42,12 @@
 <script>
   import Sale from "@/api/Sale";
   import { confirmations } from "@/config/orders";
-  import SaleReporting from '@/views/sale/partials/SaleReporting'
+  import SaleConfirmationReporting from '@/views/sale/partials/SaleConfirmationReporting'
   
   export default {
     props: ["confirmation", "id", "sale"],
 
-    components: { SaleReporting },
+    components: { SaleConfirmationReporting },
 
     data() {
       return {
