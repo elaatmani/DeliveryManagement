@@ -18,6 +18,11 @@ class Sale {
         return Api.post('api/orders/update/' + id, order);
     } 
 
+    async create(sale) {
+        await Csrf.getCookie();
+        return Api.post('api/sales/new', sale);
+    } 
+
     async agenteOrders() {
         await Csrf.getCookie();
         return Api.get('api/orders');
@@ -38,9 +43,9 @@ class Sale {
         return Api.get('api/orders/toconfirmate');
     }
 
-    async agenteUpdateConfirmation(id, confirmation) {
+    async agenteUpdateConfirmation(id, confirmation, order = {}) {
         await Csrf.getCookie();
-        return Api.post('api/orders/update/confirmation/' + id, {confirmation});
+        return Api.post('api/orders/update/confirmation/' + id, {confirmation, ...order});
     }
 
     async agenteUpdateConfirmationWithNote(id, confirmation, note) {

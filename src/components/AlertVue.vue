@@ -1,11 +1,13 @@
 <template>
-    <v-slide-y-reverse-transition>
-        <div v-if="state.active" class="pa-2 tw-absolute tw-z-50">
+    <teleport to='body'>
+        <v-slide-y-reverse-transition>
+        <div v-if="state.active" class="pa-2 tw-absolute !tw-z-[510000]">
                 <v-alert closable density="compact" variant="flat" :type="state.alert.type" position="fixed" location="bottom right" class="ma-2">
                     <div class="text-body-1">{{ state.alert.title }}</div>
                 </v-alert>
         </div>
     </v-slide-y-reverse-transition>
+    </teleport>
 </template>
 
 <script>

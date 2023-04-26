@@ -51,24 +51,7 @@
     </popup-full>
 
 
-      <!-- new line -->
-      <popup-full type="info" title="Add Note" btn-color="blue" @cancel="showPopupReporter = false"
-      :visible="showPopupReporter">
-      <div class="md:tw-max-w-[400px] tw-bg-white tw-shadow-lg tw-rounded-lg tw-py-3 tw-px-5 !tw-w-[95%] tw-mx-auto">
-        <p class="tw-text-neutral-600 mb-2">Enter Reported Date</p>
-
-        <VueDatePicker v-model="date" model-auto range />
-        <br />
-        <textarea v-model="note" cols="30" rows="12"
-          class="tw-rounded-lg tw-px-3 tw-py-1 tw-outline-none tw-w-full tw-border tw-border-solid tw-border-neutral-600 focus:tw-border-orange-500">
-        </textarea>
-
-        <div class="tw-flex tw-justify-end tw-mt-2">
-          <v-btn class="tw-capitalize" :loading="isLoading" variant="flat" color="green"
-            @click="handleClick">Confirm</v-btn>
-        </div>
-      </div>
-    </popup-full>
+      <OrderReporting :order="order" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
     
   </div>
 </template>
@@ -76,9 +59,13 @@
 <script>
 import Sale from '@/api/Sale';
 import { confirmations } from '@/config/orders';
+import OrderReporting from '@/views/order/partials/OrderReporting'
 
 export default {
-    props: ['confirmation', 'id'],
+    props: ['confirmation', 'id', 'order'],
+
+    components: { OrderReporting },
+
     data() {
         return {
             isLoading: false,

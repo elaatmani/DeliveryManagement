@@ -19,8 +19,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(sale, i) in items" :key="i" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
-                    <td class="tw-w-4 tw-p-4">
+                <tr v-for="(sale, i) in items" :key="i" :class="[sale.confirmation == 'reporter' && 'tw-relative', sale.id == 1 && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                    <td class="tw-w-4 tw-p-4 tw-relative">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
                             <label for="checkbox-table-search-1" class="tw-sr-only">checkbox</label>
@@ -32,8 +32,17 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.city }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
+                    <td class="tw-px-6 tw-py-4 tw-relative">
                         {{ sale?.created_at?.split('T')[0] }}
+                        <div v-if="sale.confirmation == 'reporter'" :class="sale.id == 1 && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                             <span v-if="sale.id == 1">
+                                Reported for today
+                             </span>
+                             <span v-else>
+                                 <v-icon size="x-small">mdi-autorenew</v-icon>
+                                 2023-05-23
+                             </span>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
@@ -42,16 +51,16 @@
                         {{ sale.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleUpsell :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
+                        <SaleUpsell :sale="sale" :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleConfirmation :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
+                        <SaleConfirmation :sale="sale" :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleAffectation v-if="sale.confirmation == 'confirmer'" :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
+                        <SaleAffectation :sale="sale" v-if="sale.confirmation == 'confirmer'" :affectation="sale.affectation" :id="sale.id" :key="sale.affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <SaleDelivery :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
+                        <SaleDelivery :sale="sale" :id="sale.id" :key="sale.delivery" :delivery="sale.delivery" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.quantity }}

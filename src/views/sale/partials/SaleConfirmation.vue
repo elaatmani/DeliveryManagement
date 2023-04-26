@@ -34,33 +34,21 @@
       </div>
     </popup-full>
 
-    <!-- new line -->
-    <popup-full type="info" title="Add Note" btn-color="blue" @cancel="showPopupReporter = false"
-      :visible="showPopupReporter">
-      <div class="md:tw-max-w-[400px] tw-bg-white tw-shadow-lg tw-rounded-lg tw-py-3 tw-px-5 !tw-w-[95%] tw-mx-auto">
-        <p class="tw-text-neutral-600 mb-2">Enter Reported Date</p>
+      <SaleReporting :order="sale" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
 
-        <VueDatePicker v-model="date" model-auto range />
-        <br />
-        <textarea v-model="note" cols="30" rows="12"
-          class="tw-rounded-lg tw-px-3 tw-py-1 tw-outline-none tw-w-full tw-border tw-border-solid tw-border-neutral-600 focus:tw-border-orange-500">
-        </textarea>
-
-        <div class="tw-flex tw-justify-end tw-mt-2">
-          <v-btn class="tw-capitalize" :loading="isLoading" variant="flat" color="green"
-            @click="handleClick">Confirm</v-btn>
-        </div>
-      </div>
-    </popup-full>
   </div>
 </template>
 
 <script>
   import Sale from "@/api/Sale";
   import { confirmations } from "@/config/orders";
-  import { ref } from "vue";
+  import SaleReporting from '@/views/sale/partials/SaleReporting'
+  
   export default {
-    props: ["confirmation", "id"],
+    props: ["confirmation", "id", "sale"],
+
+    components: { SaleReporting },
+
     data() {
       return {
         isLoading: false,
@@ -68,9 +56,9 @@
         showPopup: false,
         nextOption: null,
         note: "",
+        noteReporter: '',
         selectedId: 0,
         allOptions: confirmations,
-        date: ref(),
 
         //new line
         showPopupReporter: false,
@@ -87,6 +75,13 @@
         return this.allOptions.map((i) => i.value);
       },
     },
+
+    watc: {
+      date(value) {
+        console.log(value);
+      }
+    },
+
     methods: {
       close() {
         this.isOpen = false;
@@ -111,6 +106,10 @@
         this.updateOrderWithNote()
           .catch(this.$handleApiError)
           .finally(() => (this.showPopup = false));
+      },
+      handleClickReporter() {
+        console.log('repoting...');
+        this.showPopupReporter = false
       },
       async handleChange(option) {
         if (option.id === this.selectedId) return false;

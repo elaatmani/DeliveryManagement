@@ -1,6 +1,7 @@
 // import {abilities} from "@/config/ability"
 
 let initialState = {
+    fetched: false,
     sales: []
 }
 
@@ -11,12 +12,16 @@ export default {
     state: initialState,
 
     getters: {
-        sales: (state) => state.sales
+        sales: (state) => state.sales,
+        fetched: (state) => state.fetched
     },
 
     mutations: {
         SET_SALES: (state, payload) => {
             state.sales = payload
+        },
+        SET_FETCHED: (state, payload) => {
+            state.fetched = payload
         },
         UPDATE_SALE: (state, payload) => {
             state.sales = state.sales.map(
@@ -100,6 +105,9 @@ export default {
     actions: {
         setSales: ({ commit }, payload) => {
             commit('SET_SALES', payload)
+        },
+        setFetched: ({ commit }, payload) => {
+            commit('SET_FETCHED', payload)
         },
         update: ({ commit }, payload) => {
             commit('UPDATE_SALE', payload)

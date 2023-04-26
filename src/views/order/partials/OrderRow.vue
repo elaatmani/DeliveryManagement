@@ -16,13 +16,13 @@
                         {{ product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderUpsell :key="upsell" :upsell="upsell" :id="id" />
+                        <OrderUpsell :order="order" :key="upsell" :upsell="upsell" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderConfirmation :confirmation="confirmation" :key="confirmation" :id="id" />
+                        <OrderConfirmation :order="order" :confirmation="confirmation" :key="confirmation" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderAffectation v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
+                        <OrderAffectation :order="order" v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ quantity }}
@@ -72,7 +72,8 @@ export default {
         return {
             showPopup: false,
             isLoading: false,
-            newNote: ''
+            newNote: '',
+            newOrder: null
 
         }
     },
@@ -157,7 +158,7 @@ export default {
         },
     },
     mounted() {
-        
+        this.newOrder = this.order
     }
 
 }

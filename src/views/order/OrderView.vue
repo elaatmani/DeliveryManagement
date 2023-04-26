@@ -55,15 +55,15 @@
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation: </p>
-                        <OrderConfirmation @update="updateConfirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
+                        <OrderConfirmation :order="newOrder" @update="updateConfirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
                     </div>
                     <div v-if="newOrder.confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affectation: </p>
-                        <OrderAffectation :affectation="newOrder.affectation" :id="newOrder.id" />
+                        <OrderAffectation :order="newOrder" :affectation="newOrder.affectation" :id="newOrder.id" />
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell: </p>
-                        <OrderUpsell @update="updateUpsell" :upsell="newOrder.upsell" :id="newOrder.id" />
+                        <OrderUpsell :order="newOrder" @update="updateUpsell" :upsell="newOrder.upsell" :id="newOrder.id" />
                     </div>
                 </div>
             </div>
