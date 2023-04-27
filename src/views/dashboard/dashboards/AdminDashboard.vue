@@ -38,7 +38,13 @@
 
         </div>
 
-        <v-row v-if="isAdmin">
+        <v-row>
+            <v-col cols="12" md="12">
+                <TabSwitcher />
+            </v-col>
+        </v-row>
+
+        <v-row>
             <v-col cols="12" md="12">
                 <UsersTable />
             </v-col>
@@ -53,9 +59,10 @@ import DashItemTwo from '@/views/dashboard/partials/DashItemTwo'
 // import DashItemFilled from '@/views/dashboard/partials/DashItemFilled'
 import UsersTable from '@/views/dashboard/partials/UsersTable'
 import Sale from '@/api/Sale'
+import TabSwitcher from '@/views/dashboard/partials/admin/TabSwitcher'
 
 export default {
-    components: {  DashItemTwo, UsersTable },
+    components: {  DashItemTwo, UsersTable, TabSwitcher },
 
     data() {
         return {
