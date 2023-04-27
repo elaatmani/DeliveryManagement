@@ -100,6 +100,10 @@ export default {
             name: '#',
         },
         {
+            prop: 'date',
+            name: 'Date',
+        },
+        {
             prop: "client",
             name: "Client",
         },
@@ -130,10 +134,6 @@ export default {
         {
             prop: 'city',
             name: 'City',
-        },
-        {
-            prop: 'date',
-            name: 'Date',
         },
         {
             prop: 'actions',

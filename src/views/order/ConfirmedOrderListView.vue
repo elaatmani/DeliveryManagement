@@ -99,6 +99,10 @@ export default {
             name: '#',
         },
         {
+            prop: 'date',
+            name: 'Date',
+        },
+        {
             prop: "client",
             name: "Client",
         },

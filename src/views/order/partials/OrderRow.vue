@@ -1,5 +1,5 @@
 <template>
-  <tr :key="order.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+  <tr :key="order.id" :class="[order.confirmation == 'reporter' && 'tw-relative', isReportedToday(order) && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -9,6 +9,14 @@
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
                         {{ id }}
                     </th>
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        {{ order?.created_at?.split('T')[0] }}
+                        <div v-if="order.confirmation == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                             <span v-if="isReportedToday(order)">
+                                Reported for today
+                             </span>
+                        </div>
+                    </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ fullname }}
                     </td>
@@ -18,8 +26,21 @@
                     <td class="tw-px-6 tw-py-4">
                         <OrderUpsell :order="order" :key="upsell" :upsell="upsell" :id="id" />
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <OrderConfirmation :order="order" :confirmation="confirmation" :key="confirmation" :id="id" />
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-flex tw-items-center tw-justify-center">
+                            <OrderConfirmation :class="order.confirmation == 'reporter' && 'tw-mb-1'" :order="order" :confirmation="confirmation" :key="confirmation" :id="id" />
+                            <div v-if="order.confirmation == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                                
+                                <span class="tw-flex tw-gap-1">
+                                    <span v-if="order.confirmation == 'reporter'">
+                                        <v-icon size="x-small">mdi-autorenew</v-icon>
+                                        <span >
+                                        {{ order.reported_agente_date  }}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderAffectation :order="order" v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
@@ -73,7 +94,9 @@ export default {
             showPopup: false,
             isLoading: false,
             newNote: '',
-            newOrder: null
+            newOrder: null,
+
+            todayDate: null,
 
         }
     },
@@ -156,9 +179,34 @@ export default {
                 () => this.isLoading = false
             )
         },
+        isReportedToday(order) {
+            if(order.confirmation != "reporter") {
+                return false
+            }
+
+            if(order.reported_agente_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        }
     },
     mounted() {
         this.newOrder = this.order
+        const date = new Date();
+        const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
+        const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
+        const year = date.getFullYear();
+        this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
+    
     }
 
 }

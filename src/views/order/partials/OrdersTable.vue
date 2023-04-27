@@ -60,21 +60,11 @@ export default {
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
+            todayDate: null
         }
     },
     components: { OrderRow },
-    methods: {
-        getDeliveries() {
-            User.deliveries()
-            .then(
-                res => {
-                    console.log(res.data.data);
-                    this.$store.dispatch('user/setDeliveries', res.data.data);
-                },
-                this.$handleApiError
-            )
-        }
-    },
+
     computed: {
         deliveries() {
             return this.$store.getters['user/deliveries'];
@@ -90,14 +80,56 @@ export default {
             return Math.ceil(this.orders.length / this.paginationLimit)
         },
         items() {
-            return this.orders.slice(this.prevRange, this.nextRange)
+            const orders = [...this.reportedForToday,...this.orders.filter(sale => !this.isReportedToday(sale))]
+            return orders.slice(this.prevRange, this.nextRange)
+        },
+        reportedForToday() {
+            return this.orders.filter(this.isReportedToday)
         }
     },
+
+    methods: {
+        getDeliveries() {
+            User.deliveries()
+            .then(
+                res => {
+                    console.log(res.data.data);
+                    this.$store.dispatch('user/setDeliveries', res.data.data);
+                },
+                this.$handleApiError
+            )
+        },
+        isReportedToday(sale) {
+            if(sale.confirmation != "reporter") {
+                return false
+            }
+
+            if(sale.reported_agente_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        }
+    },
+
     mounted() {
         if(this.deliveries.length == 0) {
             this.getDeliveries()
         }
-        console.log(this.orders);
+        
+        const date = new Date();
+        const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
+        const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
+        const year = date.getFullYear();
+        this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
     }
 }
 </script>

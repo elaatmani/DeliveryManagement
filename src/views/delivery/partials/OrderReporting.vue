@@ -70,13 +70,13 @@ export default {
         //     });
         const order = {...this.order}
 
-        order.reported_agente_date = this.realDate;
-        order.reported_agente_note = this.note;
-        order.confirmation = "reporter";
+        order.reported_delivery_date = this.realDate;
+        order.reported_delivery_note = this.note;
+        order.delivery = "reporter";
 
         this.isLoading = true;
 
-        Sale.agenteUpdateConfirmation(order.id, "reporter", order)
+        Sale.deliveryUpdateDelivery(order.id, "reporter", order)
         .then(
             res => {
                 console.log(res.data);

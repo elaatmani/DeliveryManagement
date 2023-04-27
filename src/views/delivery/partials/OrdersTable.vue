@@ -60,9 +60,8 @@ export default {
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
+            todayDate: null
         }
-    },
-    methods: {
     },
     computed: {
         deliveries() {
@@ -79,10 +78,42 @@ export default {
             return Math.ceil(this.orders.length / this.paginationLimit)
         },
         items() {
-            return this.orders.slice(this.prevRange, this.nextRange)
+            const orders = [...this.reportedForToday,...this.orders.filter(sale => !this.isReportedToday(sale))]
+            return orders.slice(this.prevRange, this.nextRange)
+        },
+        reportedForToday() {
+            return this.orders.filter(this.isReportedToday)
         }
     },
+    methods: {
+        isReportedToday(sale) {
+            if(sale.confirmation != "reporter") {
+                return false
+            }
+
+            if(sale.reported_agente_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        }
+    },
+
     mounted() {
+        
+        const date = new Date();
+        const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
+        const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
+        const year = date.getFullYear();
+        this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
     }
 }
 </script>

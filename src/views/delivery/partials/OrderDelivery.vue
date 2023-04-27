@@ -28,14 +28,8 @@
         </li>
       </ul>
     </div>
-    <!-- <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
-      <div class="tw-min-w-[300px]">
-        <p>Enter note</p>
-        <v-textarea v-model="note" variant="outlined" class="rounded-md" color="primary-color">
-
-        </v-textarea>
-      </div>
-    </popup> -->
+    
+    <OrderReporting :order="order" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
     
   </div>
 </template>
@@ -43,8 +37,11 @@
 <script>
 import Sale from '@/api/Sale';
 import { deliveryStatus } from '@/config/orders';
+import OrderReporting from '@/views/delivery/partials/OrderReporting'
+
 export default {
-    props: ['delivery', 'id'],
+    props: ['delivery', 'id', 'order'],
+    components: {OrderReporting},
     data() {
         return {
             isLoading: false,
@@ -53,7 +50,8 @@ export default {
             nextOption: null,
             note: '',
             selectedId: 0,
-            allOptions: deliveryStatus
+            allOptions: deliveryStatus,
+            showPopupReporter:false
         }
     },
     computed: {
@@ -78,9 +76,15 @@ export default {
 
           if (option.id === this.selectedId) return false;
           
-            this.selectedId = option.id
-            this.updateOrder()
-            this.close()
+            if(option.value != 'reporter') {
+              this.selectedId = option.id
+              this.updateOrder()
+              this.close()
+            }
+
+            if(option.value == 'reporter') {
+              this.showPopupReporter = true
+            }
         },
         async updateOrder() {
           this.isLoading = true

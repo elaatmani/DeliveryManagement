@@ -1,5 +1,5 @@
 <template>
-  <tr :key="order" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+  <tr :key="order.id" :class="[ order.delivery == 'reporter' && 'tw-relative', isReportedToday(order) && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4">
                         <div class="tw-flex tw-items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -7,43 +7,61 @@
                         </div>
                     </td>
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                        {{ id }}
+                        {{ order.id }}
                     </th>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ fullname }}
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        {{ order?.created_at?.split('T')[0] }}
+                        <div v-if="order.delivery == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                             <span v-if="isReportedToday(order)">
+                                Reported for today
+                             </span>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ adresse }}
+                        {{ order.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ phone }}
+                        {{ order.adresse }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product_name }}
+                        {{ order.phone }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderDelivery :id="id" :key="delivery" :delivery="delivery" />
+                        {{ order.product_name }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-flex tw-items-center tw-justify-center">
+                            <OrderDelivery :class="order.delivery == 'reporter' && 'tw-mb-1'" :order="order" :id="order.id" :key="order.delivery" :delivery="order.delivery" />
+                            <div v-if="order.delivery == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
+                                
+                                <span class="tw-flex tw-gap-1">
+                                    <span v-if="order.delivery == 'reporter'">
+                                        <v-icon size="x-small">mdi-autorenew</v-icon>
+                                        <span >
+                                        {{ order.reported_delivery_date  }}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ quantity }}
+                        {{ order.quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ price }}
+                        {{ order.price }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ city }}
+                        {{ order.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4 ">
                         <div class="tw-max-w-[300px] tw-min-w-[150px] tw-whitespace-normal">
-                            {{ note }}
+                            {{ order.note }}
 
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ created_at?.split('T')[0] }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <OrderActions :key="id" :order="order" />
+                        <OrderActions :key="order.id" :order="order" />
                     </td>
                 </tr>
 </template>
@@ -61,21 +79,7 @@ export default {
             showPopup: false,
             isLoading: false,
 
-            "id": null,
-            "fullname": null,
-            "product_name": null,
-            "agente_id": null,
-            "upsell": null,
-            "phone": null,
-            "city": null,
-            "adresse": null,
-            "quantity": null,
-            "price": null,
-            "confirmation": null,
-            "affectation": null,
-            "delivery": null,
-            "note": null,
-            "created_at": null
+            todayDate: null
         }
     },
 
@@ -84,25 +88,33 @@ export default {
             this.showPopup = true
         },
 
+        isReportedToday(order) {
+            if(order.delivery != "reporter") {
+                return false
+            }
 
+            if(order.reported_delivery_date == this.todayDate) {
+                return true
+            }
+
+            return false;
+        },
     },
 
     mounted() {
-        this.id = this.order.id
-        this.fullname = this.order.fullname
-        this.product_name = this.order.product_name
-        this.agente_id = this.order.agente_id
-        this.upsell = this.order.upsell
-        this.phone = this.order.phone
-        this.city = this.order.city
-        this.adresse = this.order.adresse
-        this.quantity = this.order.quantity
-        this.price = this.order.price
-        this.confirmation = this.order.confirmation
-        this.affectation = this.order.affectation
-        this.delivery = this.order.delivery
-        this.note = this.order.note
-        this.created_at = this.order?.created_at
+        const date = new Date();
+        const day = date.getDate();
+        const dayFormated = day.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            });
+        const month = date.getMonth() + 1;
+        const monthFormated = month.toLocaleString('en-US', {
+                                minimumIntegerDigits: 2,
+                                useGrouping: false
+                            })
+        const year = date.getFullYear();
+        this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
     }
 
 }
