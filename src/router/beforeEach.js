@@ -4,7 +4,7 @@ export default function (to) {
 
 
     // Changing page title
-    document.title = to.meta?.title
+    document.title = to.meta?.title + ' | Vldo Shop'
     // return true
 
     console.log(to);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-4 tw-gap-2 py-5 px-5">
+    <div class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-4 tw-gap-2 py-5">
 
       <div class="lg:tw-col-span-2 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="totalSales" />
@@ -10,7 +10,7 @@
         <DashItemTwo :dash="deliveredSales" />
       </div>
 
-      <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-5">
+      <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-4">
         <DashItemTwo :dash="shippedSales" />
       </div>
 
