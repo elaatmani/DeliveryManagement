@@ -17,7 +17,7 @@
 
     <div
       v-if="isLoaded"
-      class="tw-min-h-[150px]"
+      class="tw-min-h-[50px]"
     >
 
       <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-2">

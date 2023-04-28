@@ -128,6 +128,11 @@ class User {
         return Api.get('api/roles/' + id);
     }
 
+    async agents() {
+        await Csrf.getCookie()
+        return Api.get('api/agents')
+    }
+
     async deliveries() {
         await Csrf.getCookie()
         return Api.get('api/delevries')

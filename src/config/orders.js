@@ -13,8 +13,8 @@ export const confirmations = [
     { id: 10, value: 'reporter' , name: 'Reporter', text: 'tw-text-teal-500', bg: 'tw-bg-teal-500/10', ring: 'tw-ring-teal-300' },
     { id: 11, value: 'annuler' , name: 'Annuler', text: 'tw-text-red-500', bg: 'tw-bg-red-500/10', ring: 'tw-ring-red-300' },
     { id: 12, value: 'expidier' , name: 'Expidier', text: 'tw-text-fuchsia-500', bg: 'tw-bg-fuchsia-500/10', ring: 'tw-ring-fuchsia-300' },
-    { id: 13, value: 'livre' , name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
-    { id: 14, value: 'confirmer' , name: 'Confirmer', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
+    // { id: 13, value: 'livre' , name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+    { id: 13, value: 'confirmer' , name: 'Confirmer', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
 ]
 
 export const upsells = [

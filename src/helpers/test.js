@@ -1,5 +1,5 @@
-export const path = 'api/sales/new'
-export const method = 'post'
+export const path = 'api/agents'
+export const method = 'get'
 
 export default {
     fullname: 'yassine',
