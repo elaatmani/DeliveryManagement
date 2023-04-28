@@ -30,33 +30,24 @@
 
             <div class="mb-5 mt-5 ml-5 tw-flex tw-justify-between tw-items-center">
                 <div>
-                    <h2 class="tw-text-gray-500 tw-text-lg">Chiffres</h2>
-                </div>
-            </div>
-
-            <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
-
-                <v-row>
-                    <v-col cols="12" sm="6" md="3" v-for="dash in dashItems" :key="dash.id">
-                        <DashItem :dash="dash" />
-                    </v-col>
-                </v-row>
-                
-            </div>
-
-            <div class="mb-5 mt-5 ml-5 tw-flex tw-justify-between tw-items-center">
-                <div>
                     <h2 class="tw-text-gray-500 tw-text-lg">Statistiques</h2>
                 </div>
             </div>
-            
+
             <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+
+
+
                 <v-row>
                     <v-col cols="12" md="12">
                         <FilterTabs />
                     </v-col>
                 </v-row>
-
+                <v-row>
+                    <v-col cols="12" sm="6" md="3" v-for="dash in dashItems" :key="dash.id">
+                        <DashItem :dash="dash" />
+                    </v-col>
+                </v-row>
                 <v-row>
                     <v-col cols="12" md="12">
                         <TabSwitcher />
@@ -110,7 +101,7 @@
                         title: 'Chiffres d\'affaire en caisse',
                         value: 543,
                         icon: 'mdi mdi-bank',
-                        color: 'pink'
+                        color: 'yellow'
                     },
 
 

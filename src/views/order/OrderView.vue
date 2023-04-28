@@ -30,6 +30,9 @@
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Phone: </p>
                         <p class="tw-text-neutral-700">{{ newOrder.phone }}</p>
+                        <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + newOrder.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="flat" density="comfortable" :ripple="false" size="small">
+                            <v-icon color="white">mdi-whatsapp</v-icon>
+                          </v-btn>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Nom de produit: </p>

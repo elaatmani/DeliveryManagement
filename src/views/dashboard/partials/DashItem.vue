@@ -24,7 +24,9 @@ export default {
           'orange': 'tw-bg-orange-500/10',
           'green': 'tw-bg-green-500/10',
           'blue': 'tw-bg-blue-500/10',
-          'pink': 'tw-bg-pink-500/10'
+          'pink': 'tw-bg-pink-500/10',
+          'red': 'tw-bg-red-500/10',
+          'yellow': 'tw-bg-yellow-500/10'
         }
         return colors[this.dash.color]
       }
