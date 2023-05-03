@@ -40,8 +40,8 @@
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Reference</div>
                   <v-text-field
-                    :error="!formStatus.quantity.valid"
-                    @keyup="resetError('quantity')"
+                    :error="!formStatus.reference.valid"
+                    @keyup="resetError('reference')"
                     :hide-details="true"
                     v-model="product.reference"
                     clearable
@@ -54,7 +54,7 @@
                   <div
                     class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
                   >
-                    {{ formStatus.quantity.message }}
+                    {{ formStatus.reference.message }}
                   </div>
                 </div>
               </v-col>
@@ -326,6 +326,10 @@ export default {
           valid: true,
           message: "",
         },
+        reference:{
+          valid: true,
+          message: "",
+        },
         buyingPrice: {
           valid: true,
           message: "",
@@ -415,6 +419,7 @@ export default {
 
     validate() {
       this.formStatus.name = validateName(this.product.name, "Product name");
+      this.formStatus.reference = validateName(this.product.reference , "Reference")
       this.formStatus.buyingPrice = validateName(
         this.product.buyingPrice,
         "Buying price"
@@ -432,6 +437,7 @@ export default {
       return (
         this.formStatus.name.valid &&
         this.formStatus.buyingPrice.valid &&
+        this.formStatus.reference.valid &&
         this.formStatus.sellingPrice &&
         this.formStatus.description.valid &&
         this.formStatus.variants.valid
