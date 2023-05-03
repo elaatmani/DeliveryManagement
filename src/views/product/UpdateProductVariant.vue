@@ -110,6 +110,7 @@ export default {
         size:'',
         color: '',
         quantity: 0,
+        stockAlert:0,
 
         newVariant: null,
 

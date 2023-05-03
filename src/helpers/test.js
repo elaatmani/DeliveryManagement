@@ -1,4 +1,4 @@
-export const path = 'api/products/stockAlert'
+export const path = 'api/product/stockAlert'
 export const method = 'get'
 
 export default {
