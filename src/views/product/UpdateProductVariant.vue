@@ -57,6 +57,26 @@
             {{ formStatus.quantity.message }}
             </div>
         </div>
+        <div class="tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Stock Alert</div>
+            <v-text-field
+            @change="handleStockAlertChange"
+            type="number"
+            :error="!formStatus.stockAlert.valid"
+            @keyup="resetError('stockAlert')"
+            :hide-details="true"
+            v-model="stockAlert"
+            clearable
+            clear-icon="mdi-close"
+            class="tw-w-full"
+            variant="outlined"
+            color="primary-color"
+            density="compact"
+            ></v-text-field>
+            <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">
+            {{ formStatus.stockAlert.message }}
+            </div>
+        </div>
         </div>
         <div>
         <div class="tw-col-span-12 tw-flex tw-gap-2 tw-justify-end">
@@ -106,6 +126,10 @@ export default {
                 valid: true,
                 message: "",
             },
+            stockAlert:{
+                valid: true,
+                message: "",
+            }
         },
     };
   },
@@ -117,7 +141,7 @@ export default {
         this.newVariant.size = this.size.toLocaleUpperCase()
         this.newVariant.color = this.color.toLocaleUpperCase()
         this.newVariant.quantity = this.quantity
-
+        this.newVariant.stockAlert = this.stockAlert
         this.newVariant.available_quantity = parseInt(this.newVariant.available_quantity) + parseInt(diffrent)
 
         // this.$emit('update', this.newVariant)
@@ -127,6 +151,12 @@ export default {
     handleQuantityChange() {
         if (this.quantity <= 0) {
             this.quantity = 0;
+        }
+    },
+
+    handleStockAlertChange() {
+        if (this.stockAlert <= 0) {
+            this.stockAlert = 0;
         }
     },
 
@@ -145,6 +175,7 @@ export default {
         this.size = this.variant.size
         this.color = this.variant.color
         this.quantity = this.variant.quantity
+        this.stockAlert = this.variant.stockAlert
         this.newVariant = this.variant
     }
 };

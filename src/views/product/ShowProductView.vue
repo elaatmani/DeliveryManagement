@@ -66,17 +66,21 @@
                 <div class="tw-bg-white tw-text-neutral-500 tw-pb-3 tw-rounded-lg">
                   <div v-for="variant in variants" :key="variant.id" class="tw-bg-neutral-200/30 tw-rounded-lg">
                     <div class="tw-grid tw-grid-cols-12 tw-text-md tw-gap-5 tw-items-center tw-my-2">
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
                         <v-icon size="x-small" color="primary-color">mdi-format-size</v-icon>
                         {{ variant.size }}
                       </div>
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
                         <v-icon size="x-small" color="primary-color">mdi-palette</v-icon>
                         {{ variant.color }}
                       </div>
-                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-4 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
                         <v-icon size="x-small" color="primary-color">mdi-inbox-multiple-outline</v-icon>
                         {{ variant.quantity }}
+                      </div>
+                      <div class="tw-flex tw-items-center tw-gap-5 tw-col-span-3 tw-break-words tw-py-1 tw-px-2 tw-rounded-md ">
+                        <v-icon size="x-small" color="primary-color">mdi-alert-outline</v-icon>
+                        {{ variant.stockAlert }}
                       </div>
                     </div>
                   </div>

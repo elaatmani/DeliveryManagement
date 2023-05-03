@@ -138,7 +138,7 @@
           >
             <div>
               <div class="tw-grid tw-grid-cols-12 md:tw-gap-3">
-                <div class="md:tw-col-span-4 tw-col-span-12">
+                <div class="md:tw-col-span-3 tw-col-span-12">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Size</div>
                   <v-text-field
                     :error="!formStatus.size.valid"
@@ -158,7 +158,7 @@
                     {{ formStatus.size.message }}
                   </div>
                 </div>
-                <div class="md:tw-col-span-4 tw-col-span-12">
+                <div class="md:tw-col-span-3 tw-col-span-12">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Color</div>
                   <v-text-field
                     :error="!formStatus.color.valid"
@@ -178,7 +178,7 @@
                     {{ formStatus.color.message }}
                   </div>
                 </div>
-                <div class="md:tw-col-span-4 tw-col-span-12">
+                <div class="md:tw-col-span-3 tw-col-span-12">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
                   <v-text-field
                     @change="handleQuantityChange"
@@ -200,12 +200,34 @@
                     {{ formStatus.quantity.message }}
                   </div>
                 </div>
+                <div class="md:tw-col-span-3 tw-col-span-12">
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Stock Alert</div>
+                  <v-text-field
+                    @change="handleStockAlertChange"
+                    type="number"
+                    :error="!formStatus.stockAlert.valid"
+                    @keyup="resetError('stockAlert')"
+                    :hide-details="true"
+                    v-model="stockAlert"
+                    clearable
+                    clear-icon="mdi-close"
+                    class="tw-w-full"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-text-field>
+                  <div
+                    class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+                  >
+                    {{ formStatus.stockAlert.message }}
+                  </div>
+                </div>
               </div>
               <div>
                 <div class="tw-col-span-12 tw-flex tw-justify-end">
                   <button
-                    :disabled="!size || !color || !quantity"
-                    :class="{ 'bg-primary-color': size && color && quantity }"
+                    :disabled="!size || !color || !quantity || !stockAlert"
+                    :class="{ 'bg-primary-color': size && color && quantity && stockAlert}"
                     @click="addVariant"
                     class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
                   >
@@ -241,7 +263,7 @@
                   <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
                     <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
                         <tr>
-                            <th v-for="column in ['size', 'color', 'qty', 'actions']" :class="[column == 'actions' && '!tw-w-[40px]']" :key="column" scope="col" class="tw-px-6 tw-py-3 text-truncate">
+                            <th v-for="column in ['size', 'color', 'qty','stockAlert' , 'actions']" :class="[column == 'actions' && '!tw-w-[40px]']" :key="column" scope="col" class="tw-px-6 tw-py-3 text-truncate">
                                 <div class="tw-w-fit tw-flex tw-whitespace-nowrap tw-capitalize">
                                     {{ column }}
                                 </div>
@@ -259,7 +281,9 @@
                             <td class="tw-px-6 tw-py-2">
                                 {{ variant.quantity }}
                             </td>
-                            
+                            <td class="tw-px-6 tw-py-2">
+                              {{ variant.stockAlert }}
+                          </td>
                             <td class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
                                 <div>
                                   <VariantActions @delete="deleteVariant" :variant="variant" />
@@ -312,6 +336,7 @@ export default {
       color: "",
       size: "",
       quantity: 0,
+      stockAlert: 0,
 
       product: {
         name: "",
@@ -347,6 +372,10 @@ export default {
           message: "",
         },
         color: {
+          valid: true,
+          message: "",
+        },
+        stockAlert: {
           valid: true,
           message: "",
         },
@@ -451,12 +480,14 @@ export default {
         color: this.color.toUpperCase(),
         size: this.size.toUpperCase(),
         quantity: this.quantity,
+        stockAlert: this.stockAlert
       };
 
       this.variants.push(variant);
 
       this.variantId++;
 
+      this.stockAlert = 0,
       this.color = "";
       this.size = "";
       this.quantity = 0;
@@ -469,6 +500,12 @@ export default {
     handleQuantityChange() {
       if (this.quantity <= 0) {
         this.quantity = 0;
+      }
+    },
+
+    handleStockAlertChange() {
+      if (this.stockAlert <= 0) {
+        this.stockAlert = 0;
       }
     },
 
