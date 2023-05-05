@@ -1,10 +1,13 @@
 <template>
   <div v-click-outside="closeMenu" class="tw-relative">
     <v-btn @click="toggleMenu"  icon max-width="35" max-height="35">
-        <v-avatar size="33">
+        <v-avatar size="32">
             <v-img :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>
         </v-avatar>
-        <v-badge floating offset-y="-10" offset-x="5" color="primary-green" :bordered=true location="bottom right" dot></v-badge>
+        <div class="tw-absolute tw-bottom-0 tw-border-2 tw-border-solid tw-border-white tw-right-0 tw-w-3 tw-h-3 tw-rounded-full tw-bg-green-500">
+
+            </div>
+        <!-- <v-badge floating offset-y="-10" offset-x="5" color="primary-green" :bordered=true location="bottom right" dot></v-badge> -->
     </v-btn>
 
 

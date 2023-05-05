@@ -21,15 +21,17 @@
 
         <!-- Right Part -->
         <template v-slot:append>
-          <v-btn :ripple="false" class="mr-2"  icon>
+          <!-- <v-btn :ripple="false" class="mr-2"  icon>
             <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
-          </v-btn>
-          <v-btn :ripple="false" class="mr-2" icon>
-            <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/notification-bing.svg'"></v-img>
-          </v-btn>
-          
-          <!-- User Menu -->
-          <HeaderMenu />
+          </v-btn> -->
+
+          <div class="tw-flex tw-items-center tw-gap-2">
+            <!-- Notifications -->
+            <Notification />
+            
+            <!-- User Menu -->
+            <HeaderMenu />
+          </div>
 
         </template>
         <!-- /Right Part -->
@@ -41,10 +43,11 @@
 <script>
 import { localUrl } from '@/config/config'
 import HeaderMenu from '@/layouts/default/partials/header/HeaderMenu'
+import Notification from '@/layouts/default/partials/header/NotificationView'
 
 export default {
     emits: [ 'toggleSidebar' ],
-    components: { HeaderMenu },
+    components: { HeaderMenu, Notification },
 
     data() {
       return {
