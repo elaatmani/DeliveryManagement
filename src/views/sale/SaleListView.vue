@@ -266,7 +266,7 @@ export default {
       return {
         id: 4,
         title: 'Delivered',
-        value: this.sales.filter(i => i.confirmation == 'livre').length,
+        value: this.sales.filter(i => i.delivery == 'livrer').length,
         // value: 412,
         color: 'primary-blue',
         icon: 'mdi-account-check-outline'
@@ -276,7 +276,7 @@ export default {
       return {
         id: 5,
         title: 'Shipped',
-        value: this.sales.filter(i => i.confirmation == 'expidier').length,
+        value: this.sales.filter(i => i.delivery == 'expidier').length,
         // value: 112,
         color: 'red',
         icon: 'mdi-truck'

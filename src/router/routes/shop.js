@@ -3,8 +3,8 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
 import ShopListView from '@/views/shop/ShopListView'
-import AddShopView from '@/views/shop/AddShopView'
-import UpdateShopView from '@/views/shop/UpdateShopView'
+import AddShopView from '@/views/shop/partials/AddShopView'
+import UpdateShopView from '@/views/shop/partials/UpdateShopView'
 
 export default 
     {

@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import ShopActions from '@/views/shop/ShopActions'
+import ShopActions from '@/views/shop/partials/ShopActions'
 
 export default {
     props: [ 'columns', 'shops' ],
