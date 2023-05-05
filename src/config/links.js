@@ -200,7 +200,33 @@ export const links = [
         ]
     },
 
-
+    {
+        id: 7,
+        module: 'shop',
+        title: 'Shop',
+        hasChildren: true,
+        gate: 'access_to_shop', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-store'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Shop List',
+                gate: 'show_all_shops',
+                subModule: 'shop/list',
+                to: '/shops'
+            },
+            {
+                id: 2,
+                title: 'Add Shop',
+                gate: 'create_shop',
+                subModule: 'shop/add',
+                to: '/shops/add'
+            }
+        ]
+    },
 
     {
         id: 8,

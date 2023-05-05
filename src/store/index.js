@@ -6,6 +6,7 @@ import sale from './modules/sale'
 import order from './modules/order'
 import inventory from './modules/inventory'
 import city from './modules/city'
+import shop from './modules/shop'
 
 export default createStore({
   state: {
@@ -23,6 +24,7 @@ export default createStore({
     sale,
     order,
     inventory,
-    city
+    city,
+    shop
   }
 })
