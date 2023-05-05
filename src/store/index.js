@@ -7,6 +7,7 @@ import order from './modules/order'
 import inventory from './modules/inventory'
 import city from './modules/city'
 import shop from './modules/shop'
+import notification from './modules/notification'
 
 export default createStore({
   state: {
@@ -25,6 +26,7 @@ export default createStore({
     order,
     inventory,
     city,
-    shop
+    shop,
+    notification
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div :key="items.length">
     
-    <div class="tw-relative tw-min-h-[400px] tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
+    <div class="tw-relative tw-pb-5 tw-overflow-x-auto tw-overflow-y-visible  sm:tw-rounded-lg">
         <table :key="reportedForToday.length" class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
             <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
                 <tr>

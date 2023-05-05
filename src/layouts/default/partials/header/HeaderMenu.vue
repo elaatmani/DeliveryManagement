@@ -13,7 +13,7 @@
 
     <v-fade-transition>
     <div v-if="isActive" class="!tw-duration-100">
-        <div  class="tw-absolute tw-bg-white tw-rounded-md tw-bordesr !tw-shadow-lg !tw-shadow-gray-400/10 tw-top-14 tw-right-0 tw-w-[200px] tw-min-h-[50px]">
+        <div  class="tw-absolute tw-bg-white tw-border tw-border-solid tw-border-neutral-200 tw-rounded-md tw-bordesr !tw-shadow-lg !tw-shadow-gray-400/10 tw-top-14 tw-right-0 tw-w-[200px] tw-min-h-[50px]">
             <div class="pa-2 d-flex tw-items-center tw-gap-2 tw-border-b tw-border-b-neutral-100">
                 <v-avatar size="35">
                     <v-img eager :src="localUrl + 'assets/img/profiles/avatar.webp'" ></v-img>

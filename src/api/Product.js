@@ -45,6 +45,11 @@ class Product {
         await Csrf.getCookie();
         return Api.delete('api/products/delete/' + id)
     }
+
+    async stockAlert() {
+        await Csrf.getCookie();
+        return Api.get('api/product/stockAlert')
+    }
 }
 
 
