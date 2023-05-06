@@ -34,7 +34,7 @@
           <input v-model="search" type="text" class="ml-2 tw-border-0 tw-w-full tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
         </div>
         <v-spacer></v-spacer>
-        <v-btn icon rounded="lg" variant="flat" size="small" color="green" class="text-white tw-mr-2">
+        <v-btn v-if="$can(`handle_expidation`)" icon rounded="lg" variant="flat" size="small" color="green" class="text-white tw-mr-2">
           <v-icon color="white" icon="mdi-ticket-confirmation-outline" size="xx-large"></v-icon>
         </v-btn>
         <v-btn @click="getSales" icon rounded="lg" variant="flat" size="small" color="blue" class="text-white tw-mr-2">

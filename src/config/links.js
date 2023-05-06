@@ -103,7 +103,7 @@ export const links = [
                 id: 2,
                 title: 'Expidation',
                 subModule: 'sale/expidation',
-                gate: 'show_all_sales',
+                gate: 'show_all_expidations',
                 to: '/sales/expidation'
             },
         ]
