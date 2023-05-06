@@ -129,7 +129,18 @@ import SaleDelivery from '@/views/sale/partials/SaleDelivery'
 import SaleActions from '@/views/sale/partials/SaleActions'
 
 export default {
-    props: [ 'columns', 'sales' ],
+    props: {
+        columns: {
+            required: true
+        } ,
+        sales: {
+            required: true
+        },
+        selectedReset: {
+            required: false,
+            default: []
+        }
+    },
     components: { SaleConfirmation, SaleUpsell, SaleAffectation, SaleDelivery, SaleActions },
 
     data() {
@@ -139,6 +150,19 @@ export default {
             paginationLimit: 10,
             todayDate: null,
             selected: [],
+        }
+    },
+
+    watch: {
+        selectedReset(value) {
+            this.selected = value
+            console.log('reset selected, ', value);
+        },
+        paginationLimit() {
+            this.currentPage = 1
+        },
+        selected(value) {
+            this.$emit('selected', value)
         }
     },
 
@@ -159,14 +183,6 @@ export default {
         },
         reportedForToday() {
             return this.sales.filter(this.isReportedToday)
-        }
-    },
-    watch: {
-        paginationLimit() {
-            this.currentPage = 1
-        },
-        selected(value) {
-            this.$emit('selected', value)
         }
     },
 

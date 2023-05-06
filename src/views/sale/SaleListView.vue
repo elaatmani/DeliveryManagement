@@ -157,7 +157,7 @@
         </div>
       </div>
       <div class="">
-        <SalesTable @selected="handleSelected" :key="filteredSales.length" :columns="columns" :sales="filteredSales" />
+        <SalesTable @selected="handleSelected" :selected-reset="selected" :key="filteredSales.length" :columns="columns" :sales="filteredSales" />
       </div>
       <!-- new lane -->
 
@@ -376,7 +376,7 @@
 
       handleSelected(value) {
         this.selected = value;
-        console.log(this.selected);
+        
         // Enable the button if selected is not empty
         if (this.selected.length > 0) {
           this.isButtonDisabled = false;
