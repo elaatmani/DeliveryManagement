@@ -65,7 +65,7 @@ export const links = [
         module: 'track',
         title: 'Tracking',
         hasChildren: true,
-        gate: 'all', 
+        gate: 'none', 
         icon: {
             type: 'icon',
             value: 'mdi-radar'
@@ -75,7 +75,7 @@ export const links = [
                 id: 1,
                 title: 'Deliveries',
                 subModule: 'track/delivery',
-                gate: 'all',
+                gate: 'none',
                 to: '/tracking/delivery'
             },
         ]
@@ -98,6 +98,13 @@ export const links = [
                 subModule: 'sale/list',
                 gate: 'show_all_sales',
                 to: '/sales'
+            },
+            {
+                id: 2,
+                title: 'Expidation',
+                subModule: 'sale/expidation',
+                gate: 'show_all_sales',
+                to: '/sales/expidation'
             },
         ]
     },

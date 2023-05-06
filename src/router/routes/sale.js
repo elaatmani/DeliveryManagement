@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
 import SaleListView from '@/views/sale/SaleListView'
+import SaleExpidationView from '@/views/sale/SaleExpidationView'
 
 
 export default 
@@ -25,6 +26,17 @@ export default
                     module: 'sale',
                     subModule: 'sale/list',
                     title: 'Sales List',
+                    gate: 'show_all_sales'
+                }
+            },
+            { 
+                name: 'sale/expidation',
+                path: 'expidation',
+                component: SaleExpidationView,
+                meta: {
+                    module: 'sale',
+                    subModule: 'sale/expidation',
+                    title: 'Expidation',
                     gate: 'show_all_sales'
                 }
             },

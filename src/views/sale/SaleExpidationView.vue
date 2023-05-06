@@ -2,8 +2,7 @@
   <div>
     <div class="mb-5 tw-flex tw-justify-between tw-items-center">
       <div>
-        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Sales List</h1>
-        <h2 class="tw-text-gray-500 tw-text-sm">Manage your sales</h2>
+        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Expidation</h1>
       </div>
 
       <!-- New Line -->
@@ -25,42 +24,8 @@
 
     <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
-      <div class="mb-5 tw-border-b  tw-border-solid tw-pb-5 tw-border-neutral-200">
-        <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-                <DashItem :dash="newSales" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-                <DashItem :dash="toProcess" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-                <DashItem :dash="confirmedSales" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-                <DashItem :dash="deliveredSales" />
-          </div>
-
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-4">
-                <DashItem :dash="shippedSales" />
-          </div>
-
-        </div>
-        <!-- <v-row >
-            <v-col
-            cols="12" sm="6" md="3"
-            v-for="dash in filledDashItems"
-            :key="dash.id"
-            >
-            </v-col>
-        </v-row> -->
-      </div>
-
       <div class="mb-5 tw-flex">
+        
         <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
           <v-icon color="white" size="xx-large">mdi-camera-control</v-icon>
         </v-btn>
@@ -68,8 +33,10 @@
           <v-img width="18" height="18" max-width="18" class="ma-0 pa-0" :src="localUrl + 'assets/img/icons/search.svg'"></v-img>
           <input v-model="search" type="text" class="ml-2 tw-border-0 tw-w-full tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
         </div>
-
         <v-spacer></v-spacer>
+        <v-btn icon rounded="lg" variant="flat" size="small" color="green" class="text-white tw-mr-2">
+          <v-icon color="white" icon="mdi-handshake-outline" size="xx-large"></v-icon>
+        </v-btn>
         <v-btn @click="getSales" icon rounded="lg" variant="flat" size="small" color="blue" class="text-white tw-mr-2">
           <v-icon color="white" icon="mdi-autorenew" size="xx-large"></v-icon>
         </v-btn>
@@ -136,7 +103,7 @@
         </div>
       </div>
       <div class="">
-        <SalesTable :key="filteredSales.length" :columns="columns" :sales="filteredSales" />
+        <SalesTable @selected="handleSelected" :key="filteredSales.length" :columns="columns" :sales="filteredSales" />
       </div>
       <!-- new lane -->
 
@@ -155,7 +122,6 @@
 import {localUrl} from '@/config/config'
 
 import SalesTable from './SalesTable.vue'
-import DashItem from '@/views/sale/partials/DashItem'
 import Sale from '@/api/Sale'
 import User from '@/api/User'
 import AddSale from '@/views/sale/partials/AddSale'
@@ -163,7 +129,7 @@ import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 export default {
-  components: {  SalesTable, DashItem, AddSale },
+  components: {  SalesTable, AddSale },
   data() {
     return {
       localUrl,
@@ -177,6 +143,8 @@ export default {
       deliveryFilter: 'all',
       agenteFilter: 'all',
       search: '',
+
+      selected: [],
       
       // new lane
       showPopup: false,
@@ -247,7 +215,7 @@ export default {
       return this.users.filter(i => i.role.id == 2)
     },
     sales() {
-      return this.$store.getters['sale/sales']
+      return this.$store.getters['sale/sales'].filter(sale => sale.delivery == 'dispatch')
     },
     cities() {
       return this.$store.getters['city/cities']
@@ -349,6 +317,12 @@ export default {
     }
   },
   methods: {
+
+    handleSelected(value) {
+        this.selected = value
+        console.log(this.selected);
+    },
+
     async getDeliveries() {
       
         await User.deliveries()

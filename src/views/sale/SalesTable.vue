@@ -7,7 +7,7 @@
                 <tr>
                     <th scope="col" class="tw-p-4">
                         <div class="tw-flex tw-items-center">
-                            <input id="checkbox-all-search" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500 focus:tw-ring-2">
+                            <input @click="handleSelectAll" id="checkbox-all-search" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500 focus:tw-ring-2">
                             <label for="checkbox-all-search" class="tw-sr-only">checkbox</label>
                         </div>
                     </th>
@@ -22,7 +22,7 @@
                 <tr v-for="(sale) in items" :key="sale.id" :class="[[sale.confirmation, sale.delivery].includes('reporter') && 'tw-relative', isReportedToday(sale) && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                     <td class="tw-w-4 tw-p-4 tw-relative">
                         <div class="tw-flex tw-items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
+                            <input @change="handleSelect($event ,sale.id)" :checked="isSelected(sale.id)" id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
                             <label for="checkbox-table-search-1" class="tw-sr-only">checkbox</label>
                         </div>
                     </td>
@@ -137,7 +137,8 @@ export default {
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
-            todayDate: null
+            todayDate: null,
+            selected: [],
         }
     },
 
@@ -163,13 +164,14 @@ export default {
     watch: {
         paginationLimit() {
             this.currentPage = 1
+        },
+        selected(value) {
+            this.$emit('selected', value)
         }
     },
 
     methods: {
         isReportedToday(sale) {
-            
-
             return this.isConfirmationReportedToday(sale) || this.isDeliveryReportedToday(sale)
         },
 
@@ -195,6 +197,26 @@ export default {
             }
 
             return false;
+        },
+
+        handleSelect(e, id) {
+            if(e.target.checked) {
+                this.selected = [...this.selected, id]
+            } else {
+                this.selected = this.selected.filter(i => i != id)
+            }
+        },
+
+        isSelected(id) {
+            return this.selected.includes(id)
+        },
+
+        handleSelectAll(e) {
+            if(e.target.checked) {
+                this.selected = [...this.items.map(i => i.id)]
+            } else {
+                this.selected = []
+            }
         }
     },
 

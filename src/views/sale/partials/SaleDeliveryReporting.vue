@@ -77,8 +77,7 @@ export default {
         this.isLoading = true;
         Sale.deliveryUpdateDelivery(order.id, "reporter", order)
         .then(
-            res => {
-                console.log(res.data);
+            () => {
                 this.$alert({
                     type: "success",
                     title: "Order reported successfully",
@@ -119,7 +118,6 @@ export default {
 
   },
     mounted() {
-        console.log(this.order);
     },
 };
 </script>

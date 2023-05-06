@@ -25,7 +25,7 @@ export const upsells = [
 
 export const deliveryStatus = [
     { id: 0, value: null , name: 'Select', text: 'tw-text-gray-500', bg: 'tw-bg-gray-500/10', ring: 'tw-ring-gray-300' },
-    { id: 1, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
+    { id: 1, value:'dispatch', name: 'Dispatch', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', ring: 'tw-ring-yellow-300' },
     { id: 2, value: 'expidier' , name: 'Expidier', text: 'tw-text-fuchsia-500', bg: 'tw-bg-fuchsia-500/10', ring: 'tw-ring-fuchsia-300' },
 
     { id: 3, value:'livrer', name: 'Livrer', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
@@ -35,5 +35,6 @@ export const deliveryStatus = [
     { id: 6, value:'annuler', name: 'Annuler', text: 'tw-text-red-500', bg: 'tw-bg-red-500/10', ring: 'tw-ring-red-300' },
     { id: 8, value:'hors-zone', name: 'Hors zone', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
     { id: 9, value:'pas-de-reponse', name: 'Pas de reponse', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', ring: 'tw-ring-yellow-300' },
-    { id: 10, value:'retourner', name: 'Retourné', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' }
+    { id: 10, value:'retourner', name: 'Retourné', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' },
+    { id: 11, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' }
 ]
