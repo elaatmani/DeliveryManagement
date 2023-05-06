@@ -3,7 +3,7 @@
     <v-btn @click="toggleMenu" icon width="35" height="35" class="tw-relative">
             <v-img width="22" height="22" :src="localUrl + 'assets/img/icons/notification-bing.svg'"></v-img>
             
-            <div v-if="stockAlert.length || reportedDeliveries.length || reportedConfirmations.length" class="tw-absolute tw-border-2 tw-border-solid tw-border-white tw-top-1 tw-right-1 tw-w-3 tw-h-3 tw-rounded-full tw-bg-red-500">
+            <div v-if="reportedDeliveries.length || reportedConfirmations.length" class="tw-absolute tw-border-2 tw-border-solid tw-border-white tw-top-1 tw-right-1 tw-w-3 tw-h-3 tw-rounded-full tw-bg-red-500">
 
             </div>
             <!-- <v-badge class="tw-animate-bounce" floating offset-y="-10" offset-x="5" color="red" :bordered=true location="bottom right" dot></v-badge> -->
@@ -23,24 +23,17 @@
                 </div>
             </div>
             <div v-if="isLoaded">
-            <router-link to="/notifications/stock" class="hover:tw-bg-black/5 tw-p-2 tw-border-y tw-flex tw-gap-2 tw-items-start tw-border-neutral-100">
-                <v-icon class="tw-mt-1 tw-text-neutral-400" size="x-small">mdi-alert-outline</v-icon>
-                <div>
-                    <p class="">Stock Alert</p>
-                    <p :class="[stockAlert.length > 0 ? 'tw-text-red-400 ' : 'tw-text-green-400 ']" class="tw-text-xs">{{ stockAlert.length }} {{stockAlert.length > 1 ? 'products' : 'product'}}</p>
-                </div>
-            </router-link>
-            <router-link to="/sales" class="hover:tw-bg-black/5 tw-p-2 tw-border-y tw-flex tw-gap-2 tw-items-start tw-border-neutral-100">
-                <v-icon class="tw-mt-1 tw-text-neutral-400" size="x-small">mdi-autorenew</v-icon>
-                <div>
-                    <p class="">Delivery Reported</p>
-                    <p :class="[reportedDeliveries.length > 0 ? 'tw-text-red-400 ' : 'tw-text-green-400 ']" class="tw-text-xs">{{ reportedDeliveries.length }} today</p>
-                </div>
-            </router-link>
-            <router-link to="/sales" class="hover:tw-bg-black/5 tw-p-2 tw-border-y tw-flex tw-gap-2 tw-items-start tw-border-neutral-100">
+            <router-link v-if="user.role == 'agente'" to="/orders" class="hover:tw-bg-black/5 tw-p-2 tw-border-y tw-flex tw-gap-2 tw-items-start tw-border-neutral-100">
                 <v-icon class="tw-mt-1 tw-text-neutral-400" size="x-small">mdi-autorenew</v-icon>
                 <div>
                     <p class="">Confirmation Reported</p>
+                    <p :class="[reportedConfirmations.length > 0 ? 'tw-text-red-400 ' : 'tw-text-green-400 ']" class="tw-text-xs">{{ reportedConfirmations.length }} today</p>
+                </div>
+            </router-link>
+            <router-link v-if="user.role == 'delivery'" to="/deliveries" class="hover:tw-bg-black/5 tw-p-2 tw-border-y tw-flex tw-gap-2 tw-items-start tw-border-neutral-100">
+                <v-icon class="tw-mt-1 tw-text-neutral-400" size="x-small">mdi-autorenew</v-icon>
+                <div>
+                    <p class="">Delivery Reported</p>
                     <p :class="[reportedConfirmations.length > 0 ? 'tw-text-red-400 ' : 'tw-text-green-400 ']" class="tw-text-xs">{{ reportedConfirmations.length }} today</p>
                 </div>
             </router-link>
@@ -73,8 +66,29 @@ export default {
             this.isActive = false
         },
 
-        getNotifications() {
-            Notification.all()
+        getAgenteNotifications() {
+
+            Notification.agente()
+            .then(
+                res => {
+                    if(res.data.code == 'SUCCESS') {
+                        console.log('success');
+                        this.$store.dispatch('notification/setNotifications', res.data.data)
+                        this.$store.dispatch('notification/setFetched', true)
+                    }
+                },
+                this.$handleApiError
+            )
+            .finally(
+                () => {
+                    this.isLoaded = true;
+                }
+            )
+        },
+
+        getDeliveryNotifications() {
+
+            Notification.delivery()
             .then(
                 res => {
                     if(res.data.code == 'SUCCESS') {
@@ -117,7 +131,13 @@ export default {
     },
 
     mounted() {
-        this.getNotifications()
+        if(this.user.role == 'agente') {
+            this.getAgenteNotifications()
+        }
+
+        if(this.user.role == 'delivery') {
+            this.getDeliveryNotifications()
+        }
     }
 }
 </script>

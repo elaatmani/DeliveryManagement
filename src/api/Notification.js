@@ -7,6 +7,18 @@ class Notification {
         await Csrf.getCookie();
         return Api.get('api/notifications');
     }
+    
+    async agente() {
+        await Csrf.getCookie();
+        return Api.get('api/notifications/agente');
+    }
+
+    async delivery() {
+        await Csrf.getCookie();
+        return Api.get('api/notifications/delivery');
+    }
+
+    
 }
 
 

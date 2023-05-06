@@ -47,30 +47,50 @@ export default {
     data() {
         return {
             tab: 1,
-            tabs: [
+            fullTabs: [
                 {
                     id: 1,
                     name: 'Stock Alert',
-                    component: 'StockAlertView'
+                    component: 'StockAlertView',
+                    permissions: ['admin']
                 },
                 {
                     id: 2,
                     name: 'Deliveries',
-                    component: 'ReportedDelivery'
+                    component: 'ReportedDelivery',
+                    permissions: ['admin..', 'delivery']
                 },
                 {
                     id: 3,
                     name: 'Confirmations',
-                    component: 'ReportedConfirmation'
+                    component: 'ReportedConfirmation',
+                    permissions: ['admin..', 'agente']
                 }
             ]
         }
     },
 
-    mounted() {
-        const tab = this.$route.params.tab
+    computed: {
+        tabs() {
+            return this.fullTabs.filter(i => i.permissions.includes(this.user.role))
+        },
+        tabName() {
+            return this.$route.params.tab
+        },
+        user() {
+            return this.$store.getters['user/user']
+        }
+    },
 
-            switch (tab) {
+    watch: {
+        tabName() {
+            this.handleChange()
+        }
+    },
+
+    methods: {
+        handleChange() {
+            switch (this.tabName) {
                 case 'stock':
                     this.tab = 1
                 break;
@@ -82,9 +102,16 @@ export default {
                 break;
             
                 default:
-                    this.tab = 1
+                    this.tab = this.tabs[0].id || 1
                 break;
             }
+        }
+    },
+
+    mounted() {
+        this.handleChange()
+
+            
     }
 }
 </script>
