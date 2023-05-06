@@ -38,9 +38,6 @@ export default {
                 item => {
                     if(item.id == payload.id) {
                         item.confirmation = payload.confirmation
-                        if(payload.confirmation == 'confirmer') {
-                            item.delivery = 'dispatch'
-                        }
                         console.log('sale updated');
                     }
                     return item
@@ -63,6 +60,12 @@ export default {
                 item => {
                     if(item.id == payload.id) {
                         item.affectation = payload.affectation
+                        if(payload.affectation != null) {
+                            item.delivery = 'dispatch'
+                        }else{
+                            item.delivery = null
+                        }
+                        
                         console.log('sale updated');
                     }
                     return item
@@ -86,9 +89,6 @@ export default {
                     if(item.id == payload.id) {
                         item.confirmation = payload.confirmation
                         item.note = payload.note        
-                        if(payload.confirmation == 'confirmer') {
-                            item.delivery = 'dispatch'
-                        }
                         console.log('order updated');
                     }
                     return item
