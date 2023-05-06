@@ -106,8 +106,6 @@
               this.shop = {
                 name: "",
               };
-  
-              this.variants = [];
           }
           if (res.data.code == "VALIDATION_ERROR") {
               this.$alert({
