@@ -84,6 +84,8 @@ export default {
                     type: "success",
                     title: "Order reported successfully",
                 });
+
+                this.$emit('orderReported')
                 
                 this.$store.dispatch('order/update', { id: order.id, order: order });
                 this.cancel()
