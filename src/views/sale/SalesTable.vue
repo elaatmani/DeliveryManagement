@@ -7,7 +7,7 @@
                 <tr>
                     <th scope="col" class="tw-p-4">
                         <div class="tw-flex tw-items-center">
-                            <input @click="handleSelectAll" id="checkbox-all-search" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500 focus:tw-ring-2">
+                            <input @click="handleSelectAll" v-model="isAllSelected" id="checkbox-all-search" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500 focus:tw-ring-2">
                             <label for="checkbox-all-search" class="tw-sr-only">checkbox</label>
                         </div>
                     </th>
@@ -150,12 +150,17 @@ export default {
             paginationLimit: 10,
             todayDate: null,
             selected: [],
+            isAllSelected: false
         }
     },
 
     watch: {
         selectedReset(value) {
             this.selected = value
+            if(this.selected.length == 0) {
+                this.isAllSelected = false
+            }
+
             console.log('reset selected, ', value);
         },
         paginationLimit() {
