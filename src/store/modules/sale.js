@@ -106,6 +106,26 @@ export default {
                 }
             )
         },
+        RESET_SALES: (state, payload) => {
+            state.sales = state.sales.map(
+                item => {
+                    if(payload.includes(item.id)) {
+                        item.agente_id = null;
+                        item.upsell = null;
+                        item.confirmation = null;
+                        item.affectation = null;
+                        item.note = null;
+                        item.note_d = null;
+                        item.delivery = null;
+                        item.reported_agente_date = null;
+                        item.reported_agente_note = null;
+                        item.reported_delivery_date = null;
+                        item.reported_delivery_note = null;
+                    }
+                    return item
+                }
+            )
+        }
     },
 
     actions: {
@@ -136,5 +156,8 @@ export default {
         updateDelivery: ({ commit }, payload) => {
             commit('UPDATE_DELIVERY', payload)
         },
+        resetSales: ({commit}, payload) => {
+            commit('RESET_SALES', payload)
+        }
     }
 }

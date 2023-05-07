@@ -446,6 +446,7 @@
                   type: "success",
                   title: res.data.message,
                 });
+                this.$store.dispatch('sale/resetSales', this.selected);
                 this.selected = [];
               }
             })
