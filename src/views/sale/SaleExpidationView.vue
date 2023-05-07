@@ -34,7 +34,7 @@
           <input v-model="search" type="text" class="ml-2 tw-border-0 tw-w-full tw-outline-0 tw-h-full tw-text-sm" placeholder="Search by name">
         </div>
         <v-spacer></v-spacer>
-        <v-btn v-if="$can(`handle_expidation`)" icon rounded="lg" variant="flat" size="small" color="green" class="text-white tw-mr-2">
+        <v-btn v-if="$can(`handle_expidation`)"  @click="showPopupTicket = true" :disabled="isButtonDisabled" icon rounded="lg" variant="flat" size="small" color="green" class="text-white tw-mr-2">
           <v-icon color="white" icon="mdi-ticket-confirmation-outline" size="xx-large"></v-icon>
         </v-btn>
         <v-btn @click="getSales" icon rounded="lg" variant="flat" size="small" color="blue" class="text-white tw-mr-2">
@@ -108,6 +108,7 @@
       <!-- new lane -->
 
         <AddSale @cancel="showPopup = false" :visible="showPopup" />
+        <AddTicket @cancel="showPopupTicket = false" :visible="showPopupTicket" />
     </div>
   </div>
 
@@ -125,11 +126,12 @@ import SalesTable from './SalesTable.vue'
 import Sale from '@/api/Sale'
 import User from '@/api/User'
 import AddSale from '@/views/sale/partials/AddSale'
+import AddTicket from '@/views/sale/partials/AddTicket'
 import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 export default {
-  components: {  SalesTable, AddSale },
+  components: {  SalesTable, AddSale,AddTicket },
   data() {
     return {
       localUrl,
@@ -143,11 +145,13 @@ export default {
       deliveryFilter: 'all',
       agenteFilter: 'all',
       search: '',
+      isButtonDisabled:true,
 
       selected: [],
       
       // new lane
       showPopup: false,
+      showPopupTicket: false,
 
       columns: 
       [
@@ -319,8 +323,13 @@ export default {
   methods: {
 
     handleSelected(value) {
-        this.selected = value
-        console.log(this.selected);
+        this.selected = value;
+        // Enable the button if selected is not empty
+        if (this.selected.length > 0) {
+          this.isButtonDisabled = false;
+        }else{
+          this.isButtonDisabled = true;
+        }
     },
 
     async getDeliveries() {
