@@ -17,27 +17,6 @@
           <v-btn @click="downloadPDF">Imprimer</v-btn>
         </div>
       </div>
-
-
-
-        <div hidden>
-            <div ref="imprimer" class="border p-4">
-            <div class="mb-2">Vldo</div>
-            <div class="grid grid-cols-2 gap-2">
-                <div class="text-sm font-bold">Client Name:</div>
-                <div class="border p-2">Abdelmonaim</div>
-                <div class="text-sm font-bold">Adresse:</div>
-                <div class="border p-2">Azli Hey Ben Tachfine</div>
-                <div class="text-sm font-bold">Phone Number:</div>
-                <div class="border p-2">0674740151</div>
-                <div class="text-sm font-bold">City:</div>
-                <div class="border p-2">Marrakech</div>
-                <div class="text-sm font-bold">Date of Delivery:</div>
-                <div class="border p-2">Now</div>
-            </div>
-            </div>
-        </div>
-      
     </popup-full>
   </div>
 </template>
@@ -45,9 +24,9 @@
 <script>
 import Product from "@/api/Product";
 import Sale from "@/api/Sale";
-
-import html2pdf from "html2pdf.js";
-
+import utf8 from "utf8";
+// import html2pdf from "html2pdf.js";
+import jsPDF from "jspdf";
 export default {
   props: ["visible"],
 
@@ -87,22 +66,62 @@ export default {
   },
 
   methods: {
-  
     downloadPDF() {
-      const pdfWidth = 100; // 10cm converted to PDF units
-      const pdfHeight = 150; // 15cm converted to PDF units
-      const element = this.$refs.imprimer;
-      console.log(element);
-      html2pdf().from(element).set({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: [pdfWidth, pdfHeight],
-        filename: 'my-pdf-document.pdf'
-      }).save();
+      // create a new jsPDF instance with the specified page size
+      var doc = new jsPDF("p", "mm", [100, 150], true);
+
+      // draw a rectangle with the page dimensions and a thickness of 1mm
+      doc.rect(1, 1, 98, 148, "S");
+
+      // add content to each of the 5 sections, separated by lines
+      doc.setFontSize(12);
+      doc.setTextColor("orange");
+      doc.text("Vldo", 3, 7);
+      doc.line(1, 10, 99, 10);
+
+      doc.setFontSize(10);
+      doc.setTextColor("black");
+      doc.setFont("helvetica", "bold");
+      doc.text("Nom Complet: ", 5, 20);
+      doc.text("Téléphone: ", 5, 25);
+      doc.text("Adresse: ", 5, 30);
+      doc.text("Ville: ", 5, 35);
+      doc.text("Date d'envoi: ", 5, 40);
+      // ----------
+      doc.setFont("helvetica", "normal");
+      doc.text(utf8.encode("Yassine Zahlane"), 30, 20);
+      doc.text("06747410151", 30, 25);
+      doc.text("Azli Hey Ben Tachfine", 30, 30);
+      doc.text("Marrakech", 30, 35);
+      doc.text("2002-18-17", 30, 40); 
+      doc.line(1, 50, 99, 50);
+      
+      doc.setFont("helvetica", "bold");
+      doc.text("Marchandise:", 10, 60);
+      doc.setFont("helvetica", "normal");
+      doc.text("Backpack x 2", 10, 65);
+      doc.line(1, 100, 99, 100);
+      
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("CRBT: 200DH", 29, 107);
+      doc.line(1, 110, 99, 110);
+
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "normal");
+      doc.text("Vous remercier pour votre confiance, pour plus d'informaion", 12, 115);
+      doc.text("veuillez nous appeler sur :", 32, 120);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("0612345678", 32, 130);
+      
+      doc.line(1, 135, 99, 135);
+
+
+      // save the document
+      doc.save("my-document.pdf");
     },
 
-
-    
     create() {
       if (!this.isFormValid) {
         this.$alert({
@@ -157,4 +176,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@media print {
+  * {
+    border: 1px solid black;
+  }
+}
+</style>
