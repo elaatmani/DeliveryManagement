@@ -87,35 +87,31 @@ export default {
       doc.text("Adresse: ", 5, 30);
       doc.text("Ville: ", 5, 35);
       doc.text("Date d'envoi: ", 5, 40);
+      doc.text("Marchandise:", 5, 45);
       // ----------
       doc.setFont("helvetica", "normal");
       doc.text(utf8.encode("Yassine Zahlane"), 30, 20);
       doc.text("06747410151", 30, 25);
       doc.text("Azli Hey Ben Tachfine", 30, 30);
       doc.text("Marrakech", 30, 35);
-      doc.text("2002-18-17", 30, 40); 
-      doc.line(1, 50, 99, 50);
-      
-      doc.setFont("helvetica", "bold");
-      doc.text("Marchandise:", 10, 60);
-      doc.setFont("helvetica", "normal");
-      doc.text("Backpack x 2", 10, 65);
-      doc.line(1, 100, 99, 100);
+      doc.text("2002-18-17", 30, 40);
+      doc.text(" - Backpack x 2", 30, 45); 
+      doc.line(1, 73, 99, 73);
       
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
-      doc.text("CRBT: 200DH", 29, 107);
-      doc.line(1, 110, 99, 110);
+      doc.text("CRBT: 200DH", 29, 80);
+      doc.line(1, 83, 99, 83);
 
       doc.setFontSize(8);
       doc.setFont("helvetica", "normal");
-      doc.text("Vous remercier pour votre confiance, pour plus d'informaion", 12, 115);
-      doc.text("veuillez nous appeler sur :", 32, 120);
+      doc.text("Vous remercier pour votre confiance, pour plus d'informaion", 12, 90);
+      doc.text("veuillez nous appeler sur :", 32, 95);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
-      doc.text("0612345678", 32, 130);
+      doc.text("0612345678", 32, 105);
       
-      doc.line(1, 135, 99, 135);
+      doc.line(1, 115, 99, 115);
 
 
       // save the document
