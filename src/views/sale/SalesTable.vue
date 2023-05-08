@@ -29,9 +29,6 @@
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
                         {{ sale.id }}
                     </th>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ sale.city }}
-                    </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
                         {{ sale?.created_at?.split('T')[0] }}
                         <div v-if="sale.confirmation == 'reporter' || sale.delivery == 'reporter'" :class="isReportedToday(sale) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
@@ -39,12 +36,15 @@
                                 Reported for today
                              </span>
                         </div>
-                    </td>
+                    </td>  
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.product_name }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ sale.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <SaleUpsell :sale="sale" :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
