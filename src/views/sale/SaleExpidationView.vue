@@ -108,7 +108,7 @@
       <!-- new lane -->
 
         <AddSale @cancel="showPopup = false" :visible="showPopup" />
-        <AddTicket @cancel="showPopupTicket = false" :visible="showPopupTicket" />
+        <AddTicket :orders="selectedOrders" @cancel="showPopupTicket = false" :visible="showPopupTicket" />
     </div>
   </div>
 
@@ -209,6 +209,9 @@ export default {
     }
   },
   computed: {
+    selectedOrders() {
+      return this.sales.filter(i => this.selected.includes(i.id))
+    },
     users() {
         return this.$store.getters['user/users']
     },

@@ -5,8 +5,6 @@ import beforeEach from './beforeEach'
 import auth from './routes/auth'
 import main from './routes/main'
 import product from './routes/product'
-import category from './routes/category'
-import subcategory from './routes/subcategory'
 import user from './routes/user'
 import sale from './routes/sale'
 import order from './routes/order'
@@ -22,8 +20,6 @@ const routes = [
   auth,
   main,
   product,
-  category,
-  subcategory,
   user,
   sale,
   order,
