@@ -458,7 +458,21 @@ export default {
       this.isLoading = true;
 
       let product = this.product;
-      product.variants = this.variants;
+      
+      product.addVariants = this.addVariants;
+
+      if(!this.addVariants) {
+        const variants = [{
+              id: this.variantId,
+              color: 'ALL',
+              size: 'ALL',
+              quantity: this.quantity,
+              stockAlert: this.stockAlert
+            }]
+        product.variants = variants;
+      } else {
+        product.variants = this.variants;
+      }
 
       Product.create(product)
         .then((res) => {
@@ -521,7 +535,7 @@ export default {
         this.formStatus.reference.valid &&
         this.formStatus.sellingPrice &&
         this.formStatus.description.valid &&
-        this.formStatus.variants.valid
+        (this.addVariants ? this.formStatus.variants.valid : true)
       );
     },
 
