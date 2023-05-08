@@ -129,6 +129,12 @@
                   </div>
                 </div>
               </v-col>
+              <v-col class="!tw-py-0" cols="12">
+                <div class="tw-w-full tw-flex tw-gap-10 tw-items-center">
+                    <span>Add Variants: </span>
+                    <v-switch v-model="addVariants" color="primary-color" :hide-details="true"></v-switch>
+                </div>
+              </v-col>
             </v-row>
           </v-col>
           <v-col
@@ -136,7 +142,53 @@
             md="6"
             class="tw-border-l tw-border-r-neutral-700 tw-py-2"
           >
-            <div>
+          <div v-if="!addVariants">
+            <div class="md:tw-col-span-3 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
+              <v-text-field
+                @change="handleQuantityChange"
+                type="number"
+                :error="!formStatus.quantity.valid"
+                @keyup="resetError('quantity')"
+                :hide-details="true"
+                v-model="quantity"
+                clearable
+                clear-icon="mdi-close"
+                class="tw-w-full"
+                variant="outlined"
+                color="primary-color"
+                density="compact"
+              ></v-text-field>
+              <div
+                class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+              >
+                {{ formStatus.quantity.message }}
+              </div>
+            </div>
+            <div class="md:tw-col-span-3 tw-col-span-12">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">Stock Alert</div>
+              <v-text-field
+                @change="handleStockAlertChange"
+                type="number"
+                :error="!formStatus.stockAlert.valid"
+                @keyup="resetError('stockAlert')"
+                :hide-details="true"
+                v-model="stockAlert"
+                clearable
+                clear-icon="mdi-close"
+                class="tw-w-full"
+                variant="outlined"
+                color="primary-color"
+                density="compact"
+              ></v-text-field>
+              <div
+                class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+              >
+                {{ formStatus.stockAlert.message }}
+              </div>
+            </div>
+          </div>
+            <div v-if="addVariants">
               <div class="tw-grid tw-grid-cols-12 md:tw-gap-3">
                 <div class="md:tw-col-span-3 tw-col-span-12">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Size</div>
@@ -328,7 +380,7 @@ export default {
   data() {
     return {
       isLoading: false,
-
+      addVariants : false,
       variantId: 1,
       variants: [
       ],
