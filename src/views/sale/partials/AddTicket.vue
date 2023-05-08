@@ -13,11 +13,14 @@
       >
         <h1 class="tw-font-bold">Choose Ticket Size</h1>
 
+
         <div class="tw-grid mt-5">
           <v-btn @click="downloadPDF">Imprimer</v-btn>
         </div>
       </div>
     </popup-full>
+        <img src="" id="image" />
+        <canvas id="qr-canvas"></canvas>
   </div>
 </template>
 
@@ -26,6 +29,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { localUrl } from "@/config/config";
+import QRCode  from 'qrcode'
 
 export default {
   props: ["visible", "orders"],
@@ -41,7 +45,8 @@ export default {
   computed: {},
 
   methods: {
-    addOrderPage(doc, order) {
+
+    async addOrderPage(doc, order) {
       const date = new Date();
 
       let day = date.getDate();
@@ -123,8 +128,43 @@ export default {
 
       doc.line(1, 115, 99, 115);
 
+      // doc.setFontSize(10);
+      // doc.setTextColor("black");
+      // doc.setFont("helvetica", "bold");
+      //  doc.text(" - Backpack x 2", 30, 45); 
+      // const qr = await this.makeQrCode();
+
+      const url = await new Promise((resolve, reject) => {
+        QRCode.toDataURL('text', function (err, url) {
+          if (err) {
+            reject(err)
+          }
+              resolve(url)
+          
+        })
+      })
+
+
+      var img = new Image();
+      img.src = url
+
+      // imag.onload = async function () {
+        // }
+        
+
+      // doc.save("new.pdf");
+      return new Promise((resolve) => {
+        img.onload = () => {
+
+          doc.addImage(img, 40, order.id * 2)
+          doc.save('test.pdf')
+          resolve(img)
+        }
+      })
+
+
     },
-    downloadPDF() {
+    async downloadPDF() {
       // const order = {
       //   fullname: 'ياسين العثماني ',
       //   address: 'Azli Hey Ben Tachfine blaa lb dqs bmla  dqklj sqd  dsqj  hhhhhhhhh hh h h h hhhhh hh hh'
@@ -137,7 +177,7 @@ export default {
         format: [100, 150],
         putOnlyUsedFonts: true,
       });
-
+      
       doc.addFont(
         // this.localUrl + "assets/fonts/Amiri/Amiri-Regular.ttf",
         this.localUrl + "assets/fonts/Cairo-Regular.ttf",
@@ -151,18 +191,35 @@ export default {
         "Cairo",
         "bold"
       );
+
+      const qrCode = [];
       
       this.orders.forEach((order, i) => {
         i>0 && doc.addPage();
-        this.addOrderPage(doc, order)
+         qrCode.push(this.addOrderPage(doc, order))
       })
 
-      // save the document
-      doc.save("my-document.pdf");
+      Promise.allSettled(qrCode)
+      .then( (res) => {
+        console.log(res);
+        // save the document
+        doc.save("my-document.pdf");
+      })
+      .catch(
+        (err) => {
+          console.log(err);
+          this.$alert({
+            'type': 'danger',
+            'title': 'Something wrong happened. Try again'
+          })
+        }
+      )
+
+
     },
   },
-  mounted() {
-    console.log(this.orders);
+  mounted() {    
+
   }
 };
 </script>
