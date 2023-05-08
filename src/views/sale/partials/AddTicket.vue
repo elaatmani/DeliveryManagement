@@ -128,96 +128,59 @@ export default {
 
       doc.line(1, 115, 99, 115);
 
-      // doc.setFontSize(10);
-      // doc.setTextColor("black");
-      // doc.setFont("helvetica", "bold");
-      //  doc.text(" - Backpack x 2", 30, 45); 
-      // const qr = await this.makeQrCode();
-
-      const url = await new Promise((resolve, reject) => {
-        QRCode.toDataURL('text', function (err, url) {
-          if (err) {
-            reject(err)
-          }
-              resolve(url)
-          
-        })
-      })
-
-
-      var img = new Image();
-      img.src = url
-
-      // imag.onload = async function () {
-        // }
-        
-
-      // doc.save("new.pdf");
-      return new Promise((resolve) => {
-        img.onload = () => {
-
-          doc.addImage(img, 40, order.id * 2)
-          doc.save('test.pdf')
-          resolve(img)
-        }
-      })
-
-
     },
     async downloadPDF() {
-      // const order = {
-      //   fullname: 'ياسين العثماني ',
-      //   address: 'Azli Hey Ben Tachfine blaa lb dqs bmla  dqklj sqd  dsqj  hhhhhhhhh hh h h h hhhhh hh hh'
-      // }
+  var doc = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: [100, 150],
+    putOnlyUsedFonts: true,
+  });
 
-      // create a new jsPDF instance with the specified page size
-      var doc = new jsPDF({
-        orientation: "p",
-        unit: "mm",
-        format: [100, 150],
-        putOnlyUsedFonts: true,
-      });
-      
-      doc.addFont(
-        // this.localUrl + "assets/fonts/Amiri/Amiri-Regular.ttf",
-        this.localUrl + "assets/fonts/Cairo-Regular.ttf",
-        "Cairo",
-        "normal"
-      );
+  doc.addFont(
+    this.localUrl + "assets/fonts/Cairo-Regular.ttf",
+    "Cairo",
+    "normal"
+  );
 
-      doc.addFont(
-        // this.localUrl + "assets/fonts/Amiri/Amiri-Regular.ttf",
-        this.localUrl + "assets/fonts/Cairo-Bold.ttf",
-        "Cairo",
-        "bold"
-      );
+  doc.addFont(
+    this.localUrl + "assets/fonts/Cairo-Bold.ttf",
+    "Cairo",
+    "bold"
+  );
 
-      const qrCode = [];
-      
-      this.orders.forEach((order, i) => {
-        i>0 && doc.addPage();
-         qrCode.push(this.addOrderPage(doc, order))
-      })
+  for (let i = 0; i < this.orders.length; i++) {
+    const order = this.orders[i];
 
-      Promise.allSettled(qrCode)
-      .then( (res) => {
-        console.log(res);
-        // save the document
-        doc.save("my-document.pdf");
-      })
-      .catch(
-        (err) => {
-          console.log(err);
-          this.$alert({
-            'type': 'danger',
-            'title': 'Something wrong happened. Try again'
-          })
+    if (i > 0) {
+      doc.addPage();
+    }
+
+    this.addOrderPage(doc, order)
+
+    const url = await new Promise((resolve, reject) => {
+      QRCode.toDataURL(order.id, {margin: 0}, function (err, url) {
+        if (err) {
+          reject(err)
         }
-      )
+        resolve(url)
+      })
+    })
 
+    const img = new Image();
+    img.src = url;
 
-    },
-  },
+    await new Promise((resolve) => {
+      img.onload = () => {
+        doc.addImage(img, 68, 118, 28, 28, 'a' + i, 'SLOW');
+        resolve();
+      };
+    });
+  }
+
+  doc.save("order_tickets.pdf");
+},
+},
   mounted() {    
 
   }
