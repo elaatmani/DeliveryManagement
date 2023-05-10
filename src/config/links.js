@@ -242,7 +242,7 @@ export const links = [
         gate: 'access_to_warehouse', 
         icon: {
             type: 'icon',
-            value: 'mdi-warehouse'
+            value: 'mdi-home-group'
         },
         children: [
             {
