@@ -159,7 +159,7 @@ export default {
     this.addOrderPage(doc, order)
 
     const url = await new Promise((resolve, reject) => {
-      QRCode.toDataURL(order.id, {margin: 0}, function (err, url) {
+      QRCode.toDataURL(order.fullname, {margin: 0}, function (err, url) {
         if (err) {
           reject(err)
         }

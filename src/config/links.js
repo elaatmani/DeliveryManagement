@@ -234,7 +234,26 @@ export const links = [
             }
         ]
     },
-
+    {
+        id: 12,
+        module: 'warehouse',
+        title: 'Warehouses',
+        hasChildren: true,
+        gate: 'access_to_warehouse', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-warehouse'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Warehouses list',
+                subModule: 'warehouse/list',
+                gate: 'show_all_warehouses',
+                to: '/warehouses'
+            },
+        ]
+    },
     {
         id: 8,
         title: 'Users',
