@@ -455,7 +455,7 @@ export default {
     create() {
       if (!this.validate()) return false;
 
-      this.isLoading = true;
+      this.isLoading = true; 
 
       let product = this.product;
       
