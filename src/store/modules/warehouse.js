@@ -27,7 +27,7 @@ export default {
         UPDATE_WAREHOUSE:(state, payload) => {
             state.warehouses = state.warehouses.map((i)=> {
                 if (i.id == payload.id){
-                    return payload
+                    return {...payload}
                 }
                 return i
             })

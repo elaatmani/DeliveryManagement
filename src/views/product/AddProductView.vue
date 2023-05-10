@@ -464,8 +464,8 @@ export default {
       if(!this.addVariants) {
         const variants = [{
               id: this.variantId,
-              color: 'ALL',
-              size: 'ALL',
+              color: 'DEFAULT',
+              size: 'DEFAULT',
               quantity: this.quantity,
               stockAlert: this.stockAlert
             }]
