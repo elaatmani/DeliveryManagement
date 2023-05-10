@@ -150,7 +150,7 @@ export default {
 
   methods: {
     create() {
-
+  
       if(!this.isFormValid) {
         this.$alert({
               type: "warning",
@@ -185,7 +185,7 @@ export default {
 
               if (this.products.length > 0) {
                 this.sale.product_name = this.products[0].name;
-                console.log(this.products[0].name);
+                // console.log(this.products[0].name);
               }
             }
           },

@@ -6,12 +6,12 @@
         <h2 class="tw-text-gray-500 tw-text-sm">Manage your warehouses</h2>
       </div>
       <div v-if="$can('create_warehouse')">
-        <!-- <v-btn color="primary-color" link :to="{name: 'warehouse/add'}" variant="flat" class="text-capitalize">
+        <v-btn color="primary-color" @click="showPopup = true" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white">
             Add Warehouse
           </span>
-        </v-btn> -->
+        </v-btn>
       </div>
     </div>
 
@@ -47,6 +47,8 @@
       <div class="">
         <WarehousesTable :columns="columns" :warehouses="filteredWarehouses" />
       </div>
+
+      <AddWarehouse @cancel="showPopup = false" :visible="showPopup" />
     </div>
   </div>
 </template>
@@ -56,9 +58,10 @@ import {localUrl} from '@/config/config'
 
 import Warehouse from '@/api/Warehouse'
 import WarehousesTable from './WarehousesTable.vue'
+import AddWarehouse from './partials/AddWarehouse'
 
 export default {
-  components: {  WarehousesTable },
+  components: {  WarehousesTable, AddWarehouse },
   data() {
     return {
       localUrl,
@@ -66,6 +69,7 @@ export default {
       showFilters: false,
       date: null,
       search: '',
+      showPopup:false,
       columns: 
       [
         {

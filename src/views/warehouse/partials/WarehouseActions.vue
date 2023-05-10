@@ -43,13 +43,14 @@ export default {
               type: 'success',
               title: 'Warehouse Deleted Successfully'
             })
+            this.$store.dispatch('warehouse/delete',this.warehouse.id)
           }
-          Warehouse.all().then(res => {
-            if(res.data.code == 'SUCCESS') {
-              this.$store.dispatch('warehouse/setWarehouses', res.data.data.warehouses)
-            }
-          }).catch(this.$handleApiError)
-
+          // Warehouse.all().then(res => {
+          //   if(res.data.code == 'SUCCESS') {
+          //     this.$store.dispatch('warehouse/setWarehouses', res.data.data.warehouses)
+          //   }
+          // }).catch(this.$handleApiError)
+          
         })
         .catch(this.$handleApiError)
         .finally(() => {

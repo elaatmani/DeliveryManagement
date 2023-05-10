@@ -1,6 +1,6 @@
 <template>
   <div v-if="visible">
-    <teleport to="body">
+    <teleport to=".my-application">
       <div>
         <div
           ref="popup"
