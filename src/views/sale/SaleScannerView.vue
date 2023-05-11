@@ -1,39 +1,41 @@
 <template>
-    <div>
+  <div>
       <video id="video"></video>
       <p v-if="!cameraPermission">Camera permission not granted.</p>
     </div>
-  </template>
+</template>
   
   <script>
-  import Quagga from "quagga";
-  import { mapActions } from "vuex";
-  
-  export default {
-    data() {
-      return {
-        cameraPermission: null
-      };
+import Quagga from "quagga";
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      cameraPermission: null,
+    };
+  },
+  methods: {
+    onDetected(result) {
+      console.log(
+        "Barcode detected and processed : [" + result.codeResult.code + "]",
+        result
+      );
     },
-    methods: {
-      onDetected(result) {
-        console.log(
-          "Barcode detected and processed : [" + result.codeResult.code + "]",
-          result
-        );
-      },
-      stopQuagga() {
-        Quagga.stop();
-        const video = document.querySelector("#video");
-        if (video.srcObject) {
-          video.srcObject.getTracks().forEach((track) => track.stop());
-          video.srcObject = null;
-        }
-      },
-      ...mapActions(["setCameraPermission"]),
+    stopQuagga() {
+      Quagga.stop();
+      const video = document.querySelector("#video");
+      if (video.srcObject) {
+        video.srcObject.getTracks().forEach((track) => track.stop());
+        video.srcObject = null;
+      }
     },
-    mounted() {
-      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+    ...mapActions(["setCameraPermission"]),
+  },
+  mounted() {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
         this.cameraPermission = true;
         this.setCameraPermission(true);
         const video = document.querySelector("#video");
@@ -62,19 +64,20 @@
           );
           Quagga.onDetected(this.onDetected);
         };
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
         this.cameraPermission = false;
         this.setCameraPermission(false);
       });
-    },
-    beforeRouteLeave(to, from, next) {
-      this.stopQuagga();
-      this.setCameraPermission(false);
-      next();
-    },
-  };
-  </script>
+  },
+  beforeRouteLeave(to, from, next) {
+    this.stopQuagga();
+    this.setCameraPermission(false);
+    next();
+  },
+};
+</script>
   
   <style></style>
   

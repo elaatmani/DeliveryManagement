@@ -7,7 +7,11 @@
       <h2 class="tw-text-gray-500 tw-text-sm">Create new product</h2>
     </div>
 
-    <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="!isLoaded">
+      <LoadingAnimation />
+    </div>
+
+    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
       <div>
         <v-row>
           <v-col cols="12" md="6">
@@ -142,6 +146,26 @@
             md="6"
             class="tw-border-l tw-border-r-neutral-700 tw-py-2"
           >
+          <div class="tw-h-fit tw-mb-">
+            <span class="tw-text-sm tw-text-neutral-600">Warehouse</span>
+            <div class="tw-relative">
+              <select 
+              v-model="warehouse"
+              @change="resetError('warehouse')"
+                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-400  tw-outline-0  tw-text-sm">
+                <option :value="0">Select</option>
+                <option v-for="w in warehouses" :key="w.id" :value="w.id">{{ w.name }}</option>
+              </select>
+              <v-icon
+                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
+            </div>
+            <div
+                class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+              >
+                {{ formStatus.warehouse.message }}
+              </div>
+          </div>
+
           <div v-if="!addVariants">
             <div class="md:tw-col-span-3 tw-col-span-12">
               <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
@@ -235,7 +259,7 @@
                   <v-text-field
                     @change="handleQuantityChange"
                     type="number"
-                    :error="!formStatus.quantity.valid"
+                    :error="!formStatus.quantity.valid && false"
                     @keyup="resetError('quantity')"
                     :hide-details="true"
                     v-model="quantity"
@@ -249,7 +273,7 @@
                   <div
                     class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
                   >
-                    {{ formStatus.quantity.message }}
+                    <!-- {{ formStatus.quantity.message }} -->
                   </div>
                 </div>
                 <div class="md:tw-col-span-3 tw-col-span-12">
@@ -278,8 +302,8 @@
               <div>
                 <div class="tw-col-span-12 tw-flex tw-justify-end">
                   <button
-                    :disabled="!size || !color || !quantity || !stockAlert"
-                    :class="{ 'bg-primary-color': size && color && quantity && stockAlert}"
+                    :disabled="!size || !color || !quantity"
+                    :class="{ 'bg-primary-color': size && color && quantity}"
                     @click="addVariant"
                     class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
                   >
@@ -375,11 +399,13 @@
 import { validateName, validateVariants } from "@/helpers/validators";
 import Product from "@/api/Product";
 import VariantActions from '@/views/product/VariantActions'
+import Warehouse from '@/api/Warehouse';
 export default {
   components: { VariantActions },
   data() {
     return {
       isLoading: false,
+      isLoaded: false,
       addVariants : false,
       variantId: 1,
       variants: [
@@ -388,6 +414,7 @@ export default {
       color: "",
       size: "",
       quantity: 0,
+      warehouse: 0,
       stockAlert: 0,
 
       product: {
@@ -435,6 +462,10 @@ export default {
           valid: true,
           message: "",
         },
+        warehouse: {
+          valid: true,
+          message: "",
+        },
         variants: {
           valid: true,
           message: "",
@@ -449,6 +480,9 @@ export default {
       this.variants.forEach((variant) => (total += parseInt(variant.quantity)));
       return total;
     },
+    warehouses() {
+      return this.$store.getters['warehouse/warehouses']
+    }
   },
 
   methods: {
@@ -467,6 +501,7 @@ export default {
               color: 'DEFAULT',
               size: 'DEFAULT',
               quantity: this.quantity,
+              warehouse_id: this.warehouse,
               stockAlert: this.stockAlert
             }]
         product.variants = variants;
@@ -519,6 +554,10 @@ export default {
         this.product.buyingPrice,
         "Buying price"
       );
+      this.formStatus.quantity = validateName(
+        this.quantity,
+        "Quantity"
+      );
       this.formStatus.sellingPrice = validateName(
         this.product.sellingPrice,
         "Selling price"
@@ -529,23 +568,42 @@ export default {
       );
       this.formStatus.variants = validateVariants(this.variants);
 
+      if(!this.addVariants) {
+        this.formStatus.warehouse = {
+          valid: this.warehouse != 0,
+          message: this.warehouse != 0 ? '' : 'Please select a warehouse'
+        }
+      }
+
       return (
         this.formStatus.name.valid &&
         this.formStatus.buyingPrice.valid &&
         this.formStatus.reference.valid &&
         this.formStatus.sellingPrice &&
         this.formStatus.description.valid &&
-        (this.addVariants ? this.formStatus.variants.valid : true)
+        (this.addVariants ? this.formStatus.variants.valid : true) &&
+        (this.addVariants ? true : this.formStatus.quantity.valid) &&
+        (this.addVariants ? true : this.formStatus.warehouse.valid)
       );
     },
 
     addVariant() {
+
+      this.formStatus.warehouse = {
+        valid: this.warehouse != 0,
+        message: this.warehouse != 0 ? '' : 'Please select a warehouse'
+      }
+
+      if(!this.formStatus.warehouse.valid) {
+        return false;
+      }
 
       const variant = {
         id: this.variantId,
         color: this.color.toUpperCase(),
         size: this.size.toUpperCase(),
         quantity: this.quantity,
+        warehouse_id: this.warehouse,
         stockAlert: this.stockAlert
       };
 
@@ -586,7 +644,25 @@ export default {
         this.product.buyingPrice = 0;
       }
     },
+
+    getWarhouses() {
+      this.isLoaded = false;
+      return Warehouse.all()
+      .then(
+        res => {
+          if(res.data.code == 'SUCCESS') {
+            this.$store.dispatch('warehouse/setWarehouses', res.data.data.warehouses)
+            this.isLoaded = true;
+          }
+        },
+        this.$handleApiError
+      )
+    }
   },
+
+  mounted() {
+    this.getWarhouses()
+  }
 };
 </script>
 
