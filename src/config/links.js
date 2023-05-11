@@ -106,6 +106,13 @@ export const links = [
                 gate: 'show_all_expidations',
                 to: '/sales/expidation'
             },
+            {
+                id: 3,
+                title: 'Scanner',
+                subModule: 'sale/scanner',
+                gate: 'show_all_expidations',
+                to: '/sales/scanner'
+            }
         ]
     },
 

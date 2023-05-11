@@ -19,6 +19,7 @@
     "jspdf-autotable": "^3.5.28",
     "last-seen-ago": "^1.1.0",
     "qrcode": "^1.5.3",
+    "quagga": "^0.12.1",
     "roboto-fontface": "*",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
