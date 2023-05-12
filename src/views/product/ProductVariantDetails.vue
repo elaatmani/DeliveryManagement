@@ -35,7 +35,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in []"
+                v-for="item in source.product_variations"
                 :key="item.id"
                 class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
               >
@@ -51,12 +51,12 @@
                 <td class="tw-w-4 tw-p-4">
                   <div class="tw-flex tw-items-center tw-gap-1">
                     <span class="tw-text-green-500"
-                      >{{ item.available_quantity }}
+                      >{{ item.on_hand_quantity }}
                     </span>
-                    <span>/ {{ item.quantity }}</span>
+                    <!-- <span>/ {{ item.quantity }}</span>
                     <span v-if="item.on_hold > 0">
                       / <span class="tw-text-red-400">{{ item.on_hold }}</span>
-                    </span>
+                    </span> -->
                   </div>
                 </td>
               </tr>
@@ -93,13 +93,17 @@
 
 <script>
 export default {
-  props: ["visible", "variations"],
+  props: ["visible", "source"],
 
   methods: {
     cancel() {
       this.$emit("cancel");
     },
   },
+
+  mounted() {
+    console.log(this.source);
+  }
 };
 </script>
 
