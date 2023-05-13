@@ -38,13 +38,13 @@
                         </div>
                     </td>  
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.fullname }}
+                        {{ sale.city }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ sale.city }}
+                        {{ sale.fullname }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <SaleUpsell :sale="sale" :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />

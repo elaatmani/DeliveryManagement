@@ -15,7 +15,6 @@
             </v-list-item>
             <!-- /NavBar Logo -->
 
-
             <v-list class="mt-2" nav>
                 <SidebarItem v-for="link in links" :key="link.id" :link="link" />
             </v-list>
