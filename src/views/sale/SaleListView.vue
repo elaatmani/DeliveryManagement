@@ -212,20 +212,20 @@
               name: '#',
             },
             {
-              prop: 'city',
-              name: 'City',
-            },
-            {
               prop: 'date',
               name: 'Date',
             },
             {
+              prop: 'city',
+              name: 'City',
+            },
+              {
+                prop: 'product',
+                name: 'Product',
+              },
+            {
               prop: "client",
               name: "Client",
-            },
-            {
-              prop: 'product',
-              name: 'Product',
             },
             {
               prop: 'upsell',
