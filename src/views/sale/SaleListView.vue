@@ -228,10 +228,10 @@ import Product from '@/api/Product'
               prop: "client",
               name: "Client",
             },
-            // {
-            //   prop: 'upsell',
-            //   name: 'Upsell',
-            // },
+            {
+              prop: 'upsell',
+              name: 'Upsell',
+            },
             {
               prop: 'confirmation',
               name: 'Confirmation',

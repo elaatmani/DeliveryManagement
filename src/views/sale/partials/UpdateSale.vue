@@ -388,7 +388,7 @@ export default {
 
   mounted() {
     this.sale = {...this.order}
-    this.items = this.order.items
+    this.items = [...this.order.items]
   },
 };
 </script>
