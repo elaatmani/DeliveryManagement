@@ -24,19 +24,6 @@
           </div>
 
           <div class="md:tw-col-span-6 tw-col-span-12">
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-            <select
-              v-model="sale.product_name"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            >
-              <option :value="p.name" v-for="p in products" :key="p.id">
-                {{ p.name }}
-              </option>
-            </select>
-            <!-- <input city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
-          </div>
-
-          <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Phone</div>
             <input
               type="text"
@@ -54,7 +41,6 @@
                 {{ c.name }}
               </option>
             </select>
-            <!-- <input city" type="text" class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"> -->
           </div>
 
           <div class="md:tw-col-span-6 tw-col-span-12">
@@ -65,21 +51,133 @@
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
+          <div class="md:tw-col-span-12 tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
+            <input
+              type="text"
+              v-model="sale.price"
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            />
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12  tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Warehouse</div>
+            <select
+              v-model="warehouse_id"
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            >
+              <option :value="0">
+                Select
+              </option>
+              <option :value="w.id" v-for="w in warehouses" :key="w.id">
+                {{ w.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12  tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
+            <select
+              v-model="product_id"
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            >
+              <option :value="0">
+                Select
+              </option>
+              <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
+                {{ p.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Variations</div>
+            <select
+              v-model="product_variation_id"
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            >
+              <option :value="0">
+                Select
+              </option>
+              <option :value="v.id" v-for="v in variations" :key="v.id">
+                {{ v.size }} / {{ v.color }}
+              </option>
+            </select>
+          </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
             <input
               type="number"
-              v-model="sale.quantity"
+              v-model="quantity"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
-          <div class="md:tw-col-span-6 tw-col-span-12">
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
-            <input
-              type="number"
-              v-model="sale.price"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            />
+          <div class="md:tw-col-span-12 tw-col-span-12">
+            <button @click="addItem" class="tw-block tw-ml-auto tw-py-1 tw-px-4 tw-rounded tw-bg-emerald-500 tw-text-white">
+              Add
+            </button>
+          </div>
+
+          <div v-if="items.length" class="md:tw-col-span-12 tw-col-span-12">
+            <div class="tw-max-w-full tw-overflow-auto">
+              <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
+                <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
+                  <tr>
+                    <th
+                      v-for="column in [
+                        'product',
+                        'variation',
+                        'quantity',
+                        'warehouse'
+                        
+                      ]"
+                      :class="[column == 'actions' && '!tw-w-[40px]']"
+                      :key="column"
+                      scope="col"
+                      class="tw-px-6 tw-py-3 text-truncate"
+                    >
+                      <div
+                        class="tw-w-fit tw-flex tw-whitespace-nowrap tw-capitalize"
+                      >
+                        {{ column }}
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="item in items"
+                    :key="item"
+                    class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
+                  >
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      {{ item.product.name }}
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      {{ item.product_variation.size }} / {{ item.product_variation.color }}
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      {{ item.quantity }}
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      {{ item.product_variation.warehouse.name }}
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -118,38 +216,84 @@ export default {
       isLoading: false,
       isLoaded: false,
 
+      product_id: 0,
+      product_variation_id: 0,
+      warehouse_id: 0,
+      quantity: 1,
+
+      items: [],
+
       sale: {
         fullname: "",
-        product_name: "",
         phone: "",
         city: "",
         adresse: "",
-        quantity: 1,
         price: 0,
       },
     };
+  },
+
+  watch: {
+    product_id() {
+      console.log(this.warehouses);
+      this.product_variation_id = 0;
+    },
+    warehouse_id() {
+      this.product_id = 0
+      this.product_variation_id = 0
+    }
   },
 
   computed: {
     products() {
       return this.$store.getters["product/products"];
     },
+
+    warehouses() {
+      const warehouses = this.products.flatMap(
+        p => {
+          return p.variations.map(v => v.warehouse)
+        })
+
+      const warehouses_ids = warehouses.map(w => w.id)
+
+      return warehouses.filter((item, index) => warehouses_ids.indexOf(item.id) === index);
+    },
+
+    filtredProducts() {
+      if(this.warehouse_id == 0) {
+        return []
+      }
+
+      return this.products.filter(p => p.variations.some(v => v.warehouse_id == this.warehouse_id))
+    },
+
     cities() {
       return this.$store.getters["city/cities"];
     },
+
+    variations() {
+      if(this.product_id == 0) {
+        return []
+      }
+
+      return this.products.find(p => p.id == this.product_id) .variations
+    },
+
     isFormValid() {
       return (
         !!this.sale.fullname &&
         !!this.sale.phone &&
         !!this.sale.adresse &&
         this.sale.price != 0 &&
-        this.sale.quantity != 0
+        this.items.length > 0
       );
     },
   },
 
   methods: {
     create() {
+
   
       if(!this.isFormValid) {
         this.$alert({
@@ -160,7 +304,16 @@ export default {
       }
       this.isLoading = true;
 
-      Sale.create(this.sale)
+      const sale = {
+        fullname: this.sale.fullname,
+        phone: this.sale.phone,
+        city: this.sale.city,
+        price: this.sale.price,
+        adresse: this.sale.adresse,
+        orderItems: this.items
+      }
+
+      Sale.create(sale)
         .then((res) => {
           if (res.data.code == "SALE_ADDED") {
             this.$emit("cancel");
@@ -171,6 +324,33 @@ export default {
           }
         }, this.$handleApiError)
         .finally(() => (this.isLoading = false));
+    },
+
+    addItem() {
+      if([this.warehouse_id, this.product_id, this.product_variation_id].includes(0)) {
+        this.$alert({
+          title: 'Choose a product',
+          type: 'warning'
+        })
+        return false;
+      }
+
+      const product = this.filtredProducts.find(p => p.id == this.product_id);
+      const product_variation = this.variations.find(p => p.id == this.product_variation_id);
+
+      const item = {
+        product_id: product.id,
+        product_ref: product.ref,
+        product: product,
+        product_variation: product_variation,
+        product_variation_id: product_variation.id,
+        quantity: this.quantity
+      }
+
+      this.items.push(item)
+      this.product_id = 0
+      this.product_variation_id = 0
+    
     },
 
     getProducts() {

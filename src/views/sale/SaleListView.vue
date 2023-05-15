@@ -219,10 +219,10 @@
               prop: 'city',
               name: 'City',
             },
-              // {
-              //   prop: 'product',
-              //   name: 'Product',
-              // },
+              {
+                prop: 'product',
+                name: 'Product',
+              },
             {
               prop: "client",
               name: "Client",
@@ -243,10 +243,10 @@
               prop: 'delivery',
               name: 'Delivery',
             },
-            // {
-            //   prop: "quantity",
-            //   name: "Qty",
-            // },
+            {
+              prop: "quantity",
+              name: "Qty",
+            },
             {
               prop: 'price',
               name: 'Price',
