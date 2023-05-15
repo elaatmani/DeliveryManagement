@@ -45,7 +45,7 @@
             </button>
             <button
             :disabled="!quantity || quantity == 0"
-            :class="{ 'tw-bg-green-500': quantity }"
+            :class="{ '!tw-bg-green-500': quantity != 0 }"
             @click="addQuantity"
             class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
             >

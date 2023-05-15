@@ -45,9 +45,9 @@
               <td class="tw-px-6 tw-py-2 tw-text-emerald-500">
                 {{ get_total_quantity(item.product_variations) }}
               </td>
-                <td class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
+                <td  class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
                     <div>
-                        <ShowProductVariantActions :source="item"  />
+                        <ShowProductVariantActions  :source="item"  />
                     </div>
                 </td>
             </tr>

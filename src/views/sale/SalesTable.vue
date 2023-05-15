@@ -40,9 +40,9 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.city }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
+                    <!-- <td class="tw-px-6 tw-py-4">
                         {{ sale.product_name }}
-                    </td>
+                    </td> -->
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
                     </td>
@@ -84,9 +84,9 @@
                             </div>
                         </div>
                     </td>
-                    <td class="tw-px-6 tw-py-4">
+                    <!-- <td class="tw-px-6 tw-py-4">
                         {{ sale.quantity }}
-                    </td>
+                    </td> -->
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.price }}
                     </td>

@@ -63,7 +63,7 @@
             </tbody>
           </table>
 
-          <div class="tw-flex tw-gap-3 mt-5">
+          <div v-if="false" class="tw-flex tw-gap-3 mt-5">
             <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
               <div
                 class="tw-w-[10px] tw-h-[10px] tw-rounded-full tw-bg-green-500"
