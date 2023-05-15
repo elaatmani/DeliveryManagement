@@ -1,6 +1,6 @@
 <template>
   <div>
-    <popup-full @cancel="$emit('cancel')" :visible="visible">
+    <popup-full @cancel="$emit('update:visible', false)" :visible="visible">
       <div
         v-if="!isLoaded"
         class="md:tw-w-[80%] tw-w-[95%] tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg"
@@ -193,7 +193,7 @@
 
         <div class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
           <v-btn
-            @click="$emit('cancel')"
+            @click="$emit('update:visible', false)"
             color="grey-darken-2"
             variant="flat"
             class="text-capitalize"
@@ -202,12 +202,12 @@
           </v-btn>
           <v-btn
             :loading="isLoading"
-            @click="create"
+            @click="update"
             color="primary-color"
             variant="flat"
             class="text-capitalize"
           >
-            <span class="text-white"> Save </span>
+            <span class="text-white"> Update </span>
           </v-btn>
         </div>
       </div>
@@ -216,15 +216,13 @@
 </template>
 
 <script>
-import Product from "@/api/Product";
 import Sale from "@/api/Sale";
 export default {
-  props: ["visible"],
+  props: ["visible", "order"],
 
   data() {
     return {
       isLoading: false,
-      isLoaded: false,
 
       product_id: 0,
       product_variation_id: 0,
@@ -257,6 +255,10 @@ export default {
   computed: {
     products() {
       return this.$store.getters["product/products"];
+    },
+
+    isLoaded() {
+        return  this.$store.getters["product/products"];
     },
 
     warehouses() {
@@ -302,39 +304,6 @@ export default {
   },
 
   methods: {
-    create() {
-
-  
-      if(!this.isFormValid) {
-        this.$alert({
-              type: "warning",
-              title: "Please fill all the form",
-            });
-        return false
-      }
-      this.isLoading = true;
-
-      const sale = {
-        fullname: this.sale.fullname,
-        phone: this.sale.phone,
-        city: this.sale.city,
-        price: this.sale.price,
-        adresse: this.sale.adresse,
-        orderItems: this.items
-      }
-
-      Sale.create(sale)
-        .then((res) => {
-          if (res.data.code == "SALE_ADDED") {
-            this.$emit("cancel");
-            this.$alert({
-              type: "success",
-              title: "Sale created successfully",
-            });
-          }
-        }, this.$handleApiError)
-        .finally(() => (this.isLoading = false));
-    },
 
     deleteItem(id) {
       this.items = this.items.filter(i => i.id != id)
@@ -369,33 +338,57 @@ export default {
     
     },
 
-    getProducts() {
-      Product.all()
-        .then(
-          (res) => {
-            if (res.data.code == "SUCCESS") {
-              this.$store.dispatch(
-                "product/setProducts",
-                res.data.data.products
-              );
+    update() {
+        if(!this.isFormValid) {
+        this.$alert({
+              type: "warning",
+              title: "Please fill all the form",
+            });
+        return false
+      }
+      this.isLoading = true;
 
-              if (this.products.length > 0) {
-                this.sale.product_name = this.products[0].name;
-                // console.log(this.products[0].name);
-              }
-            }
-          },
-          (err) => {
-            this.$handleApiError(err);
+      const sale = {
+        id: this.sale.id,
+        fullname: this.sale.fullname,
+        phone: this.sale.phone,
+        city: this.sale.city,
+        price: this.sale.price,
+        adresse: this.sale.adresse,
+        orderItems: this.items
+      }
+
+      this.isLoading = true
+      Sale.update(sale.id, sale)
+      .then(
+        res => {
+          if(res.data.code == 'SUCCESS') {
+            
+            this.showUpdatePopup = false
+            this.$alert({
+                type: 'success',
+                title: 'Order updated'
+            })
+
+            this.$store.dispatch('sale/update', { id: sale.id, sale: sale })
           }
-        )
-        .finally(() => (this.isLoaded = true));
-    },
+        }
+      )
+      .catch(
+        (err) => {
+          this.$handleApiError(err)
+      })
+      .finally(
+        () => {
+          this.isLoading = false
+          }
+      )
+    }
   },
 
   mounted() {
-    this.getProducts();
-    this.sale.city = this.cities[0].name || 1;
+    this.sale = {...this.order}
+    this.items = this.order.items
   },
 };
 </script>

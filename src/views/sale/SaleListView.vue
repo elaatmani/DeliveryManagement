@@ -181,6 +181,7 @@
   import User from '@/api/User'
   import AddSale from '@/views/sale/partials/AddSale'
   import { confirmations, deliveryStatus } from '@/config/orders'
+import Product from '@/api/Product'
 
 
   export default {
@@ -425,6 +426,29 @@
         ).catch(this.$handleApiError)
       },
 
+      getProducts() {
+      return Product.all()
+        .then(
+          (res) => {
+            if (res.data.code == "SUCCESS") {
+              this.$store.dispatch(
+                "product/setProducts",
+                res.data.data.products
+              );
+              this.$store.dispatch(
+                "product/setFetched",
+                true
+              );
+
+            }
+          },
+          (err) => {
+            this.$handleApiError(err);
+          }
+        )
+        .finally(() => (this.isLoaded = true));
+    },
+
       getCities() {
         if (this.cities.length == 0) {
           return User.cities().then(
@@ -468,6 +492,8 @@
       } else {
         this.isLoaded = true
       }
+
+      this.getProducts()
       this.getCities()
     }
   }
