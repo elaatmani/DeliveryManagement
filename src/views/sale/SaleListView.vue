@@ -245,10 +245,6 @@ import Product from '@/api/Product'
               name: 'Delivery',
             },
             {
-              prop: "quantity",
-              name: "Qty",
-            },
-            {
               prop: 'price',
               name: 'Price',
             },

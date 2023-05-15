@@ -43,12 +43,11 @@
                     <td class="tw-px-6 tw-py-4">
                         <div>
                             <ul>
-                                <li v-for="i in sale.items" :key="i.id">
-                                    - {{  i.product.name }} | {{ i.product_variation.size }} / {{ i.product_variation.color }}
+                                <li v-for="i in sale.items" :key="i.id" class="tw-font-bold">
+                                    - <span class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs" >{{i.quantity}} X </span>{{  i.product.name }} | {{ i.product_variation.size }} / {{ i.product_variation.color }} 
                                 </li>
                             </ul>
                         </div>
-                        {{ sale.product_name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
@@ -89,15 +88,6 @@
                                     </span>
                                 </span>
                             </div>
-                        </div>
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <div>
-                            <ul>
-                                <li v-for="i in sale.items" :key="i.id">
-                                    {{  i.quantity }}
-                                </li>
-                            </ul>
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
