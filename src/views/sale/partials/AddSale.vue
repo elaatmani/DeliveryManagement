@@ -331,6 +331,8 @@ export default {
               type: "success",
               title: "Sale created successfully",
             });
+
+            this.$store.dispatch('sale/add', res.data.data.sale)
           }
         }, this.$handleApiError)
         .finally(() => (this.isLoading = false));
@@ -379,10 +381,6 @@ export default {
                 res.data.data.products
               );
 
-              if (this.products.length > 0) {
-                this.sale.product_name = this.products[0].name;
-                // console.log(this.products[0].name);
-              }
             }
           },
           (err) => {

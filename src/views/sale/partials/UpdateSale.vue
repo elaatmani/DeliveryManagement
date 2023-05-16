@@ -31,6 +31,7 @@
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
+
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">City</div>
             <select
@@ -51,13 +52,26 @@
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
-          <div class="md:tw-col-span-12 tw-col-span-12">
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
             <input
               type="text"
               v-model="sale.price"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
+          </div>
+
+          <div class="md:tw-col-span-6 tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
+            <select
+            v-model="sale.upsell"
+              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+            >
+              <option :value="u.value" v-for="u in upsells" :key="u.id">
+                {{ u.name }}
+              </option>
+            </select>
           </div>
 
           <div class="md:tw-col-span-6 tw-col-span-12  tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3">
@@ -193,7 +207,7 @@
 
         <div class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
           <v-btn
-            @click="$emit('update:visible', false)"
+            @click="handleCancel"
             color="grey-darken-2"
             variant="flat"
             class="text-capitalize"
@@ -217,11 +231,14 @@
 
 <script>
 import Sale from "@/api/Sale";
+import { upsells } from '@/config/orders';
+
 export default {
   props: ["visible", "order"],
 
   data() {
     return {
+      upsells,
       isLoading: false,
 
       product_id: 0,
@@ -238,6 +255,7 @@ export default {
         city: "",
         adresse: "",
         price: 0,
+        upsell: null,
       },
     };
   },
@@ -355,6 +373,7 @@ export default {
         city: this.sale.city,
         price: this.sale.price,
         adresse: this.sale.adresse,
+        upsell: this.sale.upsell,
         orderItems: this.items
       }
 
@@ -370,7 +389,8 @@ export default {
                 title: 'Order updated'
             })
 
-            this.$store.dispatch('sale/update', { id: sale.id, sale: sale })
+            this.$store.dispatch('sale/update', { id: sale.id, sale: res.data.data.sale })
+            this.$emit('update:visible', false)
           }
         }
       )
@@ -383,6 +403,11 @@ export default {
           this.isLoading = false
           }
       )
+    },
+    handleCancel() {
+      this.sale = {...this.order}
+      this.items = [...this.order.items]
+      this.$emit('update:visible', false)
     }
   },
 

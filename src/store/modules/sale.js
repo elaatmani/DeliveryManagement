@@ -20,9 +20,11 @@ export default {
         SET_SALES: (state, payload) => {
             state.sales = payload
         },
+
         SET_FETCHED: (state, payload) => {
             state.fetched = payload
         },
+
         UPDATE_SALE: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -33,6 +35,11 @@ export default {
                 }
             )
         },
+
+        ADD_SALE: (state, payload) => {
+            state.sales.unshift(payload)
+        },
+
         UPDATE_CONFIRMATION: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -44,6 +51,7 @@ export default {
                 }
             )
         },
+
         UPDATE_UPSELL: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -55,6 +63,7 @@ export default {
                 }
             )
         },
+
         UPDATE_AFFECTATION: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -72,6 +81,7 @@ export default {
                 }
             )
         },
+
         UPDATE_NOTE: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -83,6 +93,7 @@ export default {
                 }
             )
         },
+
         UPDATE_CONFIRMATION_WITH_NOTE: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -95,6 +106,7 @@ export default {
                 }
             )
         },
+
         UPDATE_DELIVERY: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -106,6 +118,7 @@ export default {
                 }
             )
         },
+
         RESET_SALES: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -132,30 +145,43 @@ export default {
         setSales: ({ commit }, payload) => {
             commit('SET_SALES', payload)
         },
+
         setFetched: ({ commit }, payload) => {
             commit('SET_FETCHED', payload)
         },
+
         update: ({ commit }, payload) => {
             commit('UPDATE_SALE', payload)
         },
+
+        add: ({ commit }, payload) => {
+            commit('ADD_SALE', payload)
+        },
+
         updateConfirmation: ({ commit }, payload) => {
             commit('UPDATE_CONFIRMATION', payload)
         },
+
         updateUpsell: ({ commit }, payload) => {
             commit('UPDATE_UPSELL', payload)
         },
+
         updateAffectation: ({ commit }, payload) => {
             commit('UPDATE_AFFECTATION', payload)
         },
+
         updateNote: ({ commit }, payload) => {
             commit('UPDATE_NOTE', payload)
         },
+
         updateConfirmationWithNote: ({ commit }, payload) => {
             commit('UPDATE_CONFIRMATION_WITH_NOTE', payload)
         },
+
         updateDelivery: ({ commit }, payload) => {
             commit('UPDATE_DELIVERY', payload)
         },
+
         resetSales: ({commit}, payload) => {
             commit('RESET_SALES', payload)
         }

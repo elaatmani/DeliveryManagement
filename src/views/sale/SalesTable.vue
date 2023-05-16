@@ -52,9 +52,6 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.fullname }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <SaleUpsell :sale="sale" :id="sale.id" :upsell="sale.upsell" :key="sale.upsell" />
-                    </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
                         <div class="tw-flex tw-items-center tw-justify-center">
                             <SaleConfirmation :class="sale.confirmation == 'reporter' && 'tw-mb-1'" :sale="sale" :id="sale.id" :confirmation="sale.confirmation" :key="sale.confirmation" />
@@ -126,7 +123,6 @@
 
 <script>
 import SaleConfirmation from '@/views/sale/partials/SaleConfirmation'
-import SaleUpsell from '@/views/sale/partials/SaleUpsell'
 import SaleAffectation from '@/views/sale/partials/SaleAffectation'
 import SaleDelivery from '@/views/sale/partials/SaleDelivery'
 import SaleActions from '@/views/sale/partials/SaleActions'
@@ -144,7 +140,7 @@ export default {
             default: []
         }
     },
-    components: { SaleConfirmation, SaleUpsell, SaleAffectation, SaleDelivery, SaleActions },
+    components: { SaleConfirmation, SaleAffectation, SaleDelivery, SaleActions },
 
     data() {
         return {
