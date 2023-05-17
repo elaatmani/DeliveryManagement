@@ -91,7 +91,7 @@ export default {
 
     mounted() {
         this.getCities();
-        !this.subscribed && this.subscribe();
+        // !this.subscribed && this.subscribe();
     }
 }
 </script>

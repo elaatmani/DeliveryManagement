@@ -7,7 +7,10 @@ let initialState = {
     permissions: !localStorage.getItem('permissions') ? [] : JSON.parse(localStorage.getItem('permissions')),
     users: [],
     agents: [],
-    deliveries: []
+    deliveries: [],
+    fetched: false,
+    fetchedRoles: false,
+
 }
 
 export default {
@@ -17,6 +20,9 @@ export default {
     state: initialState,
 
     getters: {
+
+        fetched: (state) => state.fetched,
+        fetchedRoles: (state) => state.fetchedRoles,
         isLoggedIn: (state) => state.isLoggedIn,
         permissions: (state) => state.permissions,
         user: (state) => state.user,
@@ -27,6 +33,12 @@ export default {
     },
 
     mutations: {
+        SET_FETCHED: (state, payload) => {
+            state.fetched = payload
+        },
+        SET_FETCHED_ROLES: (state, payload) => {
+            state.fetchedRoles = payload
+        },
         SET_IS_LOGGED_IN: (state, payload) => {
             localStorage.setItem('isLoggedIn', payload);
             state.isLoggedIn = payload
@@ -55,6 +67,12 @@ export default {
     },
 
     actions: {
+        setFetched: ({ commit }, payload) => {
+            commit('SET_FETCHED', payload)
+        },
+        setFetchedRoles: ({ commit }, payload) => {
+            commit('SET_FETCHED_ROLES', payload)
+        },
         setUser: ({ commit }, payload) => {
             commit('SET_USER', payload)
         },

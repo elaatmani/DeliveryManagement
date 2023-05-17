@@ -17,11 +17,11 @@
       </div>
     </div>
 
-    <div v-if="!isLoaded">
+    <div v-if="!fetched">
           <LoadingAnimation />
     </div>
 
-    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="fetched" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-flex">
         <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
@@ -111,6 +111,9 @@ export default {
   },
 
   computed: {
+    fetched() {
+      return this.$store.getters['user/fetched']
+    },
     users() {
       return this.$store.getters['user/users']
     },
@@ -162,17 +165,19 @@ export default {
         if(res?.data.code == "SHOW_ALL_USERS") {
             const users = res.data.data.users
             this.$store.dispatch('user/setUsers', users);
+            this.$store.dispatch('user/setFetched', true);
             console.log(res);
-            this.isLoaded = true
+            // this.isLoaded = true
           }
         }
         ).catch(this.$handleApiError)
     }
   },
   mounted() {
-    
     localStorage.removeItem('updatedUsers')
-    this.getUsers()
+    if(!this.fetched) {
+      this.getUsers()
+    }
 
     
   }

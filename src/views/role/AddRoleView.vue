@@ -21,9 +21,7 @@
             <v-row>
               <v-col class="!tw-py-2" cols="12" md="12">
                 <div class="md:tw-w-1/2 tw-w-full">
-                  <div class="mb-1 text-body-2 tw-text-zinc-700">
-                    Role Name
-                  </div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Role Name</div>
                   <v-text-field
                     :error="!formStatus.name.valid"
                     :hide-details="true"
@@ -36,27 +34,44 @@
                     color="primary-color"
                     density="compact"
                   ></v-text-field>
-                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.name.message }}</div>
+                  <div
+                    class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+                  >
+                    {{ formStatus.name.message }}
+                  </div>
                 </div>
               </v-col>
               <v-col cols="12">
                 <div>
                   <div class="mb-3 text-body-2 tw-text-zinc-700">
                     Select Permissions:
-                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-text-xs">{{ formStatus.permissions.message }}</div>
-
+                    <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-text-xs">
+                      {{ formStatus.permissions.message }}
+                    </div>
                   </div>
-                  <div class="tw-flex tw-flex-wrap tw-gap-2 tw-mt-5" >
-                    <div @click="handleClick(permission)" :class="{'!tw-bg-orange-500 !tw-text-white': selectedPermissions.includes(permission)}" class="tw-py-1 tw-px-2 tw-bg-gray-900/10 tw-text-gray-900 tw-rounded-lg tw-cursor-pointer" v-for="permission in permissions" :key="permission">{{ permission }}</div>
+                  <div class="tw-flex tw-flex-wrap tw-gap-2 tw-mt-5">
+                    <div
+                      @click="handleClick(permission)"
+                      :class="{
+                        '!tw-bg-orange-500 !tw-text-white':
+                          selectedPermissions.includes(permission),
+                      }"
+                      class="tw-py-1 tw-px-2 tw-bg-gray-900/10 tw-text-gray-900 tw-rounded-lg tw-cursor-pointer"
+                      v-for="permission in permissions"
+                      :key="permission"
+                    >
+                      <span>{{ permission }}</span>
+                      <!-- <span>{{ permission.description }}</span> -->
+                    </div>
                   </div>
                 </div>
               </v-col>
             </v-row>
           </v-col>
           <v-col cols="12" md="6">
-              <div v-if="show">
-                {{ selectedPermissions }}
-              </div>
+            <div v-if="show">
+              {{ selectedPermissions }}
+            </div>
           </v-col>
         </v-row>
       </div>
@@ -81,8 +96,8 @@
 
 <script>
 import User from "@/api/User";
-import { localUrl } from '@/config/config'
-import { validateName, validatePermissions } from '@/helpers/validators';
+import { localUrl } from "@/config/config";
+import { validateName, validatePermissions } from "@/helpers/validators";
 
 export default {
   data() {
@@ -91,7 +106,6 @@ export default {
       isFormReady: false,
       isLoading: false,
       show: false,
-      
 
       formStatus: {
         name: {
@@ -100,11 +114,11 @@ export default {
         },
         permissions: {
           valid: true,
-          message: ''
-        }
+          message: "",
+        },
       },
 
-      name: '',
+      name: "",
       permissions: [],
       selectedPermissions: [],
     };
@@ -123,37 +137,34 @@ export default {
       }
 
       this.isLoading = true;
-      User.createRole(
-        {
-          name: this.name,
-          permissions: this.selectedPermissions
-
-        }
-      )
+      User.createRole({
+        name: this.name,
+        permissions: this.selectedPermissions,
+      })
         .then((res) => {
-          if (res.data.code === 'ROLE_ADDED') {
+          if (res.data.code === "ROLE_ADDED") {
             this.$alert({
               type: "success",
               title: res.data.message,
-            })
+            });
 
             this.getRoles();
 
-            this.name = ''
-            this.selectedPermissions = []
+            this.name = "";
+            this.selectedPermissions = [];
           }
         })
         .catch((err) => {
-            this.$handleApiError(err);
+          this.$handleApiError(err);
           const res = err?.response?.data;
 
-          if (res?.code == 'VALIDATION_ERROR'){
-              for (let error in res.error) {
-                this.formStatus[error] = {
-                  valid: false,
-                  message: res.error[error][0],
-                };
-              }
+          if (res?.code == "VALIDATION_ERROR") {
+            for (let error in res.error) {
+              this.formStatus[error] = {
+                valid: false,
+                message: res.error[error][0],
+              };
+            }
           }
         })
         .finally(() => {
@@ -162,25 +173,29 @@ export default {
     },
 
     handleClick(permission) {
-      if(this.selectedPermissions.includes(permission)) {
-        this.selectedPermissions = this.selectedPermissions.filter(i => i !== permission)
+      if (this.selectedPermissions.includes(permission)) {
+        this.selectedPermissions = this.selectedPermissions.filter(
+          (i) => i !== permission
+        );
       } else {
-        this.selectedPermissions.push(permission)
+        this.selectedPermissions.push(permission);
       }
     },
 
     resetError(field) {
       this.formStatus[field] = {
         valid: true,
-        message: ''
-      }
+        message: "",
+      };
     },
 
     validate() {
-      this.formStatus.name = validateName(this.name, 'Name')
-      this.formStatus.permissions = validatePermissions(this.selectedPermissions)
+      this.formStatus.name = validateName(this.name, "Name");
+      this.formStatus.permissions = validatePermissions(
+        this.selectedPermissions
+      );
 
-      return this.formStatus.name.valid && this.formStatus.permissions.valid
+      return this.formStatus.name.valid && this.formStatus.permissions.valid;
     },
 
     getRoles() {
@@ -189,7 +204,7 @@ export default {
           if (res?.data.code == "SUCCESS") {
             const roles = res.data.data.roles;
             this.$store.dispatch("user/setRoles", roles);
-            this.isFormReady = true
+            this.isFormReady = true;
           }
         })
         .catch(this.$handleApiError);
@@ -200,10 +215,10 @@ export default {
     if (this.roles.length == 0) {
       await this.getRoles();
     } else {
-      this.isFormReady = true
+      this.isFormReady = true;
     }
 
-    this.permissions = this.$store.getters['user/permissions']
+    this.permissions = this.$store.getters["user/permissions"];
   },
 };
 </script>

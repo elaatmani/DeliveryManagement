@@ -305,7 +305,6 @@ export default {
       isFormReady: false,
       isLoading: false,
 
-      cities: [],
       city: 1,
 
       isMultipleProducts: false,
@@ -316,7 +315,6 @@ export default {
       deliveryCities: [
       ],
       
-      products: [],
       product: 0,
       selectedProducts: [],
 
@@ -364,9 +362,30 @@ export default {
     roles() {
       return this.$store.getters["user/roles"];
     },
+    rolesFetched() {
+      return this.$store.getters["user/fetchedRoles"];
+    },
+    
+    cities() {
+      return this.$store.getters['city/cities']
+    },
+    
+    citiesFetched() {
+      return this.$store.getters['city/fetched']
+    },
+
+    products() {
+      return this.$store.getters['product/products']
+    },
+
+    productsFethched() {
+      return this.$store.getters['product/fetched']
+    },
+
     isAgente() {
       return this.role === 2;
     },
+
     isDelivery() {
       return this.role === 3;
     },
@@ -498,30 +517,47 @@ export default {
     },
 
     getRoles() {
+      if(this.rolesFetched) {
+        return new Promise((resolve) => resolve())
+      }
+
       return User.roles()
         .then((res) => {
           if (res?.data.code == "SUCCESS") {
             const roles = res.data.data.roles;
             this.$store.dispatch("user/setRoles", roles);
+            this.$store.dispatch("user/setFetchedRoles", true);
           }
         })
         .catch(this.$handleApiError);
     },
-    getCities() {
-       return User.cities().then(
+
+    async getCities() {
+      if(this.citiesFetched) {
+        return new Promise((resolve) => resolve())
+      }
+
+      return User.cities().then(
           res => {
-            console.log(res.data);
-            this.cities = res.data.data
+            this.$store.dispatch('city/cities', res.data.data)
+            this.$store.dispatch('city/setFetched', true)
+
           }
         )
     },
-    getProducts() {
-        return Product.all().then(
-          res => {
-            this.products = res.data.data.products
-          },
-          err => this.$handleApiError(err)
-        )
+
+    async getProducts() {
+      if(this.productsFethched) {
+        return new Promise((resolve) => resolve());
+      }
+
+      return Product.all().then(
+        res => {
+          this.$store.dispatch('product/setProducts', res.data.data.products)
+          this.$store.dispatch('product/setFetched', true)
+        },
+        err => this.$handleApiError(err)
+      )
     }
   },
 

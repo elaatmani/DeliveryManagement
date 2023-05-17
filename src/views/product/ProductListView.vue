@@ -15,11 +15,11 @@
       </div>
     </div>
 
-    <div v-if="!isLoaded">
+    <div v-if="!fetched">
           <LoadingAnimation />
     </div>
 
-    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="fetched" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-flex">
         <v-btn @click="showFilters = !showFilters" icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white">
@@ -64,7 +64,6 @@ export default {
     return {
       localUrl,
       confirmations,
-      isLoaded: false,
       showFilters: false,
       date: null,
       search: '',
@@ -107,9 +106,15 @@ export default {
     }
   },
   computed: {
+
     products() {
       return this.$store.getters['product/products'];
     },
+
+    fetched() {
+      return this.$store.getters['product/fetched']
+    },
+
     filteredProducts() {
       const date = this.date;
       
@@ -140,13 +145,14 @@ export default {
       res => {
         if (res.data.code == 'SUCCESS') {
           this.$store.dispatch('product/setProducts', res.data.data.products)
+          this.$store.dispatch('product/setFetched', true)
         }
         
       },
       err => {
         this.$handleApiError(err)
       }
-    ).finally(() => this.isLoaded = true);
+    )
   }
 }
 </script>

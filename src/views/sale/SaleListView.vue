@@ -7,7 +7,7 @@
       </div>
 
       <!-- New Line -->
-      <div v-if="$can('create_sale') && isLoaded">
+      <div v-if="$can('create_sale') && fetched">
         <v-btn color="primary-color" @click="showPopup = true" variant="flat" class="text-capitalize">
           <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
           <span class="text-white">
@@ -19,11 +19,11 @@
 
     </div>
 
-    <div v-if="!isLoaded">
+    <div v-if="!fetched">
       <LoadingAnimation />
     </div>
 
-    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="fetched" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-border-b  tw-border-solid tw-pb-5 tw-border-neutral-200">
         <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
@@ -50,14 +50,6 @@
           </div>
 
         </div>
-        <!-- <v-row >
-            <v-col
-            cols="12" sm="6" md="3"
-            v-for="dash in filledDashItems"
-            :key="dash.id"
-            >
-            </v-col>
-        </v-row> -->
       </div>
 
       <div class="mb-5 tw-flex">
@@ -258,6 +250,9 @@ import Product from '@/api/Product'
       }
     },
     computed: {
+      fetched() {
+        return this.$store.getters['sale/fetched']
+      },
       users() {
         return this.$store.getters['user/users']
       },
@@ -408,7 +403,6 @@ import Product from '@/api/Product'
       },
 
       getSales() {
-        this.isLoaded = false
         return Sale.all().then(
           res => {
             if (res?.data.code == "SUCCESS") {
@@ -416,7 +410,6 @@ import Product from '@/api/Product'
               console.log(res.data);
               this.$store.dispatch('sale/setSales', sales)
               this.$store.dispatch('sale/setFetched', true)
-              this.isLoaded = true
             }
           }
         ).catch(this.$handleApiError)
@@ -435,14 +428,13 @@ import Product from '@/api/Product'
                 "product/setFetched",
                 true
               );
-
             }
           },
           (err) => {
             this.$handleApiError(err);
           }
         )
-        .finally(() => (this.isLoaded = true));
+        // .finally(() => (this.isLoaded = true));
     },
 
       getCities() {
@@ -477,6 +469,7 @@ import Product from '@/api/Product'
         }
       },
     },
+
     async mounted() {
 
       if (this.deliveries.length == 0) {
@@ -489,8 +482,12 @@ import Product from '@/api/Product'
         this.isLoaded = true
       }
 
-      this.getProducts()
-      this.getCities()
+      if(this.fetched) {
+        this.getProducts()
+        this.getCities()
+
+      }
+
     }
   }
 </script>

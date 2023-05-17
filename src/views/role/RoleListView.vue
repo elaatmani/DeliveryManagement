@@ -17,11 +17,11 @@
       </div>
     </div>
 
-    <div v-if="!isLoaded">
+    <div v-if="!fetched">
           <LoadingAnimation />
     </div>
 
-    <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+    <div v-if="fetched" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
       <div class="mb-5 tw-flex">
         <v-btn icon rounded="lg" variant="flat" size="small" color="primary-color" class="text-white !tw-w-0 !tw-overflow-hidden">
@@ -51,8 +51,6 @@ export default {
   data() {
     return {
       localUrl,
-      isLoaded: false,
-
       
       search: '',
       columns: 
@@ -82,6 +80,9 @@ export default {
     roles() {
       return this.$store.getters['user/roles']
     },
+    fetched() {
+      return this.$store.getters['user/fetchedRoles']
+    },
     filteredRoles() {
       return this.roles.filter(item => {
 
@@ -98,21 +99,23 @@ export default {
     }
   },
   methods: {
-    beforeFocus(e) {
-      e.preventDefault();
+    getRoles() {
+      return User.roles().then(
+        res => {
+          if(res?.data.code == "SUCCESS") {
+              const roles = res.data.data.roles;
+              this.$store.dispatch("user/setRoles", roles);
+              this.$store.dispatch("user/setFetchedRoles", true);
+            }
+          }
+          ).catch(this.$handleApiError)
     }
   },
   mounted() {
-
-    User.roles().then(
-      res => {
-        if(res?.data.code == "SUCCESS") {
-            const roles = res.data.data.roles
-            this.$store.dispatch('user/setRoles', roles);
-            this.isLoaded = true
-          }
-        }
-        ).catch(this.$handleApiError)
+    if(!this.rolesFetched) {
+      this.getRoles()
+    }
+    
   }
 }
 </script>

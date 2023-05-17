@@ -1,6 +1,7 @@
 // import {abilities} from "@/config/ability"
 
 let initialState = {
+    fetched: false,
     warehouses: []
 }
 
@@ -11,10 +12,14 @@ export default {
     state: initialState,
 
     getters: {
+        fetched: (state) => state.fetched,
         warehouses: (state) => state.warehouses
     },
 
     mutations: {
+        SET_FETCHED: (state, payload) => {
+            state.fetched = payload
+        },
         SET_WAREHOUSES: (state, payload) => {
             state.warehouses = payload
         },
@@ -35,6 +40,9 @@ export default {
     },
 
     actions: {
+        setFetched: ({ commit }, payload) => {
+            commit('SET_FETCHED', payload)
+        },
         setWarehouses: ({ commit }, payload) => {
             commit('SET_WAREHOUSES', payload)
         },
