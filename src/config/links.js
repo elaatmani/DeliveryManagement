@@ -120,6 +120,28 @@ export const links = [
 
     {
         id: 5,
+        module: 'factorisation',
+        title: 'Factorisation',
+        hasChildren: true,
+        gate: 'access_to_factorisations', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-note-multiple'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Factorisation list',
+                subModule: 'factorisation/list',
+                gate: 'show_all_factorisations',
+                to: '/factorisations'
+            },
+        ]
+    },
+
+
+    {
+        id: 6,
         module: 'order',
         title: 'Orders',
         hasChildren: true,
@@ -154,7 +176,7 @@ export const links = [
     },
 
     {
-        id: 6,
+        id: 7,
         module: 'delivery',
         title: 'Orders',
         hasChildren: true,
@@ -182,7 +204,7 @@ export const links = [
     },
 
     {
-        id: 7,
+        id: 8,
         module: 'inventory',
         title: 'Inventory',
         hasChildren: true,
@@ -217,7 +239,7 @@ export const links = [
     },
 
     {
-        id: 7,
+        id: 9,
         module: 'shop',
         title: 'Shop',
         hasChildren: true,
@@ -244,7 +266,7 @@ export const links = [
         ]
     },
     {
-        id: 12,
+        id: 10,
         module: 'warehouse',
         title: 'Warehouses',
         hasChildren: true,
@@ -264,7 +286,7 @@ export const links = [
         ]
     },
     {
-        id: 8,
+        id: 11,
         title: 'Users',
         module: 'user',
         gate: 'access_to_users',
@@ -306,7 +328,7 @@ export const links = [
     },
 
     {
-        id: 9,
+        id: 12,
         title: 'Settings',
         module: 'settings',
         to: '/settings',
