@@ -52,3 +52,20 @@ export default {
     font-family: $font-family, sans-serif !important;
   }
 </style>
+
+<style>
+.dp__action_select {
+  background: #f97316 !important;
+  padding: 10px 5px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dp__action_cancel {
+  padding: 10px 5px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

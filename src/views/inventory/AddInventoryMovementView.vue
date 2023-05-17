@@ -19,6 +19,7 @@
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery</div>
                   <div class="tw-relative">
                     <select
+                    :disabled="selectedVariations.length"
                     v-model="delivery"
                     class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-capitalize tw-rounded-lg tw-border tw-border-solid tw-cursor-pointer tw-border-neutral-400 focus:tw-border-orange-500"
                     >

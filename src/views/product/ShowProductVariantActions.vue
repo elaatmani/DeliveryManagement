@@ -4,7 +4,7 @@
         <v-icon color="white">mdi-eye</v-icon>
     </v-btn>
 
-    <ProductVariantDetails :visible="visible" @cancel="cancel" :source="source" />
+    <ProductVariantDetails :visible="visible" @cancel="cancel" :type="type" :source="source" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import ProductVariantDetails from '@/views/product/ProductVariantDetails'
 
 export default {
 
-    props: [ 'product', 'source' ],
+    props: [ 'product', 'source', 'type' ],
 
     components: {ProductVariantDetails},
 

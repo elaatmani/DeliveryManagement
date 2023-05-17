@@ -49,14 +49,29 @@
                   {{ item.color }}
                 </td>
                 <td class="tw-w-4 tw-p-4">
-                  <div class="tw-flex tw-items-center tw-gap-1">
+                  <div v-if="type == 'deliveries'">
+                    <div class=" tw-border-b tw-pb-1 tw-mb-1 tw-w-fit">
+                        <div class="tw-text-pink-400">
+                          Expidier: {{ item.expidier_quantity }}
+                        </div>
+                        <div class="tw-text-green-400">
+                          Livrer: {{ item.delivery_quantity }}
+                        </div>
+                        <div class="tw-text-orange-400 tw-flex tw-items-center tw-gap-2">
+                          <span>On Hand:</span>
+                          <span class="tw-text-emerald-500">{{ item.movements_confirmed_quantity }}</span>
+                          <span class="tw-text-black">/</span>
+                          <span class="tw-text-red-400">{{ item.movements_not_confirmed_quantity }}</span>
+                        </div>
+                    </div>
+                    <div class="tw-font-bold">
+                      Total: {{ item.left_quantity }}
+                    </div>
+                  </div>
+                  <div v-if="type == 'warehouses'" class="tw-flex tw-items-center tw-gap-1">
                     <span class="tw-text-green-500"
                       >{{ item.on_hand_quantity }}
                     </span>
-                    <!-- <span>/ {{ item.quantity }}</span>
-                    <span v-if="item.on_hold > 0">
-                      / <span class="tw-text-red-400">{{ item.on_hold }}</span>
-                    </span> -->
                   </div>
                 </td>
               </tr>
@@ -93,7 +108,7 @@
 
 <script>
 export default {
-  props: ["visible", "source"],
+  props: ["visible", "source", "type"],
 
   methods: {
     cancel() {
@@ -102,6 +117,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.type);
   }
 };
 </script>

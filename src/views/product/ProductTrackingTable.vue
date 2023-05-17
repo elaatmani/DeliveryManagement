@@ -42,12 +42,33 @@
               >
                 {{ item.name }}
               </th>
-              <td class="tw-px-6 tw-py-2 tw-text-emerald-500">
-                {{ get_total_quantity(item.product_variations) }}
+              <td class="tw-px-6 tw-py-2">
+                <div v-if="source == 'warehouses'" class="tw-text-emerald-500">
+                  {{ get_total_quantity(item.product_variations) }}
+                </div>
+                <div v-if="source == 'deliveries'">
+                  <div class=" tw-border-b tw-pb-1 tw-mb-1 tw-w-fit">
+                    <div class="tw-text-pink-400">
+                      Expidier: {{ get_total_quantity(item.product_variations, 'expidier_quantity') }}
+                    </div>
+                    <div class="tw-text-green-400">
+                      Livrer: {{ get_total_quantity(item.product_variations, 'delivery_quantity') }}
+                    </div>
+                    <div class="tw-text-orange-400 tw-flex tw-items-center tw-gap-2">
+                      <span>On Hand:</span>
+                      <span class="tw-text-emerald-500">{{ get_total_quantity(item.product_variations, 'movements_confirmed_quantity') }}</span>
+                      <span class="tw-text-black">/</span>
+                      <span class="tw-text-red-400">{{ get_total_quantity(item.product_variations, 'movements_not_confirmed_quantity') }}</span>
+                    </div>
+                  </div>
+                  <div class="tw-font-bold">
+                    Total: {{ get_total_quantity(item.product_variations, 'left_quantity') }}
+                  </div>
+                </div>
               </td>
                 <td  class="tw-flex tw-items-center tw-px-6 tw-py-2 tw-space-x-3">
                     <div>
-                        <ShowProductVariantActions  :source="item"  />
+                        <ShowProductVariantActions :type="source"  :source="item"  />
                     </div>
                 </td>
             </tr>
@@ -60,7 +81,7 @@
 <script>
 import ShowProductVariantActions from '@/views/product/ShowProductVariantActions'
 export default {
-    // source: ['warehouse', 'delivery'];
+    // source: ['warehouses', 'deliveries'];
     props: ['product', 'source'],
 
     components: {ShowProductVariantActions},
@@ -75,10 +96,10 @@ export default {
     },
 
     methods: {
-        get_total_quantity(variations) {
+        get_total_quantity(variations, type = 'on_hand_quantity') {
             let total = 0;
             variations.forEach(i => {
-                total += i.on_hand_quantity
+                total += i[type]
             });
 
             return total
@@ -86,7 +107,7 @@ export default {
     },
 
     mounted() {
-        console.log(this.product);
+        console.log(this.source);
     }
 };
 </script>
