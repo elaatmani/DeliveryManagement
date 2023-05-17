@@ -175,10 +175,7 @@ export default {
             prop: "client",
             name: "Client",
         },
-        {
-          prop: 'upsell',
-          name: 'Upsell',
-        },
+        
         {
           prop: 'confirmation',
           name: 'Confirmation',
@@ -190,10 +187,6 @@ export default {
         {
           prop: 'delivery',
           name: 'Delivery',
-        },
-        {
-            prop: "quantity",
-            name: "Qty",
         },
         {
             prop: 'price',
