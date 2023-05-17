@@ -5,15 +5,6 @@
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Expidation</h1>
       </div>
 
-      <!-- New Line -->
-      <div v-if="$can('create_sale') && isLoaded">
-        <v-btn color="primary-color" @click="showPopup = true" variant="flat" class="text-capitalize">
-          <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
-          <span class="text-white">
-            Add Sale
-          </span>
-        </v-btn>
-      </div>
 
 
     </div>

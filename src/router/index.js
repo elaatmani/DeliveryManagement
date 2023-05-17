@@ -12,6 +12,7 @@ import delivery from './routes/delivery'
 import inventory from './routes/inventory'
 import shop from './routes/shop'
 import warehouse from './routes/warehouse'
+import factorisation from './routes/factorisation'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -28,7 +29,8 @@ const routes = [
   inventory,
   shop,
   warehouse,
-
+  factorisation,
+  
   {
     name: 'default',
     path: '/test',
