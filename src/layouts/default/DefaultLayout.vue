@@ -27,13 +27,16 @@ import AppHeader from '@/layouts/default/partials/AppHeader'
 import AppSidebar from '@/layouts/default/partials/AppSidebar'
 import Alert from '@/components/AlertVue'
 import User from '@/api/User'
+import Pusher from 'pusher-js'
+import Echo from 'laravel-echo'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
 
     data() {
         return {
-            drawer: false
+            drawer: false,
+            subscribed: false,
         }
     },
 
@@ -59,11 +62,36 @@ export default {
                     }
                 )
             }
+        },
+
+        subscribe() {
+            // const Pusher = window.Pusher
+            console.log(Pusher);
+
+            const echo = new Echo({
+                broadcaster: 'pusher',
+                key: 'ABCDEFG',
+                wsHost: '127.0.0.1',
+                wsPort: 6001,
+                forceTLS: false,
+                disableStats: true,
+                cluster: 'mt1'
+            });
+
+            window.Echo = echo;
+
+            echo.channel('notification')
+            .listenToAll(   (e) => {
+                console.log(e);
+            })
+
+            this.subscribed = true
         }
     },
 
     mounted() {
-        this.getCities()
+        this.getCities();
+        !this.subscribed && this.subscribe();
     }
 }
 </script>
