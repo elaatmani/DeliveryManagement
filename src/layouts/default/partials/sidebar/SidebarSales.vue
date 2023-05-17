@@ -112,10 +112,10 @@ export default {
             },
             {
                 id: 3,
-                title: 'Scanner',
-                subModule: 'sale/scanner',
+                title: 'Shipping',
+                subModule: 'sale/shipping',
                 gate: 'show_all_expidations',
-                to: '/sales/scanner'
+                to: '/sales/shipping'
             }
         ]
     },
@@ -175,7 +175,9 @@ export default {
 
   mounted() {
     this.isActive = this.isLinkActive();
-    this.getSales();
+    if(this.$can(this.link.gate) || this.link.gate == 'all'){
+      this.getSales();
+    }
   }
 };
 </script>

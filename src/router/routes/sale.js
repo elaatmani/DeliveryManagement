@@ -4,8 +4,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 // Views
 import SaleListView from '@/views/sale/SaleListView'
 import SaleExpidationView from '@/views/sale/SaleExpidationView'
-import SaleScannerView from '@/views/sale/SaleScannerView'
-
+import SaleShippingView from '@/views/sale/SaleShippingView'
 
 
 export default 
@@ -43,16 +42,17 @@ export default
                 }
             },
             { 
-                name: 'sale/scanner',
-                path: 'scanner',
-                component: SaleScannerView,
+                name: 'sale/shipping',
+                path: 'shipping',
+                component: SaleShippingView,
                 meta: {
                     module: 'sale',
-                    subModule: 'sale/scanner',
-                    title: 'Scanner',
+                    subModule: 'sale/shipping',
+                    title: 'Expidation',
                     gate: 'show_all_expidations'
                 }
-            },
+            }
+        
 
         ]
     }
