@@ -1,6 +1,6 @@
-export const path = 'api/products'
-export const method = 'get'
+export const path = 'api/orders/update/delivery/2'
+export const method = 'post'
 
 export default {
-   name:"Zahlane"
+   delivery:"expidier"
 }

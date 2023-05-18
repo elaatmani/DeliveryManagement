@@ -56,7 +56,7 @@
                     </div>
                     <div class="tw-text-orange-400 tw-flex tw-items-center tw-gap-2">
                       <span>On Hand:</span>
-                      <span class="tw-text-emerald-500">{{ get_total_quantity(item.product_variations, 'movements_confirmed_quantity') }}</span>
+                      <span class="tw-text-orange-400">{{ get_total_quantity(item.product_variations, 'movements_confirmed_quantity') }}</span>
                       <span class="tw-text-black">/</span>
                       <span class="tw-text-red-400">{{ get_total_quantity(item.product_variations, 'movements_not_confirmed_quantity') }}</span>
                     </div>
