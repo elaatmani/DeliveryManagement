@@ -14,7 +14,7 @@
 
       <div v-if="orders.length > 0" class="tw-grid tw-grid-cols-12 tw-gap-5">
         <div v-for="order in filteredOrders" :key="order.id" class="tw-col-span-12 md:tw-col-span-4">
-          <OrderCard :order="order" />
+          <OrderCard :order="order" :key="order.id" />
         </div>
         
       </div>

@@ -1,11 +1,14 @@
 <template>
   <v-card
-    class="mx-auto tw-border-dashed !tw-shadow-lg !tw-shadow-gray-100/70"
+    class="tw-mx-auto tw-relative tw-border-dashed !tw-shadow-lg !tw-shadow-gray-100/70"
     :class="[!!order.note && 'tw-border-pink-00', order.delivery == 'livrer' && 'tw-border-emerald-400']"
     flat
     border
     
   >
+  <div class="tw-absolute tw-top-0 tw-right-0 tw-py-1 tw-px-2 tw-rounded-bl tw-text-xs" :class="[delivery?.bg, delivery?.text]">
+    {{ order.delivery }}
+  </div>
     <v-card-item>
 
         <template v-slot:title>
@@ -152,12 +155,14 @@
 
 <script>
 import OrderCardDelivery from '@/views/delivery/partials/OrderCardDelivery'
+import { deliveryStatus } from '@/config/orders'
   export default {
-
+    
     components: {OrderCardDelivery},
     props: ['order'],
 
     data: () => ({
+      deliveryStatus,
       expand: false,
       confirmPopup: false,
       labels: [
@@ -165,5 +170,17 @@ import OrderCardDelivery from '@/views/delivery/partials/OrderCardDelivery'
         { name: 'Date', field: 'created_at', icon: 'mdi-calendar' },
       ],
     }),
+
+    computed: {
+      delivery() {
+        return this.getDeliveryStatus(this.order.delivery)
+      }
+    },
+
+    methods: {
+      getDeliveryStatus(value) {
+          return this.deliveryStatus.find(i => i.value == value) || this.deliveryStatus[0]
+      }
+    }
   }
 </script>

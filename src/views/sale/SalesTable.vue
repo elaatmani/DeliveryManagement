@@ -40,13 +40,22 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ sale.city }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        <div>
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-pb-2">
                             <ul>
                                 <li v-for="i in sale.items" :key="i.id" class="tw-font-bold">
                                     - <span class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs" >{{i.quantity}} X </span>{{  i.product.name }} | {{ i.product_variation.size }} / {{ i.product_variation.color }} 
                                 </li>
                             </ul>
+                            <div class="tw-absolute tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-text-xs">
+                            <p v-if="sale.counts_from_warehouse" class=" tw-bg-emerald-500/10 tw-text-emerald-500 tw-px-2 tw-rounded-t" >
+                                warehouse
+                            </p>
+                            <p v-if="!sale.counts_from_warehouse" class=" tw-bg-blue-500/10 tw-text-blue-500 tw-px-2 tw-rounded-t">
+                                delivery
+                            </p>
+                            
+                            </div>
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">

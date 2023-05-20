@@ -175,7 +175,9 @@ export default {
 
   mounted() {
     this.isActive = this.isLinkActive();
-    this.getSales();
+    if(this.$can(this.link.gate)) {
+      this.getSales();
+    }
   }
 };
 </script>

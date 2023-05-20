@@ -51,6 +51,7 @@ export default {
             note: '',
             selectedId: 0,
             allOptions: deliveryStatus,
+            disabled: ['expidier', 'annuler', 'dispatch'],
             showPopupReporter:false
         }
     },

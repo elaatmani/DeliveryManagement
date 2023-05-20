@@ -126,7 +126,20 @@
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
-          <div class="md:tw-col-span-12 tw-col-span-12">
+          <div class="md:tw-col-span-6 tw-col-span-12">
+            <div class="tw-flex tw-items-center tw-w-full tw-text-neutral-600 dark:tw-text-neutral-200 tw-text-md tw-py-1">
+                <label class="tw-relative tw-inline-flex tw-items-center tw-cursor-pointer tw-w-fit  -tw-rotate-90 tw-scale-75">
+                    <input type="checkbox" v-model="sale.counts_from_warehouse" class="tw-sr-only tw-peer">
+                    <div class="tw-w-11 tw-h-6 tw-bg-gray-200 peer-focus:tw-outline-none  tw-rounded-full tw-peer dark:tw-bg-neutral-600 peer-checked:after:tw-translate-x-full peer-checked:after:tw-border-white after:tw-content-[''] after:tw-absolute after:tw-top-[2px] after:tw-left-[2px] after:tw-bg-white after:tw-border-gray-300 after:tw-border after:tw-rounded-full after:tw-h-5 after:tw-w-5 after:tw-transition-all dark:tw-border-gray-600"></div>
+                </label>
+                <label class="tw-flex tw-flex-col tw-justify-center">
+
+                    <span :class="[sale.counts_from_warehouse ? 'tw-text-orange-500' : 'tw-text-neutral-500']" class="tw-ml-1 tw-text-sm tw-font-medium tw-duration-300">Warehouse</span>
+                    <span :class="[!sale.counts_from_warehouse ? 'tw-text-orange-500' : 'tw-text-neutral-500']" class="tw-ml-1 tw-text-sm tw-font-medium tw-duration-300">Delivery</span>
+                </label>
+            </div>
+          </div>
+          <div class="md:tw-col-span-6 tw-col-span-12">
             <button @click="addItem" class="tw-block tw-ml-auto tw-py-1 tw-px-4 tw-rounded tw-bg-emerald-500 tw-text-white">
               Add
             </button>
@@ -256,6 +269,7 @@ export default {
         adresse: "",
         price: 0,
         upsell: null,
+        counts_from_warehouse: false,
       },
     };
   },
@@ -374,6 +388,7 @@ export default {
         price: this.sale.price,
         adresse: this.sale.adresse,
         upsell: this.sale.upsell,
+        counts_from_warehouse: this.sale.counts_from_warehouse,
         orderItems: this.items
       }
 
@@ -414,6 +429,8 @@ export default {
   mounted() {
     this.sale = {...this.order}
     this.items = [...this.order.items]
+
+    console.log(this.sale.counts_from_warehouse);
   },
 };
 </script>

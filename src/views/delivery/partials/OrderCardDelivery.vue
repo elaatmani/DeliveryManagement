@@ -5,7 +5,7 @@
             <div class="tw-px-5 tw-pt-5">
                 <h1 class="tw-font-bold tw-text-gray-600">Select Status</h1>
                 <div class="tw-mt-3 tw-flex tw-gap-3 tw-flex-wrap">
-                    <button @click="delivery = d.id" v-for="d in deliveryStatus" :key="d.value" :class="[d.text, d.bg, d.id == delivery  && [d.ring, 'tw-ring']]"
+                    <button :disabled="isDisabled(d)" @click="handleChange(d)" v-for="d in deliveryStatus" :key="d.value" :class="[isDisabled(d) && 'tw-saturate-0', d.text, d.bg, d.id == delivery  && [d.ring, 'tw-ring']]"
                         class="tw-px-4 tw-py-2 tw-rounded"
                     >
                         {{ d.name }}
@@ -39,6 +39,7 @@ export default {
 
     data: () => ({
         status: deliveryStatus,
+        disabled: ['expidier', 'annuler', 'dispatch'],
         delivery: 2,
         isLoading: false,
         note: '',
@@ -58,9 +59,7 @@ export default {
     watch: {
         order: {
             handler(newValue) {
-                console.log('order changed: ', newValue);
                 this.delivery = this.getDeliveryId(newValue.delivery)
-                console.log(this.getDeliveryId(newValue.delivery));
             },
             deep: true,
             immediate: true,
@@ -69,7 +68,17 @@ export default {
 
     methods: {
         cancel() {
+            this.getCurrentStatus()
             this.$emit('cancel')
+        },
+
+        isDisabled(v) {
+            return this.disabled.includes(v.value)
+        },
+
+        handleChange(delivery) {
+            if(this.isDisabled(delivery)) return false;
+            this.delivery = delivery.id;
         },
 
         handleConfirm() {
@@ -122,8 +131,16 @@ export default {
 
         getDeliveryId(value) {
             return this.status.find(i => i.value == value).id || 0
-        } 
+        },
+        
+        getCurrentStatus() {
+            this.delivery = this.getDeliveryId(this.order.delivery)
+        }
     },
+
+    mounted() {
+        this.getCurrentStatus()
+    }
 
 }
 </script>
