@@ -9,6 +9,8 @@ import city from './modules/city'
 import shop from './modules/shop'
 import notification from './modules/notification'
 import warehouse from './modules/warehouse'
+import factorisation from './modules/factorisation'
+
 
 export default createStore({
   state: {
@@ -29,6 +31,7 @@ export default createStore({
     city,
     shop,
     notification,
-    warehouse
+    warehouse,
+    factorisation
   }
 })

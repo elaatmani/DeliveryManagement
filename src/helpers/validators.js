@@ -58,6 +58,28 @@ export function validateName(value, fieldName = 'This field') {
 }
 
 
+export function validateNumber(value, fieldName = 'This field') {
+    if (!value) {
+        return {
+            valid: false,
+            message: `${fieldName} is required`
+        }
+    }
+
+    if (isNaN(value)) {
+        return {
+            valid: false,
+            message: `${fieldName} must be a valid number`
+        }
+    }
+
+    return {
+        valid: true
+    }
+}
+
+
+
 export function validateConfirmPassword(password, confirmPasswrd) {
     if(!password) {
         return {

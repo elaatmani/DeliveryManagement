@@ -19,7 +19,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr v-for="warehouse in warehouses" :key="warehouse.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                  <tr v-for="factorisation in factorisations" :key="factorisation.id" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
                       <td class="tw-w-4 tw-p-4">
                           <div class="tw-flex tw-items-center">
                               <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
@@ -27,17 +27,38 @@
                           </div>
                       </td>
                       <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
-                          {{ warehouse.id }}
+                          {{ factorisation.id }}
                       </th>
                       <td class="tw-px-6 tw-py-4">
-                          {{ warehouse.name }}
-                      </td>            
+                          {{ factorisation.factorisation_id }}
+                      </td>  
                       <td class="tw-px-6 tw-py-4">
-                          {{ warehouse.created_at.split('T')[0] }}
+                          {{ factorisation.delivery_id }}
                       </td>
-                      <!-- <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
-                          <WarehouseActions :warehouse="warehouse" />
-                      </td> -->
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.commands_number }}
+                      </td>
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.price }}
+                      </td>
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.close_at }}
+                      </td> 
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.paid_at }}
+                      </td> 
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.close }}
+                      </td>
+                      <td class="tw-px-6 tw-py-4">
+                        {{ factorisation.paid }}
+                      </td>         
+                      <td class="tw-px-6 tw-py-4">
+                          {{ factorisation.created_at.split('T')[0] }}
+                      </td>
+                      <td class="tw-flex tw-items-center tw-px-6 tw-py-4 tw-space-x-3">
+                          <FactorisationActions :factorisation="factorisation" />
+                      </td>
                   </tr>
                   
               </tbody>
@@ -53,7 +74,7 @@
                   </select>
               </div>
               <div class="tw-col-span-12 md:tw-col-span-6 d-flex tw-justify-end tw-flex-wrap align-center">
-                  <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  warehouses.length : nextRange) }} of {{  warehouses.length }} items </div>
+                  <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  factorisations.length : nextRange) }} of {{  factorisations.length }} items </div>
                   <div>
                   <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
                       <span class="tw-text-white">{{ n }}</span>
@@ -67,11 +88,11 @@
   </template>
   
   <script>
-//   import WarehouseActions from '@/views/warehouse/partials/WarehouseActions'
+  import FactorisationActions from '@/views/factorisation/partials/FactorisationActions'
   
   export default {
-      props: [ 'columns', 'warehouses' ],
-      components: {  },
+      props: [ 'columns', 'factorisations' ],
+      components: { FactorisationActions },
   
       data() {
           return {
@@ -90,10 +111,10 @@
               return (this.currentPage) * this.paginationLimit
           },
           pageCount() {
-              return Math.ceil(this.warehouses.length / this.paginationLimit)
+              return Math.ceil(this.factorisations.length / this.paginationLimit)
           },
           items() {
-              return this.warehouses.slice(this.prevRange, this.nextRange)
+              return this.factorisations.slice(this.prevRange, this.nextRange)
           }
       },
   

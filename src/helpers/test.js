@@ -1,5 +1,5 @@
-export const path = 'api/orders/update/delivery/2'
-export const method = 'post'
+export const path = 'api/factorisations'
+export const method = 'get'
 
 export default {
    delivery:"expidier"
