@@ -86,7 +86,7 @@
           },
           {
               prop: "close_at",
-              name: "Closing at",
+              name: "Closed at",
           },
           {
               prop: "paid_at",

@@ -24,24 +24,33 @@
             {{ factorisation.price }}
         </td>
         <td class="tw-px-6 tw-py-4">
-            {{ factorisation.close_at }}
+            {{ factorisation.close_at?.split("T")[0] }}
         </td>
         <td class="tw-px-6 tw-py-4">
-            {{ factorisation.paid_at }}
-        </td>
-        <td class="tw-px-6 tw-py-4">
-            {{ factorisation.close }}
+            {{ factorisation.paid_at?.split("T")[0] }}
         </td>
         <td class="tw-px-6 tw-py-4">
             <div
                 class="tw-flex tw-items-center tw-w-full tw-text-neutral-600 dark:tw-text-neutral-200 tw-text-md tw-py-1">
                 <label class="tw-relative tw-inline-flex tw-items-center tw-cursor-pointer tw-w-fit tw-scale-75">
-                    <input :disabled="isLoading" v-model="paid" type="checkbox" class="tw-sr-only tw-peer" />
+                    <input :disabled="isLoadingClose" v-model="close" type="checkbox" class="tw-sr-only tw-peer" />
                     <div
-                        class="peer-checked:tw-bg-emerald-500 tw-w-11 tw-h-6 tw-bg-gray-200 peer-focus:tw-outline-none tw-rounded-full tw-peer dark:tw-bg-neutral-600 peer-checked:after:tw-translate-x-full peer-checked:after:tw-border-white after:tw-content-[''] after:tw-absolute after:tw-top-[2px] after:tw-left-[2px] after:tw-bg-white after:tw-border-gray-300 after:tw-border after:tw-rounded-full after:tw-h-5 after:tw-w-5 after:tw-transition-all dark:tw-border-gray-600">
-                        <v-icon color="green">mdi-loading</v-icon>
+                        class="tw-flex tw-items-center peer-checked:tw-bg-emerald-500 tw-w-11 tw-h-6 tw-bg-gray-200 peer-focus:tw-outline-none tw-rounded-full tw-peer dark:tw-bg-neutral-600 peer-checked:after:tw-translate-x-full peer-checked:after:tw-border-white after:tw-content-[''] after:tw-absolute after:tw-top-[2px] after:tw-left-[2px] after:tw-bg-white after:tw-border-gray-300 after:tw-border after:tw-rounded-full after:tw-h-5 after:tw-w-5 after:tw-transition-all dark:tw-border-gray-600">
                     </div>
                 </label>
+                <v-icon v-if="isLoadingClose" color="green" size="small" class="tw-animate-spin">mdi-loading</v-icon>
+            </div>
+        </td>
+        <td class="tw-px-6 tw-py-4">
+            <div
+                class="tw-flex tw-items-center tw-w-full tw-text-neutral-600 dark:tw-text-neutral-200 tw-text-md tw-py-1">
+                <label class="tw-relative tw-inline-flex tw-items-center tw-cursor-pointer tw-w-fit tw-scale-75">
+                    <input :disabled="isLoadingPaid" v-model="paid" type="checkbox" class="tw-sr-only tw-peer" />
+                    <div
+                        class="tw-flex tw-items-center peer-checked:tw-bg-emerald-500 tw-w-11 tw-h-6 tw-bg-gray-200 peer-focus:tw-outline-none tw-rounded-full tw-peer dark:tw-bg-neutral-600 peer-checked:after:tw-translate-x-full peer-checked:after:tw-border-white after:tw-content-[''] after:tw-absolute after:tw-top-[2px] after:tw-left-[2px] after:tw-bg-white after:tw-border-gray-300 after:tw-border after:tw-rounded-full after:tw-h-5 after:tw-w-5 after:tw-transition-all dark:tw-border-gray-600">
+                    </div>
+                </label>
+                <v-icon v-if="isLoadingPaid" color="green" size="small" class="tw-animate-spin">mdi-loading</v-icon>
             </div>
         </td>
         <td class="tw-px-6 tw-py-4">
@@ -61,7 +70,8 @@
 
         data() {
            return {
-              isLoading:false
+              isLoadingPaid:false,
+              isLoadingClose:false,
            };
         },
 
@@ -73,20 +83,44 @@
               set(v){
                 this.updatePaid(v)
               }
+           },
+           close: {
+            get() {
+                return this.factorisation.close
+            },
+            set(v){
+                this.updateClose(v)
+              }
            }
         },
 
         methods: {
             updatePaid(value){
-                this.isLoading = true
+                this.isLoadingPaid = true
                 Factorisation.updatePaid(this.factorisation.id , value).then(
                     (response) => {
-                        this.$store.dispatch('fatorisation/update', response.data.data.factorisation)
+                        if(response.data.code == 'FACTORISATION_UPDATED') {
+                            this.$store.dispatch('factorisation/update', response.data.data.factorisation)
+                        }
 
                     },
                     this.$handleApiError
                 ).finally(()=>{
-                    this.isLoading = false
+                    this.isLoadingPaid = false
+                })
+            },
+            updateClose(value){
+                this.isLoadingClose = true
+                Factorisation.updateClose(this.factorisation.id , value).then(
+                    (response) => {
+                        if(response.data.code == 'FACTORISATION_UPDATED') {
+                            this.$store.dispatch('factorisation/update', response.data.data.factorisation)
+                        }
+
+                    },
+                    this.$handleApiError
+                ).finally(()=>{
+                    this.isLoadingClose = false
                 })
             }
         },

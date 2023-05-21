@@ -28,6 +28,13 @@ class Factorisation {
         });
     }
 
+    async updateClose(id , close) {
+        await Csrf.getCookie();
+        return Api.post('api/factorisations/update/closing/' + id, {
+            close: close
+        });
+    }
+
     async all() {
         await Csrf.getCookie();
         return Api.get('api/factorisations');

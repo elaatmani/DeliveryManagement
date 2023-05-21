@@ -34,7 +34,8 @@
               :error="!formStatus.delivery_id.valid"
               @keyup="resetError('delivery_id')"
               :hide-details="true"
-              v-model="Factorisation.delivery_id"
+              :disabled="true"
+              v-model="deliveryName"
               clearable
               disable
               clear-icon="mdi-close"
@@ -55,6 +56,7 @@
               @keyup="resetError('price')"
               :hide-details="true"
               v-model="Factorisation.price"
+              :disabled="true"
               clearable
               clear-icon="mdi-close"
               class="tw-w-full"
@@ -71,6 +73,7 @@
             <div class="mb-1 text-body-2 tw-text-zinc-700">Nb Commands</div>
             <v-text-field
               :error="!formStatus.commands_number.valid"
+              :disabled="true"
               @keyup="resetError('commands_number')"
               :hide-details="true"
               v-model="Factorisation.commands_number"
@@ -155,7 +158,16 @@ export default {
     };
   },
 
-  computed: {},
+  computed: {
+    deliveryName: {
+      get() {
+        return this.Factorisation.delivery.firstname + ' ' + this.Factorisation.delivery.lastname
+      },
+      set(v) {
+        console.log(v);
+      }
+    }
+  },
 
   methods: {
     update() {
