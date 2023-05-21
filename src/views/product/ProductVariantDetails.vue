@@ -34,47 +34,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                v-for="item in source.product_variations"
-                :key="item.id"
-                class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
-              >
-                <td class="tw-w-4 tw-p-4">
-                  {{ item.id }}
-                </td>
-                <td class="tw-w-4 tw-p-4">
-                  {{ item.size }}
-                </td>
-                <td class="tw-w-4 tw-p-4">
-                  {{ item.color }}
-                </td>
-                <td class="tw-w-4 tw-p-4">
-                  <div v-if="type == 'deliveries'">
-                    <div class=" tw-border-b tw-pb-1 tw-mb-1 tw-w-fit">
-                        <div class="tw-text-pink-400">
-                          Expidier: {{ item.expidier_quantity }}
-                        </div>
-                        <div class="tw-text-green-400">
-                          Livrer: {{ item.delivery_quantity }}
-                        </div>
-                        <div class="tw-text-orange-400 tw-flex tw-items-center tw-gap-2">
-                          <span>On Hand:</span>
-                          <span class="tw-text-orange-400">{{ item.movements_confirmed_quantity }}</span>
-                          <span class="tw-text-black">/</span>
-                          <span class="tw-text-red-400">{{ item.movements_not_confirmed_quantity }}</span>
-                        </div>
-                    </div>
-                    <div class="tw-font-bold">
-                      Total: {{ item.left_quantity }}
-                    </div>
-                  </div>
-                  <div v-if="type == 'warehouses'" class="tw-flex tw-items-center tw-gap-1">
-                    <span class="tw-text-green-500"
-                      >{{ item.on_hand_quantity }}
-                    </span>
-                  </div>
-                </td>
-              </tr>
+              <ProductVariantDetailsRow  v-for="item in source.product_variations" :key="item.id" :item="item" :type="type" />
             </tbody>
           </table>
 
@@ -107,8 +67,10 @@
 </template>
 
 <script>
+import ProductVariantDetailsRow from '@/views/product/ProductVariantDetailsRow'
 export default {
   props: ["visible", "source", "type"],
+  components: {ProductVariantDetailsRow},
 
   methods: {
     cancel() {
@@ -117,8 +79,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.type);
-  }
+  },
 };
 </script>
 
