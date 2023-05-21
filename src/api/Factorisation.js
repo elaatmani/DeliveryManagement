@@ -16,9 +16,15 @@ class Factorisation {
 
     async updateComment(id , factorisation) {
         await Csrf.getCookie();
-        
         return Api.post('api/factorisations/update/comment/' + id, {
             comment: factorisation.comment
+        });
+    }
+
+    async updatePaid(id , paid) {
+        await Csrf.getCookie();
+        return Api.post('api/factorisations/update/payment/' + id, {
+            paid: paid
         });
     }
 
