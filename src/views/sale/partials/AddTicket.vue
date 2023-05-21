@@ -62,6 +62,7 @@ export default {
       doc.text("Vldo", 3, 7);
       doc.line(1, 10, 99, 10);
 
+      const items = order.items.map(i => `${i.product.name}|${i.product_variation.color}|${i.product_variation.size} x ${i.quantity}`);
 
       autoTable(doc, {
         theme: 'grid',
@@ -77,6 +78,7 @@ export default {
           ["Adresse: ", order.adresse ],
           ["Ville: ", order.city ],
           ["Date d'envoi: ", `${day}-${month}-${year}` ],
+          ["Marchandise: ", items.join('\n')],
         ],
 
         styles: {
