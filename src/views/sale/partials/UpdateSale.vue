@@ -430,7 +430,6 @@ export default {
     this.sale = {...this.order}
     this.items = [...this.order.items]
 
-    console.log(this.sale.counts_from_warehouse);
   },
 };
 </script>
