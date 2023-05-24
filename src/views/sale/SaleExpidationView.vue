@@ -79,125 +79,13 @@
       </div>
       <div
         class="tw-max-h-0 tw-duration-500 tw-overflow-hidden"
-        :class="{ '!tw-max-h-[500px]': showFilters }"
+        :class="{ '!tw-max-h-[1000px] !tw-overflow-visible': showFilters }"
       >
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4">
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Upsell</span>
-            <div class="tw-relative">
-              <select
-                v-model="upsellFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option value="all">Select</option>
-                <option value="oui">Oui</option>
-                <option value="non">Non</option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Confirmation</span>
-            <div class="tw-relative">
-              <select
-                v-model="confirmationFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option
-                  v-for="c in confirmations"
-                  :key="c.id"
-                  :value="!c.value ? 'all' : c.value"
-                >
-                  {{ c.name }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Affecté</span>
-            <div class="tw-relative">
-              <select
-                v-model="affectationFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option value="all">Select</option>
-                <option :value="null">Without delivery</option>
-                <option
-                  :value="delivery.id"
-                  :key="delivery.id"
-                  v-for="delivery in deliveries"
-                >
-                  {{ delivery.firstname }} {{ delivery.lastname }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Agente</span>
-            <div class="tw-relative">
-              <select
-                v-model="agenteFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option value="all">Select</option>
-                <option :value="null">Without agente</option>
-                <option
-                  :value="agente.id"
-                  :key="agente.id"
-                  v-for="agente in agentes"
-                >
-                  {{ agente.firstname }} {{ agente.lastname }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Delivery</span>
-            <div class="tw-relative">
-              <select
-                v-model="deliveryFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option
-                  :value="!delivery.value ? 'all' : delivery.value"
-                  :key="delivery.id"
-                  v-for="delivery in deliveryStatus"
-                >
-                  {{ !delivery.value ? "Select" : delivery.value }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-        </div>
+        <IndexFilter
+          :sales="sales"
+          :search="search"
+          v-model:filtered="filteredSales"
+        />
       </div>
       <div class="">
         <SalesTable
@@ -226,10 +114,11 @@ import Sale from "@/api/Sale";
 import User from "@/api/User";
 import AddSale from "@/views/sale/partials/AddSale";
 import AddTicket from "@/views/sale/partials/AddTicket";
+import IndexFilter from "@/views/sale/filters/IndexFilter";
 import { confirmations, deliveryStatus } from "@/config/orders";
 
 export default {
-  components: { SalesTable, AddSale, AddTicket },
+  components: { SalesTable, AddSale, AddTicket, IndexFilter },
   data() {
     return {
       localUrl,
@@ -237,13 +126,9 @@ export default {
       deliveryStatus,
       isLoaded: false,
       showFilters: false,
-      confirmationFilter: "all",
-      affectationFilter: "all",
-      upsellFilter: "all",
-      deliveryFilter: "all",
-      agenteFilter: "all",
       search: "",
       isButtonDisabled: true,
+      filteredSales: [],
 
       selected: [],
 
@@ -272,115 +157,6 @@ export default {
     },
     cities() {
       return this.$store.getters["city/cities"];
-    },
-    newSales() {
-      return {
-        id: 1,
-        title: "New",
-        value: this.sales.filter(
-          (i) => !i.confirmation || i.confirmation == "new"
-        ).length,
-        // value: 35,
-        color: "primary-green",
-        icon: "mdi mdi-new-box",
-      };
-    },
-    toProcess() {
-      return {
-        id: 2,
-        title: "Process",
-        value: this.sales.filter(
-          (i) =>
-            !!i.confirmation &&
-            !["confirmer", "livre", "expidier"].includes(i.confirmation)
-        ).length,
-        // value: 231,
-        color: "primary-orange",
-        icon: "mdi-reload",
-      };
-    },
-    confirmedSales() {
-      return {
-        id: 3,
-        title: "Confirmed",
-        value: this.sales.filter((i) => i.confirmation == "confirmer").length,
-        // value: 112,
-        color: "deep-purple-accent-2",
-        icon: "mdi-phone-check",
-      };
-    },
-    deliveredSales() {
-      return {
-        id: 4,
-        title: "Delivered",
-        value: this.sales.filter((i) => i.delivery == "livrer").length,
-        // value: 412,
-        color: "primary-blue",
-        icon: "mdi-account-check-outline",
-      };
-    },
-    shippedSales() {
-      return {
-        id: 5,
-        title: "Shipped",
-        value: this.sales.filter((i) => i.delivery == "expidier").length,
-        // value: 112,
-        color: "red",
-        icon: "mdi-truck",
-      };
-    },
-    filteredSales() {
-      const confirmationFilter = this.confirmationFilter;
-      const affectationFilter = this.affectationFilter;
-      const upsellFilter = this.upsellFilter;
-      const deliveryFilter = this.deliveryFilter;
-      const agenteFilter = this.agenteFilter;
-
-      return this.sales.filter((item) => {
-        // filter by confirmation
-        if (
-          confirmationFilter !== "all" &&
-          item.confirmation !== confirmationFilter
-        ) {
-          return false;
-        }
-
-        // filter by affectation
-        if (
-          affectationFilter !== "all" &&
-          parseInt(item.affectation) !== parseInt(affectationFilter)
-        ) {
-          return false;
-        }
-
-        // filter by upsell
-        if (upsellFilter !== "all" && item.upsell != upsellFilter) {
-          return false;
-        }
-
-        // filter by delivery
-        if (deliveryFilter !== "all" && item.delivery != deliveryFilter) {
-          return false;
-        }
-
-        // filter by agente
-        if (
-          agenteFilter !== "all" &&
-          parseInt(item.agente_id) != parseInt(agenteFilter)
-        ) {
-          return false;
-        }
-
-        if (
-          !item.fullname.toLowerCase().includes(this.search.toLowerCase()) &&
-          !item.product_name.toLowerCase().includes(this.search.toLowerCase())
-        ) {
-          return false;
-        }
-
-        // if item passes all filters, include it in the filtered data
-        return true;
-      });
     },
   },
   methods: {

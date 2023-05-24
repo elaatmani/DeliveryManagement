@@ -32,7 +32,7 @@ export default {
 
     watch: {
         date() {
-            this.$emit('update:dateFilter', [this.formattedStartDate, this.formattedEndDate])
+            this.$emit('update:filter', [this.formattedStartDate, this.formattedEndDate])
         }
     },
 

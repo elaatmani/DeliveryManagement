@@ -32,31 +32,7 @@
       v-if="fetched"
       class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md"
     >
-      <div
-        class="mb-5 tw-border-b tw-border-solid tw-pb-5 tw-border-neutral-200"
-      >
-        <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-            <DashItem :dash="newSales" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-            <DashItem :dash="toProcess" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-            <DashItem :dash="confirmedSales" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
-            <DashItem :dash="deliveredSales" />
-          </div>
-
-          <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-4">
-            <DashItem :dash="shippedSales" />
-          </div>
-        </div>
-      </div>
+      <SalesAnalytics :sales="sales" />
 
       <div class="mb-5 tw-flex">
         <v-btn
@@ -123,116 +99,11 @@
         class="tw-max-h-0 tw-duration-500 tw-overflow-hidden"
         :class="{ '!tw-max-h-[1000px] !tw-overflow-visible': showFilters }"
       >
-        <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4">
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <DateFilter v-model:dateFilter="dateFilter" />
-          </div>
-
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <UpsellFilter v-model:upsellFilter="upsellFilter" />
-          </div>
-
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Confirmation</span>
-            <div class="tw-relative">
-              <select
-                v-model="confirmationFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option
-                  v-for="c in confirmations"
-                  :key="c.id"
-                  :value="!c.value ? 'all' : c.value"
-                >
-                  {{ c.name }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Affecté</span>
-            <div class="tw-relative">
-              <select
-                v-model="affectationFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option value="all">Select</option>
-                <option :value="null">Without delivery</option>
-                <option
-                  :value="delivery.id"
-                  :key="delivery.id"
-                  v-for="delivery in deliveries"
-                >
-                  {{ delivery.firstname }} {{ delivery.lastname }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Agente</span>
-            <div class="tw-relative">
-              <select
-                v-model="agenteFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option value="all">Select</option>
-                <option :value="null">Without agente</option>
-                <option
-                  :value="agente.id"
-                  :key="agente.id"
-                  v-for="agente in agentes"
-                >
-                  {{ agente.firstname }} {{ agente.lastname }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-          <div
-            class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"
-          >
-            <span class="tw-text-sm tw-text-neutral-600">Delivery</span>
-            <div class="tw-relative">
-              <select
-                v-model="deliveryFilter"
-                class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
-              >
-                <option
-                  :value="!delivery.value ? 'all' : delivery.value"
-                  :key="delivery.id"
-                  v-for="delivery in deliveryStatus"
-                >
-                  {{ !delivery.value ? "Select" : delivery.value }}
-                </option>
-              </select>
-              <v-icon
-                class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2"
-                >mdi-chevron-down</v-icon
-              >
-            </div>
-          </div>
-        </div>
+        <IndexFilter
+          :sales="sales"
+          :search="search"
+          v-model:filtered="filteredSales"
+        />
       </div>
       <div class="">
         <SalesTable
@@ -253,34 +124,29 @@
 import { localUrl } from "@/config/config";
 
 import SalesTable from "./SalesTable.vue";
-import DashItem from "@/views/sale/partials/DashItem";
 import Sale from "@/api/Sale";
 import User from "@/api/User";
 import AddSale from "@/views/sale/partials/AddSale";
-import { confirmations, deliveryStatus } from "@/config/orders";
 import Product from "@/api/Product";
-import DateFilter from "@/views/sale/filters/DateFilter";
-import UpsellFilter from "@/views/sale/filters/UpsellFilter";
-import salesFilter from "./filters/filter";
+import IndexFilter from "@/views/sale/filters/IndexFilter";
+import SalesAnalytics from "@/views/sale/partials/SalesAnalytics";
 
 export default {
-  components: { SalesTable, DashItem, AddSale, DateFilter, UpsellFilter },
+  components: {
+    SalesTable,
+    AddSale,
+    SalesAnalytics,
+    IndexFilter,
+  },
   data() {
     return {
       localUrl,
-      confirmations,
-      deliveryStatus,
       isLoaded: false,
       isLoadingReset: false,
       showFilters: false,
-      confirmationFilter: "all",
-      affectationFilter: "all",
-      upsellFilter: "all",
-      deliveryFilter: "all",
-      agenteFilter: "all",
-      dateFilter: [null, null],
-      search: "",
       isButtonDisabled: true,
+      filteredSales: [],
+      search: "",
 
       selected: [],
       // new lane
@@ -313,76 +179,6 @@ export default {
     cities() {
       return this.$store.getters["city/cities"];
     },
-    newSales() {
-      return {
-        id: 1,
-        title: "New",
-        value: this.sales.filter(
-          (i) => !i.confirmation || i.confirmation == "new"
-        ).length,
-        // value: 35,
-        color: "primary-green",
-        icon: "mdi mdi-new-box",
-      };
-    },
-    toProcess() {
-      return {
-        id: 2,
-        title: "Process",
-        value: this.sales.filter(
-          (i) =>
-            !!i.confirmation &&
-            !["confirmer", "livre", "expidier"].includes(i.confirmation)
-        ).length,
-        // value: 231,
-        color: "primary-orange",
-        icon: "mdi-reload",
-      };
-    },
-    confirmedSales() {
-      return {
-        id: 3,
-        title: "Confirmed",
-        value: this.sales.filter((i) => i.confirmation == "confirmer").length,
-        // value: 112,
-        color: "deep-purple-accent-2",
-        icon: "mdi-phone-check",
-      };
-    },
-    deliveredSales() {
-      return {
-        id: 4,
-        title: "Delivered",
-        value: this.sales.filter((i) => i.delivery == "livrer").length,
-        // value: 412,
-        color: "primary-blue",
-        icon: "mdi-account-check-outline",
-      };
-    },
-    shippedSales() {
-      return {
-        id: 5,
-        title: "Shipped",
-        value: this.sales.filter((i) => i.delivery == "expidier").length,
-        // value: 112,
-        color: "red",
-        icon: "mdi-truck",
-      };
-    },
-    filteredSales() {
-      const config = {
-        sales: this.sales,
-        search: this.search,
-        confirmationFilter: this.confirmationFilter,
-        affectationFilter: this.affectationFilter,
-        upsellFilter: this.upsellFilter,
-        deliveryFilter: this.deliveryFilter,
-        agenteFilter: this.agenteFilter,
-        dateFilter: this.dateFilter
-      };
-
-      return salesFilter(config);
-    },
   },
   methods: {
     handleSelected(value) {
@@ -398,7 +194,6 @@ export default {
 
     async getDeliveries() {
       await User.deliveries().then((res) => {
-        console.log(res.data.data);
         this.$store.dispatch("user/setDeliveries", res.data.data);
       }, this.$handleApiError);
     },

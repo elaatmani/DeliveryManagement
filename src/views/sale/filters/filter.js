@@ -1,6 +1,4 @@
-export default function filteredSales({
-    sales,
-    search,
+export default function filteredSales(sales, search, {
     confirmationFilter,
     affectationFilter,
     upsellFilter,
@@ -21,7 +19,7 @@ export default function filteredSales({
         }
 
         // filter by affectation
-        if (affectationFilter !== 'all' && parseInt(item.affectation) !== parseInt(affectationFilter)) {
+        if (affectationFilter !== 'all' && item.affectation != affectationFilter) {
             return false;
         }
 
@@ -36,20 +34,24 @@ export default function filteredSales({
         }
 
         // filter by agente
-        if (agenteFilter !== 'all' && parseInt(item.agente_id) != parseInt(agenteFilter)) {
+        if (agenteFilter !== 'all' && item.agente_id != agenteFilter) {
             return false;
         }
 
-        if (!item.fullname.toLowerCase().includes(search.toLowerCase()) && !item.product_name.toLowerCase().includes(search.toLowerCase())) {
+        if (!item.fullname.toLowerCase().includes(search.toLowerCase())) {
             return false;
         }
+
+        // if (!item.city.toLowerCase().includes(search.toLowerCase())) {
+        //     return false;
+        // }
 
         /* eslint-disable */
         const createdAtDay = createdAt.getDate();
         const createdAtMonth = createdAt.getMonth();
         const createdAtYear = createdAt.getFullYear();
 
-        if (!!startDate) { 
+        if (!!startDate) {
             const startDay = startDate.getDate();
             const startMonth = startDate.getMonth();
             const startYear = startDate.getFullYear();
@@ -64,7 +66,7 @@ export default function filteredSales({
         }
 
 
-        if (!!endDate) { 
+        if (!!endDate) {
             const endDay = endDate.getDate();
             const endMonth = endDate.getMonth();
             const endYear = endDate.getFullYear();
@@ -78,7 +80,69 @@ export default function filteredSales({
             }
         }
 
-            // if item passes all filters, include it in the filtered data
-            return true;
+        // if item passes all filters, include it in the filtered data
+        return true;
     });
+}
+
+
+export function newSales(sales) {
+    return {
+        id: 1,
+        title: "New",
+        value: sales.filter(
+            (i) => !i.confirmation || i.confirmation == "new"
+        ).length,
+        // value: 35,
+        color: "primary-green",
+        icon: "mdi mdi-new-box",
+    };
+}
+
+export function toProcessSales(sales) {
+    return {
+        id: 2,
+        title: "Process",
+        value: sales.filter(
+            (i) =>
+            !!i.confirmation &&
+            !["confirmer", "livre", "expidier"].includes(i.confirmation)
+        ).length,
+        // value: 231,
+        color: "primary-orange",
+        icon: "mdi-reload",
+    };
+}
+
+export function confirmedSales(sales) {
+    return {
+        id: 3,
+        title: "Confirmed",
+        value: sales.filter((i) => i.confirmation == "confirmer").length,
+        // value: 112,
+        color: "deep-purple-accent-2",
+        icon: "mdi-phone-check",
+    }
+}
+
+export function deliveredSales(sales) {
+    return {
+        id: 4,
+        title: "Delivered",
+        value: sales.filter((i) => i.delivery == "livrer").length,
+        // value: 412,
+        color: "primary-blue",
+        icon: "mdi-account-check-outline",
+    };
+}
+
+export function shippedSales(sales) {
+    return {
+        id: 5,
+        title: "Shipped",
+        value: sales.filter((i) => i.delivery == "expidier").length,
+        // value: 112,
+        color: "red",
+        icon: "mdi-truck",
+    };
 }

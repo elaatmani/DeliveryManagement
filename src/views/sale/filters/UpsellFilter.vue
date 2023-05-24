@@ -24,7 +24,7 @@ export default {
 
     watch: {
         value(v) {
-            this.$emit('update:upsellFilter', v);
+            this.$emit('update:filter', v);
         }
     }
 
