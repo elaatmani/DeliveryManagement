@@ -1,6 +1,5 @@
 <template>
-    <tr 
-        class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+    <tr class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
         <td class="tw-w-4 tw-p-4">
             <div class="tw-flex tw-items-center">
                 <input id="checkbox-table-search-1" type="checkbox"
@@ -12,6 +11,7 @@
             {{ factorisation.id }}
         </th>
         <td class="tw-px-6 tw-py-4">
+            <button @click="download">Print</button>
             {{ factorisation.factorisation_id }}
         </td>
         <td class="tw-px-6 tw-py-4">
@@ -64,64 +64,78 @@
 <script>
     import FactorisationActions from "@/views/factorisation/partials/FactorisationActions";
     import Factorisation from "@/api/Factorisation";
-    export default { 
+    // import Api from "@/api/Api";
+    import { serverUrl } from "@/config/config";
+    export default {
         props: ["factorisation"],
         components: { FactorisationActions },
 
         data() {
-           return {
-              isLoadingPaid:false,
-              isLoadingClose:false,
-           };
+            return {
+                isLoadingPaid: false,
+                isLoadingClose: false,
+            };
         },
 
         computed: {
-           paid:{
-              get(){
-                return this.factorisation.paid
-              },
-              set(v){
-                this.updatePaid(v)
-              }
-           },
-           close: {
-            get() {
-                return this.factorisation.close
+            paid: {
+                get() {
+                    return this.factorisation.paid
+                },
+                set(v) {
+                    this.updatePaid(v)
+                }
             },
-            set(v){
-                this.updateClose(v)
-              }
-           }
+            close: {
+                get() {
+                    return this.factorisation.close
+                },
+                set(v) {
+                    this.updateClose(v)
+                }
+            }
         },
 
         methods: {
-            updatePaid(value){
+            updatePaid(value) {
                 this.isLoadingPaid = true
-                Factorisation.updatePaid(this.factorisation.id , value).then(
+                Factorisation.updatePaid(this.factorisation.id, value).then(
                     (response) => {
-                        if(response.data.code == 'FACTORISATION_UPDATED') {
+                        if (response.data.code == 'FACTORISATION_UPDATED') {
                             this.$store.dispatch('factorisation/update', response.data.data.factorisation)
                         }
 
                     },
                     this.$handleApiError
-                ).finally(()=>{
+                ).finally(() => {
                     this.isLoadingPaid = false
                 })
             },
-            updateClose(value){
+            updateClose(value) {
                 this.isLoadingClose = true
-                Factorisation.updateClose(this.factorisation.id , value).then(
+                Factorisation.updateClose(this.factorisation.id, value).then(
                     (response) => {
-                        if(response.data.code == 'FACTORISATION_UPDATED') {
+                        if (response.data.code == 'FACTORISATION_UPDATED') {
                             this.$store.dispatch('factorisation/update', response.data.data.factorisation)
                         }
 
                     },
                     this.$handleApiError
-                ).finally(()=>{
+                ).finally(() => {
                     this.isLoadingClose = false
                 })
+            },
+            download() {
+                
+                const url = serverUrl + 'api/factorisations/generate-pdf/2';
+                const link = document.createElement('a');
+                link.href = url;
+                link.target = "_blank";
+                link.setAttribute('download', 'dd.pdf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
             }
         },
     };
