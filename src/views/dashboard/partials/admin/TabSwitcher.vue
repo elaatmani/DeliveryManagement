@@ -17,7 +17,7 @@
         transition="fade-transition"
         reverse-transition="fade-transition"
       >
-        <component :is="t.component"></component>
+        <component :is="t.component" :filtered-sales="filteredSales"></component>
       </v-window-item>
     </v-window>
   </v-card>
@@ -29,6 +29,7 @@ import ConfirmationTab from '@/views/dashboard/partials/admin/ConfirmationTab'
 
 export default {
     components: {DeliveryTab, ConfirmationTab},
+    props: ['filteredSales'],
     data() {
         return {
             tab: 1,

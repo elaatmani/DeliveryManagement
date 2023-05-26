@@ -40,17 +40,26 @@
 
                 <v-row>
                     <v-col cols="12" md="12">
-                        <FilterTabs />
+                        <FilterTabs v-model:filters="filters" />
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col cols="12" sm="6" md="3" v-for="dash in dashItems" :key="dash.id">
-                        <DashItem :dash="dash" />
+                    <v-col cols="12" sm="6" md="3">
+                        <DashItem :dash="dashChiffreAffaires" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
+                        <DashItem :dash="dashChiffreAffairesVerse" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
+                        <DashItem :dash="dashChiffreAffairesNonVerse" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
+                        <DashItem :dash="dashChiffreAffairesEnCaisse" />
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col cols="12" md="12">
-                        <TabSwitcher />
+                        <TabSwitcher :filtered-sales="filteredSales" />
                     </v-col>
                 </v-row>
             </div>
@@ -74,75 +83,17 @@
         data() {
             return {
                 isLoaded: false,
-                dashItems: [
-                    {
-                        id: 1,
-                        title: 'Total Chiffres d\'affaire',
-                        value: 1200,
-                        icon: 'mdi-currency-usd',
-                        color: 'green'
-                    },
-                    {
-                        id: 2,
-                        title: 'Chiffres d\'affaire versé',
-                        value: '35000 DH',
-                        icon: 'mdi mdi-credit-card-check-outline',
-                        color: 'orange'
-                    },
-                    {
-                        id: 3,
-                        title: 'Chiffres d\'affaire non versé',
-                        value: 600,
-                        icon: 'mdi mdi-credit-card-remove-outline',
-                        color: 'red'
-                    },
-                    {
-                        id: 4,
-                        title: 'Chiffres d\'affaire en caisse',
-                        value: 543,
-                        icon: 'mdi mdi-bank',
-                        color: 'yellow'
-                    },
-
-
-                ],
-
-                filledDashItems: [
-
-                    {
-                        id: 1,
-                        title: 'Customers',
-                        value: 2300,
-                        color: 'primary-orange',
-                        icon: 'mdi-account-outline'
-                    },
-
-                    {
-                        id: 2,
-                        title: 'Suppliers',
-                        value: 300,
-                        color: 'primary-blue',
-                        icon: 'mdi-account-check-outline'
-                    },
-
-                    {
-                        id: 3,
-                        title: 'Purchase Invoice',
-                        value: 1100,
-                        color: 'primary-indigo',
-                        icon: 'mdi-file-document-outline'
-                    },
-
-                    {
-                        id: 4,
-                        title: 'Agents',
-                        value: 10,
-                        color: 'primary-green',
-                        icon: 'mdi-moped-outline'
-                    },
-                ]
+                filters: {
+                    deliveryFilter: 'all',
+                    agentFilter: 'all',
+                    productFilter:'all',
+                    cityFilter:'all',
+                    upsellFilter:'all',
+                    dateFilter: ['', '']
+                },
             }
         },
+
         computed: {
             user() {
                 return this.$store.getters['user/user']
@@ -153,6 +104,122 @@
 
             sales() {
                 return this.$store.getters['sale/sales']
+            },
+            filteredSales() {
+                const agentFilter = this.filters.agentFilter;
+                const deliveryFilter = this.filters.deliveryFilter;
+                const productFilter = this.filters.productFilter;
+                const cityFilter = this.filters.cityFilter;
+                const upsellFilter = this.filters.upsellFilter;
+                const startDate = this.filters.dateFilter[0];
+                const endDate = this.filters.dateFilter[1];
+
+                return this.sales.filter(sale => {
+
+                    if(agentFilter !== 'all') {
+                        if(parseInt(sale.agente_id) != parseInt(agentFilter)) {
+                            return false;
+                        }
+                    }
+
+                    if(deliveryFilter !== 'all') {
+                        if(parseInt(sale.affectation) != parseInt(deliveryFilter)) {
+                            return false;
+                        }
+                    }
+
+                    if(upsellFilter !== 'all') {
+                        if(sale.upsell != upsellFilter) {
+                            return false;
+                        }
+                    }
+
+                    if(productFilter !== 'all') {
+                        if(!sale.items.some(i => parseInt(i.product_id) == parseInt(productFilter))) {
+                            return false;
+                        }
+                    }
+
+                    if(cityFilter !== 'all') {
+                        if(sale.city?.toLocaleLowerCase() != cityFilter?.toLocaleLowerCase()) {
+                            return false;
+                        }
+                    }
+
+                    const createdAt = new Date(sale.created_at);
+                    const createdAtDay = createdAt.getDate();
+                    const createdAtMonth = createdAt.getMonth();
+                    const createdAtYear = createdAt.getFullYear();
+
+                    /* eslint-disable */
+                    if (!!startDate) {
+                        const startDay = startDate.getDate();
+                        const startMonth = startDate.getMonth();
+                        const startYear = startDate.getFullYear();
+
+                        if (
+                            createdAtYear < startYear ||
+                            (createdAtYear === startYear && createdAtMonth < startMonth) ||
+                            (createdAtYear === startYear && createdAtMonth === startMonth && createdAtDay < startDay)
+                        ) {
+                            return false;
+                        }
+                    }
+
+
+                    if (!!endDate) {
+                        const endDay = endDate.getDate();
+                        const endMonth = endDate.getMonth();
+                        const endYear = endDate.getFullYear();
+
+                        if (
+                            createdAtYear > endYear ||
+                            (createdAtYear === endYear && createdAtMonth > endMonth) ||
+                            (createdAtYear === endYear && createdAtMonth === endMonth && createdAtDay > endDay)
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+
+                });
+            },
+            dashChiffreAffaires() {
+                return {
+                        id: 1,
+                        title: 'Total Chiffres d\'affaire',
+                        value: this.getChiffresDaffaire(),
+                        icon: 'mdi-currency-usd',
+                        color: 'green'
+                    }
+            },
+            dashChiffreAffairesVerse() {
+                return {
+                        id: 2,
+                        title: 'Chiffres d\'affaire versé',
+                        value: this.getChiffresDaffaireVerse(),
+                        icon: 'mdi mdi-credit-card-check-outline',
+                        color: 'orange'
+                    }
+            },
+            dashChiffreAffairesNonVerse() {
+                return {
+                        id: 3,
+                        title: 'Chiffres d\'affaire non versé',
+                        value: this.getChiffresDaffaireNonVerse(),
+                        icon: 'mdi mdi-credit-card-remove-outline',
+                        color: 'red'
+                    }
+            },
+            dashChiffreAffairesEnCaisse() {
+                return {
+                        id: 4,
+                        title: 'Chiffres d\'affaire en caisse',
+                        value: this.getChiffresDaffaireEnCaise(),
+                        icon: 'mdi mdi-bank',
+                        color: 'yellow'
+                    }
             },
             newSales() {
                 return {
@@ -209,8 +276,10 @@
             },
 
         },
-        mounted() {
-            Sale.all().then(
+
+        methods: {
+            getSales() {
+                Sale.all().then(
                 res => {
                     if (res?.data.code == "SUCCESS") {
                         const sales = res.data.data.orders
@@ -221,7 +290,39 @@
                     }
                 }
             ).catch(this.$handleApiError)
+            },
+            getChiffresDaffaire() {
+                let total = 0;
+                this.filteredSales.forEach(s => {
+                    total += s.price;
+                })
+                return total;
+            },
+            getChiffresDaffaireVerse() {
+                let total = 0;
+                this.filteredSales.forEach(s => {
+                    if(s.factorisations != null && s.factorisations.paid) {
+                        total += s.price;
+                    }
+                })
+                return total;
+            },
+            getChiffresDaffaireNonVerse() {
+                let total = 0;
+                this.filteredSales.forEach(s => {
+                    if(s.factorisations != null && !s.factorisations.paid) {
+                        total += s.price;
+                    }
+                })
+                return total;
+            },
+            getChiffresDaffaireEnCaise() {
+                return this.getChiffresDaffaire() - this.getChiffresDaffaireVerse()
+            }
+        },
 
+        mounted() {
+            this.getSales();
         }
     }
 </script>

@@ -1,7 +1,13 @@
 <template>
 
     <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4 py-5">
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+            <div class="tw-relative">
+                <DateFilter v-model:filter="dateFilter" />
+            </div>
+        </div>
+
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Agents</span>
             <div class="tw-relative">
                 <select v-model="agentFilter"
@@ -16,7 +22,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Deliveries</span>
             <div class="tw-relative">
                 <select v-model="deliveryFilter"
@@ -31,13 +37,13 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Cities</span>
             <div class="tw-relative">
                 <select v-model="cityFilter"
                     class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
                     <option value="all">Select</option>
-                    <option :value="city.id" :key="city.id" v-for="city in cities">
+                    <option :value="city.name" :key="city.id" v-for="city in cities">
                         {{ city.name }}
                     </option>
                 </select>
@@ -46,7 +52,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Products</span>
             <div class="tw-relative">
                 <select v-model="productFilter"
@@ -61,7 +67,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Shops</span>
             <div class="tw-relative">
                 <select
@@ -73,7 +79,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Sources</span>
             <div class="tw-relative">
                 <select
@@ -85,10 +91,11 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Upsell</span>
             <div class="tw-relative">
                 <select
+                    v-model="upsellFilter"
                     class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
                     <option value="all">Select</option>
                     <option value="oui">Oui</option>
@@ -99,7 +106,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div v-if="false" class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Date Added</span>
             <div class="tw-relative">
                 <input type="date"
@@ -108,7 +115,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div v-if="false" class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Date Validation</span>
             <div class="tw-relative">
                 <input type="date"
@@ -117,7 +124,7 @@
             </div>
         </div>
 
-        <div class="lg:tw-col-span-2 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <div v-if="false" class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <span class="tw-text-sm tw-text-neutral-600">Date Update</span>
             <div class="tw-relative">
                 <input type="date"
@@ -132,9 +139,11 @@
    
     import Product from '@/api/Product'
     import User from '@/api/User'
+    import DateFilter from '@/views/dashboard/partials/admin/DateFilter'
 
     export default {
-        components: {  },
+        components: { DateFilter },
+        props: ['filters'],
 
         data() {
             return {
@@ -142,6 +151,8 @@
                 agentFilter: 'all',
                 productFilter:'all',
                 cityFilter:'all',
+                upsellFilter: 'all',
+                dateFilter: ['', ''],
                 isLoaded: false,
                 dashItems: [
                     {
@@ -212,6 +223,31 @@
                 ]
             }
         },
+
+        watch: {
+            agentFilter(v) {
+                this.$emit('update:filters', {...this.filters, agentFilter: v})
+            },
+            deliveryFilter(v) {
+                this.$emit('update:filters', {...this.filters, deliveryFilter: v})
+            },
+            productFilter(v) {
+                this.$emit('update:filters', {...this.filters, productFilter: v})
+            },
+            cityFilter(v) {
+                this.$emit('update:filters', {...this.filters, cityFilter: v})
+            },
+            upsellFilter(v) {
+                this.$emit('update:filters', {...this.filters, upsellFilter: v})
+            },
+            dateFilter: {
+                deep: true,
+                handler(v) {
+                    this.$emit('update:filters', {...this.filters, dateFilter: v})
+                }
+            },
+        },
+
         computed: {
 
             agents() {
