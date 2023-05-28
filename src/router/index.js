@@ -13,6 +13,7 @@ import inventory from './routes/inventory'
 import shop from './routes/shop'
 import warehouse from './routes/warehouse'
 import factorisation from './routes/factorisation'
+import sheet from './routes/sheet'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -30,6 +31,7 @@ const routes = [
   shop,
   warehouse,
   factorisation,
+  sheet,
   
   {
     name: 'default',

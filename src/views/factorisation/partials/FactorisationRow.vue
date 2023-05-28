@@ -80,7 +80,7 @@
         computed: {
             paid: {
                 get() {
-                    return this.factorisation.paid
+                    return this.factorisation.paid == 1 ? true : false;
                 },
                 set(v) {
                     this.updatePaid(v)
@@ -88,7 +88,7 @@
             },
             close: {
                 get() {
-                    return this.factorisation.close
+                    return this.factorisation.close == 1 ? true : false;
                 },
                 set(v) {
                     this.updateClose(v)
@@ -127,7 +127,7 @@
             },
             download() {
                 
-                const url = serverUrl + 'api/factorisations/generate-pdf/2';
+                const url = serverUrl + 'api/factorisations/generate-pdf/1';
                 const link = document.createElement('a');
                 link.href = url;
                 link.target = "_blank";

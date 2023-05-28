@@ -1,6 +1,9 @@
-export const path = 'api/factorisations/generate-pdf/2'
-export const method = 'get'
+export const path = 'api/sheets'
+export const method = 'post'
 
 export default {
-   delivery:"expidier"
+   'name': 'Orders from Youcan',
+   'sheet_id': 'QSDfFsqdDSQDfrsqFDSRHTRzer',
+   'sheet_name': 'Youcan-Orders',
+   'auto_fetch': true
 }
