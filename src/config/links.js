@@ -328,6 +328,19 @@ export const links = [
     },
 
     {
+        id: 15,
+        title: 'Sheets',
+        module: 'sheets',
+        to: '/sheets',
+        gate: 'all',
+        hasChildren: false,
+        icon: {
+            type: 'icon',
+            value: 'mdi-note-text-outline'
+        }
+    },
+
+    {
         id: 12,
         title: 'Settings',
         module: 'settings',
