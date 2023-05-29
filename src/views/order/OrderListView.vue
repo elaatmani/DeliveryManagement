@@ -61,7 +61,7 @@
       </div>
 
       <div v-if="orders.length > 0">
-        <OrdersTable :columns="columns" :orders="filteredOrders" />
+        <OrdersTable :orders="filteredOrders" />
       </div>
 
       <div v-else class="">
@@ -93,54 +93,6 @@ export default {
       affectationFilter: 'all',
       upsellFilter: 'all',
       search: '',
-      columns: 
-      [
-        {
-            prop: 'id',
-            name: '#',
-        },
-        {
-            prop: 'date',
-            name: 'Date',
-        },
-        {
-            prop: "client",
-            name: "Client",
-        },
-        {
-          prop: 'product',
-          name: 'Product',
-        },
-        {
-          prop: 'upsell',
-          name: 'Upsell',
-        },
-        {
-          prop: 'confirmation',
-          name: 'Confirmation',
-        },
-        {
-          prop: 'affectation',
-          name: 'Affecté',
-        },
-        {
-            prop: "quantity",
-            name: "Qty",
-        },
-        {
-            prop: 'price',
-            name: 'Price',
-        },
-        {
-            prop: 'city',
-            name: 'City',
-        },
-        {
-            prop: 'actions',
-            name: 'Actions',
-        },
-        
-    ],
     }
   },
   computed: {

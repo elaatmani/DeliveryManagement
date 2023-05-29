@@ -23,7 +23,7 @@
     <UpdateSale v-model:visible="showUpdatePopup" :order="sale" />
 
     <!--  -->
-    <popup type="warning" title="Warning" body="<p>Are you sure you want to delete this sale?</p> You won't be able to revert this!" :loading="isLoading" :visible="showPopup" @resolved="handleResolved" />
+    <!-- <popup type="warning" title="Warning" body="<p>Are you sure you want to delete this sale?</p> You won't be able to revert this!" :loading="isLoading" :visible="showPopup" @resolved="handleResolved" /> -->
   </div>
 </template>
 <script>
