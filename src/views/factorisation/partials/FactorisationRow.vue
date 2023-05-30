@@ -11,9 +11,9 @@
             {{ factorisation.id }}
         </th>
         <td class="tw-px-6 tw-py-4">
-            <button @click="download">Print</button>
-            {{ factorisation.factorisation_id }}
+            <button class="tw-underline" @click="download(factorisation.id)">{{ factorisation.factorisation_id }}</button>
         </td>
+        
         <td class="tw-px-6 tw-py-4">
             {{ factorisation.delivery_id }}
         </td>
@@ -125,9 +125,9 @@
                     this.isLoadingClose = false
                 })
             },
-            download() {
+            download(id) {
                 
-                const url = serverUrl + 'api/factorisations/generate-pdf/1';
+                const url = serverUrl + 'api/factorisations/generate-pdf/'+id;
                 const link = document.createElement('a');
                 link.href = url;
                 link.target = "_blank";
