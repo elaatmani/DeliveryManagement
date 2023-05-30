@@ -92,6 +92,11 @@ class Sale {
         await Csrf.getCookie();
         return Api.post('api/sales/reset',{ids})
     }
+
+    async scanSale(id) {
+        await Csrf.getCookie();
+        return Api.post('api/sales/scan',id)
+    }
 }
 
 
