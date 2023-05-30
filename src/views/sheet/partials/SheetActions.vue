@@ -90,12 +90,15 @@ export default {
               this.orders = res.data.data.orders;
               this.showSheetPopup = true;
             }
+            console.log(res.data.data.sheet);
+            this.$store.dispatch('sheet/update', res.data.data.sheet)
           }
           console.log(res.data);
         },
         err => { 
             this.$handleApiError(err);
             console.log(err);
+            this.$store.dispatch('sheet/update', err.response.data.data.sheet)
             if(err?.response?.data?.code == 'PERMISSION_DENIED') {
               this.$alert({
                 title: 'Access denied to this Google Sheet',

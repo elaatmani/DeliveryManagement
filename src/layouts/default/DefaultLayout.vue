@@ -47,6 +47,9 @@ export default {
         },
         cities() {
             return this.$store.getters['city/cities']
+        },
+        user() {
+            return this.$store.getters['user/user']
         }
     },
 
