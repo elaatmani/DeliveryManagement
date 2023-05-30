@@ -20,10 +20,38 @@
                     <td class="tw-px-6 tw-py-4">
                         {{ fullname }}
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ product_name }}
+                    <td class="tw-px-6 tw-py-4 tw-relative">
+                        <div class="tw-pb-2">
+                            <ul>
+                            <li v-for="i in order.items" :key="i.id" class="tw-font-bold">
+                                -
+                                <span
+                                class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
+                                >{{ i.quantity }}
+                                X </span
+                                >{{ i.product.name }} | {{ i.product_variation.size }} /
+                                {{ i.product_variation.color }}
+                            </li>
+                            </ul>
+                            <div
+                            class="tw-absolute tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-text-xs"
+                            >
+                            <p
+                                v-if="order.counts_from_warehouse"
+                                class="tw-bg-emerald-500/10 tw-text-emerald-500 tw-px-2 tw-rounded-t"
+                            >
+                                warehouse
+                            </p>
+                            <p
+                                v-if="!order.counts_from_warehouse"
+                                class="tw-bg-blue-500/10 tw-text-blue-500 tw-px-2 tw-rounded-t"
+                            >
+                                delivery
+                            </p>
+                            </div>
+                        </div>
                     </td>
-                    <td class="tw-px-6 tw-py-4">
+                    <td v-if="false" class="tw-px-6 tw-py-4">
                         <OrderUpsell :order="order" :key="upsell" :upsell="upsell" :id="id" />
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
@@ -46,23 +74,17 @@
                         <OrderAffectation :order="order" v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ quantity }}
+                        {{ order.price }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ price }}
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ city }}
+                        {{ order.city }}
                     </td>
                     <td v-if="showNote" class="tw-px-6 tw-py-4 ">
                         <div class="tw-max-w-[300px] tw-min-w-[150px] tw-whitespace-normal">
-                            {{ note }}
+                            {{ order.note }}
                             <v-icon @click="handleClick" size="x-small" class="tw-ml-2 tw-text-blue-500 tw-cursor-pointer hover:tw-bg-neutral-900/10 tw-rounded-full tw-p-3" :class="{'tw-animate-spin': isLoading}">{{ isLoading ? 'mdi-loading' : 'mdi-pencil' }}</v-icon>
 
                         </div>
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ created_at?.split('T')[0] }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         <OrderActions :order="order" />

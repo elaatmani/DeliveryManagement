@@ -245,6 +245,7 @@
 <script>
 import Sale from "@/api/Sale";
 import { upsells } from '@/config/orders';
+import Product from '@/api/Product';
 
 export default {
   props: ["visible", "order"],
@@ -380,7 +381,7 @@ export default {
       }
       this.isLoading = true;
 
-      const sale = {
+      const order = {
         id: this.sale.id,
         fullname: this.sale.fullname,
         phone: this.sale.phone,
@@ -393,7 +394,7 @@ export default {
       }
 
       this.isLoading = true
-      Sale.update(sale.id, sale)
+      Sale.update(order.id, order)
       .then(
         res => {
           if(res.data.code == 'SUCCESS') {
@@ -404,7 +405,7 @@ export default {
                 title: 'Order updated'
             })
 
-            this.$store.dispatch('sale/update', { id: sale.id, sale: res.data.data.sale })
+            this.$store.dispatch('order/update', { id: order.id, order: res.data.data.sale })
             this.$emit('update:visible', false)
           }
         }
@@ -423,12 +424,30 @@ export default {
       this.sale = {...this.order}
       this.items = [...this.order.items]
       this.$emit('update:visible', false)
-    }
+    },
+    getProducts() {
+        return Product.all().then(
+        (res) => {
+          if (res.data.code == "SUCCESS") {
+            this.$store.dispatch("product/setProducts", res.data.data.products);
+            this.$store.dispatch("product/setFetched", true);
+          }
+        },
+        (err) => {
+          this.$handleApiError(err);
+        }
+      );
+    },
+    
   },
 
   mounted() {
     this.sale = {...this.order}
     this.items = [...this.order.items]
+
+    if(!this.isLoaded) {
+        this.getProducts();
+    }
 
   },
 };

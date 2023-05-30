@@ -11,9 +11,9 @@
                             <label for="checkbox-all-search" class="tw-sr-only">checkbox</label>
                         </div>
                     </th>
-                    <th v-for="column in columns" :key="column.prop" scope="col" class="tw-px-6 tw-py-3 text-truncate">
+                    <th v-for="column in columns" :key="column" scope="col" class="tw-px-6 tw-py-3 text-truncate">
                         <div class="tw-w-fit tw-flex tw-whitespace-nowrap">
-                            {{ column.name }}
+                            {{ column }}
                         </div>
                     </th>
 
@@ -54,18 +54,26 @@ import OrderRow from '@/views/order/partials/OrderRow'
 import User from '@/api/User'
 
 export default {
-    props: [ 'columns', 'orders', 'note' ],
+    props: [ 'orders', 'note' ],
     data() {
         return {
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
-            todayDate: null
+            todayDate: null,
+            columnsNote: ['id','date',"client", 'product', 'confirmation', 'affectation', 'price', 'city', 'note', 'actions'],
+            columnsNormal: ['id','date',"client", 'product', 'confirmation', 'affectation', 'price', 'city', 'actions'],
         }
     },
     components: { OrderRow },
 
     computed: {
+        columns() {
+            if(this.note) {
+                return this.columnsNote
+            }
+            return this.columnsNormal
+        },
         deliveries() {
             return this.$store.getters['user/deliveries'];
         },

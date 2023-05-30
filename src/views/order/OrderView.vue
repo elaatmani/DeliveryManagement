@@ -29,18 +29,29 @@
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Phone: </p>
-                        <p class="tw-text-neutral-700">{{ newOrder.phone }}</p>
-                        <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + newOrder.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="flat" density="comfortable" :ripple="false" size="small">
-                            <v-icon color="white">mdi-whatsapp</v-icon>
-                          </v-btn>
+                        <div class="tw-flex tw-items-center">
+                            <p class="tw-text-neutral-700">{{ newOrder.phone }}</p>
+                            <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + newOrder.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="text" density="comfortable" :ripple="false" size="small">
+                                <v-icon color="green">mdi-whatsapp</v-icon>
+                            </v-btn>
+                        </div>
                     </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Nom de produit: </p>
+                    <div class="md:tw-col-span-6 lg:tw-col-span-6 tw-col-span-12 tw-py-5">
+                        <p class="tw-text-neutral-400 tw-text-md">Produit: </p>
+                        <p>
+                            <ul>
+                                <li v-for="i in newOrder.items" :key="i.id" class="tw-font-bold">
+                                    -
+                                    <span
+                                    class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
+                                    >{{ i.quantity }}
+                                    X </span
+                                    >{{ i.product.name }} | {{ i.product_variation.size }} /
+                                    {{ i.product_variation.color }}
+                                </li>
+                            </ul>
+                        </p>
                         <p class="tw-text-neutral-700">{{ newOrder.product_name }}</p>
-                    </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Quantité:</p>
-                        <p class="tw-text-neutral-700">{{ newOrder.quantity }}</p>
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md">Price:</p>
