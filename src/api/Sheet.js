@@ -42,6 +42,16 @@ class Sheet {
         return Api.post('api/sheets/' + id + '/auto-fetch', {autoFetch: value});
     }
 
+    async sync(id) {
+        await Csrf.getCookie();
+        return Api.get('api/sync/' + id);
+    }
+
+    async saveOrders(id) {
+        await Csrf.getCookie();
+        return Api.get('api/sync/' + id + '/save');
+    }
+
 }
 
 
