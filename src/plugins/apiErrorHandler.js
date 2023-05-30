@@ -7,7 +7,7 @@ const ApiErrorHandler = {
             let type = 'error'
             let title = "Something wrong happened. Try again"
             let alert = true
-            const errors = ['VALIDATION_ERROR', 'NOT_ACTIVE_ERROR', 'INVALID_CREDENTIALS'];
+            const errors = ['VALIDATION_ERROR', 'NOT_ACTIVE_ERROR', 'INVALID_CREDENTIALS', 'PERMISSION_DENIED'];
 
             if (errors.includes(code)) {
                 alert = false;

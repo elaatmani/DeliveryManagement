@@ -29,6 +29,7 @@ import Alert from '@/components/AlertVue'
 import User from '@/api/User'
 import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
+import Sheet from '@/api/Sheet'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
@@ -86,6 +87,17 @@ export default {
             })
 
             this.subscribed = true
+        },
+
+        sync_sheets() {
+            Sheet.sync_all()
+            .then(
+                res => {
+                    if (res.data.code == 'SUCCESS') {
+                        console.log(res);
+                    }
+                }
+            )
         }
     },
 

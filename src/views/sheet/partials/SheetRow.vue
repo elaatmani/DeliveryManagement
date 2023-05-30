@@ -14,7 +14,10 @@
             {{ sheet.name }}
         </td>
         <td class="tw-px-6 tw-py-4">
-            {{ sheet.sheet_name }}
+            <div>
+                <!-- <span class="tw-inline-block tw-w-[10px] tw-h-[10px] tw-rounded-full" :class="[sheet.active == 1 ? 'tw-bg-emerald-500' : 'tw-bg-red-500']"></span> -->
+                {{ sheet.sheet_name }} 
+            </div>
         </td>
         <td class="tw-px-6 tw-py-4">
             <div

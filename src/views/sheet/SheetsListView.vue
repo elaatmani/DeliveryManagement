@@ -21,6 +21,21 @@
       <div v-if="!isLoaded">
             <LoadingAnimation />
       </div>
+
+      <div v-if="isLoaded" class="py-5 px-5 tw-mb-5 tw-border bg-white tw-w-full tw-rounded-md">
+        <div class="tw-flex tw-items-center tw-gap-2">
+          <h1>Application's email</h1>
+          <button @click="copy" class="tw-bg-gray-100 tw-border tw-border-gray-300 tw-rounded tw-w-[30px] tw-h-[30px] tw-text-gray-500 hover:tw-text-gray-700 tw-duration-300 tw-border-solid hover:tw-border-gray-400">
+            <v-icon class="tw-text-xs">mdi-content-copy</v-icon>
+          </button>
+        </div>
+        <div class="tw-bg-gray-100 tw-border tw-border-gray-300 tw-rounded tw-py-2 tw-px-2 tw-text-sm tw-mt-2 tw-text-gray-700">
+          {{ email }}
+        </div>
+        <p class="tw-mt-1 tw-text-xs tw-text-gray-400">
+          Use this email to give access to Google Sheets
+        </p>
+      </div>
   
       <div v-if="isLoaded" class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
   
@@ -72,6 +87,7 @@
         date: null,
         search: '',
         showPopup:false,
+        email: '467711374919-5hekgpcdei93dmdp9jlphj4vcn5ar7b2.apps.googleusercontent.com'
         
       }
     },
@@ -99,6 +115,13 @@
                     this.isLoaded = true
                 }
             )
+        },
+        copy() {
+          navigator.clipboard.writeText(this.email)
+          this.$alert({
+            title: 'Email Copied !',
+            type: 'success'
+          })
         }
     },
 

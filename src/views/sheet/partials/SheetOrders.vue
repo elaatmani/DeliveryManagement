@@ -51,7 +51,7 @@
 
           </div>
 
-          <div class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
+          <div class="tw-flex tw-gap-2 mt-3 tw-justify-end">
             <v-btn
               @click="$emit('cancel')"
               color="grey-darken-2"
@@ -109,9 +109,17 @@ export default {
                     this.$store.dispatch("sale/setSales", [...res.data.data.orders, ...this.sales]);
                     this.$emit('cancel');
                 }
-                console.log(res.data);
+            },
+          err => { 
+            this.$handleApiError(err);
+            if(err?.response?.data?.code == 'PERMISSION_DENIED') {
+              this.$alert({
+                title: 'Access denied to this sheet',
+                type: 'warning'
+              })
             }
-        )
+          }
+)
         .finally(
             () => {
                 this.isLoading = false;

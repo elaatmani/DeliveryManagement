@@ -93,7 +93,16 @@ export default {
           }
           console.log(res.data);
         },
-        this.$handleApiError
+        err => { 
+            this.$handleApiError(err);
+            console.log(err);
+            if(err?.response?.data?.code == 'PERMISSION_DENIED') {
+              this.$alert({
+                title: 'Access denied to this Google Sheet',
+                type: 'error'
+              })
+            }
+          }
       ).finally(
         () => {
           this.isLoadingSheet = false
