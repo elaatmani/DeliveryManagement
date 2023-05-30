@@ -28,7 +28,7 @@
 // import utf8 from "utf8";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { localUrl } from "@/config/config";
+import { localUrl , serverUrl } from "@/config/config";
 import QRCode  from 'qrcode'
 
 export default {
@@ -161,7 +161,7 @@ export default {
     this.addOrderPage(doc, order)
 
     const url = await new Promise((resolve, reject) => {
-      QRCode.toDataURL(order.fullname, {margin: 0}, function (err, url) {
+      QRCode.toDataURL( serverUrl + 'api/sales/scan/'+order.id, {margin: 0}, function (err, url) {
         if (err) {
           reject(err)
         }
