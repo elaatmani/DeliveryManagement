@@ -332,7 +332,7 @@ export const links = [
         title: 'Sheets',
         module: 'sheets',
         to: '/sheets',
-        gate: 'all',
+        gate: 'access_to_sheets',
         hasChildren: false,
         icon: {
             type: 'icon',
@@ -353,16 +353,16 @@ export const links = [
         }
     },
 
-    {
-        id: 10,
-        title: 'Test',
-        module: 'test',
-        to: '/test',
-        hasChildren: false,
-        gate: 'all',
-        icon: {
-            type: 'icon',
-            value: 'mdi-hammer-wrench'
-        }
-    }
+    // {
+    //     id: 10,
+    //     title: 'Test',
+    //     module: 'test',
+    //     to: '/test',
+    //     hasChildren: false,
+    //     gate: 'all',
+    //     icon: {
+    //         type: 'icon',
+    //         value: 'mdi-hammer-wrench'
+    //     }
+    // }
 ]
