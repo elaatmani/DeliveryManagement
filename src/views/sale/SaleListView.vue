@@ -210,7 +210,6 @@ export default {
         .then((res) => {
           if (res?.data.code == "SUCCESS") {
             const sales = res.data.data.orders;
-            console.log(res.data);
             this.$store.dispatch("sale/setSales", sales);
             this.$store.dispatch("sale/setFetched", true);
           }

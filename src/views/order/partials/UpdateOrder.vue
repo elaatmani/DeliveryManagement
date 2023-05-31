@@ -331,7 +331,8 @@ export default {
         !!this.sale.phone &&
         !!this.sale.adresse &&
         this.sale.price != 0 &&
-        this.items.length > 0
+        this.items.length > 0 &&
+        !!this.sale.city
       );
     },
   },
@@ -407,6 +408,7 @@ export default {
 
             this.$store.dispatch('order/update', { id: order.id, order: res.data.data.sale })
             this.$emit('update:visible', false)
+            this.$emit('updateOrder', res.data.data.sale );
           }
         }
       )

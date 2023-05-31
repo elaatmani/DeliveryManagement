@@ -38,6 +38,9 @@ export default {
         return {
             drawer: false,
             subscribed: false,
+            fetching: null,
+            // delay: 60000,
+            delay: 6000,
         }
     },
 
@@ -50,14 +53,17 @@ export default {
         },
         user() {
             return this.$store.getters['user/user']
-        }
+        },
+        sales() {
+            return this.$store.getters["sale/sales"];
+        },
     },
 
     methods: {
         toggleSidebar() {
             this.drawer = !this.drawer
         },
-        getCities() {
+        async getCities() {
             if(this.cities.length == 0) {
                 return User.cities().then(
                     res => {
@@ -96,8 +102,8 @@ export default {
             Sheet.sync_all()
             .then(
                 res => {
-                    if (res.data.code == 'SUCCESS') {
-                        console.log(res);
+                    if (res.data.code == 'SUCCESS' && this.user.role == 'admin') {
+                        this.$store.dispatch("sale/setSales", [...res.data.data.orders, ...this.sales]);
                     }
                 }
             )
@@ -107,6 +113,7 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
+        // this.fetching = setInterval(this.sync_sheets, this.delay)
     }
 }
 </script>

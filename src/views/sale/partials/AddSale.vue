@@ -310,7 +310,8 @@ export default {
         !!this.sale.phone &&
         !!this.sale.adresse &&
         this.sale.price != 0 &&
-        this.items.length > 0
+        this.items.length > 0 &&
+        !!this.sale.city
       );
     },
   },
