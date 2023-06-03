@@ -41,21 +41,22 @@
           ></v-icon>
         </v-col>
 
-        <v-col cols="12" class="tw-flex tw-items-center tw-gap-3 tw-text-gray-500">
-            <div class="tw-flex tw-items-center">
-                <span><v-icon
+        <v-col cols="12" class="tw-text-gray-500 tw-space-y-1 tw-mt-2">
+            <!-- <v-icon
               icon="mdi-shopping tw-text-sm"
               size="small"
               class="me-1 pb-1"
-            ></v-icon>
-
-            {{ order.product_name }}</span>
+            ></v-icon> -->
+           <div class="tw-flex tw-items-center tw-gap-3 " v-for="item in order.items" :key="item.id">
+             <div class="tw-flex tw-items-center">
+                <span> {{ item.product.name }} | {{ item.product_variation.size }}</span>
             </div>
             <div>
               <p class="tw-min-w-fit tw-w-[25px] tw-h-[25px] tw-flex tw-items-center tw-justify-center tw-text-md tw-font-bold tw-p-1 tw-rounded tw-text-orange-400 tw-bg-orange-400/10">
-                <span class="tw-text-sm">x</span> {{ order.quantity }}
-                </p>
+                <span class="tw-text-sm">x</span> {{ item.quantity }}
+              </p>
             </div>
+           </div>
         </v-col>
 
 

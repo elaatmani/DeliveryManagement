@@ -1,11 +1,11 @@
 <template>
 
     <div>
-        <div class="mb-5 tw-flex tw-justify-between tw-items-center">
+        <!-- <div class="mb-5 tw-flex tw-justify-between tw-items-center">
             <div>
                 <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Dashboard</h1>
             </div>
-        </div>
+        </div> -->
 
         <div v-if="!isLoaded">
             <LoadingAnimation />
@@ -13,13 +13,13 @@
 
         <div v-if="isLoaded">
 
-            <div class="mb-5 mt-5 ml-5 tw-flex tw-justify-between tw-items-center">
+            <div class="mb-2 mt-5 tw-flex tw-justify-between tw-items-center">
                 <div>
                     <h2 class="tw-text-gray-500 tw-text-lg">Online</h2>
                 </div>
             </div>
 
-            <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+            <div class="py-2 px-2 tw-border bg-white tw-w-full tw-rounded">
                 <v-row>
                     <v-col cols="12" md="12">
                         <UsersTable />
@@ -28,13 +28,13 @@
             </div>
 
 
-            <div class="mb-5 mt-5 ml-5 tw-flex tw-justify-between tw-items-center">
+            <div class="mb-2 mt-2 tw-flex tw-justify-between tw-items-center">
                 <div>
                     <h2 class="tw-text-gray-500 tw-text-lg">Statistiques</h2>
                 </div>
             </div>
 
-            <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+            <div class="px-5 tw-border bg-white tw-w-full tw-rounded-md">
 
 
 

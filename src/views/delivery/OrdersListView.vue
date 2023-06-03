@@ -47,59 +47,6 @@ export default {
       affectationFilter: 'all',
       upsellFilter: 'all',
       search: '',
-      
-      columns: 
-      [
-        {
-            prop: 'id',
-            name: '#',
-        },
-        {
-            prop: 'date',
-            name: 'Date',
-        },
-        {
-            prop: "client",
-            name: "Client",
-        },
-        {
-          prop: 'address',
-          name: 'Address',
-        },
-        {
-          prop: 'phone',
-          name: 'Phone',
-        },
-        {
-          prop: 'product',
-          name: 'Product',
-        },
-        {
-          prop: 'delivery',
-          name: 'Delivery'
-        },
-        {
-            prop: "quantity",
-            name: "Qty",
-        },
-        {
-            prop: 'price',
-            name: 'Price',
-        },
-        {
-            prop: 'city',
-            name: 'City',
-        },
-        {
-            prop: 'note',
-            name: 'Note',
-        },
-        {
-            prop: 'actions',
-            name: 'Actions',
-        },
-        
-    ],
     }
   },
   computed: {

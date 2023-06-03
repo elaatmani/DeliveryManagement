@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { deliveryStatus } from '@/config/orders'
+import { deliveryStatus, disabledForDelivery } from '@/config/orders'
 import Sale from '@/api/Sale'
 import OrderReporting from '@/views/delivery/partials/OrderReporting'
 
@@ -39,7 +39,7 @@ export default {
 
     data: () => ({
         status: deliveryStatus,
-        disabled: ['expidier', 'annuler', 'dispatch'],
+        disabled: disabledForDelivery,
         delivery: 2,
         isLoading: false,
         note: '',

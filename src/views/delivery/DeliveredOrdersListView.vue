@@ -61,7 +61,7 @@
       </div>
 
       <div v-if="orders.length > 0" class="">
-        <OrdersTable :columns="columns" :orders="filteredOrders" />
+        <OrdersTable :orders="filteredOrders" />
       </div>
       <div v-else>
         <p>No orders for now</p>
@@ -89,58 +89,7 @@ export default {
       upsellFilter: 'all',
       search: '',
 
-      columns: 
-      [
-        {
-            prop: 'id',
-            name: '#',
-        },
-        {
-            prop: 'date',
-            name: 'Date',
-        },
-        {
-            prop: "client",
-            name: "Client",
-        },
-        {
-          prop: 'address',
-          name: 'Address',
-        },
-        {
-          prop: 'phone',
-          name: 'Phone',
-        },
-        {
-          prop: 'product',
-          name: 'Product',
-        },
-        {
-          prop: 'delivery',
-          name: 'Delivery'
-        },
-        {
-            prop: "quantity",
-            name: "Qty",
-        },
-        {
-            prop: 'price',
-            name: 'Price',
-        },
-        {
-            prop: 'city',
-            name: 'City',
-        },
-        {
-            prop: 'note',
-            name: 'Note',
-        },
-        {
-            prop: 'actions',
-            name: 'Actions',
-        },
-        
-    ],
+      
     }
   },
   computed: {

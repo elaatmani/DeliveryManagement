@@ -27,7 +27,19 @@
                         {{ order.phone }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.product_name }}
+                        <div class="tw-pb-2">
+                            <ul>
+                            <li v-for="i in order.items" :key="i.id" class="tw-font-bold">
+                                -
+                                <span
+                                class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
+                                >{{ i.quantity }}
+                                X </span
+                                >{{ i.product.name }} | {{ i.product_variation.size }} /
+                                {{ i.product_variation.color }}
+                            </li>
+                            </ul>
+                        </div>
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
                         <div class="tw-flex tw-items-center tw-justify-center">
@@ -44,9 +56,6 @@
                                 </span>
                             </div>
                         </div>
-                    </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ order.quantity }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ order.price }}

@@ -38,3 +38,5 @@ export const deliveryStatus = [
     { id: 10, value:'retourner', name: 'Retourné', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' },
     { id: 11, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' }
 ]
+
+export const disabledForDelivery = [null, 'expidier', 'annuler', 'dispatch'];

@@ -7,7 +7,7 @@
     >
       <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-2">
         <div v-for="user in 4" :key="user">
-          <div class="tw-w-[120px] tw-h-[55px] tw-bg-neutral-400/40 tw-animate-pulse tw-rounded-lg tw-border tw-grid tw-grid-cols-12">
+          <div class="tw-w-[120px] tw-h-[55px] tw-bg-neutral-300/10 tw-animate-pulse tw-rounded tw-border tw-grid tw-grid-cols-12">
                 
             </div>
         </div>
@@ -22,8 +22,8 @@
 
       <div class="tw-flex tw-items-center tw-flex-wrap tw-gap-2">
         <div v-for="user in users" :key="user.id">
-          <div class="py-2 px-3 tw-rounded-lg tw-border tw-grid tw-grid-cols-12">
-                <div class="tw-col-span-12 tw-font-medium tw-capitalize tw-text-md tw-text-neutral-700 tw-whitespace-nowrap">
+          <div class="py-2 px-3 tw-rounded tw-border tw-grid tw-grid-cols-12">
+                <div class="tw-col-span-12 tw-font-medium tw-capitalize tw-text-sm tw-text-neutral-600 tw-whitespace-nowrap">
                     {{ user.firstname }} {{ user.lastname }}
                 </div>
                 <div class="tw-col-span-12 tw-whitespace-nowrap tw-text-xs">

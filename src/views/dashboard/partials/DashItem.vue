@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="tw-rounded-lg tw-border pa-5" color="white" height="fit">
+  <v-sheet class="tw-rounded-lg tw-border pa-5 py-2" color="white" height="fit">
     <div class="tw-flex tw-items-center">
       <div :class="bgColor" class="pa-3 rounded-circle tw-w-fit tw-mr-3">
         <v-icon :color="dash.color" size="large" :icon="dash.icon"></v-icon>

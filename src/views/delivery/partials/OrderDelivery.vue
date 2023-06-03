@@ -19,10 +19,10 @@
       <ul
         class="tw-py-2 tw-space-y-1 tw-text-sm tw-text-gray-700 tw-max-h-[250px] tw-overflow-y-auto"
       >
-        <li @click="handleChange(option)" v-for="option in options" :key="option.id">
+        <li @click="!disabled.includes(option.value) && handleChange(option)" v-for="option in options" :key="option.id">
           <a
-            class="tw-block tw-px-4 tw-py-2 hover:tw-bg-gray-100"
-            :class="[option.text, option.bg]"
+            class="tw-block tw-px-4 tw-py-2"
+            :class="[!disabled.includes(option.value) ? [option.text, option.bg] : 'tw-text-neutral-400/80 tw-bg-neutral-400/10']"
             >{{ option.name }}</a
           >
         </li>
@@ -36,7 +36,7 @@
 
 <script>
 import Sale from '@/api/Sale';
-import { deliveryStatus } from '@/config/orders';
+import { deliveryStatus, disabledForDelivery } from '@/config/orders';
 import OrderReporting from '@/views/delivery/partials/OrderReporting'
 
 export default {
@@ -51,7 +51,7 @@ export default {
             note: '',
             selectedId: 0,
             allOptions: deliveryStatus,
-            disabled: ['expidier', 'annuler', 'dispatch'],
+            disabled: disabledForDelivery,
             showPopupReporter:false
         }
     },

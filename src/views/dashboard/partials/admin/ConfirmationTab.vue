@@ -3,11 +3,11 @@
     <div
       class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-4 tw-gap-2 py-5"
     >
-      <div class="lg:tw-col-span-2 md:tw-col-span-2 tw-col-span-4">
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="totalSales" />
       </div>
 
-      <div class="lg:tw-col-span-2 md:tw-col-span-2 tw-col-span-4">
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="confirmedSales" />
       </div>
 
@@ -15,9 +15,9 @@
         <DashItemTwo :dash="newSales" />
       </div>
 
-      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+      <!-- <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="toProcess" />
-      </div>
+      </div> -->
 
       <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="reportedSales" />
@@ -59,9 +59,9 @@ export default {
       return {
         id: 1,
         title: "Total",
-        value: this.sales.filter((i) => i).length,
+        value: this.sales.length,
         // value: 35,
-        color: "primary-blue",
+        color: "primary-orange",
         icon: "mdi mdi-all-inclusive",
       };
     },
@@ -71,7 +71,7 @@ export default {
         title: "New",
         value: this.sales.filter((i) => !i.confirmation).length,
         // value: 35,
-        color: "lime-darken-3",
+        color: "primary-green",
         icon: "mdi mdi-new-box",
       };
     },
@@ -82,7 +82,7 @@ export default {
         value: this.sales.filter(
           (i) =>
             !!i.confirmation &&
-            !["confirmer", "livre", "expidier"].includes(i.confirmation)
+            !["confirmer", "livrer", "expidier"].includes(i.confirmation)
         ).length,
         // value: 231,
         color: "primary-orange",
@@ -95,7 +95,7 @@ export default {
         title: "Confirmed",
         value: this.sales.filter((i) => i.confirmation == "confirmer").length,
         // value: 112,
-        color: "primary-green",
+        color: "primary-blue",
         icon: "mdi-phone-check",
       };
     },
