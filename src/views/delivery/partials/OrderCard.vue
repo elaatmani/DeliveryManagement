@@ -49,7 +49,7 @@
             ></v-icon> -->
            <div class="tw-flex tw-items-center tw-gap-3 " v-for="item in order.items" :key="item.id">
              <div class="tw-flex tw-items-center">
-                <span> {{ item.product.name }} | {{ item.product_variation.size }}</span>
+                <span> {{ item.product.name }} <span v-if="!!item.product_variation.size">| {{ item.product_variation.size }}</span> <span v-if="!!item.product_variation.size">| {{ item.product_variation.size }}</span></span>
             </div>
             <div>
               <p class="tw-min-w-fit tw-w-[25px] tw-h-[25px] tw-flex tw-items-center tw-justify-center tw-text-md tw-font-bold tw-p-1 tw-rounded tw-text-orange-400 tw-bg-orange-400/10">

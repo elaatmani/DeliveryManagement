@@ -35,8 +35,9 @@
                                 class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
                                 >{{ i.quantity }}
                                 X </span
-                                >{{ i.product.name }} | {{ i.product_variation.size }} /
-                                {{ i.product_variation.color }}
+                                >{{ i.product.name }} 
+                                <span v-if="!!i.product_variation.size">| {{ i.product_variation.size }}</span>
+                                <span v-if="!!i.product_variation.color">| {{ i.product_variation.color }}</span>
                             </li>
                             </ul>
                         </div>

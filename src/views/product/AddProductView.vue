@@ -302,8 +302,8 @@
               <div>
                 <div class="tw-col-span-12 tw-flex tw-justify-end">
                   <button
-                    :disabled="!size || !color || !quantity"
-                    :class="{ 'bg-primary-color': size && color && quantity}"
+                    :disabled="!quantity"
+                    :class="{ 'bg-primary-color': quantity}"
                     @click="addVariant"
                     class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
                   >
@@ -498,8 +498,8 @@ export default {
       if(!this.addVariants) {
         const variants = [{
               id: this.variantId,
-              color: 'DEFAULT',
-              size: 'DEFAULT',
+              color: null,
+              size: null,
               quantity: this.quantity,
               warehouse_id: this.warehouse,
               stockAlert: this.stockAlert

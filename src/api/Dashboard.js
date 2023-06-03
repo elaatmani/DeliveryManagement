@@ -8,6 +8,12 @@ class Dashboard {
         return Api.get('api/dashboard/delivery');
     }
 
+
+    async agente() {
+        await Csrf.getCookie();
+        return Api.get('api/dashboard/agente');
+    }
+
 }
 
 
