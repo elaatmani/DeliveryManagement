@@ -7,6 +7,7 @@
         </div>
         <div >
             <v-btn
+            v-if="$can('create_sheet')"
             color="primary-color"
             @click="showPopup = true"
             variant="flat"

@@ -23,7 +23,7 @@ export default
                     module: 'sheet',
                     subModule: 'sheet/list',
                     title: 'Google Sheets List',
-                    gate: 'all'
+                    gate: 'show_all_sheets'
                 }
             },
 
