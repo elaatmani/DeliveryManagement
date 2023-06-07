@@ -62,10 +62,25 @@
             />
           </div>
 
+          <div
+            class="md:tw-col-span-12 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
+          >
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Confirmation</div>
+            <OrderConfirmation
+              :order="sale"
+              @update="updateConfirmation"
+              :confirmation="sale.confirmation"
+              :id="sale.id"
+            />
+          </div>
+          <div class="md:tw-col-span-6 tw-col-span-12">
+            <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
+            <OrderAffectation :order="sale" :affectation="sale.affectation" :id="sale.id" />
+          </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
             <select
-            v-model="sale.upsell"
+              v-model="sale.upsell"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             >
               <option :value="u.value" v-for="u in upsells" :key="u.id">
@@ -74,30 +89,30 @@
             </select>
           </div>
 
-          <div class="md:tw-col-span-6 tw-col-span-12  tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3">
+          <div
+            class="md:tw-col-span-6 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
+          >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Warehouse</div>
             <select
               v-model="warehouse_id"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             >
-              <option :value="0">
-                Select
-              </option>
+              <option :value="0">Select</option>
               <option :value="w.id" v-for="w in warehouses" :key="w.id">
                 {{ w.name }}
               </option>
             </select>
           </div>
 
-          <div class="md:tw-col-span-6 tw-col-span-12  tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3">
+          <div
+            class="md:tw-col-span-6 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
+          >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
             <select
               v-model="product_id"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             >
-              <option :value="0">
-                Select
-              </option>
+              <option :value="0">Select</option>
               <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
                 {{ p.name }}
               </option>
@@ -110,9 +125,7 @@
               v-model="product_variation_id"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             >
-              <option :value="0">
-                Select
-              </option>
+              <option :value="0">Select</option>
               <option :value="v.id" v-for="v in variations" :key="v.id">
                 {{ v.size }} / {{ v.color }}
               </option>
@@ -126,7 +139,7 @@
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
           </div>
-          <div class="md:tw-col-span-6 tw-col-span-12">
+          <!-- <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="tw-flex tw-items-center tw-w-full tw-text-neutral-600 dark:tw-text-neutral-200 tw-text-md tw-py-1">
                 <label class="tw-relative tw-inline-flex tw-items-center tw-cursor-pointer tw-w-fit  -tw-rotate-90 tw-scale-75">
                     <input type="checkbox" v-model="sale.counts_from_warehouse" class="tw-sr-only tw-peer">
@@ -138,9 +151,12 @@
                     <span :class="[!sale.counts_from_warehouse ? 'tw-text-orange-500' : 'tw-text-neutral-500']" class="tw-ml-1 tw-text-sm tw-font-medium tw-duration-300">Delivery</span>
                 </label>
             </div>
-          </div>
-          <div class="md:tw-col-span-6 tw-col-span-12">
-            <button @click="addItem" class="tw-block tw-ml-auto tw-py-1 tw-px-4 tw-rounded tw-bg-emerald-500 tw-text-white">
+          </div> -->
+          <div class="md:tw-col-span-12 tw-col-span-12">
+            <button
+              @click="addItem"
+              class="tw-block tw-ml-auto tw-py-1 tw-px-4 tw-rounded tw-bg-emerald-500 tw-text-white"
+            >
               Add
             </button>
           </div>
@@ -148,7 +164,9 @@
           <div v-if="items.length" class="md:tw-col-span-12 tw-col-span-12">
             <div class="tw-max-w-full tw-overflow-auto">
               <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
-                <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50">
+                <thead
+                  class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50"
+                >
                   <tr>
                     <th
                       v-for="column in [
@@ -156,7 +174,7 @@
                         'variation',
                         'quantity',
                         'warehouse',
-                        'actions'
+                        'actions',
                       ]"
                       :class="[column == 'actions' && '!tw-w-[40px]']"
                       :key="column"
@@ -187,7 +205,8 @@
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
-                      {{ item.product_variation.size }} / {{ item.product_variation.color }}
+                      {{ item.product_variation.size }} /
+                      {{ item.product_variation.color }}
                     </th>
                     <th
                       scope="row"
@@ -206,7 +225,17 @@
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
                       <div>
-                        <v-btn @click="deleteItem(item.id)" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="red" variant="flat" density="comfortable" :ripple="false" size="small">
+                        <v-btn
+                          @click="deleteItem(item.id)"
+                          class="mr-2 !tw-px-0 !tw-py-0"
+                          min-height="25px"
+                          min-width="30"
+                          color="red"
+                          variant="flat"
+                          density="comfortable"
+                          :ripple="false"
+                          size="small"
+                        >
                           <v-icon color="white">mdi-delete-outline</v-icon>
                         </v-btn>
                       </div>
@@ -244,10 +273,13 @@
 
 <script>
 import Sale from "@/api/Sale";
-import { upsells } from '@/config/orders';
-import Product from '@/api/Product';
+import { upsells } from "@/config/orders";
+import Product from "@/api/Product";
+import OrderConfirmation from "@/views/order/partials/OrderConfirmation";
+import OrderAffectation from '@/views/order/partials/OrderAffectation';
 
 export default {
+  components: { OrderConfirmation , OrderAffectation},
   props: ["visible", "order"],
 
   data() {
@@ -280,9 +312,9 @@ export default {
       this.product_variation_id = 0;
     },
     warehouse_id() {
-      this.product_id = 0
-      this.product_variation_id = 0
-    }
+      this.product_id = 0;
+      this.product_variation_id = 0;
+    },
   },
 
   computed: {
@@ -291,26 +323,29 @@ export default {
     },
 
     isLoaded() {
-        return  this.$store.getters["product/fetched"];
+      return this.$store.getters["product/fetched"];
     },
 
     warehouses() {
-      const warehouses = this.products.flatMap(
-        p => {
-          return p.variations.map(v => v.warehouse)
-        })
+      const warehouses = this.products.flatMap((p) => {
+        return p.variations.map((v) => v.warehouse);
+      });
 
-      const warehouses_ids = warehouses.map(w => w.id)
+      const warehouses_ids = warehouses.map((w) => w.id);
 
-      return warehouses.filter((item, index) => warehouses_ids.indexOf(item.id) === index);
+      return warehouses.filter(
+        (item, index) => warehouses_ids.indexOf(item.id) === index
+      );
     },
 
     filtredProducts() {
-      if(this.warehouse_id == 0) {
-        return []
+      if (this.warehouse_id == 0) {
+        return [];
       }
 
-      return this.products.filter(p => p.variations.some(v => v.warehouse_id == this.warehouse_id))
+      return this.products.filter((p) =>
+        p.variations.some((v) => v.warehouse_id == this.warehouse_id)
+      );
     },
 
     cities() {
@@ -318,11 +353,11 @@ export default {
     },
 
     variations() {
-      if(this.product_id == 0) {
-        return []
+      if (this.product_id == 0) {
+        return [];
       }
 
-      return this.products.find(p => p.id == this.product_id) .variations
+      return this.products.find((p) => p.id == this.product_id).variations;
     },
 
     isFormValid() {
@@ -338,22 +373,29 @@ export default {
   },
 
   methods: {
-
     deleteItem(id) {
-      this.items = this.items.filter(i => i.id != id)
+      this.items = this.items.filter((i) => i.id != id);
     },
 
     addItem() {
-      if([this.warehouse_id, this.product_id, this.product_variation_id].includes(0)) {
+      if (
+        [
+          this.warehouse_id,
+          this.product_id,
+          this.product_variation_id,
+        ].includes(0)
+      ) {
         this.$alert({
-          title: 'Choose a product',
-          type: 'warning'
-        })
+          title: "Choose a product",
+          type: "warning",
+        });
         return false;
       }
 
-      const product = this.filtredProducts.find(p => p.id == this.product_id);
-      const product_variation = this.variations.find(p => p.id == this.product_variation_id);
+      const product = this.filtredProducts.find((p) => p.id == this.product_id);
+      const product_variation = this.variations.find(
+        (p) => p.id == this.product_variation_id
+      );
 
       const item = {
         id: this.item_id,
@@ -362,23 +404,22 @@ export default {
         product: product,
         product_variation: product_variation,
         product_variation_id: product_variation.id,
-        quantity: this.quantity
-      }
+        quantity: this.quantity,
+      };
 
-      this.items.push(item)
-      this.product_id = 0
-      this.product_variation_id = 0
-      this.item_id += 1
-    
+      this.items.push(item);
+      this.product_id = 0;
+      this.product_variation_id = 0;
+      this.item_id += 1;
     },
 
     update() {
-        if(!this.isFormValid) {
+      if (!this.isFormValid) {
         this.$alert({
-              type: "warning",
-              title: "Please fill all the form",
-            });
-        return false
+          type: "warning",
+          title: "Please fill all the form",
+        });
+        return false;
       }
       this.isLoading = true;
 
@@ -391,44 +432,41 @@ export default {
         adresse: this.sale.adresse,
         upsell: this.sale.upsell,
         counts_from_warehouse: this.sale.counts_from_warehouse,
-        orderItems: this.items
-      }
+        orderItems: this.items,
+      };
 
-      this.isLoading = true
+      this.isLoading = true;
       Sale.update(order.id, order)
-      .then(
-        res => {
-          if(res.data.code == 'SUCCESS') {
-            
-            this.showUpdatePopup = false
+        .then((res) => {
+          if (res.data.code == "SUCCESS") {
+            this.showUpdatePopup = false;
             this.$alert({
-                type: 'success',
-                title: 'Order updated'
-            })
+              type: "success",
+              title: "Order updated",
+            });
 
-            this.$store.dispatch('order/update', { id: order.id, order: res.data.data.sale })
-            this.$emit('update:visible', false)
-            this.$emit('updateOrder', res.data.data.sale );
+            this.$store.dispatch("order/update", {
+              id: order.id,
+              order: res.data.data.sale,
+            });
+            this.$emit("update:visible", false);
+            this.$emit("updateOrder", res.data.data.sale);
           }
-        }
-      )
-      .catch(
-        (err) => {
-          this.$handleApiError(err)
-      })
-      .finally(
-        () => {
-          this.isLoading = false
-          }
-      )
+        })
+        .catch((err) => {
+          this.$handleApiError(err);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     handleCancel() {
-      this.sale = {...this.order}
-      this.items = [...this.order.items]
-      this.$emit('update:visible', false)
+      this.sale = { ...this.order };
+      this.items = [...this.order.items];
+      this.$emit("update:visible", false);
     },
     getProducts() {
-        return Product.all().then(
+      return Product.all().then(
         (res) => {
           if (res.data.code == "SUCCESS") {
             this.$store.dispatch("product/setProducts", res.data.data.products);
@@ -440,20 +478,17 @@ export default {
         }
       );
     },
-    
   },
 
   mounted() {
-    this.sale = {...this.order}
-    this.items = [...this.order.items]
+    this.sale = { ...this.order };
+    this.items = [...this.order.items];
 
-    if(!this.isLoaded) {
-        this.getProducts();
+    if (!this.isLoaded) {
+      this.getProducts();
     }
-
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,135 +1,151 @@
 <template>
-  <div>
-    <div class="mb-5 tw-flex tw-justify-between tw-items-center">
-      <div>
-        <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Order</h1>
-        <h2 class="tw-text-gray-500 tw-text-sm">Order Details</h2>
-      </div>
-    </div>
-
-
-    <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
-      <div class="">
-        <div>
-            <v-btn @click="addOrder" color="primary-color" variant="flat" class="text-capitalize">
-                <span class="text-white">
-                    {{ isLoaded ? 'Add Order' : 'Loading...'}}
-                </span>
-                <v-icon v-if="!isLoaded" icon="mdi-autorenew" class="ml-2 text-white tw-animate-spin"></v-icon>
-            </v-btn>
+    <div>
+        <div class="mb-5 tw-flex tw-justify-between tw-items-center">
+            <div>
+                <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Order</h1>
+                <h2 class="tw-text-gray-500 tw-text-sm">Order Details</h2>
+            </div>
         </div>
-
-        <div v-if="isLoaded && isOrderExists">
-
-            <div class="mt-5">
-                <div class="tw-py-5" v-if="!!newOrder.product_name">
-                        <p class="tw-text-neutral-400 tw-text-md">Original Order: </p>
-                        <p>
+        <div class="py-5 px-5 tw-border bg-white tw-w-full tw-rounded-md">
+            <div class="">
+                <div>
+                    <v-btn @click="addOrder" color="primary-color" variant="flat" class="text-capitalize">
+                        <span class="text-white">
+                        {{ isLoaded ? 'Add Order' : 'Loading...'}}
+                        </span>
+                        <v-icon v-if="!isLoaded" icon="mdi-autorenew" class="ml-2 text-white tw-animate-spin"></v-icon>
+                    </v-btn>
+                </div>
+                <div v-if="isLoaded && isOrderExists">
+                    <div class="mt-5">
+                        <div class="tw-py-5" v-if="!!newOrder.product_name">
+                            <p class="tw-text-neutral-400 tw-text-md">Original Order: </p>
+                            <p>
                             <ul>
                                 <li v-for="i in newOrder.product_name.split('\n')" :key="i" class="tw-font-bold">
                                     - {{ i }}
                                 </li>
                             </ul>
-                        </p>
-                    </div>
-                <div class="tw-grid tw-grid-cols-12 mt-">
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Client: </p>
-                        <p class="tw-text-neutral-700">{{ newOrder.fullname }}</p>
-                    </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Phone: </p>
-                        <div class="tw-flex tw-items-center">
-                            <p class="tw-text-neutral-700">{{ newOrder.phone }}</p>
-                            <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + newOrder.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="text" density="comfortable" :ripple="false" size="small">
-                                <v-icon color="green">mdi-whatsapp</v-icon>
-                            </v-btn>
+                            </p>
+                        </div>
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
+                                <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50 ">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Client
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Phone
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Product
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Price
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            City
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Adresse
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tw-bg-white tw-border-b">
+                                        <th scope="row" class="px-6 py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap">
+                                            {{ newOrder.fullname }}
+                                        </th>
+                                        <td class="px-6 py-4 tw-flex tw-items-center">
+                                            {{ newOrder.phone }}
+                                            <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + newOrder.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="text" density="comfortable" :ripple="false" size="small">
+                                                <v-icon color="green">mdi-whatsapp</v-icon>
+                                            </v-btn>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <p>
+                                            <ul>
+                                                <li v-for="i in newOrder.items" :key="i.id" class="tw-font-bold">
+                                                    -
+                                                    <span
+                                                        class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
+                                                        >{{ i.quantity }}
+                                                    X </span
+                                                        >{{ i.product.name }} 
+                                                    <span v-if="!!i.product_variation.size">| {{ i.product_variation.size }}</span>
+                                                    <span v-if="!!i.product_variation.color">| {{ i.product_variation.color }}</span>
+                                                </li>
+                                            </ul>
+                                            </p>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ newOrder.price }} DH
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ newOrder.city }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ newOrder.adresse }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true"  class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="orange" variant="flat" density="comfortable" :ripple="false" size="small">
+                                                <v-icon color="white">mdi-pencil-outline</v-icon>
+                                            </v-btn>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-6 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Product: </p>
-                        <p>
-                            <ul>
-                                <li v-for="i in newOrder.items" :key="i.id" class="tw-font-bold">
-                                    -
-                                    <span
-                                    class="tw-text-orange-500 tw-font-bold tw-pr-1 tw-text-xs"
-                                    >{{ i.quantity }}
-                                    X </span
-                                    >{{ i.product.name }} 
-                                    <span v-if="!!i.product_variation.size">| {{ i.product_variation.size }}</span>
-                                    <span v-if="!!i.product_variation.color">| {{ i.product_variation.color }}</span>
-                                </li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Price:</p>
-                        <p class="tw-text-neutral-700">{{ newOrder.price }}</p>
-                    </div>
-                    
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">City: </p>
-                        <p class="tw-text-neutral-700">{{ newOrder.city }}</p>
-                    </div>
-
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
-                        <p class="tw-text-neutral-400 tw-text-md">Adresse: </p>
-                        <p class="tw-text-neutral-700">{{ newOrder.adresse }}</p>
-                    </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                    <!-- <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation: </p>
-                        <OrderConfirmation :order="newOrder" @update="updateConfirmation" :key="newOrder.confirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
-                    </div>
-                    <div v-if="newOrder.confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        <OrderConfirmation :order="newOrder" @update="updateConfirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
+                        </div>
+                        <div v-if="newOrder.confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affectation: </p>
                         <OrderAffectation :order="newOrder" :affectation="newOrder.affectation" :id="newOrder.id" />
-                    </div>
-                    <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
+                        </div>
+                        <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell: </p>
                         <OrderUpsell :order="newOrder" @update="updateUpsell" :upsell="newOrder.upsell" :id="newOrder.id" />
-                    </div>
+                        </div> -->
+                    <!-- <div  class="tw-flex tw-gap-2 tw-justify-end">
+                        <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
+                            <span class="text-white">
+                                Edit
+                            </span>
+                        </v-btn>
+                        <v-btn @click="clearOrder" color="primary-color" variant="flat" class="text-capitalize">
+                            <span class="text-white">
+                                Save
+                            </span>
+                        </v-btn>
+                        </div> -->
+                </div>
+                <div v-if="isLoaded && !isOrderExists">
+                    <p class="tw-text-neutral-400 tw-py-5">No Order was found !</p>
                 </div>
             </div>
-
-            <div  class="tw-flex tw-gap-2 tw-justify-end">
-                <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
-                    <span class="text-white">
-                        Edit
-                    </span>
-                </v-btn>
-                <v-btn @click="clearOrder" color="primary-color" variant="flat" class="text-capitalize">
-                    <span class="text-white">
-                        Save
-                    </span>
-                </v-btn>
-            </div>
         </div>
-
-        <div v-if="isLoaded && !isOrderExists">
-            <p class="tw-text-neutral-400 tw-py-5">No Order was found !</p>
-        </div>
-
-      </div>
+        <UpdateOrder @update-order="handleUpdateOrder" v-model:visible="showUpdatePopup" v-if="showUpdatePopup" :order="newOrder" />
     </div>
-
-    
-
-    <UpdateOrder @update-order="handleUpdateOrder" v-model:visible="showUpdatePopup" v-if="showUpdatePopup" :order="newOrder" />
-  </div>
 </template>
 
 <script>
-import OrderConfirmation from '@/views/order/partials/OrderConfirmation'
-import OrderAffectation from '@/views/order/partials/OrderAffectation'
-import OrderUpsell from '@/views/order/partials/OrderUpsell'
+// import OrderConfirmation from '@/views/order/partials/OrderConfirmation'
+// import OrderAffectation from '@/views/order/partials/OrderAffectation'
+// import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import Sale from '@/api/Sale';
 import User from '@/api/User';
 import { validateName } from '@/helpers/validators';
 import UpdateOrder from '@/views/order/partials/UpdateOrder'
 
 export default {
-    components: { OrderConfirmation, OrderAffectation, OrderUpsell, UpdateOrder },
+    components: { UpdateOrder },
   data() {
     return {
         isOrderExists: false,
