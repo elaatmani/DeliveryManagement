@@ -156,6 +156,10 @@ import Dashboard from '@/api/Dashboard';
       earnings() {
         return this.orders.reduce(
           (s,o) => {
+            if(o.factorisations == null) {
+              return s;
+            }
+            
             if(!o.factorisations.paid && !o.factorisations.close) {
               return s + o.factorisations.price
             }

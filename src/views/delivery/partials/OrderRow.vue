@@ -51,7 +51,7 @@
                                     <span v-if="order.delivery == 'reporter'">
                                         <v-icon size="x-small">mdi-autorenew</v-icon>
                                         <span >
-                                        {{ order.reported_delivery_date  }}
+                                        {{ order?.reported_delivery_date?.split("T")[0]  }}
                                         </span>
                                     </span>
                                 </span>

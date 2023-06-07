@@ -79,7 +79,7 @@
                     </div>
                     <div class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Confirmation: </p>
-                        <OrderConfirmation :order="newOrder" @update="updateConfirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
+                        <OrderConfirmation :order="newOrder" @update="updateConfirmation" :key="newOrder.confirmation" :confirmation="newOrder.confirmation" :id="newOrder.id" />
                     </div>
                     <div v-if="newOrder.confirmation === 'confirmer'" class="md:tw-col-span-6 lg:tw-col-span-3 tw-col-span-12 tw-py-5">
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Affectation: </p>
