@@ -64,7 +64,7 @@
                                     <span v-if="order.confirmation == 'reporter'">
                                         <v-icon size="x-small">mdi-autorenew</v-icon>
                                         <span >
-                                        {{ order.reported_agente_date  }}
+                                        {{ order?.reported_agente_date?.split("T")[0]  }}
                                         </span>
                                     </span>
                                 </span>

@@ -134,7 +134,7 @@
                     <span v-if="sale.confirmation == 'reporter'">
                       <v-icon size="x-small">mdi-autorenew</v-icon>
                       <span>
-                        {{ sale.reported_agente_date }}
+                        {{ sale?.reported_agente_date?.split("T")[0] }}
                       </span>
                     </span>
                   </span>
