@@ -67,6 +67,7 @@
           >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Confirmation</div>
             <OrderConfirmation
+              
               :order="sale"
               @update="updateConfirmation"
               :confirmation="sale.confirmation"

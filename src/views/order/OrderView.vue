@@ -33,6 +33,9 @@
                                 <thead class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50 ">
                                     <tr>
                                         <th scope="col" class="px-6 py-3">
+                                            #
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             Client
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -57,6 +60,9 @@
                                 </thead>
                                 <tbody>
                                     <tr class="tw-bg-white tw-border-b">
+                                        <th scope="row" class="px-6 py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap">
+                                            {{ newOrder.id }}
+                                        </th>
                                         <th scope="row" class="px-6 py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap">
                                             {{ newOrder.fullname }}
                                         </th>
