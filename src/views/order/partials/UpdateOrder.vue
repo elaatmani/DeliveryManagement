@@ -66,16 +66,17 @@
             class="md:tw-col-span-12 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
           >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Confirmation</div>
-            <OrderConfirmation
+            <AddOrderConfirmation
               :order="sale"
-              @update="updateConfirmation"
-              :confirmation="sale.confirmation"
               :id="sale.id"
+              v-model:confirmation="sale.confirmation"
+              @confirmed="(note) => sale.note = note"
+              @reported="handleReported"
             />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <OrderAffectation :order="sale" :affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
@@ -275,11 +276,11 @@
 import Sale from "@/api/Sale";
 import { upsells } from "@/config/orders";
 import Product from "@/api/Product";
-import OrderConfirmation from "@/views/order/partials/OrderConfirmation";
-import OrderAffectation from '@/views/order/partials/OrderAffectation';
+import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
+import AddOrderAffectation from '@/views/order/partials/AddOrderAffectation';
 
 export default {
-  components: { OrderConfirmation , OrderAffectation},
+  components: { AddOrderConfirmation , AddOrderAffectation},
   props: ["visible", "order"],
 
   data() {
@@ -295,6 +296,8 @@ export default {
       item_id: 1,
       items: [],
 
+      reported_date: null,
+
       sale: {
         fullname: "",
         phone: "",
@@ -302,6 +305,7 @@ export default {
         adresse: "",
         price: 0,
         upsell: null,
+        confirmation: null,
         counts_from_warehouse: false,
       },
     };
@@ -433,6 +437,11 @@ export default {
         upsell: this.sale.upsell,
         counts_from_warehouse: this.sale.counts_from_warehouse,
         orderItems: this.items,
+        confirmation: this.sale.confirmation,
+        note: this.sale.note,
+        affectation: this.sale.affectation,
+        reported_agente_note: this.sale.reported_agente_note,
+        reported_agente_date: this.sale.reported_agente_date,
       };
 
       this.isLoading = true;
@@ -464,6 +473,11 @@ export default {
       this.sale = { ...this.order };
       this.items = [...this.order.items];
       this.$emit("update:visible", false);
+    },
+    handleReported(data) {
+      this.sale.reported_agente_note = data.reported_agente_note
+      this.sale.reported_agente_date = data.reported_agente_date
+      console.log(data);
     },
     getProducts() {
       return Product.all().then(
