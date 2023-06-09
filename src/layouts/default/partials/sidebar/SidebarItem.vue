@@ -102,6 +102,14 @@
     <div v-if="link.id == 4">
       <SidebarSales />
     </div>
+
+    <div v-if="link.id == 7">
+      <SidebarDelivery />
+    </div>
+
+    <div v-if="link.id == 8">
+      <SidebarAgente />
+    </div>
   </div>
 </template>
 
@@ -109,11 +117,13 @@
 import { localUrl } from "@/config/config";
 import { disabled_links } from "@/config/links";
 import SidebarSales from "@/layouts/default/partials/sidebar/SidebarSales.vue";
+import SidebarDelivery from '@/layouts/default/partials/sidebar/SidebarDelivery'
+import SidebarAgente from '@/layouts/default/partials/sidebar/SidebarAgente'
 
 export default {
   props: ["link"],
 
-  components: { SidebarSales },
+  components: { SidebarSales, SidebarDelivery, SidebarAgente },
 
   data() {
     return {

@@ -113,18 +113,18 @@
                         <p class="tw-text-neutral-400 tw-text-md tw-mb-2">Upsell: </p>
                         <OrderUpsell :order="newOrder" @update="updateUpsell" :upsell="newOrder.upsell" :id="newOrder.id" />
                         </div> -->
-                    <!-- <div  class="tw-flex tw-gap-2 tw-justify-end">
-                        <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
+                    <div  class="tw-flex tw-gap-2 tw-justify-end tw-mt-5">
+                        <!-- <v-btn v-if="newOrder.upsell == 'oui' || true" @click="showUpdatePopup = true" color="blue" variant="flat" class="text-capitalize">
                             <span class="text-white">
                                 Edit
                             </span>
-                        </v-btn>
+                        </v-btn> -->
                         <v-btn @click="clearOrder" color="primary-color" variant="flat" class="text-capitalize">
                             <span class="text-white">
                                 Save
                             </span>
                         </v-btn>
-                        </div> -->
+                        </div>
                 </div>
                 <div v-if="isLoaded && !isOrderExists">
                     <p class="tw-text-neutral-400 tw-py-5">No Order was found !</p>
@@ -235,6 +235,11 @@ export default {
             return false
         }
         this.isOrderExists = false;
+        this.$alert({
+            type: 'success',
+            title: 'Order Saved Successfully !'
+        })
+        this.$store.dispatch('order/addOrder', this.newOrder)
     },
     updateOrder() {
         this.validateForm()

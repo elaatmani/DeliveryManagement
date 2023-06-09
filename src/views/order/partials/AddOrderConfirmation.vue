@@ -10,7 +10,7 @@
         v-model="confirmationValue"
           class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
         >
-          <option v-for="o in allOptions" :key="o.id" :value="o.value">
+          <option :class="[o.text, !o.value && '!tw-text-gray-700']" v-for="o in allOptions" :key="o.id" :value="o.value">
             {{ o.name }}
           </option>
         </select>

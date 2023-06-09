@@ -2,7 +2,9 @@
 
 let initialState = {
     orders: [],
-    order: null
+    order: null,
+    all_orders: [],
+    fetched: false,
 }
 
 export default {
@@ -12,14 +14,30 @@ export default {
     state: initialState,
 
     getters: {
+        fetched: (state) => state.fetched,
         orders: (state) => state.orders,
         order: (state) => state.order,
+        allOrders: (state) => state.all_orders,
     },
 
     mutations: {
         SET_ORDERS: (state, payload) => {
-            state.orders = payload
+            state.orders = payload;
         },
+
+        ADD_ORDER: (state, payload) => {
+            state.orders.unshift(payload);
+            state.all_orders.unshift(payload);
+        },
+
+        SET_FETCHED: (state, payload) => {
+            state.fetched = payload;
+        },
+
+        SET_ALL_ORDERS: (state, payload) => {
+            state.all_orders = payload
+        },
+
         SET_ORDER: (state, payload) => {
             state.order = payload
         },
@@ -32,9 +50,29 @@ export default {
                     return item
                 }
             )
+            state.all_orders = state.all_orders.map(
+                item => {
+                    if(item.id === payload.id) {
+                        return payload.order
+                    }
+                    return item
+                }
+            )
         },
         UPDATE_CONFIRMATION: (state, payload) => {
             state.orders = state.orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.confirmation = payload.confirmation
+                        if(payload.confirmation == 'confirmer') {
+                            item.delivery = 'dispatch'
+                        }
+                        console.log('order updated');
+                    }
+                    return item
+                }
+            )
+            state.all_orders = state.all_orders.map(
                 item => {
                     if(item.id == payload.id) {
                         item.confirmation = payload.confirmation
@@ -62,10 +100,32 @@ export default {
                     return item
                 }
             )
+            state.all_orders = state.all_orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.confirmation = payload.confirmation
+                        item.note = payload.note        
+                        if(payload.confirmation == 'confirmer') {
+                            item.delivery = 'dispatch'
+                        }
+                        console.log('order updated');
+                    }
+                    return item
+                }
+            )
         
         },
         UPDATE_UPSELL: (state, payload) => {
             state.orders = state.orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.upsell = payload.upsell
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
+            state.all_orders = state.all_orders.map(
                 item => {
                     if(item.id == payload.id) {
                         item.upsell = payload.upsell
@@ -85,9 +145,27 @@ export default {
                     return item
                 }
             )
+            state.all_orders = state.all_orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.affectation = payload.affectation
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
         },
         UPDATE_NOTE: (state, payload) => {
             state.orders = state.orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.note = payload.note
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
+            state.all_orders = state.all_orders.map(
                 item => {
                     if(item.id == payload.id) {
                         item.note = payload.note
@@ -107,12 +185,33 @@ export default {
                     return item
                 }
             )
+            state.all_orders = state.all_orders.map(
+                item => {
+                    if(item.id == payload.id) {
+                        item.delivery = payload.delivery
+                        console.log('sale updated');
+                    }
+                    return item
+                }
+            )
         },
     },
 
     actions: {
         setOrders: ({ commit }, payload) => {
             commit('SET_ORDERS', payload)
+        },
+
+        addOrder: ({ commit }, payload) => {
+            commit('ADD_ORDER', payload)
+        },
+
+        setFetched: ({commit}, payload) => {
+            commit('SET_FETCHED', payload)
+        },
+
+        setAllOrders: ({commit}, payload) => {
+            commit('SET_ALL_ORDERS', payload);
         },
         setOrder: ({ commit }, payload) => {
             commit('SET_ORDER', payload)

@@ -17,7 +17,7 @@
 // 
 // ---------------------------------------------------------------------------
 
-export const disabled_links = [4];
+export const disabled_links = [4, 6, 7];
 
 export const links = [
 
