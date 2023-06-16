@@ -27,12 +27,14 @@
             <DashItemTwo :dash="confirmedSales" />
           </div>
 
-          <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
-            <DashItemTwo :dash="toProcess" />
-          </div>
+          
 
           <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
             <DashItemTwo :dash="reportedSales" />
+          </div>
+
+          <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+            <DashItemTwo :dash="noanswerSales" />
           </div>
 
           <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
@@ -65,58 +67,86 @@ export default {
       return this.user.role == "admin";
     },
     totalSales() {
-      return {
-        id: 1,
-        title: "Total",
-        //   value: this.sales.filter(i => i).length,
-        value: this.orders.length,
-        color: "primary-blue",
-        icon: "mdi mdi-all-inclusive",
-      };
-    },
-    toProcess() {
-      return {
-        id: 3,
-        title: "Process",
-        //   value: this.sales.filter(
-        //       i => (!!i.confirmation)
-        //           && !(['confirmer', 'livre', 'expidier'].includes(i.confirmation))
-        //   ).length,
-        value: this.orders.filter(i => i.confirmation != 'confirmer').length,
-        color: "primary-orange",
-        icon: "mdi-reload",
-      };
-    },
-    confirmedSales() {
-      return {
-        id: 4,
-        title: "Confirmed",
-        //   value: this.sales.filter(i => i.confirmation == 'confirmer').length,
-        value: this.filterByStatus('confirmer').length,
-        color: "primary-green",
-        icon: "mdi-phone-check",
-      };
-    },
-    reportedSales() {
-      return {
-        id: 5,
-        title: "Reported",
-        //   value: this.sales.filter(i => i.confirmation == 'reporter').length,
-        value: this.filterByStatus('reporter').length,
-        color: "deep-purple-accent-2",
-        icon: "mdi mdi-clock-outline",
-      };
-    },
-    canceledSales() {
-      return {
-        id: 6,
-        title: "Canceled",
-        //   value: this.sales.filter(i => i.confirmation == 'annuler').length,
-        value: this.filterByStatus('annuler').length,
-        color: "red-accent-3",
-        icon: "mdi mdi-cancel",
-      };
-    },
+        return {
+          id: 1,
+          title: "Total",
+          pourcentage: 100,
+          value: this.orders.length,
+          // value: 35,
+          color: "deep-purple-accent-2",
+          icon: "mdi mdi-all-inclusive",
+        };
+      },
+      newSales() {
+        return {
+          id: 2,
+          title: "New",
+          value: this.orders.filter((i) => !i.confirmation).length,
+          pourcentage: ((this.orders.filter((i) => !i.confirmation).length * 100) / this.orders.length).toFixed(2),
+          // value: 35,
+          color: "grey",
+          icon: "mdi mdi-new-box",
+        };
+      },
+      confirmedSales() {
+        return {
+          id: 4,
+          title: "Confirmed",
+          value: this.orders.filter((i) => i.confirmation == "confirmer").length,
+          pourcentage: ((this.orders.filter((i) => i.confirmation == "confirmer").length * 100) / this.orders.length).toFixed(2),
+          // value: 112,
+          color: "primary-green",
+          icon: "mdi-phone-check",
+        };
+      },
+      reportedSales() {
+        return {
+          id: 5,
+          title: "Reported",
+          value: this.orders.filter((i) => i.confirmation == "reporter").length,
+          pourcentage: ((this.orders.filter((i) => i.confirmation == "reporter").length * 100) / this.orders.length).toFixed(2),        // value: 112,
+          color: "primary-blue",
+          icon: "mdi mdi-clock-outline",
+        };
+      },
+      canceledSales() {
+        return {
+          id: 6,
+          title: "Canceled",
+          value: this.orders.filter((i) => i.confirmation == "annuler").length,
+          pourcentage: ((this.orders.filter((i) => i.confirmation == "annuler").length * 100) / this.orders.length).toFixed(2),
+          // value: 112,
+          color: "red-accent-3",
+          icon: "mdi mdi-cancel",
+        };
+      },
+      noanswerSales() {
+        return {
+          id: 6,
+          title: "No Answer",
+          value: this.orders.filter((i) => ['day-one-call-one',
+            'day-one-call-two',
+            'day-one-call-three',
+            'day-two-call-one',
+            'day-two-call-two',
+            'day-two-call-three',
+            'day-three-call-one',
+            'day-three-call-two',
+            'day-three-call-three'].includes(i.confirmation)).length,
+          pourcentage: ((this.orders.filter((i) => ['day-one-call-one',
+            'day-one-call-two',
+            'day-one-call-three',
+            'day-two-call-one',
+            'day-two-call-two',
+            'day-two-call-three',
+            'day-three-call-one',
+            'day-three-call-two',
+            'day-three-call-three'].includes(i.confirmation)).length * 100) / this.orders.length).toFixed(2),
+          // value: 112,
+          color: "yellow-darken-3",
+          icon: "mdi mdi-headphones-off",
+        };
+      }
   },
 
   methods: {

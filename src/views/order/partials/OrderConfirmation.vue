@@ -52,6 +52,8 @@
 
 
       <OrderReporting :order="order" :visible="showPopupReporter" @cancel="showPopupReporter = false" />
+      <OrderAnnuler :order="order" :visible="showPopupAnnuler" @cancel="showPopupAnnuler = false" />
+
     
   </div>
 </template>
@@ -60,11 +62,13 @@
 import Sale from '@/api/Sale';
 import { confirmations } from '@/config/orders';
 import OrderReporting from '@/views/order/partials/OrderReporting'
+import OrderAnnuler from '@/views/order/partials/OrderAnnuler'
+
 
 export default {
     props: ['confirmation', 'id', 'order'],
 
-    components: { OrderReporting },
+    components: { OrderReporting, OrderAnnuler },
 
     data() {
         return {
@@ -76,7 +80,8 @@ export default {
             selectedId: 0,
             allOptions: confirmations,
 
-            showPopupReporter:false
+            showPopupReporter:false,
+            showPopupAnnuler:false
         }
     },
     computed: {
@@ -116,15 +121,19 @@ export default {
           .finally(() => this.showPopup = false)
         },
         async handleChange(option) {
+          // console.log('uuuuuuuuppppppppddddaaaaattttteeeeeeedddd');
 
           if (option.id === this.selectedId) return false;
           
-          if (option.value !== 'confirmer' && option.value !== 'reporter'){
+          if ( !['confirmer' , 'reporter', 'annuler'].includes(option.value)){
             this.selectedId = option.id
             this.updateOrder()
             } else {
               if(option.value === 'reporter'){
                 this.showPopupReporter = true
+              }else if(option.value === 'annuler'){
+                this.showPopupAnnuler = true
+
               }else{
 
                 this.nextOption = option.id

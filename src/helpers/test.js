@@ -1,5 +1,5 @@
-export const path = 'api/sheets'
-export const method = 'post'
+export const path = 'api/orders/count'
+export const method = 'get'
 
 export default {
    'name': 'Orders from Youcan',

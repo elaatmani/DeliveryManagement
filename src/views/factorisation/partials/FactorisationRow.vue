@@ -11,11 +11,13 @@
             {{ factorisation.id }}
         </th>
         <td class="tw-px-6 tw-py-4">
-            <button class="tw-underline" @click="download(factorisation.id)">{{ factorisation.factorisation_id }}</button>
+            <button class="tw-underline" @click="download(factorisation.id)">
+                {{ factorisation.factorisation_id }}
+            </button>
         </td>
-        
+
         <td class="tw-px-6 tw-py-4">
-            {{ factorisation.delivery_id }}
+            {{ deliveryName }}
         </td>
         <td class="tw-px-6 tw-py-4">
             {{ factorisation.commands_number }}
@@ -78,65 +80,77 @@
         },
 
         computed: {
+            deliveryName: {
+                get() {
+                    return (
+                        this.factorisation.delivery.firstname +
+                        " " +
+                        this.factorisation.delivery.lastname
+                    );
+                },
+                set(v) {
+                    console.log(v);
+                },
+            },
             paid: {
                 get() {
                     return this.factorisation.paid == 1 ? true : false;
                 },
                 set(v) {
-                    this.updatePaid(v)
-                }
+                    this.updatePaid(v);
+                },
             },
             close: {
                 get() {
                     return this.factorisation.close == 1 ? true : false;
                 },
                 set(v) {
-                    this.updateClose(v)
-                }
-            }
+                    this.updateClose(v);
+                },
+            },
         },
 
         methods: {
             updatePaid(value) {
-                this.isLoadingPaid = true
-                Factorisation.updatePaid(this.factorisation.id, value).then(
-                    (response) => {
-                        if (response.data.code == 'FACTORISATION_UPDATED') {
-                            this.$store.dispatch('factorisation/update', response.data.data.factorisation)
+                this.isLoadingPaid = true;
+                Factorisation.updatePaid(this.factorisation.id, value)
+                    .then((response) => {
+                        if (response.data.code == "FACTORISATION_UPDATED") {
+                            this.$store.dispatch(
+                                "factorisation/update",
+                                response.data.data.factorisation
+                            );
                         }
-
-                    },
-                    this.$handleApiError
-                ).finally(() => {
-                    this.isLoadingPaid = false
-                })
+                    }, this.$handleApiError)
+                    .finally(() => {
+                        this.isLoadingPaid = false;
+                    });
             },
             updateClose(value) {
-                this.isLoadingClose = true
-                Factorisation.updateClose(this.factorisation.id, value).then(
-                    (response) => {
-                        if (response.data.code == 'FACTORISATION_UPDATED') {
-                            this.$store.dispatch('factorisation/update', response.data.data.factorisation)
+                this.isLoadingClose = true;
+                Factorisation.updateClose(this.factorisation.id, value)
+                    .then((response) => {
+                        if (response.data.code == "FACTORISATION_UPDATED") {
+                            this.$store.dispatch(
+                                "factorisation/update",
+                                response.data.data.factorisation
+                            );
                         }
-
-                    },
-                    this.$handleApiError
-                ).finally(() => {
-                    this.isLoadingClose = false
-                })
+                    }, this.$handleApiError)
+                    .finally(() => {
+                        this.isLoadingClose = false;
+                    });
             },
             download(id) {
-                
-                const url = serverUrl + 'api/factorisations/generate-pdf/'+id;
-                const link = document.createElement('a');
+                const url = serverUrl + "api/factorisations/generate-pdf/" + id;
+                const link = document.createElement("a");
                 link.href = url;
                 link.target = "_blank";
-                link.setAttribute('download', 'dd.pdf');
+                link.setAttribute("download", "dd.pdf");
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
-            }
+            },
         },
     };
 </script>

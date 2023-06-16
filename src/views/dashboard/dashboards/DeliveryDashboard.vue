@@ -17,7 +17,7 @@
                 <div class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
 
                     <div class="lg:tw-col-span-1 md:tw-col-span-1 tw-col-span-4">
-                      <DashItemTwo :dash="earningsDash" />
+                      <DashItemTwo :dash="earningsDash" symbol="DH" :numbers="false"/>
                     </div>
 
                     <div class="lg:tw-col-span-1 md:tw-col-span-1 tw-col-span-4">
@@ -28,16 +28,17 @@
                       <DashItemTwo :dash="deliveredSales" />
                     </div>
               
-                    <!-- <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-5">
-                      <DashItemTwo :dash="shippedSales" />
-                    </div> -->
-              
+                    
                     <!-- <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
                       <DashItemTwo :dash="toProcess" />
                     </div> -->
-              
+                    
                     <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
                       <DashItemTwo :dash="reportedSales" />
+                    </div>
+
+                    <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-5">
+                      <DashItemTwo :dash="shippedSales" />
                     </div>
               
                     <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
@@ -80,7 +81,8 @@ import Dashboard from '@/api/Dashboard';
           id: 1,
           title: "Total Orders",
           value: this.orders.length,
-          color: "primary-blue",
+          pourcentage: 100,
+          color: "deep-purple-accent-2",
           icon: "mdi mdi-all-inclusive",
         };
       },
@@ -91,7 +93,9 @@ import Dashboard from '@/api/Dashboard';
           title: "Delivered",
         //   value: this.sales.filter((i) => i.confirmation == "livre").length,
           value: this.filterByStatus('livrer').length,
-          color: "primary-orange",
+          pourcentage: (this.filterByStatus('livrer').length * 100) / this.orders.length,
+
+          color: "primary-green",
           icon: "mdi-account-check-outline",
         };
       },
@@ -116,7 +120,8 @@ import Dashboard from '@/api/Dashboard';
           title: "Shipped",
         //   value: this.sales.filter((i) => i.confirmation == "expidier").length,
           value: this.filterByStatus('expidier').length,
-          color: "purple",
+          pourcentage: (this.filterByStatus('expidier').length * 100) / this.orders.length,
+          color: "primary-orange",
           icon: "mdi-truck",
         };
       },
@@ -128,7 +133,8 @@ import Dashboard from '@/api/Dashboard';
           title: 'Reported',
         //   value: this.sales.filter(i => i.confirmation == 'reporter').length,
           value: this.filterByStatus('reporter').length,
-          color: 'deep-purple-accent-2',
+          pourcentage: (this.filterByStatus('reporter').length * 100) / this.orders.length,
+          color: 'primary-blue',
           icon: 'mdi mdi-clock-outline'
         }
       },
@@ -139,6 +145,8 @@ import Dashboard from '@/api/Dashboard';
           title: 'Canceled',
         //   value: this.sales.filter(i => i.confirmation == 'annuler').length,
           value: this.filterByStatus('annuler').length,
+          pourcentage: (this.filterByStatus('annuler').length * 100) / this.orders.length,
+
           color: 'red-accent-3',
           icon: 'mdi mdi-cancel'
         }
@@ -148,8 +156,8 @@ import Dashboard from '@/api/Dashboard';
           id: 2,
           title: "Earnings",
         //   value: this.sales.filter((i) => i.confirmation == "livre").length,
-          value: this.earnings,
-          color: "primary-green",
+          pourcentage: this.earnings,
+          color: "green-darken-4",
           icon: "mdi-currency-usd",
         }
       },

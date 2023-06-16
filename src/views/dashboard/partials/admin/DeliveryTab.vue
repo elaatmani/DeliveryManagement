@@ -23,8 +23,14 @@
       </div>
 
       <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+        <DashItemTwo :dash="noanswerSales" />
+      </div>
+      
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="canceledSales" />
       </div>
+
+     
     </div>
   </div>
 </template>
@@ -61,9 +67,10 @@
         return {
           id: 1,
           title: "Total",
-          value: this.sales.filter((i) => i).length,
+          value: this.sales.filter((i) => i.confirmation == "confirmer").length,
+          pourcentage: this.sales.filter((i) => i.confirmation == "confirmer").length * 100  / this.sales.filter((i) => i.confirmation == "confirmer").length,
           // value: 35,
-          color: "primary-blue",
+          color: "deep-purple-accent-2",
           icon: "mdi mdi-all-inclusive",
         };
       },
@@ -73,6 +80,7 @@
           id: 2,
           title: "Delivered",
           value: this.sales.filter((i) => i.delivery == "livrer").length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'livrer').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
           // value: 412,
           color: "primary-green",
           icon: "mdi-account-check-outline",
@@ -98,6 +106,8 @@
           id: 4,
           title: "Shipped",
           value: this.sales.filter((i) => i.delivery == "expidier").length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'expidier').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
+
           // value: 112,
           color: "primary-orange",
           icon: "mdi-truck",
@@ -110,8 +120,10 @@
           id: 5,
           title: 'Reported',
           value: this.sales.filter(i => i.delivery == 'reporter').length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'reporter').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
+
           // value: 112,
-          color: 'deep-purple-accent-2',
+          color: 'primary-blue',
           icon: 'mdi mdi-clock-outline'
         }
       },
@@ -121,11 +133,23 @@
           id: 6,
           title: 'Canceled',
           value: this.sales.filter(i => i.delivery == 'annuler').length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'annuler').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
           // value: 112,
           color: 'red-accent-3',
           icon: 'mdi mdi-cancel'
         }
       },
+      noanswerSales() {
+        return {
+          id: 6,
+          title: "No Answer",
+          value: this.sales.filter((i) => i.delivery == 'pas-de-reponse').length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'pas-de-reponse').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
+          // value: 112,
+          color: "yellow-darken-3",
+          icon: "mdi mdi-headphones-off",
+        };
+      }
     },
     mounted() {
       Sale.all()
