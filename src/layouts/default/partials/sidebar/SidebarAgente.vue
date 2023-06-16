@@ -37,6 +37,10 @@
         <v-icon v-if="!fetched" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
         <p v-if="fetched" class="tw-text-xs">{{ l.id == 2 ? (myOrders.length) : confirmedOrders.length }}</p>
       </div>
+      <div v-if="l.id == 1" class="tw-w-fit tw-h-[24px] tw-flex tw-items-center tw-justify-center tw-px-1 tw-bg-orange-500 tw-text-sm tw-text-white tw-rounded tw-ml-2">
+        <v-icon v-if="isCountLoading" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
+        <p v-if="!isCountLoading" class="tw-text-xs">{{ available }}</p>
+      </div>
     </div>
   </v-list-item>
 </div>
@@ -45,6 +49,7 @@
 <script>
 import { localUrl } from '@/config/config'
 import Dashboard from '@/api/Dashboard';
+import Sale from '@/api/Sale';
 
 export default {
   props: [],
@@ -54,6 +59,8 @@ export default {
         localUrl,
         isActive: false,
         isLoaded: false,
+        isCountLoading: false,
+        available: 0,
         link: {
         id: 6,
         module: 'order',
@@ -127,6 +134,21 @@ export default {
           }
         ).catch(this.$handleApiError)
       },
+
+      getCountOrders() {
+        this.isCountLoading = true;
+
+        Sale.availableOrders()
+        .then(res => {
+          console.log(res);
+          if(res.data.code == 'SUCCESS') {
+            this.available = res.data.data.availble
+          }
+        }, this.$handleApiError)
+        .finally(() => {
+          this.isCountLoading = false
+        })
+      }
   },
 
   computed: {
@@ -152,6 +174,9 @@ export default {
   watch: {
     $route() {
       this.isActive = this.isLinkActive()
+    },
+    orders() {
+      this.getCountOrders()
     }
   },
 
@@ -159,7 +184,9 @@ export default {
     this.isActive = this.isLinkActive();
     if(this.$can(this.link.gate)) {
       this.getOrders();
+    this.getCountOrders()
     }
+
   }
 };
 </script>
