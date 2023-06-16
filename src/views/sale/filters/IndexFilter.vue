@@ -24,6 +24,10 @@
       <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
         <DeliveryFilter v-model:filter="config.deliveryFilter" />
       </div>
+
+      <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <ProductFilter v-model:filter="config.productFilter" />
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +39,9 @@ import DeliveryFilter from "@/views/sale/filters/DeliveryFilter";
 import ConfirmationFilter from "@/views/sale/filters/ConfirmationFilter";
 import AffectationFilter from "@/views/sale/filters/AffectationFilter";
 import AgenteFilter from "@/views/sale/filters/AgenteFilter";
+import ProductFilter from '@/views/sale/filters/ProductFilter';
 import salesFilter from "./../filters/filter";
+
 export default {
   components: {
     DateFilter,
@@ -44,6 +50,7 @@ export default {
     ConfirmationFilter,
     AffectationFilter,
     AgenteFilter,
+    ProductFilter
   },
 
   props: ["sales", "filtered", "search"],
@@ -56,6 +63,7 @@ export default {
         upsellFilter: "all",
         deliveryFilter: "all",
         agenteFilter: "all",
+        productFilter: "all",
         dateFilter: [null, null],
       },
     };

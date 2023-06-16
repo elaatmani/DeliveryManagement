@@ -75,7 +75,7 @@
                         <OrderAffectation :order="order" v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.price }}
+                        {{ getPrice(order) }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ order.city }}
@@ -107,6 +107,7 @@ import OrderUpsell from '@/views/order/partials/OrderUpsell'
 import OrderAffectation from '@/views/order/partials/OrderAffectation'
 import OrderActions from '@/views/order/partials/OrderActions'
 import Sale from '@/api/Sale'
+import { getPrice } from '@/helpers/methods'
 
 export default {
     props: ['order', 'showNote'],
@@ -173,6 +174,9 @@ export default {
     },
 
     methods: {
+        getPrice(order) {
+            return getPrice(order)
+        },
         handleClick() {
             this.showPopup = true
             this.newNote = this.note

@@ -89,7 +89,7 @@
                                             </p>
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ newOrder.price }} DH
+                                            {{ getPrice(order) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ newOrder.city }}
@@ -149,6 +149,7 @@ import Sale from '@/api/Sale';
 import User from '@/api/User';
 import { validateName } from '@/helpers/validators';
 import UpdateOrder from '@/views/order/partials/UpdateOrder'
+import { getPrice } from '@/helpers/methods'
 
 export default {
     components: { UpdateOrder },
@@ -210,9 +211,11 @@ export default {
 
   methods: {
     updateConfirmation(newValue) {
-        console.log(newValue);
         this.newOrder.confirmation = newValue
     },
+    getPrice(order) {
+            return getPrice(order)
+        },
     updateUpsell(newValue) {
         this.newOrder.upsell = newValue
         this.popupOrder.upsell = newValue
