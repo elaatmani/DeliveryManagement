@@ -400,12 +400,19 @@ v-if="false"
           <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
             <div class="md:tw-col-span-6 tw-col-span-12"></div>
             <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
-              <div class="tw-font-medium tw-text-zinc-700 tw-mb-2 tw-whitespace-nowrap">Total Price: </div>
+              <div class="tw-font-medium tw-text-zinc-700 tw-mb-2 tw-whitespace-nowrap">Price: </div>
               <input
-                type="text"
-                v-model="total_price"
+                type="number"
+                v-model="sale.price"
                 class="tw-py-1 tw-max-w-[100px] tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
               />
+            </div>
+          </div>
+          <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
+            <div class="md:tw-col-span-6 tw-col-span-12"></div>
+            <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
+              <div class="tw-font-medium tw-text-zinc-700 tw-whitespace-nowrap">Total Price: </div>
+              <div class="tw-font-medium">{{ total_price }}</div>
             </div>
           </div>
         </div>
@@ -544,9 +551,6 @@ export default {
         const total = this.items.reduce((s, i) => s += (!i.price ? 0 : i.price), 0);
         return parseFloat(!this.sale.price ? 0 : this.sale.price) + parseFloat(total);
       },
-      set(v) {
-        console.log(v);
-      }
     },
 
     isItemsValid() {
@@ -672,6 +676,15 @@ export default {
         });
         return false;
       }
+
+      if(this.total_price == 0) {
+        this.$alert({
+          type: "warning",
+          title: "Total price cannot be 0",
+        });
+        return false;
+      }
+
       this.isLoading = true;
 
       const order = {

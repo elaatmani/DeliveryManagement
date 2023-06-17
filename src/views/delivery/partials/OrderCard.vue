@@ -64,7 +64,7 @@
           class="text-h4 tw-my-3"
           cols="12"
         >
-          {{ order.price }} DH
+          {{ getPrice(order) }}
         </v-col>
 
       </v-row>
@@ -157,6 +157,8 @@
 <script>
 import OrderCardDelivery from '@/views/delivery/partials/OrderCardDelivery'
 import { deliveryStatus } from '@/config/orders'
+import { getPrice } from '@/helpers/methods'
+
   export default {
     
     components: {OrderCardDelivery},
@@ -181,6 +183,9 @@ import { deliveryStatus } from '@/config/orders'
     methods: {
       getDeliveryStatus(value) {
           return this.deliveryStatus.find(i => i.value == value) || this.deliveryStatus[0]
+      },
+      getPrice(order) {
+        return getPrice(order)
       }
     }
   }
