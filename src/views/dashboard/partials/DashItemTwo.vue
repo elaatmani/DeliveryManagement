@@ -8,7 +8,7 @@
         <div class="tw-flex tw-justify-between tw-items-center tw-w-full tw-h-full pa-3 px-4">
             <div class="tw-flex tw-flex-col tw-justify-center tw-w-full tw-h-full tw-text-white">
                 <p class="tw-text-xl tw-font-bold">
-                    {{ dash.pourcentage }} {{ symbol }}
+                    {{ isNaN(dash.pourcentage) ? '0%' : dash.pourcentage }} {{ symbol }}
                 </p>
                 <!-- <v-spacer></v-spacer> -->
                 <span class="tw-flex tw-items-center tw-gap-1 tw-w-full tw-h-full tw-text-white">
