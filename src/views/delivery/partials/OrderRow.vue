@@ -59,7 +59,7 @@
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ order.price }}
+                        {{ getPrice(order) }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ order.city }}
@@ -79,6 +79,8 @@
 <script>
 import OrderDelivery from './OrderDelivery.vue'
 import OrderActions from '@/views/delivery/partials/OrderActions'
+import { getPrice } from '@/helpers/methods'
+
 
 export default {
     props: ['order', 'showNote'],
@@ -109,6 +111,9 @@ export default {
 
             return false;
         },
+        getPrice(order) {
+            return getPrice(order)
+        }
     },
 
     mounted() {
@@ -125,7 +130,8 @@ export default {
                             })
         const year = date.getFullYear();
         this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
-    }
+    },
+
 
 }
 </script>

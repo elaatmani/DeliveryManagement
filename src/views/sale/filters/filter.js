@@ -4,7 +4,8 @@ export default function filteredSales(sales, search, {
     upsellFilter,
     deliveryFilter,
     agenteFilter,
-    dateFilter
+    dateFilter,
+    productFilter
 }) {
 
     const startDate = dateFilter[0];
@@ -39,6 +40,10 @@ export default function filteredSales(sales, search, {
         }
 
         if (!item.fullname.toLowerCase().includes(search.toLowerCase())) {
+            return false;
+        }
+
+        if(productFilter !== 'all' && !item.items.some(i => i.product_id == productFilter)) {
             return false;
         }
 

@@ -9,7 +9,7 @@
       </div>
       <div
         v-if="isLoaded"
-        class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[750px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5"
+        class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[880px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5"
       >
         <h1 class="tw-text-lg">Update Order</h1>
 
@@ -53,15 +53,6 @@
             />
           </div>
 
-          <div class="md:tw-col-span-6 tw-col-span-12">
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
-            <input
-              type="text"
-              v-model="sale.price"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            />
-          </div>
-
           <div
             class="md:tw-col-span-12 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
           >
@@ -91,6 +82,8 @@
           </div>
 
           <div
+v-if="false"
+
             class="md:tw-col-span-6 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
           >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Warehouse</div>
@@ -106,6 +99,8 @@
           </div>
 
           <div
+v-if="false"
+
             class="md:tw-col-span-6 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
           >
             <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
@@ -120,7 +115,9 @@
             </select>
           </div>
 
-          <div class="md:tw-col-span-6 tw-col-span-12">
+          <div
+          v-if="false"
+           class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Variations</div>
             <select
               v-model="product_variation_id"
@@ -132,7 +129,9 @@
               </option>
             </select>
           </div>
-          <div class="md:tw-col-span-6 tw-col-span-12">
+          <div
+          v-if="false"
+           class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
             <input
               type="number"
@@ -153,7 +152,9 @@
                 </label>
             </div>
           </div> -->
-          <div class="md:tw-col-span-12 tw-col-span-12">
+          <div
+          v-if="false"
+           class="md:tw-col-span-12 tw-col-span-12">
             <button
               @click="addItem"
               class="tw-block tw-ml-auto tw-py-1 tw-px-4 tw-rounded tw-bg-emerald-500 tw-text-white"
@@ -162,9 +163,15 @@
             </button>
           </div>
 
+          <p class="tw-col-span-12 tw-mt-5 tw-mb-2">Order Items</p>
+
+          <p v-if="!items.length" class="tw-col-span-12 tw-rounded tw-text-center tw-p-5 tw-text-gray-700 tw-bg-gray-50">
+            No Order items 
+          </p>
+
           <div v-if="items.length" class="md:tw-col-span-12 tw-col-span-12">
             <div class="tw-max-w-full tw-overflow-auto">
-              <table class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
+              <table :key="items.length" class="tw-w-full tw-text-sm tw-text-left tw-text-gray-500">
                 <thead
                   class="tw-text-xs tw-text-gray-700 tw-uppercase tw-bg-gray-50"
                 >
@@ -174,7 +181,7 @@
                         'product',
                         'variation',
                         'quantity',
-                        'warehouse',
+                        'price',
                         'actions',
                       ]"
                       :class="[column == 'actions' && '!tw-w-[40px]']"
@@ -200,27 +207,77 @@
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
-                      {{ item.product.name }}
+                      <div>
+                        <div
+                          
+                        >
+                          <select
+                            v-model="item.product.id"
+                            class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                          >
+                            <option :value="0">Select</option>
+                            <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
+                              {{ p.name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    ><div>
+                      <select
+                        v-model="item.product_variation.id"
+                        class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                      >
+                        <option :value="0">Select</option>
+                        <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
+                          <p v-if="!v.size && !v.color">-</p>
+                          <p v-else>
+                          {{ v.size }} / {{ v.color }}
+                          </p>  
+                        </option>
+                      </select>
+                    </div>
                     </th>
                     <th
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
-                      {{ item.product_variation.size }} /
-                      {{ item.product_variation.color }}
+                    <div class="md:tw-col-span-6 tw-col-span-12">
+                        <input
+                          type="number"
+                          v-model="item.quantity"
+                          placeholder="Quantity"
+                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-[80px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                        />
+                      </div>
                     </th>
                     <th
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
-                      {{ item.quantity }}
+                    <div>
+                      <div v-if="item.price == null">
+                        -
+                      </div>
+                      <div v-else class="md:tw-col-span-6 tw-col-span-12">
+                          <input
+                            type="number"
+                            v-model="item.price"
+                            placeholder="Price"
+                            class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[100px] tw-max-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                          />
+                        </div>
+                    </div>
                     </th>
-                    <th
+                    <!-- <th
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
                       {{ item.product_variation.warehouse.name }}
-                    </th>
+                    </th> -->
                     <th
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
@@ -242,8 +299,120 @@
                       </div>
                     </th>
                   </tr>
+                  <tr
+                  v-if="isAddItem"
+                    class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
+                  >
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                    <div>
+                      <div
+                        
+                      >
+                        <select
+                          v-model="product_id"
+                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                        >
+                          <option :value="0">Select</option>
+                          <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
+                            {{ p.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                    <div>
+                      <select
+                        v-model="product_variation_id"
+                        class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                      >
+                        <option :value="0">Select</option>
+                        <option :value="v.id" v-for="v in variations" :key="v.id">
+                          <p v-if="!v.size && !v.color">-</p>
+                          <p v-else>
+                          {{ v.size }} / {{ v.color }}
+                          </p>
+                        </option>
+                      </select>
+                    </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      <div class="md:tw-col-span-6 tw-col-span-12">
+                        <input
+                          type="number"
+                          v-model="quantity"
+                          placeholder="Quantity"
+                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-[80px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                        />
+                      </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      <div class="md:tw-col-span-6 tw-col-span-12">
+                        <input
+                          type="number"
+                          v-model="price"
+                          placeholder="Price"
+                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[100px] tw-max-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+                        />
+                      </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                    >
+                      
+                    </th>
+                  </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+            <div class="tw-w-full tw-col-span-12 tw-flex tw-justify-end tw-mt-3">
+              <div>
+                <v-btn
+                @click="addNewRow"
+                  class="mr-2 !tw-px-1 !tw-py-1 !tw-pr-2 tw-flex tw-items-center tw-gap-2"
+                  min-height="25px"
+                  min-width="30"
+                  color="green"
+                  variant="flat"
+                  density="comfortable"
+                  :ripple="false"
+                >
+                  <v-icon color="white">mdi-plus</v-icon>
+                  <span class="!tw-text-sm !tw-capitalize">Add</span>
+                </v-btn>
+              </div>
+            </div>
+
+          <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
+            <div class="md:tw-col-span-6 tw-col-span-12"></div>
+            <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
+              <div class="tw-font-medium tw-text-zinc-700 tw-mb-2 tw-whitespace-nowrap">Price: </div>
+              <input
+                type="number"
+                v-model="sale.price"
+                class="tw-py-1 tw-max-w-[100px] tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
+              />
+            </div>
+          </div>
+          <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
+            <div class="md:tw-col-span-6 tw-col-span-12"></div>
+            <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
+              <div class="tw-font-medium tw-text-zinc-700 tw-whitespace-nowrap">Total Price: </div>
+              <div class="tw-font-medium">{{ total_price }}</div>
             </div>
           </div>
         </div>
@@ -287,6 +456,7 @@ export default {
     return {
       upsells,
       isLoading: false,
+      isAddItem: false,
 
       product_id: 0,
       product_variation_id: 0,
@@ -297,6 +467,7 @@ export default {
       items: [],
 
       reported_date: null,
+      price: 0,
 
       sale: {
         fullname: "",
@@ -313,7 +484,13 @@ export default {
 
   watch: {
     product_id() {
-      this.product_variation_id = 0;
+      
+      if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {
+        this.product_variation_id = this.selectedProduct.variations[0].id;
+      } else {
+        this.product_variation_id = 0;
+      }
+
     },
     warehouse_id() {
       this.product_id = 0;
@@ -343,13 +520,14 @@ export default {
     },
 
     filtredProducts() {
-      if (this.warehouse_id == 0) {
-        return [];
-      }
+      return this.products
+      // if (this.warehouse_id == 0) {
+      //   return [];
+      // }
 
-      return this.products.filter((p) =>
-        p.variations.some((v) => v.warehouse_id == this.warehouse_id)
-      );
+      // return this.products.filter((p) =>
+      //   p.variations.some((v) => v.warehouse_id == this.warehouse_id)
+      // );
     },
 
     cities() {
@@ -362,6 +540,23 @@ export default {
       }
 
       return this.products.find((p) => p.id == this.product_id).variations;
+    },
+
+    selectedProduct() {
+      return this.products.find(p => p.id == this.product_id);
+    },
+
+    total_price: {
+      get() {
+        const total = this.items.reduce((s, i) => s += (!i.price ? 0 : i.price), 0);
+        return parseFloat(!this.sale.price ? 0 : this.sale.price) + parseFloat(total);
+      },
+    },
+
+    isItemsValid() {
+      if(this.items.length == 0) return false;
+      const check = this.items.some(i => (i.product.id == 0) || (i.product_variation_id == 0) || i.quantity == 0);
+      return !check;
     },
 
     isFormValid() {
@@ -381,10 +576,55 @@ export default {
       this.items = this.items.filter((i) => i.id != id);
     },
 
+    addNewRow() {
+      const item = {
+        id: this.item_id,
+        product_id: 0,
+        product_ref: null,
+        product: {id: 0},
+        product_variation: {id: 0},
+        product_variation_id: 0,
+        order_id: this.order.id,
+        quantity: 0,
+        price: 0,
+      };
+
+      this.items.push(item);
+    },
+
+    getVariations(product) {
+      return this.products.find(p => p.id == product.id)
+    },
+
+    formatItems() {
+      // console.log();
+      const items = this.items.map(i => {
+        const p = this.products.find(x => x.id == i.product.id);
+
+        if(!p) return i;
+
+        const v = p.variations.find(j => j.id == i.product_variation.id);
+
+        if(!v) return i;
+        // return false;
+        return {
+          ...i,
+          product: p,
+          product_id: p.id,
+          product_variation: v,
+          product_variation_id: v.id,
+          product_ref: p.ref
+        }
+      })
+      console.log(items);
+          this.items = items;
+          return items;
+      // return this.items;
+    },
+
     addItem() {
       if (
         [
-          this.warehouse_id,
           this.product_id,
           this.product_variation_id,
         ].includes(0)
@@ -409,15 +649,18 @@ export default {
         product_variation: product_variation,
         product_variation_id: product_variation.id,
         quantity: this.quantity,
+        price: this.price,
       };
 
       this.items.push(item);
       this.product_id = 0;
       this.product_variation_id = 0;
+      this.price = 0;
       this.item_id += 1;
     },
 
     update() {
+      this.formatItems()
       if (!this.isFormValid) {
         this.$alert({
           type: "warning",
@@ -425,6 +668,23 @@ export default {
         });
         return false;
       }
+
+      if(!this.isItemsValid) {
+        this.$alert({
+          type: "warning",
+          title: "Order Items are not valid",
+        });
+        return false;
+      }
+
+      if(this.total_price == 0) {
+        this.$alert({
+          type: "warning",
+          title: "Total price cannot be 0",
+        });
+        return false;
+      }
+
       this.isLoading = true;
 
       const order = {
@@ -501,6 +761,7 @@ export default {
     if (!this.isLoaded) {
       this.getProducts();
     }
+
   },
 };
 </script>

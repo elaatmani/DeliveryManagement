@@ -176,7 +176,7 @@
               </div>
             </td>
             <td class="tw-px-6 tw-py-4">
-              {{ sale.price }}
+              {{ getPrice(sale) }}
             </td>
 
             <td class="tw-px-6 tw-py-4">
@@ -239,6 +239,7 @@ import SaleConfirmation from "@/views/sale/partials/SaleConfirmation";
 import SaleAffectation from "@/views/sale/partials/SaleAffectation";
 import SaleDelivery from "@/views/sale/partials/SaleDelivery";
 import SaleActions from "@/views/sale/partials/SaleActions";
+import { getPrice } from '@/helpers/methods';
 
 export default {
   props: {
@@ -316,6 +317,9 @@ export default {
   },
 
   methods: {
+    getPrice(order) {
+      return getPrice(order)
+    },
     isReportedToday(sale) {
       return (
         this.isConfirmationReportedToday(sale) ||
