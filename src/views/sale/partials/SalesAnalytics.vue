@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="mb-5 tw-border-b tw-border-solid tw-pb-5 tw-border-neutral-200">
-      <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2">
+      <div class="tw-grid tw-grid-cols-4 lg:tw-grid-cols-4 tw-gap-2">
         <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
           <DashItem :dash="newSales" />
         </div>
 
-        <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
+        <!-- <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
           <DashItem :dash="toProcess" />
-        </div>
+        </div> -->
 
         <div class="lg:tw-col-span-1 md:tw-col-span-4 tw-col-span-2">
           <DashItem :dash="confirmedSales" />
@@ -33,7 +33,7 @@ import {
   deliveredSales,
   newSales,
   shippedSales,
-  toProcessSales,
+  // toProcessSales,
 } from "./../filters/filter";
 
 export default {
@@ -44,9 +44,9 @@ export default {
     newSales() {
       return newSales(this.sales);
     },
-    toProcess() {
-      return toProcessSales(this.sales);
-    },
+    // toProcess() {
+    //   return toProcessSales(this.sales);
+    // },
     confirmedSales() {
       return confirmedSales(this.sales);
     },
