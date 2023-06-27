@@ -52,6 +52,11 @@ class Sheet {
         return Api.get('api/sync');
     }
 
+    async auto() {
+        await Csrf.getCookie();
+        return Api.post('api/sync');
+    }
+
     async saveOrders(id) {
         await Csrf.getCookie();
         return Api.get('api/sync/' + id + '/save');
