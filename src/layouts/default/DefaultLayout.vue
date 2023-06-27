@@ -99,11 +99,24 @@ export default {
         },
 
         sync_sheets() {
-            Sheet.auto()
+            if(this.user.role == 'admin') {
+                Sheet.sync_all()
+                .then(
+                    res => {
+                        if(res.data.code == 'SUCCESS') {
+                            const sales = [...res.data.data.orders, ...this.sales];
+                            this.$store.dispatch('sale/setSales', sales);
+                        }
+                    }
+                )
+            } else {
+                Sheet.auto()
+            }
         }
     },
 
     mounted() {
+        console.log(this.user);
         this.getCities();
         // !this.subscribed && this.subscribe();
         this.fetching = setInterval(this.sync_sheets, this.delay)
