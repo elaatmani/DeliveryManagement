@@ -64,11 +64,12 @@ export default {
             this.drawer = !this.drawer
         },
         async getCities() {
-            if(this.cities.length == 0) {
+            if(this.cities.length == 0 || !localStorage.getItem('update_cities')) {
                 return User.cities().then(
                     res => {
                         const cities = res.data.data
-                        this.$store.dispatch('city/setCities', cities)
+                        this.$store.dispatch('city/setCities', cities);
+                        localStorage.setItem('update_cities', true)
                     }
                 )
             }
@@ -106,6 +107,12 @@ export default {
                         if(res.data.code == 'SUCCESS') {
                             const sales = [...res.data.data.orders, ...this.sales];
                             this.$store.dispatch('sale/setSales', sales);
+                            if(res.data.data.orders.length > 0) {
+                                this.$alert({
+                                    type: 'info',
+                                    title: res.data.data.orders.length + ' New orders has been added'
+                                })
+                            }
                         }
                     }
                 )
@@ -116,7 +123,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.user);
         this.getCities();
         // !this.subscribed && this.subscribe();
         this.fetching = setInterval(this.sync_sheets, this.delay)
