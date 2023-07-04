@@ -189,7 +189,7 @@
                 return {
                         id: 1,
                         title: 'Total Chiffres d\'affaire',
-                        value: this.getChiffresDaffaire(),
+                        value: this.getChiffresDaffaire().toFixed(2),
                         icon: 'mdi-currency-usd',
                         color: 'green'
                     }
@@ -198,7 +198,7 @@
                 return {
                         id: 2,
                         title: 'Chiffres d\'affaire versé',
-                        value: this.getChiffresDaffaireVerse(),
+                        value: this.getChiffresDaffaireVerse().toFixed(2),
                         icon: 'mdi mdi-credit-card-check-outline',
                         color: 'orange'
                     }
@@ -207,7 +207,7 @@
                 return {
                         id: 3,
                         title: 'Chiffres d\'affaire non versé',
-                        value: this.getChiffresDaffaireNonVerse(),
+                        value: this.getChiffresDaffaireNonVerse().toFixed(2),
                         icon: 'mdi mdi-credit-card-remove-outline',
                         color: 'red'
                     }
@@ -216,7 +216,7 @@
                 return {
                         id: 4,
                         title: 'Chiffres d\'affaire en caisse',
-                        value: this.getChiffresDaffaireEnCaise(),
+                        value: this.getChiffresDaffaireEnCaise().toFixed(2),
                         icon: 'mdi mdi-bank',
                         color: 'yellow'
                     }

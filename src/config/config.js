@@ -1,5 +1,5 @@
 
-// export const localUrl = 'https://app.vldo.shop/'
+// export const localUrl = 'https://vldo.shop/'
 // export const serverUrl = 'https://api.vldo.shop/'
 
 
