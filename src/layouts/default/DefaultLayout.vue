@@ -125,7 +125,7 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        this.fetching = setInterval(this.sync_sheets, this.delay)
+        // this.fetching = setInterval(this.sync_sheets, this.delay)
     }
 }
 </script>

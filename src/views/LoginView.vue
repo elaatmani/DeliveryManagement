@@ -59,6 +59,7 @@ import { validateEmail, validatePassword } from '@/helpers/validators'
 import User from '@/api/User'
 import Alert from '@/components/AlertVue'
 import { mapActions } from 'vuex'
+// import TestApi from '@/api/Test'
 
 export default {
     components: { Alert },
@@ -185,6 +186,13 @@ export default {
             
         }
     },
+
+    mounted() {
+        // TestApi.post('api/clients/order/delivery')
+        // .then(res => {
+        //     console.log(res.data);
+        // })
+    }
 
 }
 </script>

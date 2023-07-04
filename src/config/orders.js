@@ -36,7 +36,9 @@ export const deliveryStatus = [
     { id: 8, value:'hors-zone', name: 'Hors zone', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
     { id: 9, value:'pas-de-reponse', name: 'Pas de reponse', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', ring: 'tw-ring-yellow-300' },
     { id: 10, value:'retourner', name: 'Retourné', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' },
-    { id: 11, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' }
+    { id: 11, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
+    { id: 12, value:'paid', name: 'Paid', text: 'tw-text-emerald-500', bg: 'tw-bg-emerald-500/10', ring: 'tw-ring-emerald-300' },
+    { id: 13, value:'transfer', name: 'Transfer', text: 'tw-text-violet-500', bg: 'tw-bg-violet-500/10', ring: 'tw-ring-violet-300' }
 ]
 
-export const disabledForDelivery = [null, 'expidier', 'annuler', 'dispatch'];
+export const disabledForDelivery = [null, 'expidier', 'paid', 'transfer', 'dispatch'];

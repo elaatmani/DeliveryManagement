@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     orders() {
-      return  this.$store.getters['order/orders']
+      return  this.$store.getters['order/orders'].filter(o => o.delivery != 'livrer')
     },
     filteredOrders() {
       const deliveryFilter = this.deliveryFilter;
