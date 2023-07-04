@@ -39,4 +39,4 @@ export const deliveryStatus = [
     { id: 11, value:'reconfirmer', name: 'Reconfirmer', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' }
 ]
 
-export const disabledForDelivery = [null, 'expidier', 'annuler', 'dispatch'];
+export const disabledForDelivery = [null, 'expidier', 'dispatch'];
