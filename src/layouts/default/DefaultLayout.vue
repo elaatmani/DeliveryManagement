@@ -39,8 +39,8 @@ export default {
             drawer: false,
             subscribed: false,
             fetching: null,
-            // delay: 60000,
-            delay: 6000,
+            delay: 60000,
+            // delay: 6000,
         }
     },
 
@@ -64,12 +64,12 @@ export default {
             this.drawer = !this.drawer
         },
         async getCities() {
-            if(this.cities.length == 0 || !localStorage.getItem('update_cities')) {
+            if(this.cities.length == 0 || localStorage.getItem('update_cities') != 1) {
                 return User.cities().then(
                     res => {
                         const cities = res.data.data
                         this.$store.dispatch('city/setCities', cities);
-                        localStorage.setItem('update_cities', true)
+                        localStorage.setItem('update_cities', 1)
                     }
                 )
             }
@@ -125,7 +125,7 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        // this.fetching = setInterval(this.sync_sheets, this.delay)
+        this.fetching = setInterval(this.sync_sheets, this.delay)
     }
 }
 </script>

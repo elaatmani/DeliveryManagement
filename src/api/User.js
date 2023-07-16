@@ -25,7 +25,8 @@ class User {
             lastname: user.lastname,
             product_id: user.product_id,
             city: user?.city,
-            deliverycity: user?.deliveryCities
+            deliverycity: user?.deliveryCities,
+            having_all: user.having_all
         })
     }
 
@@ -43,7 +44,8 @@ class User {
             role: user.role,
             city: user?.city,
             deliverycity: user?.deliveryCities,
-            updatePassword: updatePassword
+            updatePassword: updatePassword,
+            having_all: user.having_all
         })
     }
 

@@ -65,7 +65,7 @@
               <v-col class="!tw-py-2" cols="12" sm="6" md="6">
                 <div class="tw-w-full">
                   <div class="mb-1 text-body-2 tw-text-zinc-700">
-                    Buying Price (DH)
+                    Buying Price ({{currency}})
                   </div>
                   <v-text-field
                     type="number"
@@ -90,7 +90,7 @@
               <v-col class="!tw-py-2" cols="12" sm="6" md="6">
                 <div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">
-                    Selling Price (DH)
+                    Selling Price ({{currency}})
                   </div>
                   <v-text-field
                     type="number"
@@ -400,10 +400,12 @@ import { validateName, validateVariants } from "@/helpers/validators";
 import Product from "@/api/Product";
 import VariantActions from '@/views/product/VariantActions'
 import Warehouse from '@/api/Warehouse';
+import { currency } from '@/config/config';
 export default {
   components: { VariantActions },
   data() {
     return {
+      currency,
       isLoading: false,
       isLoaded: false,
       addVariants : false,

@@ -15,6 +15,7 @@ export const confirmations = [
     { id: 12, value: 'wrong-number' , name: 'Wrong number', text: 'tw-text-fuchsia-500', bg: 'tw-bg-fuchsia-500/10', ring: 'tw-ring-fuchsia-300' },
     // { id: 13, value: 'livre' , name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
     { id: 13, value: 'confirmer' , name: 'Confirmed', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
+    { id: 14, value: 'double' , name: 'Double', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' },
 ]
 
 export const upsells = [

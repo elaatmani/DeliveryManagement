@@ -1,24 +1,29 @@
 <template>
   <tr :key="order.id" :class="[order.confirmation == 'reporter' && 'tw-relative', isReportedToday(order) && '!tw-border tw-border-red-400']" class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
-                    <td class="tw-w-4 tw-p-4">
-                        <div class="tw-flex tw-items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" class="tw-w-4 tw-h-4 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 tw-rounded focus:tw-ring-blue-500   focus:tw-ring-2 ">
-                            <label for="checkbox-table-search-1" class="tw-sr-only">checkbox</label>
-                        </div>
-                    </td>
+
                     <th scope="row" class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap ">
                         {{ id }}
                     </th>
+
                     <td class="tw-px-6 tw-py-4 tw-relative">
-                        {{ order?.created_at?.split('T')[0] }}
-                        <div v-if="order.confirmation == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
-                             <span v-if="isReportedToday(order)">
-                                Reported for today
-                             </span>
-                        </div>
+                        <p>{{ fullname }}</p>
+                        <div
+                            class="tw-absolute tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-text-xs"
+                            >
+                            <p
+                                v-if="order.is_double"
+                                class="tw-bg-purple-500/10 tw-text-purple-500 tw-px-2 tw-rounded-t"
+                            >
+                                Maybe Double: {{ order.double }}
+                            </p>
+                            </div>
+
                     </td>
-                    <td class="tw-px-6 tw-py-4">
-                        {{ fullname }}
+                    <td class="px-6 py-4 tw-flex tw-items-center">
+                        {{ order.phone }}
+                        <v-btn link target="_blank" :href="'https://api.whatsapp.com/send?phone=' + order.phone.replace('+', '').replace('-', '').replace(' ', '')" class="mr-2 !tw-px-0 !tw-py-0" min-height="25px" min-width="30" color="green" variant="text" density="comfortable" :ripple="false" size="small">
+                            <v-icon color="green">mdi-whatsapp</v-icon>
+                        </v-btn>
                     </td>
                     <td class="tw-px-6 tw-py-4 tw-relative">
                         <div class="tw-pb-2">
@@ -34,28 +39,12 @@
                                 <span v-if="!!i.product_variation.color">| {{ i.product_variation.color }}</span>
                             </li>
                             </ul>
-                            <div
-                            class="tw-absolute tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-text-xs"
-                            >
-                            <p
-                                v-if="order.counts_from_warehouse"
-                                class="tw-bg-emerald-500/10 tw-text-emerald-500 tw-px-2 tw-rounded-t"
-                            >
-                                warehouse
-                            </p>
-                            <p
-                                v-if="!order.counts_from_warehouse"
-                                class="tw-bg-blue-500/10 tw-text-blue-500 tw-px-2 tw-rounded-t"
-                            >
-                                delivery
-                            </p>
-                            </div>
                         </div>
                     </td>
                     <td v-if="false" class="tw-px-6 tw-py-4">
                         <OrderUpsell :order="order" :key="upsell" :upsell="upsell" :id="id" />
                     </td>
-                    <td class="tw-px-6 tw-py-4 tw-relative">
+                    <td v-if="false" class="tw-px-6 tw-py-4 tw-relative">
                         <div class="tw-flex tw-items-center tw-justify-center">
                             <OrderConfirmation :class="order.confirmation == 'reporter' && 'tw-mb-1'" :order="order" :confirmation="confirmation" :key="confirmation" :id="id" />
                             <div v-if="order.confirmation == 'reporter'" :class="isReportedToday(order) && '!tw-bg-red-400'" class=" tw-text-xs tw-text-white tw-px-1 tw-rounded-t tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-absolute tw-bg-gray-500">
@@ -71,16 +60,17 @@
                             </div>
                         </div>
                     </td>
-                    <td class="tw-px-6 tw-py-4">
+                    <td v-if="false" class="tw-px-6 tw-py-4">
                         <OrderAffectation :order="order" v-if="confirmation === 'confirmer'" :id="id" :affectation="affectation" :key="affectation" />
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ getPrice(order) }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <div class="!tw-max-w-[300px] !tw-min-w-[300px] tw-whitespace-normal">
-                            {{ order.city }}
-                        </div>
+                        {{ order.city }}
+                    </td>
+                    <td class="tw-px-6 tw-py-4">
+                        {{ order.adresse }}
                     </td>
                     <td v-if="showNote" class="tw-px-6 tw-py-4 ">
                         <div class="tw-max-w-[300px] tw-min-w-[150px] tw-whitespace-normal">
@@ -90,7 +80,7 @@
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        <OrderActions :order="order" />
+                        <OrderActions :double="true" @update-order="o => $emit('update', o)" :only="['update']" :order="order" />
                     </td>
                 </tr>
                 <popup type="info" title="Add Note" @resolved="handleResolved" :loading="isLoading" :visible="showPopup">
@@ -113,6 +103,7 @@ import { getPrice } from '@/helpers/methods'
 
 export default {
     props: ['order', 'showNote'],
+    emits: ['update'],
     components: { OrderConfirmation, OrderUpsell, OrderAffectation, OrderActions },
 
     data() {

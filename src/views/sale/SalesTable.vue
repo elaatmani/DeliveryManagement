@@ -26,6 +26,7 @@
             <th
               v-for="column in columns"
               :key="column"
+              :class="[column == 'city' && '!tw-max-w-[150px]']"
               scope="col"
               class="tw-px-6 tw-py-3 text-truncate"
             >
@@ -43,6 +44,7 @@
               [sale.confirmation, sale.delivery].includes('reporter') &&
                 'tw-relative',
               isReportedToday(sale) && '!tw-border tw-border-red-400',
+
             ]"
             class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
           >
@@ -79,7 +81,9 @@
               </div>
             </td>
             <td class="tw-px-6 tw-py-4">
-              {{ sale.city }}
+              <div class="!tw-max-w-[300px] !tw-min-w-[300px] tw-whitespace-normal">
+                {{ sale.city }}
+              </div>
             </td>
             <td class="tw-px-6 tw-py-4 tw-relative">
               <div class="tw-pb-2">

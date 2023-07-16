@@ -73,6 +73,7 @@ export default {
             this.isOpen = !this.isOpen
         },
         handleChange(option) {
+          this.old = this.affectation;
             if(option.id === this.selectedId) return false;
             this.selectedId = option.id
             this.isLoading = true
@@ -92,7 +93,11 @@ export default {
                 this.isLoading = false
               }
             },
-            err => this.$handleApiError(err)
+            err => {
+              this.$handleApiError(err)
+              this.isLoading = false;
+              this.selectedId = this.old;
+            }
           )
         },
         updateAffectation(id, affectation) {

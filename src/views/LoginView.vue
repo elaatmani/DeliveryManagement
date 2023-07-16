@@ -18,7 +18,7 @@
                         <div class="mt-5">
                             <div>
                                 <p class="mb-1">Email</p>
-                                <v-text-field @keyup="resetError('email')" v-model="email" :error="!emailStatus.valid" :error-messages="emailStatus.valid ? '' :  emailStatus.message" autofocus @blur="emailFocus = false" @focus="emailFocus = true"  color="primary-color" variant="outlined" class="tw-w-full" density="compact">
+                                <v-text-field name="email" @keyup="resetError('email')" v-model="email" :error="!emailStatus.valid" :error-messages="emailStatus.valid ? '' :  emailStatus.message" autofocus @blur="emailFocus = false" @focus="emailFocus = true"  color="primary-color" variant="outlined" class="tw-w-full" density="compact">
                                     <template v-slot:append-inner>
                                         <v-icon :color="emailFocus ? emailStatus.valid ? 'primary-color' : 'error': 'grey-darken-3'">mdi-email-outline</v-icon>
                                     </template>
@@ -27,7 +27,7 @@
 
                             <div>
                                 <p class="mb-1">Password</p>
-                                <v-text-field @keyup.enter="login" v-model="password" :error="!passwordStatus.valid" :error-messages="passwordStatus.valid ? '' :  passwordStatus.message " :type="showPassword ? 'text' : 'password'" @blur="passwordFocus = false" @focus="passwordFocus = true" color="primary-color" variant="outlined" class="tw-w-full" density="compact">
+                                <v-text-field name="password" @keyup.enter="login" v-model="password" :error="!passwordStatus.valid" :error-messages="passwordStatus.valid ? '' :  passwordStatus.message " :type="showPassword ? 'text' : 'password'" @blur="passwordFocus = false" @focus="passwordFocus = true" color="primary-color" variant="outlined" class="tw-w-full" density="compact">
                                     <template  v-slot:append-inner>
                                         <v-icon @click="showPassword = !showPassword" class="tw-relative tw-z-50 tw-cursor-pointer"  :color="passwordFocus ? passwordStatus.valid ? 'primary-color' : 'error': 'grey-darken-3'">{{ showPassword ? 'mdi-eye-off-outline' : 'mdi-eye-outline' }}</v-icon>
                                     </template>

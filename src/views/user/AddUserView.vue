@@ -98,10 +98,13 @@
               <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
                 <div>
                   <div>
-                    <v-switch v-model="isMultipleProducts" color="primary-color" label="Multiple Products"></v-switch>
+                    <v-switch v-model="isHavingAllProducts" color="primary-color" label="All Products"></v-switch>
                   </div>
+                  <!-- <div>
+                    <v-switch v-model="isMultipleProducts" color="primary-color" label="Multiple Products"></v-switch>
+                  </div> -->
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-                  <div v-if="!isMultipleProducts">
+                  <!-- <div v-if="!isMultipleProducts">
                     <select v-model="product" 
                     class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
                       
@@ -109,9 +112,10 @@
                         {{ p.name }}
                       </option>
                     </select>
-                  </div>
-                  <div v-else>
+                  </div> -->
+                  <div>
                     <v-autocomplete
+                    :disabled="isHavingAllProducts"
                     v-model="selectedProducts"
                     filter-keys="name"
                       density="compact"
@@ -123,18 +127,6 @@
                       :items="selectProducts"
                       multiple
                     ></v-autocomplete>
-                    <!-- <v-select
-                      v-model="selectedProducts"
-                      :items="selectProducts"
-                      density="compact"
-                      item-value="id"
-                      item-title="name"
-                      variant="outlined"
-                      color="primary-color"
-                      chips
-                      :hide-details="true"
-                      multiple
-                    ></v-select> -->
                   </div>
                 </div>
               </v-col>
@@ -255,7 +247,7 @@
                       {{  cities.filter(i => i.id == c.city_id)[0]?.name }}
                       </div>
                       <div>
-                        {{ c.fee }} DH
+                        {{ c.fee }} {{currency}}
                       </div>
                       <div>
                         <v-icon color="red" @click="removeCity(c.id)" size="x-small">mdi-delete</v-icon>
@@ -289,7 +281,7 @@
 
 <script>
 import User from "@/api/User";
-import { localUrl } from '@/config/config'
+import { currency, localUrl } from '@/config/config'
 import {
   validateEmail,
   validateName,
@@ -302,12 +294,14 @@ export default {
   data() {
     return {
       localUrl,
+      currency,
       isFormReady: false,
       isLoading: false,
 
       city: 1,
 
       isMultipleProducts: false,
+      isHavingAllProducts: false,
 
       id: 1,
       deliveryCity: 1,
@@ -393,13 +387,15 @@ export default {
       if(this.isMultipleProducts) {
         return [...this.products]
       }
-      return [{ id: 0, name: 'All' },...this.products]
+      // return [{ id: 0, name: 'All' },...this.products]
+      return [...this.products]
     },
     userProducts() {
-      if(this.isMultipleProducts) {
+      // if(this.isMultipleProducts) {
+      //   return this.selectedProducts
+      // }
         return this.selectedProducts
-      }
-      return [this.product]
+      // return [this.product]
     }
   },
 
@@ -438,7 +434,9 @@ export default {
         role: this.role, 
         product_id: this.userProducts, 
         city: this.city, 
-        deliveryCities: this.deliveryCities};
+        deliveryCities: this.deliveryCities,
+        having_all: this.isHavingAllProducts
+        };
       User.register(user)
         .then((res) => {
           if (res.data.code == "USER_CREATED") {

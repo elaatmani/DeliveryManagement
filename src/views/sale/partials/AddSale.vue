@@ -54,7 +54,7 @@
           <div class="md:tw-col-span-12 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Price</div>
             <input
-              type="text"
+              type="number"
               v-model="sale.price"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             />
@@ -377,7 +377,8 @@ export default {
         product: product,
         product_variation: product_variation,
         product_variation_id: product_variation.id,
-        quantity: this.quantity
+        quantity: this.quantity,
+        price: 0
       }
 
       this.items.push(item)

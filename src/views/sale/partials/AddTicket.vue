@@ -28,7 +28,7 @@
 // import utf8 from "utf8";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import { localUrl , serverUrl } from "@/config/config";
+import { currency, localUrl , serverUrl } from "@/config/config";
 import QRCode  from 'qrcode'
 import { getPrice } from '@/helpers/methods';
 
@@ -111,11 +111,11 @@ export default {
       });
 
       doc.line(1, 73, 99, 73);
-
+      
       doc.setFont("helvetica", "bold");
       doc.setTextColor("black");
       doc.setFontSize(16);
-      doc.text(`CRBT: ${getPrice(order)}`, 29, 80);
+      doc.text(`CRBT: ${getPrice(order)} ${currency}`, 29, 80);
       doc.line(1, 83, 99, 83);
 
       doc.setFontSize(8);

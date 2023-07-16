@@ -89,7 +89,7 @@
                                             </p>
                                         </td>
                                         <td class="px-6 py-4">
-                                            {{ getPrice(order) }}
+                                            {{ getPrice(newOrder) }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ newOrder.city }}
@@ -103,6 +103,7 @@
                                             </v-btn>
                                         </td>
                                     </tr>
+                                    <NewOrder @update="handleDoubleUpdate" :order="o" v-for="o in newOrder?.doubles" :key="o.id" />
                                 </tbody>
                             </table>
                         </div>
@@ -150,9 +151,10 @@ import User from '@/api/User';
 import { validateName } from '@/helpers/validators';
 import UpdateOrder from '@/views/order/partials/UpdateOrder'
 import { getPrice } from '@/helpers/methods'
+import NewOrder from '@/views/order/partials/NewOrder'
 
 export default {
-    components: { UpdateOrder },
+    components: { UpdateOrder, NewOrder },
   data() {
     return {
         isOrderExists: false,
@@ -235,6 +237,9 @@ export default {
         this.form.quantity = validateName(this.popupOrder.quantity, 'Quantity')
         this.form.price = validateName(this.popupOrder.price, 'Price')
     },
+    handleDoubleUpdate(order) {
+        this.newOrder.doubles = this.newOrder.doubles.map(o => o.id == order.id ? order : o);
+    },
     clearOrder() {
         if(!this.newOrder.confirmation) {
             this.$alert({
@@ -243,6 +248,15 @@ export default {
             })
             return false
         }
+
+        if(this.newOrder.has_doubles && this.newOrder.doubles.some(o => !o.confirmation)) {
+            this.$alert({
+                type: 'warning',
+                title: 'Double order confirmation not changed'
+            })
+            return false
+        }
+
         this.isOrderExists = false;
         this.$alert({
             type: 'success',

@@ -24,6 +24,10 @@ const ApiErrorHandler = {
                     title = 'Your are not allowed to this resources'
                 break;
 
+                case 'ERROR':
+                    title = err?.response?.data.message
+                break;
+
                 case 'NOT_AUTHENTICATED':
                     title = 'Your session expired'
 

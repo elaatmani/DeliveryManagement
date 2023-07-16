@@ -161,11 +161,14 @@
               </v-col>
               <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
                 <div>
-                  <div>
+                  <!-- <div>
                     <v-switch v-model="isMultipleProducts" color="primary-color" label="Multiple Products"></v-switch>
+                  </div> -->
+                  <div>
+                    <v-switch v-model="isHavingAllProducts" color="primary-color" label="All Products"></v-switch>
                   </div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-                  <div v-if="!isMultipleProducts">
+                  <!-- <div v-if="!isMultipleProducts">
                     <select v-model="product" 
                     class="tw-w-full tw-py-[7px] focus:tw-border-orange-500 tw-px-4 tw-border tw-outline-orange-500 tw-border-neutral-400 tw-border-solid tw-rounded-md">
                       
@@ -173,9 +176,10 @@
                         {{ p.name }}
                       </option>
                     </select>
-                  </div>
-                  <div v-else>
+                  </div> -->
+                  <div>
                     <v-autocomplete
+                    :disabled="isHavingAllProducts"
                     v-model="selectedProducts"
                     filter-keys="name"
                       density="compact"
@@ -358,6 +362,7 @@ export default {
       products: [],
       selectedProducts: [],
       isMultipleProducts: false,
+      isHavingAllProducts: false
 
 
     };
@@ -395,13 +400,14 @@ export default {
       if(this.isMultipleProducts) {
         return [...this.products]
       }
-      return [{ id: 0, name: 'All' },...this.products]
+      // return [{ id: 0, name: 'All' },...this.products]
+      return [...this.products]
     },
     userProducts() {
-      if(this.isMultipleProducts) {
-        return this.selectedProducts
-      }
-      return [this.product]
+      // if(this.isMultipleProducts) {
+      //   return this.selectedProducts
+      // }
+      return this.selectedProducts
     }
   },
 
@@ -425,7 +431,9 @@ export default {
         role: this.role, 
         product_id: this.userProducts, 
         city: this.city, 
-        deliveryCities: this.deliveryCities};
+        deliveryCities: this.deliveryCities,
+        having_all: this.isHavingAllProducts
+        };
 
       this.isLoading = true;
       User.update(user, this.updatePassword)
@@ -542,16 +550,17 @@ export default {
                   this.role = user.role
 
                   if (user.role == 2) {
+                    this.isHavingAllProducts = user.having_all == 1;
 
-                      if(user?.product.length >= 1) {
-                        if(user?.product.length == 1) {
-                        this.product = user?.product[0]
-                        this.isMultipleProducts = false
-                      } else {
                         this.selectedProducts = user?.product
-                        this.isMultipleProducts = true
-                      }
-                    }
+                    //   if(user?.product.length >= 1) {
+                    //     if(user?.product.length == 1) {
+                    //     this.product = user?.product[0]
+                    //     this.isMultipleProducts = false
+                    //   } else {
+                    //     this.isMultipleProducts = true
+                    //   }
+                    // }
                   }
 
                   this.user_image = user.photo
