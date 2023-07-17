@@ -1,5 +1,21 @@
 <template>
   <div :key="items.length">
+    <div class="tw-grid tw-grid-cols-12 tw-mb-5">
+      <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-items-center">
+        <div
+          class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700 tw-whitespace-nowrap"
+        >
+          Show per page:
+        </div>
+        <select
+          v-model="paginationLimit"
+          class="focus:tw-border-orange-400 tw-border-solid tw-w-[70px] ml-2 px-2 tw-py-2 tw-rounded-md tw-border tw-flex tw-items-center"
+        >
+          <option :value="o" :key="o" v-for="o in allowedLimit">{{ o }}</option>
+        </select>
+      </div>
+      
+    </div>
     <div
       class="tw-relative tw-pb-5 tw-overflow-x-auto tw-min-h-[400px] tw-overflow-y-visible sm:tw-rounded-lg"
     >
@@ -193,7 +209,7 @@
 
     <!-- Pagination -->
     <div class="mt-5 tw-grid tw-grid-cols-12 tw-gap-5">
-      <div class="tw-col-span-12 md:tw-col-span-6 d-flex align-center">
+      <!-- <div class="tw-col-span-12 md:tw-col-span-6 d-flex align-center">
         <div
           class="text-body-2 tw-h-fit mr-2 tw-text-zinc-700 tw-whitespace-nowrap"
         >
@@ -205,9 +221,9 @@
         >
           <option :value="o" :key="o" v-for="o in allowedLimit">{{ o }}</option>
         </select>
-      </div>
+      </div> -->
       <div
-        class="tw-col-span-12 md:tw-col-span-6 d-flex tw-justify-end tw-flex-wrap align-center"
+        class="tw-col-span-12 md:tw-col-span-12 d-flex tw-justify-end tw-flex-wrap align-center"
       >
         <div
           class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700"
@@ -216,12 +232,11 @@
           {{ currentPage == pageCount ? sales.length : nextRange }} of
           {{ sales.length }} items
         </div>
-        <div>
+        <div class="tw-flex tw-flex-wrap tw-gap-2">
           <v-btn
             @click="currentPage = n"
             :ripple="false"
             variant="flat"
-            class="mr-1"
             icon
             rounded="lg"
             :color="n == currentPage ? 'primary-color' : 'grey'"
@@ -259,9 +274,9 @@ export default {
 
   data() {
     return {
-      allowedLimit: [5, 10, 20, 50, 100],
+      allowedLimit: [5, 10, 20, 50, 100, 300, 500],
       currentPage: 1,
-      paginationLimit: 10,
+      paginationLimit: 50,
       todayDate: null,
       selected: [],
       isAllSelected: false,

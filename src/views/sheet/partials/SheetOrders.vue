@@ -23,6 +23,7 @@
                   <tr>
                     <th scope="col" class="tw-px-6 tw-py-3">Fullname</th>
                     <th scope="col" class="tw-px-6 tw-py-3">Product</th>
+                    <th scope="col" class="tw-px-6 tw-py-3">SKU</th>
                     <th scope="col" class="tw-px-6 tw-py-3">Qty</th>
                     <th scope="col" class="tw-px-6 tw-py-3">Price</th>
                   </tr>
@@ -36,6 +37,11 @@
                     <td class="tw-px-6 tw-py-2">
                         <div>
                             <p v-for="p in o['Product name'].split('\n')" :key="p">- {{ p }}</p>
+                        </div>
+                    </td>
+                    <td class="tw-px-6 tw-py-2">
+                        <div>
+                            <p v-for="p in o['SKU'].split('\n')" :key="p">{{ p }}</p>
                         </div>
                     </td>
                     <td class="tw-px-6 tw-py-2">

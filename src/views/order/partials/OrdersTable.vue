@@ -37,8 +37,8 @@
             </div>
             <div class="tw-col-span-12 md:tw-col-span-6 d-flex tw-justify-end tw-flex-wrap align-center">
                 <div class="text-caption tw-h-fit mr-2 font-weight-bold tw-text-zinc-700">{{ prevRange + 1 }} - {{ (currentPage == pageCount ?  orders.length : nextRange) }} of {{  orders.length }} items </div>
-                <div>
-                <v-btn @click="currentPage = n" :ripple="false" variant="flat" class="mr-1" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
+                <div class="tw-flex tw-flex-wrap tw-gap-2">
+                <v-btn @click="currentPage = n" :ripple="false" variant="flat" icon rounded="lg" :color="n == currentPage ? 'primary-color' : 'grey'" density="comfortable"  v-for="n in pageCount" :key="n">
                     <span class="tw-text-white">{{ n }}</span>
                 </v-btn>
                 </div>
@@ -57,9 +57,9 @@ export default {
     props: [ 'orders', 'note' ],
     data() {
         return {
-            allowedLimit: [5, 10, 20, 50, 100],
+            allowedLimit: [5, 10, 20, 50, 100, 200, 500],
             currentPage: 1,
-            paginationLimit: 10,
+            paginationLimit: 50,
             todayDate: null,
             columnsNote: ['id','date',"client", 'product', 'confirmation', 'affectation', 'price', 'city', 'note', 'actions'],
             columnsNormal: ['id','date',"client", 'product', 'confirmation', 'affectation', 'price', 'city', 'actions'],
