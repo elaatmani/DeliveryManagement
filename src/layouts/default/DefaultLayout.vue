@@ -30,6 +30,7 @@ import User from '@/api/User'
 import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
 import Sheet from '@/api/Sheet'
+import Product from '@/api/Product'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
@@ -119,13 +120,29 @@ export default {
             } else {
                 Sheet.auto()
             }
-        }
+        },
+        getProducts() {
+        return Product.all().then(
+            (res) => {
+            if (res.data.code == "SUCCESS") {
+                this.$store.dispatch("product/setProducts", res.data.data.products);
+                this.$store.dispatch("product/setFetched", true);
+            }
+            },
+            (err) => {
+            this.$handleApiError(err);
+            }
+        );
+        },
     },
 
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        this.fetching = setInterval(this.sync_sheets, this.delay)
+        this.fetching = setInterval(this.sync_sheets, this.delay);
+        if(this.$can('show_all_products')) {
+            this.getProducts();
+        }
     }
 }
 </script>

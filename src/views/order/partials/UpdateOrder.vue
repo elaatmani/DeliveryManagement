@@ -38,6 +38,9 @@
               v-model="sale.city"
               class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
             >
+            <option disabled :value="sale.city">
+                {{ sale.city }}
+              </option>
               <option :value="c.name" v-for="c in cities" :key="c.id">
                 {{ c.name }}
               </option>
@@ -758,9 +761,9 @@ export default {
     this.sale = { ...this.order };
     this.items = [...this.order.items];
 
-    if (!this.isLoaded) {
-      this.getProducts();
-    }
+    // if (!this.isLoaded) {
+    //   this.getProducts();
+    // }
 
   },
 };

@@ -53,7 +53,9 @@ export default {
 
   computed: {
     toImport() {
-        const data = this.data.map(s => {
+      const copy = this.data.map(p => ({...p}));
+
+        const data = copy.map(s => {
             const keys = Object.keys(s);
             keys.forEach(k => {
                 s[k] = !s[k] ? "NONE" : s[k]
