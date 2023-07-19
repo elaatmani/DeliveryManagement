@@ -103,6 +103,7 @@
           :sales="sales"
           :search="search"
           v-model:filtered="filteredSales"
+          :selected="selectedSales"
         />
       </div>
       <div class="">
@@ -154,12 +155,6 @@ export default {
     };
   },
 
-  watch: {
-    dateFilter(v) {
-      console.log("date: ", v);
-    },
-  },
-
   computed: {
     fetched() {
       return this.$store.getters["sale/fetched"];
@@ -179,6 +174,9 @@ export default {
     cities() {
       return this.$store.getters["city/cities"];
     },
+    selectedSales() {
+      return this.sales.filter(s => this.selected.includes(s.id));
+    }
   },
   methods: {
     handleSelected(value) {
@@ -190,6 +188,7 @@ export default {
       } else {
         this.isButtonDisabled = true;
       }
+      console.log(this.selectedSales);
     },
 
     async getDeliveries() {

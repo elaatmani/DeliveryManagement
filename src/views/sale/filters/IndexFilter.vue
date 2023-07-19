@@ -28,6 +28,10 @@
       <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
         <ProductFilter v-model:filter="config.productFilter" />
       </div>
+
+      <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+        <ExcelExport :selected="selected" :filtered="filtered" :sales="sales" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,6 +45,7 @@ import AffectationFilter from "@/views/sale/filters/AffectationFilter";
 import AgenteFilter from "@/views/sale/filters/AgenteFilter";
 import ProductFilter from '@/views/sale/filters/ProductFilter';
 import salesFilter from "./../filters/filter";
+import ExcelExport from '@/views/sale/filters/ExcelExport'
 
 export default {
   components: {
@@ -50,10 +55,11 @@ export default {
     ConfirmationFilter,
     AffectationFilter,
     AgenteFilter,
-    ProductFilter
+    ProductFilter,
+    ExcelExport
   },
 
-  props: ["sales", "filtered", "search"],
+  props: ["sales", "filtered", "search", "selected"],
 
   data() {
     return {
