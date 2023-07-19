@@ -36,10 +36,10 @@
                         {{ product.name }}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.buying_price }} DH
+                        {{ product.buying_price }} {{currency}}
                     </td>
                     <td class="tw-px-6 tw-py-4">
-                        {{ product.selling_price }} DH
+                        {{ product.selling_price }} {{currency}}
                     </td>
                     <td class="tw-px-6 tw-py-4">
                         {{ calculQty(product.variations) }}
@@ -80,6 +80,7 @@
 
 <script>
 import ProductActions from '@/views/product/ProductActions'
+import { currency } from '@/config/config'
 
 export default {
     props: [ 'columns', 'products' ],
@@ -87,6 +88,7 @@ export default {
 
     data() {
         return {
+            currency,
             allowedLimit: [5, 10, 20, 50, 100],
             currentPage: 1,
             paginationLimit: 10,
