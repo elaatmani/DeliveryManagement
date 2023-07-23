@@ -13,6 +13,7 @@ class Product {
             ref: product.reference,
             variations: product.variants,
             description: product.description,
+            deliveries: product.selectedDeliveries,
             status: 1
         });
     }
@@ -27,7 +28,8 @@ class Product {
             ref: product.reference,
             variations: product.variants,
             description: product.description,
-            status: 1
+            status: 1,
+            deliveries: product.selectedDeliveries
         });
     }
 

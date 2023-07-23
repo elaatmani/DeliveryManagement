@@ -121,6 +121,17 @@ export default {
                 Sheet.auto()
             }
         },
+        getUsers() {
+            User.all().then(
+            res => {
+                if(res?.data.code == "SHOW_ALL_USERS") {
+                    const users = res.data.data.users
+                    this.$store.dispatch('user/setUsers', users);
+                    this.$store.dispatch('user/setFetched', true);
+                }
+                }
+                ).catch(this.$handleApiError)
+            },
         getProducts() {
         return Product.all().then(
             (res) => {
@@ -143,6 +154,9 @@ export default {
         if(this.$can('show_all_products')) {
             this.getProducts();
         }
+        // if(this.$can('show_all_users')) {
+            this.getUsers();
+        // }
     }
 }
 </script>

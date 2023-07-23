@@ -70,7 +70,7 @@
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <AddOrderAffectation :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation :items="formatedItems" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
@@ -452,7 +452,7 @@ import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/order/partials/AddOrderAffectation';
 
 export default {
-  components: { AddOrderConfirmation , AddOrderAffectation},
+  components: { AddOrderConfirmation , AddOrderAffectation },
   props: ["visible", "order"],
 
   data() {
@@ -571,6 +571,29 @@ export default {
         this.items.length > 0 &&
         !!this.sale.city
       );
+    },
+    formatedItems() {
+      // console.log();
+      const items = this.items.map(i => {
+        const p = this.products.find(x => x.id == i.product.id);
+
+        if(!p) return i;
+
+        const v = p.variations.find(j => j.id == i.product_variation.id);
+
+        if(!v) return i;
+        // return false;
+        return {
+          ...i,
+          product: p,
+          product_id: p.id,
+          product_variation: v,
+          product_variation_id: v.id,
+          product_ref: p.ref
+        }
+      })
+          return items;
+      // return this.items;
     },
   },
 

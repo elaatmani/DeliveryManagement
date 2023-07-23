@@ -139,20 +139,27 @@ export default {
       });
     }
   },
-  mounted() {
-    Product.all()
-    .then(
-      res => {
-        if (res.data.code == 'SUCCESS') {
-          this.$store.dispatch('product/setProducts', res.data.data.products)
-          this.$store.dispatch('product/setFetched', true)
+  methods: {
+    getProducts() {
+      Product.all()
+      .then(
+        res => {
+          if (res.data.code == 'SUCCESS') {
+            this.$store.dispatch('product/setProducts', res.data.data.products)
+            this.$store.dispatch('product/setFetched', true)
+          }
+          
+        },
+        err => {
+          this.$handleApiError(err)
         }
-        
-      },
-      err => {
-        this.$handleApiError(err)
-      }
-    )
+      )
+    }
+  },
+  mounted() {
+    if(!this.fetched) {
+      this.getProducts();
+    }
   }
 }
 </script>

@@ -374,6 +374,26 @@
           </v-col>
         </v-row>
 
+        <v-row>
+          <v-col>
+            <div>
+              <h1>Deliveries</h1>
+              <div>
+                <v-select
+                v-model="selectedDeliveries"
+                  :items="deliveries"
+                  item-title="fullname"
+                  item-value="id"
+                  
+                  chips
+                  multiple
+                  variant="outlined"
+                  ></v-select>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+
       </div>
 
 
@@ -426,6 +446,7 @@ export default {
         sellingPrice: 0,
         description: "",
       },
+      selectedDeliveries:[],
 
       formStatus: {
         name: {
@@ -484,6 +505,13 @@ export default {
     },
     warehouses() {
       return this.$store.getters['warehouse/warehouses']
+    },
+    users() {
+      return this.$store.getters['user/users']
+    },
+    deliveries() {
+      return this.users.filter(u => u.role?.name == "delivery")
+      .map(u => ({...u, fullname: u.firstname + ' ' + u.lastname}))
     }
   },
 
@@ -496,6 +524,7 @@ export default {
       let product = this.product;
       
       product.addVariants = this.addVariants;
+      product.selectedDeliveries = this.selectedDeliveries.map(i => ({delivery_id: i}));
 
       if(!this.addVariants) {
         const variants = [{
@@ -527,7 +556,10 @@ export default {
               description: "",
             };
 
+            this.selectedDeliveries = [];
             this.variants = [];
+
+            this.$store.dispatch('addProduct', res.data.data.product)
         }
         if (res.data.code == "VALIDATION_ERROR") {
             this.$alert({

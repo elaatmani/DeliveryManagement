@@ -453,7 +453,7 @@ import Sale from "@/api/Sale";
 import { upsells } from "@/config/orders";
 import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
-import AddOrderAffectation from '@/views/order/partials/AddOrderAffectation';
+import AddOrderAffectation from '@/views/sale/partials/AddOrderAffectation';
 
 export default {
   components: { AddOrderConfirmation , AddOrderAffectation},

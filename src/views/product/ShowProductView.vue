@@ -24,11 +24,11 @@
             </div>
             <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-gap-2 tw-items-center tw-justify-between tw-flex-wrap">
               <p class="tw-font-light tw-text-neutral-500">Buying Price:</p>
-              <p class="tw-text-neutral-800 tw-font-medium tw-px-3">{{ product.buying_price }} DH</p>
+              <p class="tw-text-neutral-800 tw-font-medium tw-px-3">{{ product.buying_price }} {{currency}}</p>
             </div>
             <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-gap-2 tw-items-center tw-justify-between tw-flex-wrap">
               <p class="tw-font-light tw-text-neutral-500">Selling Price:</p>
-              <p class="tw-text-neutral-800 tw-font-medium tw-px-3">{{ product.selling_price }} DH</p>
+              <p class="tw-text-neutral-800 tw-font-medium tw-px-3">{{ product.selling_price }} {{currency}}</p>
             </div>
             <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-gap-2 tw-items-center tw-justify-between tw-flex-wrap">
               <p class="tw-font-light tw-text-neutral-500">Total Delivered:</p>
@@ -88,6 +88,24 @@
                               {{ variant.stockAlert }}
                           </td>
                         </tr>
+                        <tr class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50">
+                            <th scope="row" class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900">
+                                
+                            </th>
+                            <th scope="row" class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900">
+                                
+                            </th>
+                            <td class="tw-px-6 tw-py-2">
+                                
+                            </td>
+                            <td class="tw-px-6 tw-py-2">
+                                <div class="tw-flex tw-flex-col tw-font-medium">
+                                  <span>Total: {{ qtyTotal }}</span>
+                                </div>
+                            </td>
+                            <td class="tw-px-6 tw-py-2">
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
           </div>
@@ -105,11 +123,13 @@
 <script>
 import Product from '@/api/Product';
 import ProductTracking from '@/views/product/ProductTracking'
+import { currency } from '@/config/config';
 
 export default {
     components: {  ProductTracking },
     data() {
       return {
+        currency,
         isLoading: false,
         isLoaded: false,
 
@@ -152,6 +172,18 @@ export default {
         });
         return total
       },
+
+      qtyTotal() {
+        if(this.isLoaded) {
+
+          let total = 0;
+          this.product.variations.forEach(element => {
+            total += element.quantity;
+          });
+          return total
+      }
+      return 0
+      }
 
     },
 

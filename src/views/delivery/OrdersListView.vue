@@ -62,13 +62,29 @@ export default {
           return false;
         }
 
-        if(!item.fullname.toLowerCase().includes(this.search.toLowerCase()) && !item.product_name.toLowerCase().includes(this.search.toLowerCase())) {
+        // if(!item.fullname.toLowerCase().includes(this.search.toLowerCase()) && !item.product_name.toLowerCase().includes(this.search.toLowerCase())) {
+        //   return false;
+        // }
+
+        const isSearchFound = ((item, search) => {
+          for (const key in item) {
+            if(['created_at', 'updated_at'].includes(key)){
+              continue;
+            }
+            if (String(item[key]).toLowerCase().includes(search.toLowerCase())) {
+              return true; // If any value matches the search, return true and exit the loop.
+            }
+          }
+          return false; // If no value matches the search, return false after checking all values.
+        })(item, this.search);
+        
+        if(!isSearchFound) {
           return false;
         }
-        
-        // if item passes all filters, include it in the filtered data
-        return true;
-      });
+          
+          // if item passes all filters, include it in the filtered data
+          return true;
+        });
     }
   },
   methods: {
@@ -76,7 +92,7 @@ export default {
       Sale.deliveryOrders()
       .then(
         res => {
-          console.log(res.data);
+          // console.log(res.data);
           const orders = res.data.data.orders
           this.$store.dispatch('order/setOrders', orders)
           this.isLoaded = true

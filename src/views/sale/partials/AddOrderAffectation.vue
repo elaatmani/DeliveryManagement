@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    props: [ 'affectation', 'id', 'order', 'confirmation', 'items' ],
+    props: [ 'affectation', 'id', 'order', 'confirmation' ],
     data() {
         return {
             isOpen: false,
@@ -59,12 +59,8 @@ export default {
           return this.$store.getters['user/fetched']
         },
         deliveries() {
-            console.log(this.allDeliveries);
-            console.log(this.order);
-            if(this.order.created_at) {
-                  return this.allDeliveries.filter(d => d.delivery_products.some(p => this.items.some(i => i.product_id == p.product_id)))
-            }
-            return [];
+            // console.log(this.allDeliveries);
+          return this.allDeliveries.filter(d => d.delivery_products.some(p => this.order.items.some(i => i.product_id == p.product_id)))
         }
     },
     methods: {

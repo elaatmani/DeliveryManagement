@@ -1,5 +1,5 @@
 <template>
-  <div :key="affectation" v-if="deliveries.length > 0" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
+  <div :key="affectation" v-if="fetched" v-click-outside="close" class="tw-relative tw-min-w-[100px]">
     <button
         @click="toggle"
         
@@ -36,7 +36,7 @@
 <script>
 import Sale from '@/api/Sale';
 export default {
-    props: [ 'affectation', 'id' ],
+    props: [ 'affectation', 'id', 'sale'],
     data() {
         return {
             isOpen: false,
@@ -61,8 +61,20 @@ export default {
             return this.options.filter(i => i.id == this.selectedId)[0]
             
         },
+        // deliveries() {
+        //     return this.$store.getters['user/deliveries']
+        // },
+        users() {
+          return this.$store.getters['user/users']
+        },
+        allDeliveries() {
+            return this.users.filter(u => u.role_name == 'delivery')
+        },
+        fetched() {
+          return this.$store.getters['user/fetched']
+        },
         deliveries() {
-            return this.$store.getters['user/deliveries']
+          return this.allDeliveries.filter(d => d.delivery_products.some(p => this.sale.items.some(i => i.product_id == p.product_id)))
         }
     },
     methods: {

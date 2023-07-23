@@ -266,10 +266,10 @@
               <div>
                 <div class="tw-col-span-12 tw-flex tw-justify-end">
                   <button
-                    :disabled="!size || !color || !quantity"
+                    :disabled="!quantity"
                     :class="{
                       'bg-primary-color':
-                        size && color && quantity,
+                        quantity,
                     }"
                     @click="addVariant"
                     class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
@@ -381,6 +381,24 @@
             </div>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <div>
+              <h1>Deliveries</h1>
+              <div>
+                <v-select
+                v-model="selectedDeliveries"
+                  :items="deliveries"
+                  item-title="fullname"
+                  item-value="id"
+                  chips
+                  multiple
+                  variant="outlined"
+                  ></v-select>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
       </div>
 
       <div class="mt-8 tw-flex tw-justify-end tw-gap-3">
@@ -433,6 +451,7 @@ export default {
         sellingPrice: 0,
         description: "",
       },
+      selectedDeliveries:[],
 
       formStatus: {
         name: {
@@ -493,6 +512,14 @@ export default {
       return this.$store.getters["warehouse/warehouses"];
     },
 
+    users() {
+      return this.$store.getters['user/users']
+    },
+    deliveries() {
+      return this.users.filter(u => u.role?.name == "delivery")
+      .map(u => ({...u, fullname: u.firstname + ' ' + u.lastname}))
+    }
+
   },
 
   methods: {
@@ -503,6 +530,7 @@ export default {
 
       let product = this.product;
       product.variants = this.variants;
+      product.selectedDeliveries = this.selectedDeliveries.map(d => ({delivery_id: d, product_id: this.id}));
 
       Product.update(this.$route.params.id, product)
         .then((res) => {
@@ -647,6 +675,7 @@ export default {
             ref,
             name,
             description,
+            deliveries
           } = res.data.data.products;
           this.variants = variations;
           this.product.buyingPrice = buying_price;
@@ -655,6 +684,7 @@ export default {
           this.product.reference = ref;
           this.product.description = description;
           this.variantId = this.getLastVariantId(variations);
+          this.selectedDeliveries = deliveries.map(d => (d.delivery_id))
           this.isLoaded = true;
           return res;
         }

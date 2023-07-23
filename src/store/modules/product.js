@@ -21,6 +21,10 @@ export default {
             state.products = payload
         },
 
+        ADD_PRODUCT: (state, payload) => {
+            state.products.push(payload)
+        },
+
         SET_FETCHED: (state, payload) => {
             state.fetched = payload
         },
@@ -29,6 +33,10 @@ export default {
     actions: {
         setProducts: ({ commit }, payload) => {
             commit('SET_PRODUCTS', payload)
+        },
+
+        addProduct: ({ commit }, payload) => {
+            commit('ADD_PRODUCT', payload)
         },
 
         setFetched: ({ commit }, payload) => {

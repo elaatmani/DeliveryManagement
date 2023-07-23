@@ -45,7 +45,23 @@ export default function filteredSales(
       return false;
     }
 
-    if (!item.fullname.toLowerCase().includes(search.toLowerCase())) {
+    // if (!item.fullname.toLowerCase().includes(search.toLowerCase())) {
+    //   return false;
+    // }
+
+    const isSearchFound = ((item, search) => {
+      for (const key in item) {
+        if(['created_at', 'updated_at'].includes(key)){
+          continue;
+        }
+        if (String(item[key]).toLowerCase().includes(search.toLowerCase())) {
+          return true; // If any value matches the search, return true and exit the loop.
+        }
+      }
+      return false; // If no value matches the search, return false after checking all values.
+    })(item, search);
+    
+    if(!isSearchFound) {
       return false;
     }
 
@@ -100,6 +116,10 @@ export default function filteredSales(
     // if item passes all filters, include it in the filtered data
     return true;
   });
+}
+
+function checkItemForSearch(item, search) {
+  
 }
 
 export function newSales(sales) {

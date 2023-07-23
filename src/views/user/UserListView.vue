@@ -166,8 +166,6 @@ export default {
             const users = res.data.data.users
             this.$store.dispatch('user/setUsers', users);
             this.$store.dispatch('user/setFetched', true);
-            console.log(res);
-            // this.isLoaded = true
           }
         }
         ).catch(this.$handleApiError)
