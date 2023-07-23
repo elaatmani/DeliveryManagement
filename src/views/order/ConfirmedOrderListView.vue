@@ -125,10 +125,10 @@ export default {
         // if(!item.fullname.toLowerCase().includes(this.search.toLowerCase()) && !item.product_name.toLowerCase().includes(this.search.toLowerCase())) {
         //   return false;
         // }
-        
+
         const isSearchFound = ((item, search) => {
         for (const key in item) {
-          if(['created_at', 'updated_at'].includes(key)){
+        if(['created_at', 'updated_at', 'sheet_id', 'reported_agente_note', 'reported_agente_note', 'reported_agente_date', 'reported_delivery_note', 'reported_delivery_date'].includes(key)){
             continue;
           }
           if (String(item[key]).toLowerCase().includes(search.toLowerCase())) {

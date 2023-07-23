@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    props: [ 'affectation', 'id', 'order', 'confirmation' ],
+    props: [ 'affectation', 'id', 'order', 'confirmation', 'items' ],
     data() {
         return {
             isOpen: false,
@@ -24,9 +24,18 @@ export default {
             selectedId: null,
         }
     },
+    watch: {
+        items(newvalue, old) {
+            console.log(newvalue);
+            console.log(old);
+        }
+    },
     computed: {
         options() {
             return [{ id: null, firstname: 'select', lastname: '' }, ...this.deliveries]
+        },
+        order_items(){
+            return this.items
         },
         affectationValue: {
             get() {
@@ -60,7 +69,7 @@ export default {
         },
         deliveries() {
             // console.log(this.allDeliveries);
-          return this.allDeliveries.filter(d => d.delivery_products.some(p => this.order.items.some(i => i.product_id == p.product_id)))
+          return this.allDeliveries.filter(d => d.delivery_products.some(p => this.items.some(i => i.product_id == p.product_id)))
         }
     },
     methods: {
@@ -80,6 +89,7 @@ export default {
     },
     mounted() {
         this.selectedId = this.affectation;
+        
     }
 };
 </script>

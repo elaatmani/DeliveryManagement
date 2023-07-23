@@ -70,7 +70,7 @@
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <AddOrderAffectation :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation v-model:items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
@@ -528,13 +528,6 @@ export default {
 
     filtredProducts() {
       return this.products
-      // if (this.warehouse_id == 0) {
-      //   return [];
-      // }
-
-      // return this.products.filter((p) =>
-      //   p.variations.some((v) => v.warehouse_id == this.warehouse_id)
-      // );
     },
 
     cities() {
@@ -597,6 +590,7 @@ export default {
       };
 
       this.items.push(item);
+      // this.items = this.items.map(i => i);
     },
 
     getVariations(product) {
@@ -765,10 +759,6 @@ export default {
   mounted() {
     this.sale = { ...this.order };
     this.items = [...this.order.items];
-
-    // if (!this.isLoaded) {
-    //   this.getProducts();
-    // }
 
   },
 };

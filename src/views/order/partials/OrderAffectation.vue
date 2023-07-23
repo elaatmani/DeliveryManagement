@@ -36,7 +36,7 @@
 <script>
 import Sale from '@/api/Sale';
 export default {
-    props: [ 'affectation', 'id', 'order', 'items' ],
+    props: [ 'affectation', 'id', 'order' ],
     data() {
         return {
             isOpen: false,

@@ -70,7 +70,7 @@
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <AddOrderAffectation :items="formatedItems" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation :items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
