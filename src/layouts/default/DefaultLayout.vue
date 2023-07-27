@@ -150,7 +150,7 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        if(this.user.role_name == 'admin') {
+        if(this.user.role == 'admin') {
             this.fetching = setInterval(this.sync_sheets, this.delay);
         }
         if(this.$can('show_all_products')) {
