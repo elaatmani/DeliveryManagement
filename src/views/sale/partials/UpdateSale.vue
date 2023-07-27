@@ -481,6 +481,7 @@ export default {
       product_variation_id: 0,
       warehouse_id: 0,
       quantity: 1,
+      // product_images: [],
 
       item_id: 1,
       items: [],
@@ -502,17 +503,36 @@ export default {
   },
 
   watch: {
-    // items: {
-    //   deep: true,
-    //   immediate: true,
-    //   handler(newItems) {
-    //     this.items = newItems.map(i => {
-    //       if(i.product_id == 0) return i;
+    items: {
+      deep: true,
+      immediate: true,
+      handler() {
 
-    //       return {...i, product_id: i.product.id, product: this.products.find(p => p.id == i.product.id)}
-    //     })
-    //   },
-    // },
+        // console.log(newItems);
+        // if(newItems.length == 0) return false;
+        // for(const p in newItems) {
+          // newItems.forEach(p => {
+          // console.log(p);
+          // if(p.product_id == 0) return false;
+          // console.log(p.product.id);
+          // console.log(p.product.id);
+          // p.product_id = p.product.id
+          // p.product = this.products.find(x => x.id == p?.product?.id);
+        // })
+        // for (let i = 0; i < newItems.length; i++) {
+        //   if(newItems[i].product_id == 0) continue;
+        //   console.log(newItems[i]);
+        //   if(newItems[i].product.id != oldItems[i].product.id) {
+        //     newItems[i].product_id = newItems[i].product.id;
+        //     newItems[i].product = this.products.find(p => p.id == newItems[i].product.id);
+        //   }
+        // }
+        // this.items = newItems.map(i => {
+
+        //   return {...i, product_id: i.product.id, product: }
+        // })
+      },
+    },
     product_id() {
       
       if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {

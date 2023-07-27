@@ -103,7 +103,9 @@
                                             </v-btn>
                                         </td>
                                     </tr>
-                                    <NewOrder @update="handleDoubleUpdate" :order="o" v-for="o in newOrder?.doubles" :key="o.id" />
+                                    <div v-if="false">
+                                        <NewOrder  @update="handleDoubleUpdate" :order="o" v-for="o in doubles.filter(i => i.id != newOrder.id)" :key="o.id" />
+                                    </div>
                                 </tbody>
                             </table>
                         </div>
@@ -161,6 +163,8 @@ export default {
         isLoaded: false,
         isLoading: false,
         showUpdatePopup: false,
+
+        doubles: [],
 
         form: {
             fullname: {
@@ -312,7 +316,9 @@ export default {
                         this.newOrder = order;
                         this.popupOrder = {...order};
                         this.$store.dispatch('order/setOrder', this.order)
-                        this.isLoaded = true
+                        this.isLoaded = true;
+                        this.is_double = res.data.data.double
+                        this.doubles = res.data.data.double_orders;  
                         this.isOrderExists = true
                     }
                 }

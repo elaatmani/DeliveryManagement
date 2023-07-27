@@ -150,7 +150,9 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        this.fetching = setInterval(this.sync_sheets, this.delay);
+        if(this.user.role_name == 'admin') {
+            this.fetching = setInterval(this.sync_sheets, this.delay);
+        }
         if(this.$can('show_all_products')) {
             this.getProducts();
         }
