@@ -120,7 +120,7 @@ v-if="false"
 
           <div
           v-if="false"
-           class="md:tw-col-span-6 tw-col-span-12">
+          class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Variations</div>
             <select
               v-model="product_variation_id"
@@ -134,7 +134,7 @@ v-if="false"
           </div>
           <div
           v-if="false"
-           class="md:tw-col-span-6 tw-col-span-12">
+          class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
             <input
               type="number"
@@ -185,6 +185,7 @@ v-if="false"
                   <tr>
                     <th
                       v-for="column in [
+                        '',
                         'product',
                         'variation',
                         'quantity',
@@ -207,12 +208,21 @@ v-if="false"
                 <tbody>
                   <tr
                     v-for="item in items"
-                    :key="item"
+                    :key="item.product.id"
                     class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
                   >
                     <th
                       scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
+                      class="tw-px-2 tw-py-2"
+                      :key="item.product.id"
+                    >
+                      <div class="tw-w-[50px] tw-h-[35px]">
+                        <img class="tw-w-full tw-h-full tw-object-contain" :src="serverUrl + 'storage/' + item.product.image" />
+                      </div>
+                    </th>
+                    <th
+                      scope="row"
+                      class="tw-pr-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     >
                       <div>
                         <div
@@ -454,6 +464,7 @@ import { upsells } from "@/config/orders";
 import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/sale/partials/AddOrderAffectation';
+import { serverUrl } from '@/config/config';
 
 export default {
   components: { AddOrderConfirmation , AddOrderAffectation},
@@ -462,6 +473,7 @@ export default {
   data() {
     return {
       upsells,
+      serverUrl,
       isLoading: false,
       isAddItem: false,
 
@@ -490,6 +502,17 @@ export default {
   },
 
   watch: {
+    // items: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(newItems) {
+    //     this.items = newItems.map(i => {
+    //       if(i.product_id == 0) return i;
+
+    //       return {...i, product_id: i.product.id, product: this.products.find(p => p.id == i.product.id)}
+    //     })
+    //   },
+    // },
     product_id() {
       
       if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {
@@ -497,6 +520,8 @@ export default {
       } else {
         this.product_variation_id = 0;
       }
+
+      console.log(this.items);
 
     },
     warehouse_id() {

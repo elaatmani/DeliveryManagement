@@ -110,7 +110,7 @@ export default {
 
   computed: {
     users() {
-      return this.$store.getters["user/users"].slice(0, 5);
+      return this.$store.getters["user/users"].filter(u => u.role_name != 'admin');
     },
   },
 

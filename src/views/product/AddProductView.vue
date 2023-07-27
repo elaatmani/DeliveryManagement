@@ -603,7 +603,7 @@ export default {
             this.selectedDeliveries = [];
             this.variants = [];
 
-            this.$store.dispatch('addProduct', res.data.data.product)
+            this.$store.dispatch('product/addProduct', res.data.data.product)
         }
         if (res.data.code == "VALIDATION_ERROR") {
             this.$alert({
