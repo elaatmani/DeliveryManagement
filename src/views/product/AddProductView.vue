@@ -375,10 +375,10 @@
         </v-row>
 
         <v-row>
-          <v-col>
+          <v-col cols="12">
             <div>
               <h1>Deliveries</h1>
-              <div>
+              <div class="tw-mt-2">
                 <v-select
                 v-model="selectedDeliveries"
                   :items="deliveries"
@@ -389,6 +389,46 @@
                   multiple
                   variant="outlined"
                   ></v-select>
+              </div>
+            </div>
+          </v-col>
+          
+          <v-col cols="12">
+            <div>
+              <h1>Image</h1>
+              <div class="tw-grid tw-grid-cols-12 tw-gap-5 tw-mt-2">
+                  <div class="md:tw-col-span-6 tw-col-span-12 tw-relative tw-h-fit">
+                    <label title="Click to upload" for="button2" class="tw-cursor-pointer tw-flex tw-items-center tw-gap-4 tw-px-6 tw-py-4 before:border-gray-400/60 hover:before:tw-border-gray-300 group dark:before:bg-darker dark:hover:before:tw-border-gray-500 before:tw-bg-gray-100 dark:before:tw-border-gray-600 before:tw-absolute before:tw-inset-0 before:tw-rounded-lg before:tw-border before:tw-border-dashed before:tw-transition-transform before:tw-duration-300 hover:before:tw-scale-100 active:tw-duration-75 active:before:tw-scale-95">
+                      <div class="tw-w-max tw-relative">
+                        <v-icon class="tw-text-6xl tw-text-orange-500">mdi-progress-upload</v-icon>
+                          <!-- <img class="tw-w-12" src="https://www.svgrepo.com/show/485545/upload-cicle.svg" alt="file upload icon" width="512" height="512"> -->
+                      </div>
+                      <div class="tw-relative">
+                          <span class="tw-block tw-text-base tw-font-semibold tw-relative tw-text-orange-600">
+                              Upload a file
+                          </span>
+                          <span class="tw-mt-0.5 tw-block tw-text-sm tw-text-gray-500 dark:tw-text-gray-400">Max 2 MB</span>
+                      </div>
+                    </label>
+                    <input @change="handleImageChange" class="tw-hidden" type="file" name="button2" id="button2">
+                  </div>
+                  <div class="md:tw-col-span-6 tw-col-span-12">
+                    <div
+                      class="image-preview tw-w-full tw-flex tw-items-center tw-justify-center tw-h-full border rounded p-4"
+                      
+                    >
+                      <img
+                        :class="{'tw-hidden': !image}"
+                        ref="image"
+                        id="image-preview"
+                        alt="Image Preview"
+                        class="w-full h-full tw-object-contain"
+                      />
+                      <div :class="{'tw-hidden': !!image}" class="bg-gray-300 h-48 flex items-center justify-center">
+                        <span>No image available</span>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </v-col>
@@ -432,6 +472,9 @@ export default {
       variantId: 1,
       variants: [
       ],
+
+      image: '',
+      imageFile: null,
 
       color: "",
       size: "",
@@ -524,6 +567,7 @@ export default {
       let product = this.product;
       
       product.addVariants = this.addVariants;
+      product.image = this.image;
       product.selectedDeliveries = this.selectedDeliveries.map(i => ({delivery_id: i}));
 
       if(!this.addVariants) {
@@ -572,6 +616,22 @@ export default {
           this.$handleApiError(err);
         })
         .finally(() => (this.isLoading = false));
+    },
+
+    handleImageChange(event) {
+      const file = event.target.files[0];
+      // this.imageFile = file;
+      this.image = file;
+
+      const img = this.$refs.image
+
+      if (file) {
+          const reader = new FileReader();
+          reader.addEventListener('load', function() {
+            img.src = this.result
+          });
+          reader.readAsDataURL(file);
+        }
     },
 
     resetError(field) {

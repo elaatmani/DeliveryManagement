@@ -5,8 +5,15 @@ const Api = axios.create({
     baseURL: serverUrl,
 });
 
+const ApiForm = axios.create({
+    baseURL: serverUrl,
+});
+
+ApiForm.defaults.withCredentials = true;
+ApiForm.defaults.headers = { 'Content-Type': 'multipart/form-data', 'Accept': 'application/json' };
+
 Api.defaults.withCredentials = true;
 Api.defaults.headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
 
-
-export default Api
+export { ApiForm };
+export default Api;
