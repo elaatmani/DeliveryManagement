@@ -67,6 +67,16 @@
               @confirmed="(note) => sale.note = note"
               @reported="handleReported"
             />
+            <div v-if="sale.confirmation == 'reporter' && !!sale.reported_agente_date" class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
+              <div class="tw-col-span-12 md:tw-col-span-4">
+                <div class="mb-1 text-body-2 tw-text-zinc-700">Reported Date:</div>
+                <div>{{ sale.reported_agente_date.split('T')[0]   }}</div>
+              </div>
+              <div class="tw-col-span-12 md:tw-col-span-8">
+                <div class="mb-1 text-body-2 tw-text-zinc-700">Reported Note:</div>
+                <div>{{ sale.reported_agente_note }}</div>
+              </div>
+            </div>
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
