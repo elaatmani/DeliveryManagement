@@ -77,6 +77,12 @@
                 <div>{{ sale.reported_agente_note }}</div>
               </div>
             </div>
+            <div v-if="sale.confirmation == 'confirmer'" class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
+              <div class="tw-col-span-12">
+                <div class="mb-1 text-body-2 tw-text-zinc-700">Note:</div>
+                <textarea class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500" v-model="sale.note"></textarea>
+              </div>
+            </div>
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>

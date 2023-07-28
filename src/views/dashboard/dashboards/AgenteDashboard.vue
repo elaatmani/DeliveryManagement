@@ -71,7 +71,7 @@ export default {
           id: 1,
           title: "Total",
           pourcentage:  this.orders.length === 0 ? 0.00 : 100.00,
-          value: this.orders.length,
+          value: this.orders.filter(s => s.confirmation != 'double').length,
           // value: 35,
           color: "deep-purple-accent-2",
           icon: "mdi mdi-all-inclusive",

@@ -76,6 +76,8 @@
     import Sale from '@/api/Sale'
     import TabSwitcher from '@/views/dashboard/partials/admin/TabSwitcher'
     import FilterTabs from '@/views/dashboard/partials/admin/FilterTabs'
+import { getPrice } from '@/helpers/methods'
+    
 
     export default {
         components: { DashItem, UsersTable, TabSwitcher, FilterTabs },
@@ -283,7 +285,6 @@
                 res => {
                     if (res?.data.code == "SUCCESS") {
                         const sales = res.data.data.orders
-                        console.log(res.data);
                         this.$store.dispatch('sale/setSales', sales)
                         this.$store.dispatch('sale/setFetched', true)
                         this.isLoaded = true
@@ -294,7 +295,7 @@
             getChiffresDaffaire() {
                 let total = 0;
                 this.filteredSales.forEach(s => {
-                    total += s.price;
+                    total += getPrice(s);
                 })
                 return total;
             },
@@ -302,7 +303,7 @@
                 let total = 0;
                 this.filteredSales.forEach(s => {
                     if(s.factorisations != null && s.factorisations.paid) {
-                        total += s.price;
+                        total += getPrice(s);
                     }
                 })
                 return total;
@@ -311,7 +312,7 @@
                 let total = 0;
                 this.filteredSales.forEach(s => {
                     if(s.factorisations != null && !s.factorisations.paid) {
-                        total += s.price;
+                        total += getPrice(s);
                     }
                 })
                 return total;
