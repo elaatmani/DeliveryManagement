@@ -213,7 +213,7 @@ export default {
                 return false
             }
 
-            if(order.reported_agente_date == this.todayDate) {
+            if(order.reported_agente_date?.split('T')[0] == this.todayDate) {
                 return true
             }
 

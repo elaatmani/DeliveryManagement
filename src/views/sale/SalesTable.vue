@@ -351,7 +351,7 @@ export default {
         return false;
       }
 
-      if (sale.reported_delivery_date == this.todayDate) {
+      if (sale.reported_delivery_date?.split('T')[0] == this.todayDate) {
         return true;
       }
 
@@ -363,7 +363,7 @@ export default {
         return false;
       }
 
-      if (sale.reported_agente_date == this.todayDate) {
+      if (sale.reported_agente_date?.split('T')[0]  == this.todayDate) {
         return true;
       }
 

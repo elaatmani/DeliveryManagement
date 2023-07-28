@@ -89,10 +89,10 @@ export default {
         },
         items() {
             const orders = [...this.reportedForToday,...this.orders.filter(sale => !this.isReportedToday(sale))]
-            return orders.slice(this.prevRange, this.nextRange)
+            return orders.slice(this.prevRange, this.nextRange);
         },
         reportedForToday() {
-            return this.orders.filter(this.isReportedToday)
+            return this.orders.filter(this.isReportedToday);
         }
     },
 
@@ -101,7 +101,6 @@ export default {
             User.deliveries()
             .then(
                 res => {
-                    console.log(res.data.data);
                     this.$store.dispatch('user/setDeliveries', res.data.data);
                 },
                 this.$handleApiError
@@ -112,7 +111,7 @@ export default {
                 return false
             }
 
-            if(sale.reported_agente_date == this.todayDate) {
+            if(sale.reported_agente_date?.split('T')[0] == this.todayDate) {
                 return true
             }
 
@@ -138,6 +137,7 @@ export default {
                             })
         const year = date.getFullYear();
         this.todayDate = `${year}-${monthFormated}-${dayFormated}`;
+        console.log(this.reportedForToday);
     }
 }
 </script>
