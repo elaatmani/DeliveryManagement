@@ -103,9 +103,8 @@
                                             </v-btn>
                                         </td>
                                     </tr>
-                                    <div v-if="false">
                                         <NewOrder  @update="handleDoubleUpdate" :order="o" v-for="o in doubles.filter(i => i.id != newOrder.id)" :key="o.id" />
-                                    </div>
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -165,6 +164,7 @@ export default {
         showUpdatePopup: false,
 
         doubles: [],
+        double: false,
 
         form: {
             fullname: {
@@ -242,7 +242,8 @@ export default {
         this.form.price = validateName(this.popupOrder.price, 'Price')
     },
     handleDoubleUpdate(order) {
-        this.newOrder.doubles = this.newOrder.doubles.map(o => o.id == order.id ? order : o);
+        console.log('order updated: ', order);
+        this.doubles = this.doubles.map(o => o.id == order.id ? order : o);
     },
     clearOrder() {
         if(!this.newOrder.confirmation) {
@@ -253,7 +254,7 @@ export default {
             return false
         }
 
-        if(this.newOrder.has_doubles && this.newOrder.doubles.some(o => !o.confirmation)) {
+        if(this.double && this.doubles.some(o => o.id != this.newOrder.id && !o.confirmation)) {
             this.$alert({
                 type: 'warning',
                 title: 'Double order confirmation not changed'
@@ -317,8 +318,15 @@ export default {
                         this.popupOrder = {...order};
                         this.$store.dispatch('order/setOrder', this.order)
                         this.isLoaded = true;
-                        this.is_double = res.data.data.double
-                        this.doubles = res.data.data.double_orders;  
+
+                        if(res.data.data.double == true) {
+                            this.doubles = res.data.data.double_orders
+                            this.double = true
+                        } else {
+                            this.doubles = [];
+                            this.double = false;
+                        }
+
                         this.isOrderExists = true
                     }
                 }
@@ -338,10 +346,18 @@ export default {
             res => {
                 if (res.data.code === "SUCCESS") {
                     const order = res.data.data.orders[0]
-                    console.log(order);
                     this.newOrder = order;
                     this.popupOrder = {...order};
-                    this.$store.dispatch('order/setOrder', this.order)
+                    this.$store.dispatch('order/setOrder', this.order);
+
+                    if(res.data.data.double == true) {
+                        this.doubles = res.data.data.double_orders
+                        this.double = true
+                    } else {
+                        this.doubles = [];
+                        this.double = false;
+                    }
+
 
                     this.isLoaded = true
                     this.isOrderExists = true

@@ -150,6 +150,8 @@ export default {
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
+        console.log(this.user);
+        console.log(this.user.role == 'admin');
         if(this.user.role == 'admin') {
             this.fetching = setInterval(this.sync_sheets, this.delay);
         }

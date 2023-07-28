@@ -59,8 +59,6 @@ export default {
           return this.$store.getters['user/fetched']
         },
         deliveries() {
-            console.log(this.allDeliveries);
-            console.log(this.order);
             if(this.order.created_at) {
                   return this.allDeliveries.filter(d => d.delivery_products.some(p => this.items.some(i => i.product_id == p.product_id)))
             }

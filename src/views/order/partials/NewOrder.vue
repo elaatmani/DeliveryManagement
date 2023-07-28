@@ -11,7 +11,6 @@
                             class="tw-absolute tw-bottom-0 tw-left-1/2 -tw-translate-x-1/2 tw-text-xs"
                             >
                             <p
-                                v-if="order.is_double"
                                 class="tw-bg-purple-500/10 tw-text-purple-500 tw-px-2 tw-rounded-t"
                             >
                                 Maybe Double: {{ order.double }}

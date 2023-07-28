@@ -100,7 +100,6 @@ export default {
             return this.confirmation
         },
         set(v) {
-            console.log(v);
             switch (v) {
                 case 'reporter':
                     this.showPopupReporter = true;
