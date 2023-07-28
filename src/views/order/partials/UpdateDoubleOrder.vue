@@ -66,6 +66,7 @@
               v-model:confirmation="sale.confirmation"
               @confirmed="(note) => sale.note = note"
               @reported="handleReported"
+              @change="handleConfirmationChange"
             />
             <div v-if="sale.confirmation == 'reporter' && !!sale.reported_agente_date" class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
               <div class="tw-col-span-12 md:tw-col-span-4">
@@ -616,6 +617,12 @@ export default {
   methods: {
     deleteItem(id) {
       this.items = this.items.filter((i) => i.id != id);
+    },
+
+    handleConfirmationChange() {
+      if(this.sale.confirmation != 'confirmer') {
+        this.sale.affectation = null
+      }
     },
 
     addNewRow() {

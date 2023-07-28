@@ -64,6 +64,7 @@
               :order="sale"
               :id="sale.id"
               v-model:confirmation="sale.confirmation"
+              @change="handleConfirmationChange"
               @confirmed="(note) => sale.note = note"
               @reported="handleReported"
             />
@@ -509,12 +510,20 @@ export default {
       } else {
         this.product_variation_id = 0;
       }
-
     },
     warehouse_id() {
       this.product_id = 0;
       this.product_variation_id = 0;
     },
+    // sale: {
+    //   deep: true,
+    //   immediate: true,
+    //   handler(newValue) {
+    //     if(newValue.confirmation != 'confirmer') {
+
+    //     }
+    //   }
+    // }
   },
 
   computed: {
@@ -617,6 +626,12 @@ export default {
   methods: {
     deleteItem(id) {
       this.items = this.items.filter((i) => i.id != id);
+    },
+
+    handleConfirmationChange() {
+      if(this.sale.confirmation != 'confirmer') {
+        this.sale.affectation = null
+      }
     },
 
     addNewRow() {
