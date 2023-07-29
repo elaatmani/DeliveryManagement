@@ -9,7 +9,7 @@
       </div>
       <div
         v-if="isLoaded"
-        class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[880px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5"
+        class="md:tw-w-[80%] tw-w-[95%] tw-px-5 tw-max-w-[950px] tw-mx-auto tw-my-3 tw-min-h-fit tw-bg-white tw-rounded-lg tw-shadow-lg tw-py-5"
       >
         <h1 class="tw-text-lg">Update Order</h1>
 
@@ -199,6 +199,7 @@ v-if="false"
                     <th
                       v-for="column in [
                         'product',
+                        '',
                         'variation',
                         'quantity',
                         'price',
@@ -219,10 +220,19 @@ v-if="false"
                 </thead>
                 <tbody>
                   <tr
-                    v-for="item in items"
+                    v-for="(item, i) in items"
                     :key="item"
                     class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
                   >
+                  <th
+                      scope="row"
+                      class="tw-px-2 tw-py-2"
+                      :key="item.product.id"
+                    >
+                      <div class="tw-mx-auto tw-w-[50px] tw-h-[35px] tw-shadow tw-shadow-gray-200 tw-rounded tw-overflow-hidden tw-cursor-pointer">
+                        <img v-if="!!product_images[i]" class="tw-w-full tw-h-full tw-object-contain" :src="serverUrl + 'storage/' + product_images[i]" />
+                      </div>
+                    </th>
                     <th
                       scope="row"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
@@ -254,9 +264,11 @@ v-if="false"
                         <option :value="0">Select</option>
                         <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
                           <p v-if="!v.size && !v.color">-</p>
-                          <p v-else>
-                          {{ v.size }} / {{ v.color }}
-                          </p>  
+                          <p v-else-if="!!v.size && !!v.color">
+                            {{ v.size }} / {{ v.color }}
+                          </p>
+                          <p v-else-if="!!v.size">{{v.size}}</p>  
+                          <p v-else-if="!!v.color">{{v.color}}</p>  
                         </option>
                       </select>
                     </div>
@@ -467,6 +479,7 @@ import { upsells } from "@/config/orders";
 import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/order/partials/AddOrderAffectation';
+import { serverUrl } from '@/config/config';
 
 export default {
   components: { AddOrderConfirmation , AddOrderAffectation},
@@ -475,6 +488,7 @@ export default {
   data() {
     return {
       upsells,
+      serverUrl,
       isLoading: false,
       isAddItem: false,
 
@@ -515,20 +529,18 @@ export default {
       this.product_id = 0;
       this.product_variation_id = 0;
     },
-    // sale: {
-    //   deep: true,
-    //   immediate: true,
-    //   handler(newValue) {
-    //     if(newValue.confirmation != 'confirmer') {
-
-    //     }
-    //   }
-    // }
   },
 
   computed: {
     products() {
       return this.$store.getters["product/products"];
+    },
+
+    product_images() {
+      return this.items.map(i => {
+        if(i.product.id == 0) return null;
+        return this.products.find(p => p.id == i.product.id)?.image;
+      })
     },
 
     isLoaded() {

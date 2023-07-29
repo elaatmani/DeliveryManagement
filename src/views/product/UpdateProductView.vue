@@ -391,12 +391,18 @@
                   :items="deliveries"
                   item-title="fullname"
                   item-value="id"
-                  
+                  :hide-details="true"
                   chips
                   multiple
                   variant="outlined"
                   ></v-select>
               </div>
+            </div>
+          </v-col>
+
+          <v-col v-if="false" cols="12">
+            <div>
+              <ProductOffers v-model:offers="offers" />
             </div>
           </v-col>
           
@@ -467,10 +473,11 @@ import Product from "@/api/Product";
 import UpdateVariantActions from "@/views/product/UpdateVariantActions";
 import Warehouse from "@/api/Warehouse";
 import { currency, serverUrl } from '@/config/config';
+import ProductOffers from '@/views/product/partials/ProductOffers'
 
 
 export default {
-  components: { UpdateVariantActions },
+  components: { UpdateVariantActions, ProductOffers },
   data() {
     return {
       currency,

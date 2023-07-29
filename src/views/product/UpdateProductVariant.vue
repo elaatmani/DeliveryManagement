@@ -87,8 +87,8 @@
             <span class="tw-text-white">Cancel</span>
             </button>
             <button
-            :disabled="!size || !color || !quantity"
-            :class="{ 'tw-bg-orange-500': size && color && quantity }"
+            :disabled="!quantity"
+            :class="{ 'tw-bg-orange-500': quantity }"
             @click="updateVariant"
             class="tw-bg-neutral-400 tw-py-1 tw-px-4 tw-flex tw-items-center tw-gap-1 tw-text-white tw-rounded-md"
             >
@@ -139,8 +139,8 @@ export default {
     updateVariant() {
         console.log('updated');
         const diffrent = this.quantity - this.newVariant.quantity
-        this.newVariant.size = this.size.toLocaleUpperCase()
-        this.newVariant.color = this.color.toLocaleUpperCase()
+        this.newVariant.size = !this.size ? '' : this.size.toLocaleUpperCase()
+        this.newVariant.color = !this.color ? '' : this.color.toLocaleUpperCase()
         this.newVariant.quantity = this.quantity
         this.newVariant.stockAlert = this.stockAlert
         this.newVariant.available_quantity = parseInt(this.newVariant.available_quantity) + parseInt(diffrent)

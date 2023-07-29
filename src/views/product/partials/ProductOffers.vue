@@ -1,6 +1,8 @@
 <template>
   <div>
-    <!-- ask if offer contains only text or quantity + price -->
+    <h1>Offers</h1>
+    <div class="tw-mt-2">
+    </div>
   </div>
 </template>
 
