@@ -554,11 +554,11 @@ export default {
     },
     product_id() {
       
-      if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {
-        this.product_variation_id = this.selectedProduct.variations[0].id;
-      } else {
+      // if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {
+      //   this.product_variation_id = this.selectedProduct.variations[0].id;
+      // } else {
         this.product_variation_id = 0;
-      }
+      // }
 
     },
     warehouse_id() {
