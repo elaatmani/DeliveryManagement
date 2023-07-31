@@ -19,6 +19,10 @@
         <div
           class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2"
         >
+        <div class="lg:tw-col-span-1 md:tw-col-span-1 tw-col-span-4">
+          <DashItemTwo :dash="earningsDash" symbol="DH" :numbers="false"/>
+        </div>
+
           <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
             <DashItemTwo :dash="totalSales" />
           </div>
@@ -40,6 +44,11 @@
           <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
             <DashItemTwo :dash="canceledSales" />
           </div>
+          <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+            <DashItemTwo :dash="upsellSales" />
+          </div>
+        
+
         </div>
       </div>
     </div>
@@ -120,6 +129,42 @@ export default {
           icon: "mdi mdi-cancel",
         };
       },
+      upsellSales() {
+        return {
+          id: 6,
+          title: "Upsell",
+          value: this.orders.filter((i) => i.upsell == "oui").length,
+          pourcentage: ((this.orders.filter((i) => i.upsell == "oui").length * 100) / this.orders.length).toFixed(2),
+          // value: 112,
+          color: "#2563eb",
+          icon: "mdi mdi-cancel",
+        };
+      },
+      earningsDash() {
+        return {
+          id: 2,
+          title: "Earnings",
+        //   value: this.sales.filter((i) => i.confirmation == "livre").length,
+          pourcentage: ((this.orders.filter((i) => i.upsell == "oui" && i.delivery == "livrer").length ) * 0.7),
+          color: "green-darken-4",
+          icon: "mdi-currency-usd",
+        }
+      },
+      // earnings() {
+      //   return this.orders.reduce(
+      //     (s,o) => {
+      //       if(o.factorisations == null) {
+      //         return s;
+      //       }
+            
+      //       if(!o.factorisations.paid && !o.factorisations.close) {
+      //         return s + o.factorisations.price
+      //       }
+      //       return s
+      //     }, 0
+      //   )
+      // },
+
       noanswerSales() {
         return {
           id: 6,
