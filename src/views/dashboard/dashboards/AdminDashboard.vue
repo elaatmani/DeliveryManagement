@@ -28,9 +28,23 @@
             </div>
 
 
-            <div class="mb-2 mt-2 tw-flex tw-justify-between tw-items-center">
-                <div>
+            <div class="mb-2 mt-2 tw-flex tw-justify-between tw-items-center tw-w-full">
+                <div class="tw-flex tw-items-center tw-justify-between tw-w-full">
                     <h2 class="tw-text-gray-500 tw-text-lg">Statistiques</h2>
+
+                    <button :disabled="updating"  @click="updateSales"  type="button" class="tw-text-white tw-w-fit tw-my-2 tw-bg-gradient-to-r tw-from-cyan-500 tw-to-blue-500 hover:tw-bg-gradient-to-bl focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-cyan-300 dark:focus:tw-ring-cyan-800 tw-font-medium tw-rounded-lg tw-text-sm tw-px-5 tw-py-2.5 tw-text-center tw-mr-2 dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 tw-duration-200 tw-gap-2 tw-pointer-events-auto tw-inline-flex tw-items-center">
+                            <div v-if="!updating" class="tw-flex tw-items-center tw-gap-2">
+                                <v-icon class="tw-text-sm" color="white">mdi-autorenew</v-icon>
+                                Fresh
+                            </div>
+                            <div  v-if="updating">
+                                <svg aria-hidden="true" role="status" class="tw-inline tw-w-4 tw-h-4 tw-mr-3 tw-text-white tw-animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+                                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+                                </svg>
+                                Loading...
+                            </div>
+                    </button>
                 </div>
             </div>
 
@@ -84,14 +98,15 @@ import { getPrice } from '@/helpers/methods'
 
         data() {
             return {
-                isLoaded: false,
+                updating: false,
                 filters: {
                     deliveryFilter: 'all',
                     agentFilter: 'all',
                     productFilter:'all',
                     cityFilter:'all',
                     upsellFilter:'all',
-                    dateFilter: ['', '']
+                    dateFilter: ['', ''],
+                    droppedAtFilter: ['', '']
                 },
             }
         },
@@ -107,6 +122,9 @@ import { getPrice } from '@/helpers/methods'
             sales() {
                 return this.$store.getters['sale/sales']
             },
+            isLoaded() {
+                return this.$store.getters['sale/fetched']
+            },
             filteredSales() {
                 const agentFilter = this.filters.agentFilter;
                 const deliveryFilter = this.filters.deliveryFilter;
@@ -115,6 +133,9 @@ import { getPrice } from '@/helpers/methods'
                 const upsellFilter = this.filters.upsellFilter;
                 const startDate = this.filters.dateFilter[0];
                 const endDate = this.filters.dateFilter[1];
+
+                const droppedStartDate = this.filters.droppedAtFilter[0];
+                const droppedEndDate = this.filters.droppedAtFilter[1];
 
                 return this.sales.filter(sale => {
 
@@ -153,6 +174,7 @@ import { getPrice } from '@/helpers/methods'
                     const createdAtMonth = createdAt.getMonth();
                     const createdAtYear = createdAt.getFullYear();
 
+
                     /* eslint-disable */
                     if (!!startDate) {
                         const startDay = startDate.getDate();
@@ -178,6 +200,41 @@ import { getPrice } from '@/helpers/methods'
                             createdAtYear > endYear ||
                             (createdAtYear === endYear && createdAtMonth > endMonth) ||
                             (createdAtYear === endYear && createdAtMonth === endMonth && createdAtDay > endDay)
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    
+                    const droppedAt = new Date(sale.dropped_at);
+                    const droppedAtDay = droppedAt.getDate();
+                    const droppedAtMonth = droppedAt.getMonth();
+                    const droppedAtYear = createdAt.getFullYear();
+
+
+                    if (!!droppedStartDate) {
+                        const droppedStartDay = droppedStartDate.getDate();
+                        const droppedStartMonth = droppedStartDate.getMonth();
+                        const droppedStartYear = droppedStartDate.getFullYear();
+
+                        if (
+                            droppedAtYear < droppedStartYear ||
+                            (droppedAtYear === droppedStartYear && droppedAtMonth < droppedStartMonth) ||
+                            (droppedAtYear === droppedStartYear && droppedAtMonth === droppedStartMonth && droppedAtDay < droppedStartDay)
+                        ) {
+                            return false;
+                        }
+                    }
+
+                    if (!!droppedEndDate) {
+                        const droppedEndDay = droppedEndDate.getDate();
+                        const droppedEndMonth = droppedEndDate.getMonth();
+                        const droppedEndYear = droppedEndDate.getFullYear();
+
+                        if (
+                            droppedAtYear > droppedEndYear ||
+                            (droppedAtYear === droppedEndYear && droppedAtMonth > droppedEndMonth) ||
+                            (droppedAtYear === droppedEndYear && droppedAtMonth === droppedEndMonth && droppedAtDay > droppedEndDay)
                         ) {
                             return false;
                         }
@@ -287,10 +344,26 @@ import { getPrice } from '@/helpers/methods'
                         const sales = res.data.data.orders
                         this.$store.dispatch('sale/setSales', sales)
                         this.$store.dispatch('sale/setFetched', true)
-                        this.isLoaded = true
+                        // this.isLoaded = true
                     }
                 }
-            ).catch(this.$handleApiError)
+                ).catch(this.$handleApiError)
+            },
+            updateSales() {
+                this.updating = true;
+                Sale.all().then(
+                res => {
+                    if (res?.data.code == "SUCCESS") {
+                        const sales = res.data.data.orders
+                        this.$store.dispatch('sale/setSales', sales)
+                        this.updating
+                        // this.isLoaded = true;
+                    }
+                }
+                ).catch(this.$handleApiError)
+                .finally(() => {
+                    this.updating = false
+                })
             },
             getChiffresDaffaire() {
                 let total = 0;
@@ -323,7 +396,9 @@ import { getPrice } from '@/helpers/methods'
         },
 
         mounted() {
-            this.getSales();
+            if(!this.isLoaded) {
+                this.getSales();
+            }
         }
     }
 </script>

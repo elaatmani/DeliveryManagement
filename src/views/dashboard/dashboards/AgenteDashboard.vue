@@ -20,7 +20,7 @@
           class="tw-grid tw-mb-5 tw-grid-cols-4 md:tw-grid-cols-4 lg:tw-grid-cols-5 tw-gap-2"
         >
         <div class="lg:tw-col-span-1 md:tw-col-span-1 tw-col-span-4">
-          <DashItemTwo :dash="earningsDash" symbol="DH" :numbers="false"/>
+          <DashItemTwo :dash="earningsDash" :symbol="currency" :numbers="false"/>
         </div>
 
           <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
@@ -58,12 +58,14 @@
 <script>
 import DashItemTwo from "@/views/dashboard/partials/DashItemTwo";
 import Dashboard from "@/api/Dashboard";
+import { currency } from '@/config/config';
 
 export default {
   components: { DashItemTwo },
 
   data() {
     return {
+      currency,
       isLoaded: true,
       orders: []
     };
@@ -137,7 +139,7 @@ export default {
           pourcentage: ((this.orders.filter((i) => i.upsell == "oui").length * 100) / this.orders.length).toFixed(2),
           // value: 112,
           color: "#2563eb",
-          icon: "mdi mdi-cancel",
+          icon: "mdi mdi-transfer-up",
         };
       },
       earningsDash() {

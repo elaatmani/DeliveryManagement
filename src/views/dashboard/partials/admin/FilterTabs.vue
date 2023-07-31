@@ -3,7 +3,13 @@
     <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4 py-5">
         <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
             <div class="tw-relative">
-                <DateFilter v-model:filter="dateFilter" />
+                <DateFilter name="Created Date" v-model:filter="dateFilter" />
+            </div>
+        </div>
+
+        <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit">
+            <div class="tw-relative">
+                <DateFilter name="Dropped Date" v-model:filter="droppedAtFilter" />
             </div>
         </div>
 
@@ -153,6 +159,7 @@
                 cityFilter:'all',
                 upsellFilter: 'all',
                 dateFilter: ['', ''],
+                droppedAtFilter: ['', ''],
                 isLoaded: false,
                 dashItems: [
                     {
@@ -244,6 +251,12 @@
                 deep: true,
                 handler(v) {
                     this.$emit('update:filters', {...this.filters, dateFilter: v})
+                }
+            },
+            droppedAtFilter: {
+                deep: true,
+                handler(v) {
+                    this.$emit('update:filters', {...this.filters, droppedAtFilter: v})
                 }
             },
         },

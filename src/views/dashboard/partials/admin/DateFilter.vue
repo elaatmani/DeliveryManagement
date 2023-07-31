@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="tw-text-sm tw-text-neutral-600">Date</span>
+        <span class="tw-text-sm tw-text-neutral-600">{{ name }}</span>
         <VueDatePicker v-model="date" @cleared="cleared" @update:model-value="onDateRangePicked" :format="dateFilterFormat" range :preset-ranges="presetRanges">
             <template #yearly="{ label, range, presetDateRange }">
                 <span @click="presetDateRange(range)">{{ label }}</span>
@@ -11,6 +11,7 @@
 <script>
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths, subDays } from 'date-fns'
 export default {
+    props: ['name'],
     data() {
         return {
             date: ['', ''],
