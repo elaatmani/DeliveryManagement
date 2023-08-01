@@ -73,10 +73,13 @@ export default {
             delete s['is_done'];
             delete s['factorisation'];
             delete s['doubles'];
+            delete s['is_double'];
+            delete s['has_doubles'];
+            delete s['double'];
 
             return ({
             ...s,
-            products: s.items.map(p => `id=${p.id}${separator}ref=${p.product?.ref}${separator}variation_id=${p.product_variation_id}${separator}size=${!p.product_variation.size ? 'DEFAULT': p.product_variation.size}${separator}color=${!p.product_variation.color ? 'DEFAULT': p.product_variation.color}${separator}`)
+            products: s.items.map(p => `id=${p.id}${separator}price=${!p.price ? 0 : p.price}${separator}name=${p.product?.name}${separator}ref=${p.product?.ref}${separator}variation_id=${p.product_variation_id}${separator}size=${!p.product_variation.size ? 'DEFAULT': p.product_variation.size}${separator}color=${!p.product_variation.color ? 'DEFAULT': p.product_variation.color}${separator}`)
         })});
 
         return new_data.map(i => {

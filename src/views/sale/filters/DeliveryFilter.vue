@@ -11,7 +11,7 @@
           :key="delivery.id"
           v-for="delivery in deliveryStatus"
         >
-          {{ !delivery.value ? "Select" : delivery.value }}
+          {{ !delivery.value ? "Select" : delivery.name }}
         </option>
       </select>
       <v-icon

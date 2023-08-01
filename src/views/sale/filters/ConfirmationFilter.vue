@@ -7,9 +7,14 @@
         class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200 tw-outline-0 tw-text-sm"
       >
         <option
+          value="all"
+        >
+          Select
+        </option>
+        <option
           v-for="c in confirmations"
           :key="c.id"
-          :value="!c.value ? 'all' : c.value"
+          :value="c.value"
         >
           {{ c.name }}
         </option>
