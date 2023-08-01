@@ -28,6 +28,12 @@
       <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="canceledSales" />
       </div>
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+        <DashItemTwo :dash="doubledSales" />
+      </div>
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+        <DashItemTwo :dash="wrongNumberSales" />
+      </div>
 
     </div>
   </div>
@@ -157,7 +163,29 @@
           color: "yellow-darken-3",
           icon: "mdi mdi-headphones-off",
         };
-      }
+      },
+      doubledSales() {
+        return {
+          id: 8,
+          title: "Doubled",
+          pourcentage: ((this.sales.filter(s => s.confirmation == 'double').length * 100) / this.sales.length).toFixed(2),
+          value: this.sales.filter(s => s.confirmation == 'double').length,
+          // value: 35,
+          color: "purple-accent-4",
+          icon: "mdi mdi-selection-multiple",
+        };
+      },
+      wrongNumberSales() {
+        return {
+          id: 9,
+          title: "Wrong Number",
+          pourcentage: ((this.sales.filter(s => s.confirmation == 'wrong-number').length * 100) / this.sales.length).toFixed(2),
+          value: this.sales.filter(s => s.confirmation == 'wrong-number').length,
+          // value: 35,
+          color: "purple-lighten-1",
+          icon: "mdi mdi-phone-remove",
+        };
+      },
     },
     mounted() {
       Sale.all()

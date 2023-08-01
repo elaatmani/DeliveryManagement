@@ -119,7 +119,6 @@
   
     },
       mounted() {
-          console.log(this.order);
       },
   };
   </script>

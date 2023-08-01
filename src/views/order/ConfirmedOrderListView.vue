@@ -26,6 +26,24 @@
       <div class="tw-max-h-0 tw-duration-500 tw-overflow-hidden" :class="{'!tw-max-h-[500px]': showFilters}">
         <div class="tw-grid tw-grid-cols-12 tw-gap-2 tw-mb-4">
           <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"> 
+            <span class="tw-text-sm tw-text-neutral-600">Sort By</span>
+            <div class="tw-relative">
+              <select v-model="sorting.sortBy" class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
+                <option :key="f.value" v-for="f in sorting.fields" :value="f.value">{{f.name}}</option>
+              </select>
+              <v-icon class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
+            </div>
+          </div>
+          <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"> 
+            <span class="tw-text-sm tw-text-neutral-600">Order By</span>
+            <div class="tw-relative">
+              <select v-model="sorting.orderBy" class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
+                <option :key="o.value" v-for="o in sorting.options" :value="o.value">{{o.name}}</option>
+              </select>
+              <v-icon class="tw-pointer-events-none tw-absolute tw-right-1 tw-text-neutral-500 tw-top-1/2 -tw-translate-y-1/2">mdi-chevron-down</v-icon>
+            </div>
+          </div>
+          <div class="lg:tw-col-span-4 md:tw-col-span-6 tw-col-span-12 tw-h-fit"> 
             <span class="tw-text-sm tw-text-neutral-600">Upsell</span>
             <div class="tw-relative">
               <select v-model="upsellFilter" class="tw-w-full focus:tw-border-orange-400 tw-h-[40px] px-2 tw-rounded-md tw-border tw-border-solid tw-border-neutral-200  tw-outline-0  tw-text-sm">
@@ -92,11 +110,55 @@ export default {
       affectationFilter: 'all',
       upsellFilter: 'all',
       search: '',
+
+      sorting: {
+        sortBy: null,
+        orderBy: 'asc',
+        fields: [
+          {
+            name: 'Select',
+            value: null
+          },
+          {
+            name: 'ID',
+            value: 'id'
+          },
+          {
+            name: 'Created At',
+            value: 'created_at'
+          },
+        ],
+        options: [
+          {
+            name: 'Ascending',
+            value: 'asc'
+          },
+          {
+            name: 'Descending',
+            value: 'desc'
+          },
+        ]
+      }
     }
   },
   computed: {
     confirmedOrders() {
       return this.$store.getters['order/orders']
+    },
+    sortedOrders() {
+      const copied = this.confirmedOrders;
+      return copied.sort((a, b) => {
+        switch (this.sorting.sortBy) {
+          case 'created_at':
+            return this.sorting.orderBy == 'asc' ? new Date(a.created_at) - new Date(b.created_at) : new Date(b.created_at) - new Date(a.created_at);
+          case 'id':
+            return this.sorting.orderBy == 'asc' ? a.id - b.id : b.id - a.id;
+
+          default:
+
+            return true;
+        }
+      });
     },
     deliveries() {
       return this.$store.getters['user/deliveries']
@@ -106,7 +168,7 @@ export default {
       const affectationFilter = this.affectationFilter;
       const upsellFilter = this.upsellFilter;
 
-      return this.confirmedOrders.filter(item => {
+      return this.sortedOrders.filter(item => {
         // filter by confirmation
         if (confirmationFilter !== 'all' && item.confirmation !== confirmationFilter) {
           return false;

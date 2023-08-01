@@ -118,47 +118,6 @@ v-if="false"
             </select>
           </div>
 
-          <div
-v-if="false"
-
-            class="md:tw-col-span-6 tw-col-span-12 tw-mt-3 tw-border-t tw-border-neutral-300 tw-pt-3"
-          >
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Product</div>
-            <select
-              v-model="product_id"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            >
-              <option :value="0">Select</option>
-              <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
-                {{ p.name }}
-              </option>
-            </select>
-          </div>
-
-          <div
-          v-if="false"
-          class="md:tw-col-span-6 tw-col-span-12">
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Variations</div>
-            <select
-              v-model="product_variation_id"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            >
-              <option :value="0">Select</option>
-              <option :value="v.id" v-for="v in variations" :key="v.id">
-                {{ v.size }} / {{ v.color }}
-              </option>
-            </select>
-          </div>
-          <div
-          v-if="false"
-          class="md:tw-col-span-6 tw-col-span-12">
-            <div class="mb-1 text-body-2 tw-text-zinc-700">Quantity</div>
-            <input
-              type="number"
-              v-model="quantity"
-              class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-            />
-          </div>
           <!-- <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="tw-flex tw-items-center tw-w-full tw-text-neutral-600 dark:tw-text-neutral-200 tw-text-md tw-py-1">
                 <label class="tw-relative tw-inline-flex tw-items-center tw-cursor-pointer tw-w-fit  -tw-rotate-90 tw-scale-75">
@@ -333,82 +292,6 @@ v-if="false"
                           <v-icon color="white">mdi-delete-outline</v-icon>
                         </v-btn>
                       </div>
-                    </th>
-                  </tr>
-                  <tr
-                  v-if="isAddItem"
-                    class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
-                  >
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                    <div>
-                      <div
-                        
-                      >
-                        <select
-                          v-model="product_id"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        >
-                          <option :value="0">Select</option>
-                          <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
-                            {{ p.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                    <div>
-                      <select
-                        v-model="product_variation_id"
-                        class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                      >
-                        <option :value="0">Select</option>
-                        <option :value="v.id" v-for="v in variations" :key="v.id">
-                          <p v-if="!v.size && !v.color">-</p>
-                          <p v-else>
-                          {{ v.size }} / {{ v.color }}
-                          </p>
-                        </option>
-                      </select>
-                    </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      <div class="md:tw-col-span-6 tw-col-span-12">
-                        <input
-                          type="number"
-                          v-model="quantity"
-                          placeholder="Quantity"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-[80px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        />
-                      </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      <div class="md:tw-col-span-6 tw-col-span-12">
-                        <input
-                          type="number"
-                          v-model="price"
-                          placeholder="Price"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[100px] tw-max-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        />
-                      </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      
                     </th>
                   </tr>
                 </tbody>
