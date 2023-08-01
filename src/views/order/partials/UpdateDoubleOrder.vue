@@ -87,7 +87,7 @@
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <AddOrderAffectation :items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation :product-ids="product_ids" :items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
@@ -530,6 +530,15 @@ export default {
       this.product_id = 0;
       this.product_variation_id = 0;
     },
+    'sale.confirmation': {
+      deep: true,
+      handler(newConfirmation) {
+        if(newConfirmation != 'confirmer') {
+          this.sale.affectation = null;
+          this.sale.delivery = null;
+        }
+      }
+    }
   },
 
   computed: {
@@ -542,6 +551,10 @@ export default {
         if(i.product.id == 0) return null;
         return this.products.find(p => p.id == i.product.id)?.image;
       })
+    },
+
+    product_ids() {
+      return this.items.map(i => i.product.id)
     },
 
     isLoaded() {

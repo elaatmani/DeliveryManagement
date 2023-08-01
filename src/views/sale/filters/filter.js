@@ -1,6 +1,7 @@
 export default function filteredSales(
   sales,
   search,
+  searchId,
   {
     confirmationFilter,
     affectationFilter,
@@ -16,6 +17,11 @@ export default function filteredSales(
 
   return sales.filter((item) => {
     const createdAt = new Date(item.created_at);
+
+    //filter by id
+    if(searchId != '' && searchId != item.id) {
+      return false;
+    }
 
     // filter by confirmation
     if (

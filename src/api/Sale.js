@@ -23,6 +23,11 @@ class Sale {
         return Api.post('api/sales/new', sale);
     } 
 
+    async getNewOrders(ids) {
+        await Csrf.getCookie();
+        return Api.post('api/sales/fresh', {ids});
+    }
+
     async agenteOrders() {
         await Csrf.getCookie();
         return Api.get('api/orders');

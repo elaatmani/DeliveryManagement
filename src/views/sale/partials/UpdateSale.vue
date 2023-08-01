@@ -87,7 +87,7 @@
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
-            <AddOrderAffectation v-model:items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
+            <AddOrderAffectation :product-ids="product_ids" v-model:items="items" :order="sale" :confirmation="sale.confirmation" v-model:affectation="sale.affectation" :id="sale.id" />
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Upsell</div>
@@ -405,36 +405,6 @@ export default {
   },
 
   watch: {
-    items: {
-      deep: true,
-      immediate: true,
-      handler() {
-
-        // console.log(newItems);
-        // if(newItems.length == 0) return false;
-        // for(const p in newItems) {
-          // newItems.forEach(p => {
-          // console.log(p);
-          // if(p.product_id == 0) return false;
-          // console.log(p.product.id);
-          // console.log(p.product.id);
-          // p.product_id = p.product.id
-          // p.product = this.products.find(x => x.id == p?.product?.id);
-        // })
-        // for (let i = 0; i < newItems.length; i++) {
-        //   if(newItems[i].product_id == 0) continue;
-        //   console.log(newItems[i]);
-        //   if(newItems[i].product.id != oldItems[i].product.id) {
-        //     newItems[i].product_id = newItems[i].product.id;
-        //     newItems[i].product = this.products.find(p => p.id == newItems[i].product.id);
-        //   }
-        // }
-        // this.items = newItems.map(i => {
-
-        //   return {...i, product_id: i.product.id, product: }
-        // })
-      },
-    },
     product_id() {
       
       // if(!!this.selectedProduct && this.selectedProduct.variations.length > 0) {
@@ -448,6 +418,16 @@ export default {
       this.product_id = 0;
       this.product_variation_id = 0;
     },
+
+    'sale.confirmation': {
+      deep: true,
+      handler(newConfirmation) {
+        if(newConfirmation != 'confirmer') {
+          this.sale.affectation = null;
+          this.sale.delivery = null;
+        }
+      }
+    }
   },
 
   computed: {
@@ -460,6 +440,9 @@ export default {
         if(i.product.id == 0) return null;
         return this.products.find(p => p.id == i.product.id)?.image;
       })
+    },
+    product_ids() {
+      return this.items.map(i => i.product.id)
     },
 
     isLoaded() {
@@ -575,7 +558,7 @@ export default {
           product_ref: p.ref
         }
       })
-      console.log(items);
+      
           this.items = items;
           return items;
       // return this.items;

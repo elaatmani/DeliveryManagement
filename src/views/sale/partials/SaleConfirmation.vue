@@ -76,11 +76,6 @@
       },
     },
 
-    watc: {
-      date(value) {
-        console.log(value);
-      }
-    },
 
     methods: {
       close() {

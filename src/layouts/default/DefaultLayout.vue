@@ -31,6 +31,7 @@ import Pusher from 'pusher-js'
 import Echo from 'laravel-echo'
 import Sheet from '@/api/Sheet'
 import Product from '@/api/Product'
+import Sale from '@/api/Sale'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
@@ -57,6 +58,9 @@ export default {
         },
         sales() {
             return this.$store.getters["sale/sales"];
+        },
+        salesFetched() {
+            return this.$store.getters["sale/fetched"];
         },
     },
 
@@ -135,25 +139,44 @@ export default {
         getProducts() {
         return Product.all().then(
             (res) => {
-            if (res.data.code == "SUCCESS") {
-                this.$store.dispatch("product/setProducts", res.data.data.products);
-                this.$store.dispatch("product/setFetched", true);
-            }
-            },
-            (err) => {
-            this.$handleApiError(err);
-            }
-        );
+                if (res.data.code == "SUCCESS") {
+                    this.$store.dispatch("product/setProducts", res.data.data.products);
+                    this.$store.dispatch("product/setFetched", true);
+                }
+                },
+                (err) => {
+                this.$handleApiError(err);
+                }
+            );
         },
+        fetchNewOrders() {
+            if(this.salesFetched) {
+                const ids = this.sales.map(s => s.id);
+                Sale.getNewOrders(ids)
+                .then(res => {
+                    if(res.data.code == 'SUCCESS') {
+                        const newSales = res.data.data.orders;
+                        if(newSales.length > 0) {
+                            this.$store.dispatch('sale/addSales', newSales);
+                            this.$alert({
+                                type: 'info',
+                                title: newSales.length + ' New orders has been added'
+                            })
+                        }
+                    }
+                })
+            }
+            // .catch(this.$handleApiError)
+        }
     },
 
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
-        console.log(this.user);
-        console.log(this.user.role == 'admin');
+
         if(this.user.role == 'admin') {
-            this.fetching = setInterval(this.sync_sheets, this.delay);
+            // this.fetching = setInterval(this.sync_sheets, this.delay);
+            this.fetching = setInterval(this.fetchNewOrders, this.delay);
         }
         if(this.$can('show_all_products')) {
             this.getProducts();

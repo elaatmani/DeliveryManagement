@@ -15,10 +15,12 @@
 </template>
 
 <script>
+import User from '@/api/User';
 export default {
-    props: [ 'affectation', 'id', 'order', 'confirmation', 'items' ],
+    props: [ 'affectation', 'id', 'order', 'confirmation', 'items', 'productIds' ],
     data() {
         return {
+            fetched: false,
             isOpen: false,
             isLoading: false,
             selectedId: null,
@@ -55,14 +57,12 @@ export default {
             return this.users.filter(u => u.role_name == 'delivery')
             // return this.$store.getters['user/deliveries']
         },
-        fetched() {
-          return this.$store.getters['user/fetched']
-        },
+        // fetched() {
+        //   return this.$store.getters['user/fetched']
+        // },
         deliveries() {
-            if(this.order.created_at) {
-                  return this.allDeliveries.filter(d => d.delivery_products.some(p => this.items.some(i => i.product_id == p.product_id)))
-            }
-            return [];
+            // console.log(this.allDeliveries);
+          return this.allDeliveries.filter(d => d.delivery_products.some(p => this.productIds.includes(p.product_id)))
         }
     },
     methods: {
@@ -79,9 +79,23 @@ export default {
             this.updateOrder();
             this.close()
         },
+        getUsers() {
+            this.fetched = false;
+            User.all().then(
+            res => {
+                if(res?.data.code == "SHOW_ALL_USERS") {
+                    const users = res.data.data.users
+                    this.$store.dispatch('user/setUsers', users);
+                    this.$store.dispatch('user/setFetched', true);
+                    this.fetched = true
+                }
+                }
+                ).catch(this.$handleApiError)
+        }
     },
     mounted() {
         this.selectedId = this.affectation;
+        this.getUsers()
     }
 };
 </script>

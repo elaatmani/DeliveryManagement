@@ -40,6 +40,11 @@ export default {
             state.sales.unshift(payload)
         },
 
+        ADD_SALES: (state, payload) => {
+
+            state.sales = [...payload, ...state.sales]
+        },
+
         UPDATE_CONFIRMATION: (state, payload) => {
             state.sales = state.sales.map(
                 item => {
@@ -156,6 +161,10 @@ export default {
 
         add: ({ commit }, payload) => {
             commit('ADD_SALE', payload)
+        },
+
+        addSales: ({ commit }, payload) => {
+            commit('ADD_SALES', payload)
         },
 
         updateConfirmation: ({ commit }, payload) => {

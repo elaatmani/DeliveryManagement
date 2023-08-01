@@ -59,7 +59,7 @@ export default {
     ExcelExport
   },
 
-  props: ["sales", "filtered", "search", "selected"],
+  props: ["sales", "filtered", "search", "searchId", "selected"],
 
   data() {
     return {
@@ -77,7 +77,7 @@ export default {
 
   computed: {
     results() {
-      return salesFilter(this.sales, this.search, this.config);
+      return salesFilter(this.sales, this.search, this.searchId, this.config);
     },
   },
 

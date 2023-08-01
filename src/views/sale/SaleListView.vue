@@ -60,7 +60,25 @@
             v-model="search"
             type="text"
             class="ml-2 tw-border-0 tw-w-full tw-outline-0 tw-h-full tw-text-sm"
-            placeholder="Search by name"
+            placeholder="Search by client, phone..."
+          />
+        </div>
+        <div
+          class="focus-within:tw-border-orange-400 tw-w-[250px] ml-2 px-2 tw-rounded-md tw-border tw-flex tw-items-center"
+        >
+        <v-icon class="tw-text-gray-500" size="small">mdi-pound</v-icon>
+          <!-- <v-img
+            width="18"
+            height="18"
+            max-width="18"
+            class="ma-0 pa-0"
+            :src="localUrl + 'assets/img/icons/search.svg'"
+          ></v-img> -->
+          <input
+            v-model="searchId"
+            type="number"
+            class="ml-2 tw-border-0 tw-w-full tw-outline-0 tw-h-full tw-text-sm"
+            placeholder="Search By ID"
           />
         </div>
 
@@ -102,6 +120,7 @@
         <IndexFilter
           :sales="sales"
           :search="search"
+          :search-id="searchId"
           v-model:filtered="filteredSales"
           :selected="selectedSales"
         />
@@ -148,6 +167,7 @@ export default {
       isButtonDisabled: true,
       filteredSales: [],
       search: "",
+      searchId: '',
 
       selected: [],
       // new lane
@@ -188,7 +208,6 @@ export default {
       } else {
         this.isButtonDisabled = true;
       }
-      console.log(this.selectedSales);
     },
 
     async getDeliveries() {
@@ -199,7 +218,6 @@ export default {
 
     async getUsers() {
       await User.all().then((res) => {
-        console.log(res.data.data);
         this.$store.dispatch("user/setUsers", res.data.data.users);
       }, this.$handleApiError);
     },
