@@ -5,6 +5,17 @@
         <h1 class="tw-text-gray-700 font-weight-medium tw-text-md md:tw-text-lg">Confirmed Orders</h1>
         <h2 class="tw-text-gray-500 tw-text-sm">See your confirmed orders</h2>
       </div>
+      <div v-if="isLoaded">
+        <v-btn
+          color="primary-color"
+          @click="showPopup = true"
+          variant="flat"
+          class="text-capitalize"
+        >
+          <v-icon icon="mdi-plus" class="mr-2 text-white"></v-icon>
+          <span class="text-white"> Add Sale </span>
+        </v-btn>
+      </div>
     </div>
 
     <div v-if="!isLoaded">
@@ -86,6 +97,7 @@
         <p class="tw-text-neutral-400 tw-py-5">Your order's list is empty !</p>
       </div>
     </div>
+    <AddNewOrder @cancel="showPopup = false" v-model:visible="showPopup"/>
   </div>
 </template>
 
@@ -95,11 +107,12 @@ import {localUrl} from '@/config/config'
 import OrdersTable from './partials/OrdersTable.vue'
 import Sale from '@/api/Sale'
 import { confirmations } from '@/config/orders'
-import User from '@/api/User'
+import User from '@/api/User';
+import AddNewOrder from '@/views/order/partials/AddNewOrder'
 
 
 export default {
-  components: {  OrdersTable },
+  components: {  OrdersTable, AddNewOrder },
   data() {
     return {
       localUrl,
@@ -110,6 +123,8 @@ export default {
       affectationFilter: 'all',
       upsellFilter: 'all',
       search: '',
+
+      showPopup: false,
 
       sorting: {
         sortBy: null,

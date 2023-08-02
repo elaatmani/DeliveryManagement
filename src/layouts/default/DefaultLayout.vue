@@ -18,6 +18,10 @@
                 <router-view></router-view>
             </v-container>
         </v-main>
+
+        <button v-if="showScrollUpButton" @click="scrollToTop" class="tw-fixed tw-shadow tw-text-sm tw-bottom-5 tw-right-3 tw-w-10 tw-h-10 tw-z-10 tw-rounded-full tw-bg-orange-400 tw-text-white">
+            <v-icon>mdi-transfer-up</v-icon>
+        </button>
     </v-layout>
   </div>
 </template>
@@ -42,6 +46,7 @@ export default {
             subscribed: false,
             fetching: null,
             delay: 60000,
+            showScrollUpButton: false,
             // delay: 6000,
         }
     },
@@ -68,6 +73,17 @@ export default {
         toggleSidebar() {
             this.drawer = !this.drawer
         },
+        checkScroll() {
+            // Show the "scroll up" button when the vertical scroll position is greater than 100 pixels
+            this.showScrollUpButton = window.scrollY > 100;
+            },
+            scrollToTop() {
+            // Scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            },
         async getCities() {
             if(this.cities.length == 0 || localStorage.getItem('update_cities') != 1) {
                 return User.cities().then(
@@ -181,10 +197,17 @@ export default {
         if(this.$can('show_all_products')) {
             this.getProducts();
         }
-        // if(this.$can('show_all_users')) {
-            this.getUsers();
-        // }
+        
+        this.getUsers();
+
+        window.addEventListener('scroll', this.checkScroll);
+    },
+
+    unmounted() {
+        window.removeEventListener('scroll', this.checkScroll);
     }
+
+
 }
 </script>
 

@@ -29,6 +29,9 @@
       <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
         <DashItemTwo :dash="canceledSales" />
       </div>
+      <div class="lg:tw-col-span-1 md:tw-col-span-2 tw-col-span-4">
+        <DashItemTwo :dash="transferSales" />
+      </div>
 
      
     </div>
@@ -110,6 +113,19 @@
 
           // value: 112,
           color: "primary-orange",
+          icon: "mdi-truck",
+        };
+      },
+
+      transferSales() {
+        return {
+          id: 8,
+          title: "Transferred",
+          value: this.sales.filter((i) => i.delivery == "transfer").length,
+          pourcentage: ((this.sales.filter((i) => i.delivery == 'transfer').length * 100) / (this.sales.filter((i) => i.confirmation == "confirmer").length)).toFixed(2),
+
+          // value: 112,
+          color: "purple-darken-1",
           icon: "mdi-truck",
         };
       },

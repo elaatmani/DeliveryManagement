@@ -82,6 +82,7 @@
               <div class="tw-col-span-12 md:tw-col-span-8">
                 <div class="mb-1 text-body-2 tw-text-zinc-700">Reported Note:</div>
                 <textarea class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500" v-model="sale.reported_agente_note"></textarea>
+
               </div>
             </div>
             
@@ -348,12 +349,12 @@ v-if="false"
           </v-btn>
           <v-btn
             :loading="isLoading"
-            @click="update"
+            @click="create"
             color="primary-color"
             variant="flat"
             class="text-capitalize"
           >
-            <span class="text-white"> Update </span>
+            <span class="text-white"> Create </span>
           </v-btn>
         </div>
       </div>
@@ -400,7 +401,7 @@ export default {
         price: 0,
         upsell: null,
         confirmation: null,
-        counts_from_warehouse: false,
+        counts_from_warehouse: true,
       },
     };
   },
@@ -526,7 +527,7 @@ export default {
         product: {id: 0},
         product_variation: {id: 0},
         product_variation_id: 0,
-        order_id: this.order.id,
+        // order_id: this.order.id,
         quantity: 0,
         price: 0,
       };
@@ -602,20 +603,12 @@ export default {
       this.item_id += 1;
     },
 
-    update() {
+    create() {
       this.formatItems()
       if (!this.isFormValid) {
         this.$alert({
           type: "warning",
           title: "Please fill all the form",
-        });
-        return false;
-      }
-
-      if(this.sale.confirmation == 'annuler' && this.sale.note == '') {
-        this.$alert({
-          type: "warning",
-          title: "Add Cancellation note.",
         });
         return false;
       }
@@ -641,7 +634,7 @@ export default {
       this.isLoading = true;
 
       const order = {
-        id: this.sale.id,
+        // id: this.sale.id,
         fullname: this.sale.fullname,
         phone: this.sale.phone,
         city: this.sale.city,
@@ -657,27 +650,23 @@ export default {
         reported_agente_date: this.sale.reported_agente_date,
       };
 
-      if(order.confirmation != 'confirmer') {
-        order.affectation = null;
-        order.delivery = null;
-      }
-
       this.isLoading = true;
-      Sale.update(order.id, order)
+      Sale.create(order)
         .then((res) => {
-          if (res.data.code == "SUCCESS") {
+          if (res.data.code == "SALE_ADDED") {
             this.showUpdatePopup = false;
             this.$alert({
               type: "success",
-              title: "Order updated",
+              title: "New Order Added",
             });
 
-            this.$store.dispatch("sale/update", {
-              id: order.id,
-              sale: res.data.data.sale,
-            });
+            // this.$store.dispatch("sale/update", {
+            //   id: order.id,
+            //   sale: res.data.data.sale,
+            // });
+            this.$store.dispatch('order/addOrder', res.data.data.sale)
             this.$emit("update:visible", false);
-            this.$emit("updateOrder", res.data.data.sale);
+            // this.$emit("updateOrder", res.data.data.sale);
           }
         })
         .catch((err) => {
@@ -688,8 +677,8 @@ export default {
         });
     },
     handleCancel() {
-      this.sale = { ...this.order };
-      this.items = [...this.order.items];
+    //   this.sale = { ...this.order };
+    //   this.items = [...this.order.items];
       this.$emit("update:visible", false);
     },
     handleReported(data) {
@@ -712,8 +701,6 @@ export default {
   },
 
   mounted() {
-    this.sale = { ...this.order };
-    this.items = [...this.order.items];
 
   },
 };

@@ -39,7 +39,8 @@ export const deliveryStatus = [
     { id: 10, value:'retourner', name: 'Retourned', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', ring: 'tw-ring-purple-300' },
     { id: 11, value:'reconfirmer', name: 'Reconfirmed', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', ring: 'tw-ring-indigo-300' },
     { id: 12, value:'paid', name: 'Paid', text: 'tw-text-emerald-500', bg: 'tw-bg-emerald-500/10', ring: 'tw-ring-emerald-300' },
-    { id: 13, value:'transfer', name: 'Transferd', text: 'tw-text-violet-500', bg: 'tw-bg-violet-500/10', ring: 'tw-ring-violet-300' }
+    { id: 13, value:'transfer', name: 'Transferd', text: 'tw-text-violet-500', bg: 'tw-bg-violet-500/10', ring: 'tw-ring-violet-300' },
+    { id: 14, value:'livrer-et-retourner', name: 'Delivered & Return', text: 'tw-text-cyan-500', bg: 'tw-bg-cyan-500/10', ring: 'tw-ring-cyan-300' }
 ]
 
 export const disabledForDelivery = [null, 'expidier', 'paid', 'transfer', 'dispatch'];

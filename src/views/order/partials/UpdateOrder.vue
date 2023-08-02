@@ -68,6 +68,12 @@
               @confirmed="(note) => sale.note = note"
               @reported="handleReported"
             />
+            <div class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
+              <div class="tw-col-span-12">
+                <div class="mb-1 text-body-2 tw-text-zinc-700">Note:</div>
+                <textarea class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500" v-model="sale.note"></textarea>
+              </div>
+            </div>
             <div v-if="sale.confirmation == 'reporter' && !!sale.reported_agente_date" class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
               <div class="tw-col-span-12 md:tw-col-span-4">
                 <div class="mb-1 text-body-2 tw-text-zinc-700">Reported Date:</div>
@@ -75,15 +81,10 @@
               </div>
               <div class="tw-col-span-12 md:tw-col-span-8">
                 <div class="mb-1 text-body-2 tw-text-zinc-700">Reported Note:</div>
-                <div>{{ sale.reported_agente_note }}</div>
+                <textarea class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500" v-model="sale.reported_agente_note"></textarea>
               </div>
             </div>
-            <div v-if="sale.confirmation == 'confirmer'" class="tw-grid tw-grid-cols-12 tw-gap-3 tw-my-3">
-              <div class="tw-col-span-12">
-                <div class="mb-1 text-body-2 tw-text-zinc-700">Note:</div>
-                <textarea class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-full tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500" v-model="sale.note"></textarea>
-              </div>
-            </div>
+            
           </div>
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Affectation</div>
@@ -491,7 +492,7 @@ export default {
         !!this.sale.fullname &&
         !!this.sale.phone &&
         !!this.sale.adresse &&
-        this.sale.price != 0 &&
+        this.total_price != 0 &&
         this.items.length > 0 &&
         !!this.sale.city
       );
@@ -625,6 +626,14 @@ export default {
         return false;
       }
 
+      if(this.sale.confirmation == 'annuler' && this.sale.note == '') {
+        this.$alert({
+          type: "warning",
+          title: "Add Cancellation note.",
+        });
+        return false;
+      }
+
       if(!this.isItemsValid) {
         this.$alert({
           type: "warning",
@@ -660,6 +669,11 @@ export default {
         reported_agente_date: this.sale.reported_agente_date,
       };
 
+      if(order.confirmation != 'confirmer') {
+        order.affectation = null;
+        order.delivery = null;
+      }
+
       this.isLoading = true;
       Sale.update(order.id, order)
         .then((res) => {
@@ -693,7 +707,6 @@ export default {
     handleReported(data) {
       this.sale.reported_agente_note = data.reported_agente_note
       this.sale.reported_agente_date = data.reported_agente_date
-      console.log(data);
     },
     getProducts() {
       return Product.all().then(

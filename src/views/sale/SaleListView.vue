@@ -135,7 +135,9 @@
       </div>
       <!-- new lane -->
 
-      <AddSale @cancel="showPopup = false" :visible="showPopup" />
+      <!-- <AddSale @cancel="showPopup = false" :visible="showPopup" /> -->
+      <AddSale @cancel="showPopup = false" :visible="false" />
+      <NewAddSale @cancel="showPopup = false" v-model:visible="showPopup"/>
     </div>
   </div>
 </template>
@@ -147,6 +149,7 @@ import SalesTable from "./SalesTable.vue";
 import Sale from "@/api/Sale";
 import User from "@/api/User";
 import AddSale from "@/views/sale/partials/AddSale";
+import NewAddSale from "@/views/sale/partials/NewAddSale";
 import Product from "@/api/Product";
 import IndexFilter from "@/views/sale/filters/IndexFilter";
 import SalesAnalytics from "@/views/sale/partials/SalesAnalytics";
@@ -157,6 +160,7 @@ export default {
     AddSale,
     SalesAnalytics,
     IndexFilter,
+    NewAddSale,
   },
   data() {
     return {
@@ -285,9 +289,15 @@ export default {
       await this.getDeliveries();
       this.getUsers();
     }
-    if (!this.$store.getters["sale/fetched"]) {
-      this.getSales();
-    } else {
+
+    // if (!this.$store.getters["sale/fetched"]) {
+    //   this.getSales();
+    // } else {
+    //   this.isLoaded = true;
+    // }
+
+    if(this.fetched) {
+      
       this.isLoaded = true;
     }
 

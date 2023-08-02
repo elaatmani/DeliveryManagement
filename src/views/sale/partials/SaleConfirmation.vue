@@ -103,7 +103,6 @@
           .finally(() => (this.showPopup = false));
       },
       handleClickReporter() {
-        console.log('repoting...');
         this.showPopupReporter = false
       },
       async handleChange(option) {
