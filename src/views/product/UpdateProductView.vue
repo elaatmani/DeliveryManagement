@@ -400,7 +400,7 @@
             </div>
           </v-col>
 
-          <v-col v-if="false" cols="12">
+          <v-col  cols="12">
             <div>
               <ProductOffers v-model:offers="offers" />
             </div>
@@ -495,6 +495,8 @@ export default {
 
       image: '',
       imageFile: null,
+
+      offers: [],
       
       warehouse: 0,
       product: {
@@ -584,6 +586,7 @@ export default {
       let product = this.product;
       product.variants = this.variants;
       product.image = this.image;
+      product.offers = this.offers;
       product.selectedDeliveries = this.selectedDeliveries.map(d => ({delivery_id: d, product_id: this.id}));
 
       Product.update(this.$route.params.id, product)
@@ -746,7 +749,8 @@ export default {
             name,
             description,
             deliveries,
-            image
+            image,
+            offers
           } = res.data.data.products;
           this.variants = variations;
           this.product.buyingPrice = buying_price;
@@ -755,6 +759,7 @@ export default {
           this.product.reference = ref;
           this.product.description = description;
           this.image = image;
+          this.offers = offers;
           this.variantId = this.getLastVariantId(variations);
           this.selectedDeliveries = deliveries.map(d => (d.delivery_id))
           this.isLoaded = true;

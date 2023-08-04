@@ -309,7 +309,7 @@ export default {
         !!this.sale.fullname &&
         !!this.sale.phone &&
         !!this.sale.adresse &&
-        this.sale.price != 0 &&
+        // this.sale.price != 0 &&
         this.items.length > 0 &&
         !!this.sale.city
       );

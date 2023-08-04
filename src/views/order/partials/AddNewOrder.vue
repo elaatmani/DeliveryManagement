@@ -318,6 +318,10 @@ v-if="false"
               </div>
             </div>
 
+            <div class="md:tw-col-span-12 tw-col-span-12">
+              <ProductOffers :product-ids="product_ids" />
+            </div>
+
           <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
             <div class="md:tw-col-span-6 tw-col-span-12"></div>
             <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
@@ -368,10 +372,11 @@ import { upsells } from "@/config/orders";
 import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/sale/partials/AddOrderAffectation';
+import ProductOffers from '@/views/sale/partials/ProductOffers'
 import { serverUrl } from '@/config/config';
 
 export default {
-  components: { AddOrderConfirmation , AddOrderAffectation},
+  components: { AddOrderConfirmation , AddOrderAffectation, ProductOffers},
   props: ["visible", "order"],
 
   data() {
@@ -501,7 +506,7 @@ export default {
         !!this.sale.fullname &&
         !!this.sale.phone &&
         !!this.sale.adresse &&
-        this.total_price != 0 &&
+        // this.total_price != 0 &&
         this.items.length > 0 &&
         !!this.sale.city
       );
@@ -621,13 +626,13 @@ export default {
         return false;
       }
 
-      if(this.total_price == 0) {
-        this.$alert({
-          type: "warning",
-          title: "Total price cannot be 0",
-        });
-        return false;
-      }
+      // if(this.total_price == 0) {
+      //   this.$alert({
+      //     type: "warning",
+      //     title: "Total price cannot be 0",
+      //   });
+      //   return false;
+      // }
 
       
 

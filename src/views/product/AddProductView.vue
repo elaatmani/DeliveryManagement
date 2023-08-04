@@ -377,7 +377,7 @@
         <v-row>
           <v-col cols="12">
             <div>
-              <h1>Deliveries</h1>
+              <h1 class="tw-font-medium">Deliveries</h1>
               <div class="tw-mt-2">
                 <v-select
                 v-model="selectedDeliveries"
@@ -393,7 +393,7 @@
             </div>
           </v-col>
 
-          <v-col v-if="false" cols="12">
+          <v-col cols="12">
             <div>
               <ProductOffers v-model:offers="offers" />
             </div>
@@ -401,7 +401,7 @@
           
           <v-col cols="12">
             <div>
-              <h1>Image</h1>
+              <h1 class="tw-font-medium">Image</h1>
               <div class="tw-grid tw-grid-cols-12 tw-gap-5 tw-mt-2">
                   <div class="md:tw-col-span-6 tw-col-span-12 tw-relative tw-h-fit">
                     <label title="Click to upload" for="button2" class="tw-cursor-pointer tw-flex tw-items-center tw-gap-4 tw-px-6 tw-py-4 before:border-gray-400/60 hover:before:tw-border-gray-300 group dark:before:bg-darker dark:hover:before:tw-border-gray-500 before:tw-bg-gray-100 dark:before:tw-border-gray-600 before:tw-absolute before:tw-inset-0 before:tw-rounded-lg before:tw-border before:tw-border-dashed before:tw-transition-transform before:tw-duration-300 hover:before:tw-scale-100 active:tw-duration-75 active:before:tw-scale-95">
@@ -578,6 +578,7 @@ export default {
       
       product.addVariants = this.addVariants;
       product.image = this.image;
+      product.offers = this.offers;
       product.selectedDeliveries = this.selectedDeliveries.map(i => ({delivery_id: i}));
 
       if(!this.addVariants) {
@@ -610,6 +611,7 @@ export default {
               description: "",
             };
 
+            this.offers = [];
             this.selectedDeliveries = [];
             this.variants = [];
 
