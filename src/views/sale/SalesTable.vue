@@ -44,7 +44,7 @@
               :key="column"
               :class="[column == 'city' && '!tw-max-w-[150px]']"
               scope="col"
-              class="tw-px-6 tw-py-3 text-truncate"
+              class="tw-px-6 tw-py-3 tw-truncate"
             >
               <div class="tw-w-fit tw-flex tw-whitespace-nowrap">
                 {{ column }}
@@ -78,12 +78,12 @@
                 >
               </div>
             </td>
-            <th
+            <td
               scope="row"
               class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap"
             >
               {{ sale.id }}
-            </th>
+            </td>
             <td class="tw-px-6 tw-py-4 tw-relative">
               {{ sale?.created_at?.split("T")[0] }}
               <div
@@ -97,7 +97,7 @@
               </div>
             </td>
             <td class="tw-px-6 tw-py-4">
-              <div class="!tw-max-w-[300px] !tw-min-w-[300px] tw-whitespace-normal">
+              <div  :title="sale.city" class="!tw-max-w-[200px] tw-truncate">
                 {{ sale.city }}
               </div>
             </td>

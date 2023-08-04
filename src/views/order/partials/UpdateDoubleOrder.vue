@@ -544,6 +544,20 @@ export default {
           this.sale.delivery = null;
         }
       }
+    },
+
+    product_ids() {
+        this.items.map(i => {
+        if(!i) return i;
+        const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
+
+        if((i.product.id != 0 || !i.product.id) && exists) {
+          i.product_variation = variation;
+          i.product_variation_id = variation.id;
+        }
+
+        return i;
+      })
     }
   },
 
@@ -836,7 +850,6 @@ export default {
     handleReported(data) {
       this.sale.reported_agente_note = data.reported_agente_note
       this.sale.reported_agente_date = data.reported_agente_date
-      console.log(data);
     },
     getProducts() {
       return Product.all().then(

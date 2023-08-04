@@ -228,10 +228,10 @@ v-if="false"
                         <option :value="0">Select</option>
                         <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
                           <p v-if="!v.size && !v.color">-</p>
-                          <p v-else-if="(!!v.size) && !!v.color">
+                          <p v-else-if="(!!v.size && v.size != '-') && (!!v.color && v.color != '-')">
                             {{ v.size }} / {{ v.color }}
                           </p>
-                          <p v-else-if="!!v.size">{{v.size}}</p>  
+                          <p v-else-if="!!v.size && v.size != '-'">{{v.size}}</p>  
                           <p v-else-if="!!v.color">{{v.color}}</p>  
                         </option>
                       </select>
@@ -433,6 +433,20 @@ export default {
           this.sale.delivery = null;
         }
       }
+    },
+    
+    product_ids() {
+        this.items.map(i => {
+        if(!i) return i;
+        const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
+
+        if((i.product.id != 0 || !i.product.id) && exists) {
+          i.product_variation = variation;
+          i.product_variation_id = variation.id;
+        }
+
+        return i;
+      })
     }
   },
 
@@ -700,6 +714,18 @@ export default {
     handleReported(data) {
       this.sale.reported_agente_note = data.reported_agente_note
       this.sale.reported_agente_date = data.reported_agente_date
+    },
+    checkVariant(product_id, variation_id) {
+      const product = this.products.find(p => p.id == product_id);
+      if(!product) return {exists: false};
+
+      let variation = product.variations.find(v => v.id == variation_id);
+      if (variation) {
+        return { exists: true, variation }
+      }
+      variation = product.variations.length > 0 ? product.variations[0] : null;
+
+      return { exists: true, variation };
     },
     getProducts() {
       return Product.all().then(
