@@ -31,8 +31,9 @@
             >
               {{event.type}}
             </v-chip>
-            <v-icon size="x-small" color="grey">mdi-arrow-right</v-icon>
+            <v-icon v-if="event.type != 'responsibility'" size="x-small" color="grey">mdi-arrow-right</v-icon>
             <v-chip
+              v-if="event.type != 'responsibility'"
               class="ms-0 tw-capitalize tw-w-fit"
               color="green"
               label

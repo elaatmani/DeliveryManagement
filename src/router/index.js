@@ -14,6 +14,7 @@ import shop from './routes/shop'
 import warehouse from './routes/warehouse'
 import factorisation from './routes/factorisation'
 import sheet from './routes/sheet'
+import followup from './routes/followup'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -32,6 +33,7 @@ const routes = [
   warehouse,
   factorisation,
   sheet,
+  followup,
   
   {
     name: 'default',

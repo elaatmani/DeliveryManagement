@@ -353,6 +353,19 @@ export const links = [
         }
     },
 
+    {
+        id: 13,
+        title: 'Orders',
+        module: 'followup',
+        to: '/followup',
+        hasChildren: false,
+        gate: 'follow_up_orders',
+        icon: {
+            type: 'icon',
+            value: 'mdi-package-variant-closed'
+        }
+    },
+
     // {
     //     id: 10,
     //     title: 'Test',

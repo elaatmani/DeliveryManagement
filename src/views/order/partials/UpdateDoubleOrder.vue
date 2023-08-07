@@ -546,19 +546,19 @@ export default {
       }
     },
 
-    product_ids() {
-        this.items.map(i => {
-        if(!i) return i;
-        const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
+    // product_ids() {
+    //     this.items.map(i => {
+    //     if(!i) return i;
+    //     const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
 
-        if((i.product.id != 0 || !i.product.id) && exists) {
-          i.product_variation = variation;
-          i.product_variation_id = variation.id;
-        }
+    //     if((i.product.id != 0 || !i.product.id) && exists) {
+    //       i.product_variation = variation;
+    //       i.product_variation_id = variation.id;
+    //     }
 
-        return i;
-      })
-    }
+    //     return i;
+    //   })
+    // }
   },
 
   computed: {
