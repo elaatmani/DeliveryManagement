@@ -59,16 +59,16 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12" sm="6" md="3">
-                        <DashItem :dash="dashChiffreAffaires" />
+                        <DashItem :dash="dashChiffreAffairesConfirmer" />
+                    </v-col>
+                    <v-col cols="12" sm="6" md="3">
+                        <DashItem :dash="dashChiffreAffairesDelivery" />
                     </v-col>
                     <v-col cols="12" sm="6" md="3">
                         <DashItem :dash="dashChiffreAffairesVerse" />
                     </v-col>
                     <v-col cols="12" sm="6" md="3">
                         <DashItem :dash="dashChiffreAffairesNonVerse" />
-                    </v-col>
-                    <v-col cols="12" sm="6" md="3">
-                        <DashItem :dash="dashChiffreAffairesEnCaisse" />
                     </v-col>
                 </v-row>
                 <v-row>
@@ -244,11 +244,29 @@ import { getPrice } from '@/helpers/methods'
 
                 });
             },
-            dashChiffreAffaires() {
+            // dashChiffreAffaires() {
+            //     return {
+            //             id: 1,
+            //             title: 'Total Chiffres d\'affaire',
+            //             value: this.getChiffresDaffaire().toFixed(2),
+            //             icon: 'mdi-currency-usd',
+            //             color: 'green'
+            //         }
+            // },
+            dashChiffreAffairesConfirmer() {
                 return {
                         id: 1,
                         title: 'Total Chiffres d\'affaire',
-                        value: this.getChiffresDaffaire().toFixed(2),
+                        value: this.getChiffresDaffaireConfirmer().toFixed(2),
+                        icon: 'mdi-currency-usd',
+                        color: 'green'
+                    }
+            },
+            dashChiffreAffairesDelivery() {
+                return {
+                        id: 1,
+                        title: 'Total Chiffres d\'affaire',
+                        value: this.getChiffresDaffaireDelivery().toFixed(2),
                         icon: 'mdi-currency-usd',
                         color: 'green'
                     }
@@ -271,15 +289,15 @@ import { getPrice } from '@/helpers/methods'
                         color: 'red'
                     }
             },
-            dashChiffreAffairesEnCaisse() {
-                return {
-                        id: 4,
-                        title: 'Chiffres d\'affaire en caisse',
-                        value: this.getChiffresDaffaireEnCaise().toFixed(2),
-                        icon: 'mdi mdi-bank',
-                        color: 'yellow'
-                    }
-            },
+            // dashChiffreAffairesEnCaisse() {
+            //     return {
+            //             id: 4,
+            //             title: 'Chiffres d\'affaire en caisse',
+            //             value: this.getChiffresDaffaireEnCaise().toFixed(2),
+            //             icon: 'mdi mdi-bank',
+            //             color: 'yellow'
+            //         }
+            // },
             newSales() {
                 return {
                     id: 1,
@@ -372,10 +390,28 @@ import { getPrice } from '@/helpers/methods'
                 })
                 return total;
             },
+            getChiffresDaffaireConfirmer() {
+                let total = 0;
+                this.filteredSales.forEach(s => {
+                    if(s.confirmation == "confirmer"){
+                        total += getPrice(s);
+                    }
+                })
+                return total;
+            },
+            getChiffresDaffaireDelivery() {
+                let total = 0;
+                this.filteredSales.forEach(s => {
+                    if(s.delivery == "livrer"){
+                        total += getPrice(s);
+                    }
+                })
+                return total;
+            },
             getChiffresDaffaireVerse() {
                 let total = 0;
                 this.filteredSales.forEach(s => {
-                    if(s.factorisations != null && s.factorisations.paid) {
+                    if(s.factorisations != null && s.factorisations.paid && s.factorisations.close) {
                         total += getPrice(s);
                     }
                 })
@@ -384,7 +420,7 @@ import { getPrice } from '@/helpers/methods'
             getChiffresDaffaireNonVerse() {
                 let total = 0;
                 this.filteredSales.forEach(s => {
-                    if(s.factorisations != null && !s.factorisations.paid) {
+                    if(s.factorisations != null && !s.factorisations.paid && s.factorisations.close) {
                         total += getPrice(s);
                     }
                 })
