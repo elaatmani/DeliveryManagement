@@ -31,19 +31,19 @@
                 View all
             </button>
 
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
+            <!-- <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                 Today
             </button>
             <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                 Yesterday
-            </button>
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
+            </button> -->
+            <button @click="showFilters = !showFilters" class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9 5a1 1 0 1 0 0 2a1 1 0 0 0 0-2zM6.17 5a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 0 1 0-2h1.17zM15 11a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h7.17zM9 17a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h1.17z"/></svg>
             </button>
             <div class="tw-relative">
-                        
             <select
                 @change="(e) => $emit('perPageChange', e.target.value)"
+                :value="perPage"
                 class="tw-h-full tw-px-5 tw-py-2 tw-w-20 focus:tw-outline-none tw-text-xs tw-font-medium tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                 <option value="5">5</option>
                 <option value="10">10</option>
@@ -72,7 +72,15 @@
         </div>
     </div>
 
-    <div class="tw-flex tw-flex-col tw-mt-6">
+    <div :class="[showFilters ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']" class="tw-grid tw-duration-300 tw-my-4 tw-transition-all">
+        <div class="tw-overflow-hidden tw-col-span-1">
+            <div class="">
+                <IndexFilters />
+            </div>
+        </div>
+    </div>
+
+    <div class="tw-flex tw-flex-col">
         <div class="tw-overflow-x-auto">
             <div class="tw-inline-block tw-min-w-full tw-align-middle">
                 <div class="tw-overflow-hidden tw-border tw-border-gray-200 darkx:tw-border-gray-700 md:tw-rounded-lg">
@@ -83,7 +91,7 @@
                                         <span>ID</span>
                                 </th>
                                 <th scope="col" class="tw-py-3.5 tw-px-4 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    <button class="tw-flex tw-items-center tw-gap-x-3 focus:tw-outline-none">
+                                    <button @click="$emit('sortOrder', {name: 'created_at'})" class="tw-flex tw-items-center tw-gap-x-3 focus:tw-outline-none">
                                         <span>Created</span>
 
                                         <svg class="tw-h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,7 +111,7 @@
                                     Delivery
                                 </th>
                                 <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    Product
+                                    Affected
                                 </th>
 
 
@@ -145,9 +153,10 @@
 <script>
 import TablePaginationNoNums from '@/views/followup/partials/table/TablePaginationNoNums';
 import TableRow from '@/views/followup/partials/table/TableRow';
+import IndexFilters from '@/views/followup/partials/filters/IndexFilters'
 
 export default {
-  components: { TablePaginationNoNums, TableRow },
+  components: { TablePaginationNoNums, TableRow, IndexFilters },
 
   props: {
     items: {
@@ -180,6 +189,12 @@ export default {
     lastPage: {
       type: Number,
       default: 1
+    }
+  },
+
+  data() {
+    return {
+        showFilters: false
     }
   }
 

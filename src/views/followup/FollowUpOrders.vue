@@ -4,7 +4,7 @@
       <div
         class="py-5 px-2 tw-border tw-bg-white tw-w-full tw-rounded-md tw-mb-5 "
       >
-        <IndexTable :loading="fetching" :from="from" :to="to" :last-page="last_page" :per-page="per_page" :total="total" @next="handleNext" @prev="handlePrev" :current-page="current_page" @page-change="handlePageChange" @per-page-change="handlePerPageChange"  :items="items" />
+        <IndexTable :loading="fetching" :from="from" :to="to" :last-page="last_page" :per-page="per_page" :total="total" @next="handleNext" @prev="handlePrev" :current-page="current_page" @page-change="handlePageChange" @per-page-change="handlePerPageChange" @sort-order="handleSortOrderChange"  :items="items" />
       </div>
 
   </div>
@@ -36,7 +36,7 @@ export default {
 
       sort_by: 'created_at',
       sort_order: 'asc',
-      per_page: 5,
+      per_page: 10,
       current_page: 1
 
     }
@@ -53,10 +53,14 @@ export default {
         current_page: this.current_page
       };
 
+      this.fetching = true
       return FollowUp.paginate(url, options)
       .then(({data}) => {
         const options = data.data.orders;
         this.setOptions(options)
+      })
+      .then(() => {
+        this.fetching = false
       })
     },
 
@@ -83,12 +87,8 @@ export default {
     },
 
     handlePageChange(page) {
-      this.fetching = true
       this.current_page = page
       this.paginateOrders()
-      .then(() => {
-        this.fetching = false
-      })
     },
 
     handlePerPageChange(n) {
@@ -96,14 +96,16 @@ export default {
       this.handlePageChange(1)
     },
 
+    handleSortOrderChange() {
+      this.sort_order = this.sort_order == 'asc' ? 'desc' : 'asc';
+      this.paginateOrders()
+    }
+
   },
 
 
   mounted() {
     this.paginateOrders()
-    .then(() => {
-        this.fetching = false
-    })
   }
 };
 </script>
