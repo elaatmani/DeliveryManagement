@@ -259,18 +259,27 @@ v-if="false"
                       class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
                     ><div>
                       <select
+                      :disabled="getVariations(item.product)?.variations?.length == 1"
+                      v-if="item.product.id != 0"
                         v-model="item.product_variation.id"
                         class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
                       >
                         <option :value="0">Select</option>
-                        <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
-                          <p v-if="!v.size && !v.color">-</p>
-                          <p v-else-if="!!v.size && !!v.color">
-                            {{ v.size }} / {{ v.color }}
-                          </p>
-                          <p v-else-if="!!v.size">{{v.size}}</p>  
-                          <p v-else-if="!!v.color">{{v.color}}</p>  
-                        </option>
+                        <template v-if="getVariations(item.product)?.variations?.length > 1">
+                          <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
+                            <p v-if="!v.size && !v.color">-</p>
+                            <p v-else-if="(!!v.size && v.size != '-') && (!!v.color && v.color != '-')">
+                              {{ v.size }} / {{ v.color }}
+                            </p>
+                            <p v-else-if="!!v.size && v.size != '-'">{{v.size}}</p>  
+                            <p v-else-if="!!v.color">{{v.color}}</p>  
+                          </option>
+                        </template>
+                        <template v-else>
+                          <option :value="getVariations(item.product)?.variations[0]?.id">
+                            Default
+                          </option>
+                        </template>
                       </select>
                     </div>
                     </th>
@@ -332,82 +341,6 @@ v-if="false"
                       </div>
                     </th>
                   </tr>
-                  <tr
-                  v-if="isAddItem"
-                    class="tw-bg-white tw-border-b tw-whitespace-nowrap hover:tw-bg-gray-50"
-                  >
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                    <div>
-                      <div
-                        
-                      >
-                        <select
-                          v-model="product_id"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        >
-                          <option :value="0">Select</option>
-                          <option :value="p.id" v-for="p in filtredProducts" :key="p.id">
-                            {{ p.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                    <div>
-                      <select
-                        v-model="product_variation_id"
-                        class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                      >
-                        <option :value="0">Select</option>
-                        <option :value="v.id" v-for="v in variations" :key="v.id">
-                          <p v-if="!v.size && !v.color">-</p>
-                          <p v-else>
-                          {{ v.size }} / {{ v.color }}
-                          </p>
-                        </option>
-                      </select>
-                    </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      <div class="md:tw-col-span-6 tw-col-span-12">
-                        <input
-                          type="number"
-                          v-model="quantity"
-                          placeholder="Quantity"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-w-[80px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        />
-                      </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      <div class="md:tw-col-span-6 tw-col-span-12">
-                        <input
-                          type="number"
-                          v-model="price"
-                          placeholder="Price"
-                          class="tw-py-2 tw-outline-none tw-duration-300 tw-px-3 tw-min-w-[100px] tw-max-w-[150px] tw-rounded-lg tw-border tw-border-solid tw-border-neutral-300 focus:tw-border-orange-500"
-                        />
-                      </div>
-                    </th>
-                    <th
-                      scope="row"
-                      class="tw-px-6 tw-py-2 tw-font-medium tw-text-gray-900"
-                    >
-                      
-                    </th>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -449,7 +382,7 @@ v-if="false"
             <div class="md:tw-col-span-6 tw-col-span-12"></div>
             <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
               <div class="tw-font-medium tw-text-zinc-700 tw-whitespace-nowrap">Total Price: </div>
-              <div class="tw-font-medium">{{ total_price }}</div>
+              <div class="tw-text-xl tw-text-green-500 tw-font-bold tw-px-2 tw-py-1 tw-rounded tw-bg-green-100">{{currency}} {{ total_price }}</div>
             </div>
           </div>
         </div>
@@ -485,7 +418,7 @@ import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/order/partials/AddOrderAffectation';
 import ProductOffers from '@/views/product/partials/ProductOffers'
-import { serverUrl } from '@/config/config';
+import { serverUrl, currency } from '@/config/config';
 
 export default {
   components: { AddOrderConfirmation , AddOrderAffectation, ProductOffers },
@@ -495,6 +428,7 @@ export default {
     return {
       upsells,
       serverUrl,
+      currency,
       isLoading: false,
       isAddItem: false,
 
@@ -546,19 +480,28 @@ export default {
       }
     },
 
-    // product_ids() {
-    //     this.items.map(i => {
-    //     if(!i) return i;
-    //     const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
+    product_ids: {
+      deep: true,
+      handler(newIds, oldIds) {
+        this.items.map((i, index) => {
+          if(i.product.id == 0) return i;
 
-    //     if((i.product.id != 0 || !i.product.id) && exists) {
-    //       i.product_variation = variation;
-    //       i.product_variation_id = variation.id;
-    //     }
+        const variations = this.getVariations(i.product)?.variations;
 
-    //     return i;
-    //   })
-    // }
+        if(oldIds[index] != newIds[i] && !variations.some(v => v.id == i.product_variation.id)) {
+          i.product_variation = {id:0};
+          i.product_variation_id = 0;
+        }
+        if(variations?.length == 1) {
+          i.product_variation = variations[0];
+          i.product_variation_id = variations[0].id;
+        }
+
+
+        return i;
+      })
+    }
+    }
   },
 
   computed: {
