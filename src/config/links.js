@@ -364,7 +364,7 @@ export const links = [
             type: 'icon',
             value: 'mdi-hammer-wrench'
         }
-    }
+    },
     {
         id: 13,
         title: 'Orders',
