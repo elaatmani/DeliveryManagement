@@ -354,6 +354,18 @@ export const links = [
     },
 
     {
+        id: 10,
+        title: 'Test',
+        module: 'test',
+        to: '/test',
+        hasChildren: false,
+        gate: 'all',
+        icon: {
+            type: 'icon',
+            value: 'mdi-hammer-wrench'
+        }
+    },
+    {
         id: 13,
         title: 'Orders',
         module: 'followup',
