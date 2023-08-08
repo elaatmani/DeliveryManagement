@@ -228,10 +228,10 @@ v-if="false"
                         <option :value="0">Select</option>
                         <option :value="v.id" v-for="v in getVariations(item.product)?.variations" :key="v.id">
                           <p v-if="!v.size && !v.color">-</p>
-                          <p v-else-if="(!!v.size) && !!v.color">
+                          <p v-else-if="(!!v.size && v.size != '-') && (!!v.color && v.color != '-')">
                             {{ v.size }} / {{ v.color }}
                           </p>
-                          <p v-else-if="!!v.size">{{v.size}}</p>  
+                          <p v-else-if="!!v.size && v.size != '-'">{{v.size}}</p>  
                           <p v-else-if="!!v.color">{{v.color}}</p>  
                         </option>
                       </select>
@@ -317,6 +317,9 @@ v-if="false"
               </div>
             </div>
 
+          <div class="md:tw-col-span-12 tw-col-span-12">
+            <ProductOffers :product-ids="product_ids" />
+          </div>
           <div class="md:tw-col-span-12 tw-col-span-12 tw-grid tw-grid-cols-12 tw-mt-5 tw-gap-5">
             <div class="md:tw-col-span-6 tw-col-span-12"></div>
             <div class="md:tw-col-span-6 tw-col-span-12 tw-flex tw-items-center tw-mb-2 tw-gap-5 tw-justify-end">
@@ -336,6 +339,7 @@ v-if="false"
             </div>
           </div>
         </div>
+
 
         <div class="tw-flex tw-gap-2 mt-3 mb-2 tw-justify-end">
           <v-btn
@@ -368,9 +372,10 @@ import Product from "@/api/Product";
 import AddOrderConfirmation from "@/views/order/partials/AddOrderConfirmation";
 import AddOrderAffectation from '@/views/sale/partials/AddOrderAffectation';
 import { serverUrl } from '@/config/config';
+import ProductOffers from './ProductOffers.vue';
 
 export default {
-  components: { AddOrderConfirmation , AddOrderAffectation},
+  components: { AddOrderConfirmation , AddOrderAffectation, ProductOffers },
   props: ["visible", "order"],
 
   data() {
@@ -428,7 +433,21 @@ export default {
           this.sale.delivery = null;
         }
       }
-    }
+    },
+    
+    // product_ids() {
+    //     this.items.map(i => {
+    //     if(!i) return i;
+    //     const {exists, variation} = this.checkVariant(i.product.id, i.product_variation.id);
+
+    //     if((i.product.id != 0 || !i.product.id) && exists) {
+    //       i.product_variation = variation;
+    //       i.product_variation_id = variation.id;
+    //     }
+
+    //     return i;
+    //   })
+    // }
   },
 
   computed: {
@@ -500,7 +519,7 @@ export default {
         !!this.sale.fullname &&
         !!this.sale.phone &&
         !!this.sale.adresse &&
-        this.total_price != 0 &&
+        // this.total_price != 0 &&
         this.items.length > 0 &&
         !!this.sale.city
       );
@@ -612,7 +631,7 @@ export default {
         return false;
       }
 
-      if(this.sale.confirmation == 'annuler' && this.sale.note == '') {
+      if(this.sale.confirmation == 'annuler' && !this.sale.note) {
         this.$alert({
           type: "warning",
           title: "Add Cancellation note.",
@@ -628,13 +647,13 @@ export default {
         return false;
       }
 
-      if(this.total_price == 0) {
-        this.$alert({
-          type: "warning",
-          title: "Total price cannot be 0",
-        });
-        return false;
-      }
+      // if(this.total_price == 0) {
+      //   this.$alert({
+      //     type: "warning",
+      //     title: "Total price cannot be 0",
+      //   });
+      //   return false;
+      // }
 
       
 
@@ -695,6 +714,18 @@ export default {
     handleReported(data) {
       this.sale.reported_agente_note = data.reported_agente_note
       this.sale.reported_agente_date = data.reported_agente_date
+    },
+    checkVariant(product_id, variation_id) {
+      const product = this.products.find(p => p.id == product_id);
+      if(!product) return {exists: false};
+
+      let variation = product.variations.find(v => v.id == variation_id);
+      if (variation) {
+        return { exists: true, variation }
+      }
+      variation = product.variations.length > 0 ? product.variations[0] : null;
+
+      return { exists: true, variation };
     },
     getProducts() {
       return Product.all().then(

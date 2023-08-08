@@ -9,6 +9,7 @@ import apiErrorHandler from './plugins/apiErrorHandler'
 import VueNumber from 'vue-number-animation'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
+import LoadingCss from '@/components/LoadingCss'
 import PopupVue from '@/components/PopupVue'
 import PopupFull from '@/components/PopupFull'
 import VueDatePicker from '@vuepic/vue-datepicker';
@@ -32,6 +33,7 @@ createApp(App)
 
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)
+  .component('Loading', LoadingCss)
   .component('Popup', PopupVue)
   .component('PopupFull', PopupFull)
   .component('VueDatePicker', VueDatePicker)

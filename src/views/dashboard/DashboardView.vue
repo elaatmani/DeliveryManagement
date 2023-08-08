@@ -10,13 +10,15 @@ import AdminDashboard from '@/views/dashboard/dashboards/AdminDashboard'
 import DeliveryDashboard from './dashboards/DeliveryDashboard.vue'
 import AgenteDashboard from './dashboards/AgenteDashboard.vue'
 import DefaultDashboard from './dashboards/DefaultDashboard.vue'
+import FollowUpDashboard from '@/views/dashboard/dashboards/FollowUpDashboard'
 
 export default {
     components: { 
         admin: AdminDashboard,
         delivery: DeliveryDashboard,
         agente: AgenteDashboard,
-        default: DefaultDashboard
+        default: DefaultDashboard,
+        'follow-up': FollowUpDashboard
      },
 
     data() {
@@ -30,7 +32,7 @@ export default {
         },
         dashboard() {
             
-            return ['admin', 'delivery', 'agente'].includes(this.user.role) ? this.user.role : 'default'
+            return ['admin', 'delivery', 'agente', 'follow-up'].includes(this.user.role) ? this.user.role : 'default'
         },
         
     },
