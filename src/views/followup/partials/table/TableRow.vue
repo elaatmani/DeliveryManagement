@@ -54,24 +54,9 @@
       </td>
 
       <td class="tw-px-4 tw-py-2 tw-text-sm tw-whitespace-nowrap">
-        <button
-          class="tw-px-1 tw-py-1 tw-text-gray-500 tw-transition-colors tw-duration-200 tw-rounded-lg darkx:tw-text-gray-300 hover:tw-bg-gray-100"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="tw-w-6 tw-h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-            />
-          </svg>
-        </button>
+        <div>
+          <TableActions :item="item" />
+        </div>
       </td>
     </tr>
 </template>
@@ -79,8 +64,11 @@
 <script>
 import moment from 'moment';
 import { confirmations, deliveryStatus } from '@/config/orders';
+import TableActions from '@/views/followup/partials/table/TableActions'
 
 export default {
+  components: {TableActions},
+
   props: {
     item: {
       required: true,

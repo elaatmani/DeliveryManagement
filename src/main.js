@@ -15,6 +15,7 @@ import PopupFull from '@/components/PopupFull'
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import JsonCSV from 'vue-json-csv'
+import PopupNew from '@/components/PopupNew'
 
 // import styling and tailwind
 import '@/assets/style.css'
@@ -38,5 +39,6 @@ createApp(App)
   .component('PopupFull', PopupFull)
   .component('VueDatePicker', VueDatePicker)
   .component('downloadCsv', JsonCSV)
+  .component('popupNew', PopupNew)
 
   .mount('#app')

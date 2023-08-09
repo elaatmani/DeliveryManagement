@@ -1,84 +1,5 @@
 <template>
   <div>
-    <!-- component -->
-<section class="tw-px-4 tw-mx-auto">
-    <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
-        <div>
-            <div class="tw-flex tw-items-center tw-gap-x-3">
-                <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Orders</h2>
-
-                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ total }} order</span>
-            </div>
-
-            <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">These orders have needs to reconfirmed.</p>
-        </div>
-
-        <div class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
-
-            <button class="tw-flex tw-items-center tw-justify-center  tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-500 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-
-                <span>Create</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="tw-mt-6 md:tw-flex md:tw-items-center md:tw-justify-between">
-        <div class="tw-inline-flex tw-overflow-hidden tw-bg-white tw-border tw-divide-x tw-rounded-lg darkx:tw-bg-gray-900 rtl:tw-flex-row-reverse darkx:tw-border-gray-700 darkx:tw-divide-gray-700">
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 tw-bg-gray-100 sm:tw-text-sm darkx:tw-bg-gray-800 darkx:tw-text-gray-300">
-                View all
-            </button>
-
-            <!-- <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                Today
-            </button>
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                Yesterday
-            </button> -->
-            <button @click="showFilters = !showFilters" class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9 5a1 1 0 1 0 0 2a1 1 0 0 0 0-2zM6.17 5a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 0 1 0-2h1.17zM15 11a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h7.17zM9 17a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h1.17z"/></svg>
-            </button>
-            <div class="tw-relative">
-            <select
-                @change="(e) => $emit('perPageChange', e.target.value)"
-                :value="perPage"
-                class="tw-h-full tw-px-5 tw-py-2 tw-w-20 focus:tw-outline-none tw-text-xs tw-font-medium tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-            </select>
-            <div
-                class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700">
-                <svg class="tw-fill-current tw-h-4 tw-w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-            </div>
-        </div>
-        </div>
-
-        <div class="tw-relative tw-flex tw-items-center tw-mt-4 md:tw-mt-0">
-            <span class="tw-absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5 tw-mx-3 tw-text-gray-400 darkx:tw-text-gray-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-            </span>
-
-            <input type="text" placeholder="Search" class="tw-block tw-w-full tw-py-1.5 tw-pr-5 tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pl-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40">
-        </div>
-    </div>
-
-    <div :class="[showFilters ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']" class="tw-grid tw-duration-300 tw-my-4 tw-transition-all">
-        <div class="tw-overflow-hidden tw-col-span-1">
-            <div class="">
-                <IndexFilters />
-            </div>
-        </div>
-    </div>
 
     <div class="tw-flex tw-flex-col">
         <div class="tw-overflow-x-auto">
@@ -146,17 +67,15 @@
     <div class="tw-mt-6">
       <TablePaginationNoNums :from="from" :to="to" :last-page="lastPage" :per-page="perPage" :total="total" :current-page="currentPage" @page-change="(n) => $emit('pageChange', n)" />
     </div>
-</section>
   </div>
 </template>
 
 <script>
 import TablePaginationNoNums from '@/views/followup/partials/table/TablePaginationNoNums';
 import TableRow from '@/views/followup/partials/table/TableRow';
-import IndexFilters from '@/views/followup/partials/filters/IndexFilters'
 
 export default {
-  components: { TablePaginationNoNums, TableRow, IndexFilters },
+  components: { TablePaginationNoNums, TableRow },
 
   props: {
     items: {
@@ -192,11 +111,6 @@ export default {
     }
   },
 
-  data() {
-    return {
-        showFilters: false
-    }
-  }
 
 }
 </script>

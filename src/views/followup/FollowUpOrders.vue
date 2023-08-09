@@ -1,11 +1,39 @@
 <template>
-  <div>
+  <div class="py-5 px-2 tw-border tw-bg-white tw-w-full tw-rounded-md tw-mb-5 ">
 
-      <div
-        class="py-5 px-2 tw-border tw-bg-white tw-w-full tw-rounded-md tw-mb-5 "
-      >
-        <IndexTable :loading="fetching" :from="from" :to="to" :last-page="last_page" :per-page="per_page" :total="total" @next="handleNext" @prev="handlePrev" :current-page="current_page" @page-change="handlePageChange" @per-page-change="handlePerPageChange" @sort-order="handleSortOrderChange"  :items="items" />
-      </div>
+    <section class="tw-px-3">
+    <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
+        <div>
+            <div class="tw-flex tw-items-center tw-gap-x-3">
+                <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Orders</h2>
+
+                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ total }} order</span>
+            </div>
+
+            <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">These orders have needs to reconfirmed.</p>
+        </div>
+
+        <div class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
+
+            <button class="tw-flex tw-items-center tw-justify-center  tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-500 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
+                <span>Create</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <IndexFilters @per-page-change="handlePerPageChange" active-statistics :statistics="statistics" />
+
+    <div>
+      <IndexTable :loading="fetching" :from="from" :to="to" :last-page="last_page" :per-page="per_page" :total="total" @next="handleNext" @prev="handlePrev" :current-page="current_page" @page-change="handlePageChange" @sort-order="handleSortOrderChange"  :items="items" />
+    </div>
+</section>
+
+      
 
   </div>
 </template>
@@ -13,16 +41,19 @@
 <script>
 import FollowUp from '@/api/FollowUp';
 import IndexTable from '@/views/followup/partials/IndexTable'
+import IndexFilters from '@/views/followup/partials/filters/IndexFilters'
 import { getPath } from '@/helpers/methods';
 
 export default {
-  components: { IndexTable },
+  components: { IndexTable, IndexFilters },
 
   data() {
     return {
       fetching: true,
 
       items: [],
+
+      statistics: null,
 
       first_page_url: null,
       lase_page_url: null,
@@ -58,6 +89,7 @@ export default {
       .then(({data}) => {
         const options = data.data.orders;
         this.setOptions(options)
+        this.statistics = data.data.statistics;
       })
       .then(() => {
         this.fetching = false
