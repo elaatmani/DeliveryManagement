@@ -13,16 +13,9 @@ class FollowUp {
         return Api.post('api/' + url, options);
     }
 
-    async update(id, sheet) {
+    async update(id, order) {
         await Csrf.getCookie();
-
-        const data = {
-            name: sheet.name,
-            sheet_id: sheet.sheet_id,
-            sheet_name: sheet.sheet_name,
-            auto_fetch: sheet.auto_fetch
-        }
-        return Api.post('api/sheets/' + id, data);
+        return Api.post('api/followup/' + id + '/update', order);
     }
 }
 

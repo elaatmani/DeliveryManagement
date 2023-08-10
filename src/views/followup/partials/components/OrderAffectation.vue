@@ -7,11 +7,13 @@
     <div v-if="fetched" class="tw-relative">
         <select
         :value="affectation"
-        @change="e => $emit('update:affectation', e.target.value)"
+        @change="handleChange"
+        :disabled="item.confirmation != 'confirmer'"
+        :class="[error && '!tw-border-red-400', item.confirmation != 'confirmer' && 'tw-cursor-not-allowed']"
         class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
         >
-        <option :value="null" selected>Choose a Delivery</option>
-        <option v-for="u in users" :value="u.id" :key="u.id">{{ u.firstname + ' ' + u.lastname }}</option>
+        <option value="">Choose a Delivery</option>
+        <option v-for="u in deliveries" :value="u.id" :key="u.id">{{ u.name }}</option>
         </select>
         <div
         class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"
@@ -27,6 +29,12 @@
         </svg>
         </div>
     </div>
+    <label
+    v-if="fetched && error"
+    class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+    >{{ error }}</label
+            >
+
     <div v-if="!fetched" class="tw-relative">
         <div class="tw-absolute tw-scale-75 tw-left-1/2 tw-top-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-z-10">
             <loading />
@@ -53,29 +61,50 @@ export default {
     props: {
         affectation: {
             required: true
+        },
+        error: {
+            required: false,
+            default: null
+        },
+        item: {
+            required: true,
         }
     },
 
     data() {
         return {
-            users: [],
+            deliveries: [],
             fetched: false,
+        }
+    },
+
+    watch: {
+        'item.confirmation': {
+            deep: true,
+            handler() {
+                // this.$emit('update:affectation', null)
+            }
         }
     },
 
   methods: {
     getDeliveries() {
         this.fetched = false;
-        User.all()
+        User.allDeliveries()
         .then((res) => {
-            if (res?.data.code == "SHOW_ALL_USERS") {
-            const users = res.data.data.users;
-            this.users = users.filter(u => u.role_name == 'delivery');
+            if (res?.data.code == "SUCCESS") {
+            this.deliveries = res.data.data.deliveries;
+
             this.fetched = true;
             }
         })
         .catch(this.$handleApiError);
     },
+
+    handleChange(e) {
+        this.$emit('update:affectation', e.target.value)
+        this.$emit('update:error', null)
+    }
   },
 
   mounted() {

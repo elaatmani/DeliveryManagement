@@ -140,6 +140,11 @@ class User {
         return Api.get('api/delevries')
     }
 
+    async allDeliveries() {
+        await Csrf.getCookie()
+        return Api.get('api/deliveries')
+    }
+
     async cities() {
         await Csrf.getCookie()
         return Api.get('api/cities')

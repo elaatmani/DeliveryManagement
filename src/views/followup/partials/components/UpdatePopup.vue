@@ -1,6 +1,6 @@
 <template>
   <div>
-    <popup-new :visible="visible" :closeable="true" @cancel="cancel">
+    <popup-new :visible="visible" :closeable="false" @cancel="cancel">
       <div
         class="tw-mx-auto tw-w-[95%] md:tw-max-w-[800px] tw-overflow-hidden tw-h-fit dark:tw-bg-neutral-900 tw-bg-white tw-border tw-border-solid dark:tw-border-neutral-700 tw-border-neutral-300 tw-shadow-md tw-my-5 tw-rounded-lg"
       >
@@ -20,11 +20,18 @@
                 >
                 <input
                   v-model="itemCopy.fullname"
+                  @input="errors.fullname = null"
                   type="text"
+                  :class="[errors.fullname && '!tw-border-red-400']"
                   class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                   placeholder="John"
                   required
                 />
+                <label
+                  v-if="errors.fullname"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.fullname }}</label
+                >
               </div>
 
               <div class="tw-col-span-2 md:tw-col-span-1">
@@ -34,11 +41,18 @@
                 >
                 <input
                   v-model="itemCopy.phone"
+                  @input="errors.phone = null"
+                  :class="[errors.phone && '!tw-border-red-400']"
                   type="text"
                   class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                   placeholder="123-45-678"
                   required
                 />
+                <label
+                  v-if="errors.phone"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.phone }}</label
+                >
               </div>
 
               <div class="tw-col-span-2 md:tw-col-span-1">
@@ -49,6 +63,8 @@
                 <div class="tw-relative">
                   <select
                     v-model="itemCopy.city"
+                    @change="errors.city = null"
+                    :class="[errors.city && '!tw-border-red-400']"
                     class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 tw-pr-7"
                   >
                     <option :value="null" disabled>Choose a City</option>
@@ -69,6 +85,11 @@
                     </svg>
                   </div>
                 </div>
+                <label
+                  v-if="errors.city"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.city }}</label
+                >
               </div>
 
               <div class="tw-col-span-2 md:tw-col-span-1">
@@ -78,11 +99,18 @@
                 >
                 <input
                   v-model="itemCopy.adresse"
+                  @input="errors.adresse = null"
+                  :class="[errors.adresse && '!tw-border-red-400']"
                   type="text"
                   class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                   placeholder="Address"
                   required
                 />
+                <label
+                  v-if="errors.adresse"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.adresse }}</label
+                >
               </div>
 
               <div class="tw-col-span-2">
@@ -93,6 +121,8 @@
                 <div class="tw-relative">
                   <select
                     v-model="itemCopy.confirmation"
+                    @change="errors.confirmation = null"
+                  :class="[errors.confirmation && '!tw-border-red-400']"
                     class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
                   >
                     <option :value="c.value" :class="[c.text, !c.value && '!tw-text-green-500']" v-for="c in confirmations" :key="c.id">{{ c.name }}</option>
@@ -111,6 +141,11 @@
                     </svg>
                   </div>
                 </div>
+                <label
+                  v-if="errors.confirmation"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.confirmation }}</label
+                >
               </div>
 
               <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.confirmation == 'reporter'">
@@ -120,10 +155,17 @@
                 >
                 <input
                   v-model="itemCopy.reported_agente_date"
+                  @input="errors.reported_agente_date = null"
+                  :class="[errors.reported_agente_date && '!tw-border-red-400']"
                   type="date"
                   class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                   required
                 />
+                <label
+                  v-if="errors.reported_agente_date"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.reported_agente_date }}</label
+                >
               </div>
 
               <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.confirmation == 'reporter'">
@@ -146,14 +188,21 @@
                 >
                 <textarea
                 v-model="itemCopy.note"
+                @input="errors.note = null"
+                  :class="[errors.note && '!tw-border-red-400']"
                 rows="3"
                   class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                   placeholder="Enter a note"
                 ></textarea>
+                <label
+                  v-if="errors.note"
+                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                  >{{ errors.note }}</label
+                >
               </div>
 
               <div class="md:tw-col-span-1 tw-col-span-2">
-                <OrderAffectation v-model:affectation="itemCopy.affectation" />
+                <OrderAffectation :item="itemCopy" v-model:error="errors.affectation" v-model:affectation="itemCopy.affectation" />
               </div>
 
               <div class="md:tw-col-span-1 tw-col-span-2">
@@ -190,7 +239,7 @@
                   >Order Items</label
                 >
                 <div>
-                  <OrderItems :items="itemCopy.items" />
+                  <OrderItems :products="products" :products-fetched="products_fetched" :items="itemCopy.items" />
                 </div>
               </div>
 
@@ -207,7 +256,8 @@
             Cancel
           </button>
           <button
-            @click="handle"
+            @click="handleUpdate"
+            :disabled="isLoading"
             class="tw-py-2 tw-px-7 tw-flex tw-items-center  tw-rounded tw-text-sm tw-bg-orange-400 tw-border tw-border-solid tw-border-tansparent hover:tw-border-orange-600 dark:tw-border-neutral-900 dark:hover:tw-border-orange-500 hover:tw-bg-orange-500/80 dark:hover:tw-bg-orange-400 tw-duration-300 tw-text-white"
           >
             <v-icon
@@ -230,7 +280,7 @@ import { update } from "../lib/update";
 import { confirmations, upsells } from '@/config/orders';
 import OrderItems from '@/views/followup/partials/components/OrderItems'
 import OrderAffectation from '@/views/followup/partials/components/OrderAffectation'
-
+import Product from '@/api/Product';
 
 export default {
   components: { OrderItems, OrderAffectation },
@@ -250,9 +300,19 @@ export default {
       upsells: upsells,
       isLoading: false,
 
-      confirmation: null,
+      products_fetched: null,
+      products: null,
+      itemCopy: null,
 
-      itemCopy: null
+      errors: {
+        fullname: null,
+        phone: null,
+        city: null,
+        adresse: null,
+        note: null,
+        reported_agente_date: null,
+        affectation: null
+      }
     };
   },
 
@@ -263,22 +323,36 @@ export default {
   },
 
   methods: {
-    handle() {
+    handleUpdate() {
       const validated = validate(this, this.item);
       if (!validated) return false;
-
-      update(this, this.item);
+      update(this, this.itemCopy);
     },
 
     cancel() {
       if (this.isLoading) return false;
       this.$emit("update:visible", false);
     },
+
+    getProducts() {
+      this.products_fetched = false;
+      Product.allForOrder()
+      .then((res) => {
+        if(res.data.code == 'SUCCESS') {
+          this.products = res.data.data.products;
+        } else {
+          this.products = [];
+        }
+
+        this.products_fetched = true;
+      })
+      .catch(this.$handleApiError)
+    }
   },
 
   mounted() {
-
     this.itemCopy = JSON.parse(JSON.stringify(this.item));
+    this.getProducts();
   
   }
 };
