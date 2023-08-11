@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import TablePaginationNoNums from '@/views/followup/partials/table/TablePaginationNoNums';
-import TableRow from '@/views/followup/partials/table/TableRow';
+import TablePaginationNoNums from '@/views/agent/partials/table/TablePaginationNoNums';
+import TableRow from '@/views/agent/partials/table/TableRow';
 
 export default {
   components: { TablePaginationNoNums, TableRow },

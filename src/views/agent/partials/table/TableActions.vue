@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import UpdatePopup from '@/views/followup/partials/components/UpdatePopup'
+import UpdatePopup from '@/views/agent/partials/components/UpdatePopup'
 
 export default {
     components: { UpdatePopup },

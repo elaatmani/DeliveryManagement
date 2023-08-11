@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import ItemRow from '@/views/followup/partials/components/ItemRow';
+import ItemRow from '@/views/agent/partials/components/ItemRow';
 import { currency } from '@/config/config';
 import { getPrice } from '@/helpers/methods';
 

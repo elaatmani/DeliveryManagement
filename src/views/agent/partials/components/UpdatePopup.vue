@@ -278,8 +278,8 @@
 import { validate } from "../lib/validate";
 import { update } from "../lib/update";
 import { confirmations, upsells } from '@/config/orders';
-import OrderItems from '@/views/followup/partials/components/OrderItems'
-import OrderAffectation from '@/views/followup/partials/components/OrderAffectation'
+import OrderItems from '@/views/agent/partials/components/OrderItems'
+import OrderAffectation from '@/views/agent/partials/components/OrderAffectation'
 import Product from '@/api/Product';
 
 export default {

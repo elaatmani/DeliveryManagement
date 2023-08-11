@@ -76,7 +76,7 @@ export default {
   methods: {
 
     paginateOrders() {
-      const url = '?page=' + this.current_page;
+      const url = 'followup?page=' + this.current_page;
       const options = {
         sort_by: this.sort_by,
         sort_order: this.sort_order,

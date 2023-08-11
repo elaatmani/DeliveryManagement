@@ -64,7 +64,7 @@
 <script>
 import moment from 'moment';
 import { confirmations, deliveryStatus } from '@/config/orders';
-import TableActions from '@/views/followup/partials/table/TableActions'
+import TableActions from '@/views/agent/partials/table/TableActions'
 
 export default {
   components: {TableActions},

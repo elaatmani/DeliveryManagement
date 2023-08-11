@@ -75,7 +75,7 @@
     <td>
       <div class="tw-p-2">
         <input
-          @input="e => $emit('update', {...item, quantity: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0})"
+          @change="e => $emit('update', {...item, quantity: parseInt(e.target.value) >= 0 ? parseInt(e.target.value) : 0})"
           :value="item.quantity"
           min="0"
           type="number"
@@ -86,7 +86,7 @@
     <td>
       <div class="tw-p-2">
         <input
-          @input="e => $emit('update', {...item, price: parseFloat(e.target.value)})"
+          @change="e => $emit('update', {...item, price: parseFloat(e.target.value)})"
           :value="item.price"
           min="0"
           type="number"

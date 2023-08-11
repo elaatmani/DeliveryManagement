@@ -117,8 +117,8 @@
 </template>
 
 <script>
-import IndexStatistics from '@/views/followup/partials/filters/IndexStatistics'
-import FiltersWrapper from '@/views/followup/partials/filters/FiltersWrapper'
+import IndexStatistics from '@/views/agent/partials/filters/IndexStatistics'
+import FiltersWrapper from '@/views/agent/partials/filters/FiltersWrapper'
 
 export default {
   components: { IndexStatistics, FiltersWrapper },

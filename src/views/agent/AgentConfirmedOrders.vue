@@ -10,7 +10,7 @@
                 <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ total }} order</span>
             </div>
 
-            <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">These orders have needs to reconfirmed.</p>
+            <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">Show all confirmed orders.</p>
         </div>
 
         <div class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import FollowUp from '@/api/FollowUp';
-import IndexTable from '@/views/followup/partials/IndexTable'
-import IndexFilters from '@/views/followup/partials/filters/IndexFilters'
+import Agent from '@/api/Agent';
+import IndexTable from '@/views/agent/partials/IndexTable'
+import IndexFilters from '@/views/agent/partials/filters/IndexFilters'
 import { getPath } from '@/helpers/methods';
 
 export default {
@@ -81,11 +81,13 @@ export default {
         sort_by: this.sort_by,
         sort_order: this.sort_order,
         per_page: this.per_page,
-        current_page: this.current_page
+        current_page: this.current_page,
+        confirmation: 'confirmer'
       };
 
       this.fetching = true
-      return FollowUp.paginate(url, options)
+      
+      return Agent.paginate(url, options)
       .then(({data}) => {
         const options = data.data.orders;
         this.setOptions(options)

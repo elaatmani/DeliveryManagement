@@ -8,14 +8,14 @@ class FollowUp {
     //     return Api.get('api/followup');
     // }
 
-    async paginate(url = 'followup', options) {
+    async paginate(url = '/', options) {
         await Csrf.getCookie();
-        return Api.post('api/' + url, options);
+        return Api.post('api/v1/followup/orders' + url, options);
     }
 
     async update(id, order) {
         await Csrf.getCookie();
-        return Api.post('api/followup/' + id + '/update', order);
+        return Api.post('api/v1/followup/orders/' + id + '/update', order);
     }
 }
 
