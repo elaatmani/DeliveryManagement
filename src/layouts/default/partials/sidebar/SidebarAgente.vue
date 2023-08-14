@@ -68,14 +68,14 @@ export default {
             value: 'mdi-barcode-scan'
         },
         children: [
-            {
-                id: 1,
-                title: 'Order',
-                subModule: 'order/show',
-                gate: 'show_all_orders',
-                to: '/order',
-                icon: 'mdi-plus-box'
-            },
+            // {
+            //     id: 1,
+            //     title: 'Order',
+            //     subModule: 'order/show',
+            //     gate: 'show_all_orders',
+            //     to: '/order',
+            //     icon: 'mdi-plus-box'
+            // },
             // {
             //     id: 2,
             //     title: 'My Orders',
@@ -92,6 +92,14 @@ export default {
             //     to: '/orders/confirmed',
             //     icon: 'mdi-checkbox-marked'
             // },
+            {
+                id: 1,
+                title: 'Add Order',
+                subModule: 'agent/orders/add',
+                gate: 'show_all_orders',
+                to: '/agent/orders/add',
+                icon: 'mdi-plus-box'
+            },
             {
                 id: 4,
                 title: 'Orders',

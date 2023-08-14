@@ -6,7 +6,7 @@
       </template>
 
       <template v-else>
-        <div v-for="item in dashes" :key="item.id" class="tw-bg-white tw-animate-pulse tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
+        <div v-for="item in 4" :key="item" class="tw-bg-white tw-animate-pulse tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
           <div class="tw-flex tw-justify-between tw-w-full">
               <div>
               <div class="tw-flex tw-w-full tw-items-center tw-gap-2">
@@ -41,37 +41,37 @@ export default {
     return {
       fetching: true,
       dashes: [
-        {
-          id: 1,
-          title: 'Orders',
-          value: 200,
-          icon: 'mdi-package-variant-closed',
-          color: '#6b7280'
-        },
-        {
-          id: 2,
-          title: 'New',
-          value: 200,
-          percentage: 100,
-          icon: 'mdi-bell',
-          color: '#ef4444'
-        },
-        {
-          id: 3,
-          title: 'Reconfirmed',
-          value: 200,
-          percentage: 0,
-          icon: 'mdi-check-all',
-          color: '#06b6d4'
-        },
-        {
-          id: 4,
-          title: 'Delivered',
-          value: 0,
-          percentage: 23.40,
-          icon: 'mdi-truck-delivery-outline',
-          color: '#34d399'
-        },
+        // {
+        //   id: 1,
+        //   title: 'Orders',
+        //   value: 200,
+        //   icon: 'mdi-package-variant-closed',
+        //   color: '#6b7280'
+        // },
+        // {
+        //   id: 2,
+        //   title: 'New',
+        //   value: 200,
+        //   percentage: 100,
+        //   icon: 'mdi-bell',
+        //   color: '#ef4444'
+        // },
+        // {
+        //   id: 3,
+        //   title: 'Reconfirmed',
+        //   value: 200,
+        //   percentage: 0,
+        //   icon: 'mdi-check-all',
+        //   color: '#06b6d4'
+        // },
+        // {
+        //   id: 4,
+        //   title: 'Delivered',
+        //   value: 0,
+        //   percentage: 23.40,
+        //   icon: 'mdi-truck-delivery-outline',
+        //   color: '#34d399'
+        // },
 
       ]
     }

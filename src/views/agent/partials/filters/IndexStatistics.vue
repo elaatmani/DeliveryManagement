@@ -26,6 +26,7 @@ export default {
 
   computed: {
     visible() {
+      if(this.statistics.show.includes('*')) return this.statistics.data;
       return this.statistics.data.filter(s => this.statistics.show.includes(s.confirmation))
     }
   },

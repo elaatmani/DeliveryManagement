@@ -1,4 +1,4 @@
-import Agent from "@/api/Agent";
+import FollowUp from "@/api/FollowUp";
 
 
 const success = (app, res) => {
@@ -9,6 +9,7 @@ const success = (app, res) => {
 
     const order = res.data.order;
     app.$emit('update', order);
+    app.isLoading = false;
     app.cancel();
     app.errors  = {};
 }
@@ -16,16 +17,20 @@ const success = (app, res) => {
 const failed = (app, res) => {
     app.$alert({
         title: res.message,
-        type: 'warning'
+        type: 'error'
     });
 
-    app.errors  = res.errors;
+    if(res.code == 'VALIDATION_ERROR') {
+        app.errors  = res.errors;
+    }
+    
+    app.isLoading = false;
 }
 
 export const update = (app, order) => {
     app.isLoading = true;
     app.errors  = {};
-    Agent.update(order.id, order)
+    FollowUp.update(order.id, order)
     .then((res) => success(app, res.data))
     .catch((err) => failed(app, err.response.data))
     .finally(() => app.isLoading = false);

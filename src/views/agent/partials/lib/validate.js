@@ -5,7 +5,7 @@ export const validate = (app, order) => {
     }
 
     if(!order.phone) {
-        app.errors.fullname = "Phone Number is required";
+        app.errors.phone = "Phone Number is required";
         return false;
     }
 

@@ -6,6 +6,7 @@ import OrderListView from '@/views/order/OrderListView'
 import OrderView from '@/views/order/OrderView'
 import ConfirmedOrderListView from '@/views/order/ConfirmedOrderListView'
 import AgentOrders from '@/views/agent/AgentOrders'
+import AgentAddOrder from '@/views/agent/AgentAddOrder'
 import AgentConfirmedOrders from '@/views/agent/AgentConfirmedOrders'
 
 
@@ -57,6 +58,17 @@ export default
                 }
             },
 
+            { 
+                name: 'agent/orders/add',
+                path: '/agent/orders/add',
+                component: AgentAddOrder,
+                meta: {
+                    module: 'order',
+                    subModule: 'agent/orders/add',
+                    title: 'Add Order',
+                    gate: 'show_all_orders'
+                }
+            },
             { 
                 name: 'agent/orders',
                 path: '/agent/orders',

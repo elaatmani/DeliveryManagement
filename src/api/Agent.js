@@ -8,6 +8,11 @@ class Agent {
     //     return Api.get('api/Agent');
     // }
 
+    async statistics() {
+        await Csrf.getCookie();
+        return Api.post('api/v1/agent/statistics');
+    }
+
     async paginate(url = '/', options) {
         await Csrf.getCookie();
         return Api.post('api/v1/agent/orders' + url, options);
@@ -21,6 +26,16 @@ class Agent {
     async update(id, order) {
         await Csrf.getCookie();
         return Api.post('api/v1/agent/orders/' + id + '/update', order);
+    }
+
+    async toConfirm() {
+        await Csrf.getCookie();
+        return Api.get('api/orders/toconfirmate');
+    }
+
+    async getOrder() {
+        await Csrf.getCookie();
+        return Api.get('api/orders/add');
     }
 }
 

@@ -7,13 +7,13 @@
             <div class="tw-flex tw-items-center tw-gap-x-3">
                 <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Orders</h2>
 
-                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ total }} order</span>
+                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ totalOrders }} order</span>
             </div>
 
             <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">Show all confirmed orders.</p>
         </div>
 
-        <div class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
+        <div v-if="false" class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
 
             <button class="tw-flex tw-items-center tw-justify-center  tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-500 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5">
@@ -26,10 +26,31 @@
     </div>
 
     <!-- Filters Section -->
-    <IndexFilters @per-page-change="handlePerPageChange" active-statistics :statistics="statistics" />
+    <IndexFilters 
+      v-model:search="search" 
+      v-model:filters="filters"
+      @filter="handlePerPageChange(per_page)" 
+      @per-page-change="handlePerPageChange" 
+      @fresh="paginateOrders" 
+      :loading="fetching" 
+      :statistics="statistics" 
+      active-statistics
+    />
 
     <div>
-      <IndexTable @update="handleItemUpdate" :loading="fetching" :from="from" :to="to" :last-page="last_page" :per-page="per_page" :total="total" @next="handleNext" @prev="handlePrev" :current-page="current_page" @page-change="handlePageChange" @sort-order="handleSortOrderChange"  :items="items" />
+      <IndexTable 
+      @update="handleItemUpdate" 
+      @page-change="handlePageChange" 
+      @sort-order="handleSortOrderChange"  
+      :loading="fetching" 
+      :from="from" 
+      :to="to" 
+      :last-page="last_page" 
+      :per-page="per_page" 
+      :total="total" 
+      :current-page="current_page" 
+      :items="items" 
+      />
     </div>
 </section>
 
@@ -63,12 +84,19 @@ export default {
       from: 1,
       to: 1,
       total: 0,
+      totalOrders: 0,
       links: null,
+      search: '',
 
       sort_by: 'created_at',
       sort_order: 'desc',
       per_page: 10,
-      current_page: 1
+      current_page: 1,
+
+      filters: {
+        confirmation: 'all',
+        created_at: 'all',
+      }
 
     }
   },
@@ -82,16 +110,17 @@ export default {
         sort_order: this.sort_order,
         per_page: this.per_page,
         current_page: this.current_page,
+        search: this.search,
+        filters: this.filters,
         confirmation: 'confirmer'
       };
 
       this.fetching = true
-      
       return Agent.paginate(url, options)
       .then(({data}) => {
         const options = data.data.orders;
-        this.setOptions(options)
-        this.statistics = data.data.statistics;
+        this.setOptions(options);
+        this.statistics = !this.search ? data.data.statistics : this.statistics;
       })
       .then(() => {
         this.fetching = false
@@ -109,6 +138,7 @@ export default {
       this.to = parseInt(options.to)
       this.per_page = parseInt(options.per_page)
       this.total = parseInt(options.total)
+      this.totalOrders = !this.search ? parseInt(options.total) : this.totalOrders;
       this.links = (options.links)
     },
 

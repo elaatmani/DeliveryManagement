@@ -8,15 +8,16 @@
 import { localUrl } from '@/config/config'
 import AdminDashboard from '@/views/dashboard/dashboards/AdminDashboard'
 import DeliveryDashboard from './dashboards/DeliveryDashboard.vue'
-import AgenteDashboard from './dashboards/AgenteDashboard.vue'
+// import AgenteDashboard from './dashboards/AgenteDashboard.vue'
 import DefaultDashboard from './dashboards/DefaultDashboard.vue'
 import FollowUpDashboard from '@/views/dashboard/dashboards/FollowUpDashboard'
+import AgentDashboardNew from '@/views/dashboard/dashboards/AgentDashboardNew'
 
 export default {
     components: { 
         admin: AdminDashboard,
         delivery: DeliveryDashboard,
-        agente: AgenteDashboard,
+        agente: AgentDashboardNew,
         default: DefaultDashboard,
         'follow-up': FollowUpDashboard
      },
