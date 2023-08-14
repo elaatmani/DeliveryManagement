@@ -64,7 +64,7 @@
                 </div>
 
                 <ul class="tw-p-3 tw-pl-10 tw-space-y-2">
-                    <li class="tw-font-[cairo]" v-for="p in order.items" :key="p.id"> <span class="tw-font-bold">{{ p.quantity }} x </span> {{ p.product.name }} <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.color && !['/', '-'].includes(p.product_variation.color)">{{ p.product_variation.color }}</span> <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.size && !['/', '-'].includes(p.product_variation.size)">{{ p.product_variation.size }}</span></li>
+                    <li class="tw-font-[cairo] tw-flex tw-items-center tw-gap-1" v-for="p in order.items" :key="p.id"> <span class="tw-font-bold tw-text-green-500">{{ p.quantity }} x </span> <span>{{ p.product.name }}</span> <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.color && !['/', '-'].includes(p.product_variation.color)">{{ p.product_variation.color }}</span> <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.size && !['/', '-'].includes(p.product_variation.size)">{{ p.product_variation.size }}</span></li>
                     <li class="tw-font-[cairo] tw-mt-2 tw-flex tw-items-center tw-justify-end tw-gap-1 tw-text-2xl tw-text-green-400 tw-font-bold"><span>{{ currency }}</span><span>{{ price }}</span></li>
                 </ul>
             </div>

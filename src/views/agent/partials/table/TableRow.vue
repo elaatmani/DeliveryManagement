@@ -39,6 +39,15 @@
       <td
         class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
+        <div>
+          <ul class="tw-space-y-1">
+              <li class="tw-font-[cairo] tw-flex tw-items-center tw-gap-1" v-for="p in item.items" :key="p.id"> <span class="tw-font-bold tw-text-green-500">{{ p.quantity }} x </span> <span>{{ p.product.name }}</span> <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.color && !['/', '-'].includes(p.product_variation.color)">{{ p.product_variation.color }}</span> <span class="tw-font-bold tw-text-orange-500 tw-bg-orange-100 tw-rounded-lg tw-px-2 tw-text-sm" v-if="!!p.product_variation.size && !['/', '-'].includes(p.product_variation.size)">{{ p.product_variation.size }}</span></li>
+          </ul>
+        </div>
+      </td>
+      <td
+        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
+      >
         <span
         :class="[confirmation.bgLight, confirmation.textLight]"
         class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (confirmation.name) }}</span>
@@ -54,13 +63,7 @@
             class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">No Delivery</span>
         </div>
       </td>
-      <td
-        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
-      >
-        <span
-        :class="[deliveryState.bgLight, deliveryState.textLight]"
-        class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (!deliveryState.value ? 'Not Selected' : deliveryState.name ) }}</span>
-      </td>
+      
 
       <td class="tw-px-4 tw-py-2 tw-text-sm tw-whitespace-nowrap">
         <div>
