@@ -6,9 +6,13 @@
         <!-- <v-img width="18" height="18" :src="localUrl + 'assets/img/icons/dash2.svg'"></v-img> -->
       </div>
       <div class="tw-flex tw-flex-col tw-h-full tw-text-neutral-600">
-        <p class="tw-text-lg tw-font-bold">{{ dash.value }}</p>
+        <p  v-if="dash.pourcentage" class="tw-text-lg tw-font-bold">{{ dash.pourcentage }} {{ symbol }}</p>
+        <p  v-if="!dash.pourcentage" class="tw-text-lg tw-font-bold">{{ dash.value }}</p>
         <v-spacer></v-spacer>
-        <p class="tw-text-sm">{{ dash.title }}</p>
+        <div class="tw-flex tw-flex-row tw-h-full" >
+          <p v-if="dash.pourcentage" class="tw-text-sm pr-1">{{ dash.value }}</p>
+          <p class="tw-text-sm">{{ dash.title }}</p>
+        </div>
       </div>
     </div>
   </v-sheet>
@@ -16,7 +20,19 @@
 
 <script>
 export default {
-    props: [ 'dash' ],
+  props: {
+        dash: {
+            required: true
+        },
+        symbol: {
+            required: false,
+            default: '%'
+        },
+        numbers : {
+            required : false,
+            default : true
+        }
+    },
 
     computed: {
       bgColor() {
