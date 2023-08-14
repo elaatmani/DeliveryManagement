@@ -349,7 +349,7 @@ export default {
       return {
         id: 1,
         title: "Total Spend",
-        value: this.getChiffresDaffaireConfirmer().toFixed(2),
+        value:  this.getChiffresDaffaireConfirmer().toFixed(2),
         icon: "mdi-credit-card-outline",
         color: "green",
       };
@@ -486,6 +486,7 @@ export default {
       this.filteredSales.forEach((s) => {
         if (s.confirmation == "confirmer") {
           total += getPrice(s);
+          console.log(total);
         }
       });
       return total;

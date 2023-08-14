@@ -394,9 +394,11 @@ import { getPrice } from '@/helpers/methods'
                 let total = 0;
                 this.filteredSales.forEach(s => {
                     if(s.confirmation == "confirmer"){
+                        console.log(getPrice(s) , typeof getPrice(s))
                         total += getPrice(s);
                     }
                 })
+              
                 return total;
             },
             getChiffresDaffaireDelivery() {

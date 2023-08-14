@@ -26,28 +26,28 @@ export const links = [
         title: 'Dashboard',
         module: 'dashboard',
         to: '/',
-        hasChildren: true,
+        hasChildren: false,
         gate: 'all',
         icon: {
             type: 'svg',
             value: 'assets/img/icons/dashboard.svg'
         },
-        children: [
-            {
-                id: 1,
-                title: 'Dashboard Analytics',
-                subModule: '/',
-                gate: 'all',
-                to: '/'
-            },
-            {
-                id: 2,
-                title: 'Dashboard Operational',
-                subModule: 'dashboard/operational',
-                gate: 'all',
-                to: '/dashboard/operational'
-            },
-        ]
+        // children: [
+        //     {
+        //         id: 1,
+        //         title: 'Dashboard Analytics',
+        //         subModule: '/',
+        //         gate: 'all',
+        //         to: '/'
+        //     },
+            // {
+            //     id: 2,
+            //     title: 'Dashboard Operational',
+            //     subModule: 'dashboard/operational',
+            //     gate: 'all',
+            //     to: '/dashboard/operational'
+            // },
+        // ]
     },
 
     {

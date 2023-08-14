@@ -2,7 +2,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import DashboardView from '@/views/dashboard/DashboardView.vue'
 import SettingsView from '@/views/settings/SettingsView'
 import IndexView from '@/views/notification/IndexView'
-import OperationalDashboard from '@/views/dashboard/partials/admin/OperationalDashboard.vue'
+// import OperationalDashboard from '@/views/dashboard/partials/admin/OperationalDashboard.vue'
 
 export default {
 
@@ -23,16 +23,16 @@ export default {
               gate: 'all'
             }
           },
-          {
-            path: '/dashboard/operational',
-            name: 'operational',
-            component: OperationalDashboard,
-            meta: {
-              module: 'dashboard',
-              title: 'Dashboard Operational',
-              gate: 'all'
-            }
-          },
+          // {
+          //   path: '/dashboard/operational',
+          //   name: 'operational',
+          //   component: OperationalDashboard,
+          //   meta: {
+          //     module: 'dashboard',
+          //     title: 'Dashboard Operational',
+          //     gate: 'all'
+          //   }
+          // },
           {
             path: '/notifications/:tab',
             name: 'notifications',
