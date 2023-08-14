@@ -36,6 +36,7 @@ import Echo from 'laravel-echo'
 import Sheet from '@/api/Sheet'
 import Product from '@/api/Product'
 import Sale from '@/api/Sale'
+import Agent from '@/api/Agent'
 
 export default {
     components: { AppHeader, AppSidebar, Alert },
@@ -165,6 +166,20 @@ export default {
                 }
             );
         },
+        getAgentCounts() {
+                return Agent.counts()
+                .then(
+                res => {
+                    if (res?.data.code == "SUCCESS") {
+                    const data = res.data.data
+                    this.$store.dispatch('agent/setTotalConfirmed', data.confirmed)
+                    this.$store.dispatch('agent/setTotalNotConfirmed', data.not_confirmed)
+                    this.$store.dispatch('agent/setTotalAvailable', data.available)
+                    this.$store.dispatch('agent/setFetched', true)
+                    }
+                }
+                ).catch(this.$handleApiError)
+        },
         fetchNewOrders() {
             if(this.salesFetched) {
                 const ids = this.sales.map(s => s.id);
@@ -194,11 +209,20 @@ export default {
             // this.fetching = setInterval(this.sync_sheets, this.delay);
             this.fetching = setInterval(this.fetchNewOrders, this.delay);
         }
-        if(this.$can('show_all_products')) {
+        console.log(this.user);
+        console.log(this.user.role == "agente");
+        if(this.user.role == "agente") {
+            // this.fetching = setInterval(this.sync_sheets, this.delay);
+            this.fetching = setInterval(this.getAgentCounts, this.delay);
+            this.getAgentCounts();
+        }
+
+        if(this.$can('show_all_products') && this.user.role == 'admin') {
             this.getProducts();
         }
-        
-        this.getUsers();
+        if(this.user.role == 'admin') {
+            this.getUsers();
+        }
 
         window.addEventListener('scroll', this.checkScroll);
     },

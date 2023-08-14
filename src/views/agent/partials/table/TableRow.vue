@@ -13,7 +13,7 @@
         <div>
           <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-flex tw-items-center tw-gap-2">
             <!-- {{ getDate(item.created_at) }} -->
-            <p>{{ moment(item.created_at).format("DD[/]MM[/]YY") }}</p>
+            <p>{{ moment(item.created_at).format("MM[/]DD[/]YY") }}</p>
             <p v-if="false">{{ moment(item.created_at).format("HH[:]mm[:]ss") }}</p>
           </h2>
         </div>
@@ -28,20 +28,18 @@
         </div>
       </td>
       <td
-        class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
-      >
-        <div>
-          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]">
-            {{ item.phone }}
-          </h2>
-        </div>
-      </td>
-      <td
         class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
         <span
         :class="[confirmation.bgLight, confirmation.textLight]"
         class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (confirmation.name) }}</span>
+      </td>
+      <td
+        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
+      >
+        <span
+        :class="[deliveryState.bgLight, deliveryState.textLight]"
+        class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (!deliveryState.value ? 'Not Selected' : deliveryState.name ) }}</span>
       </td>
       <td class="tw-px-12 tw-py-2 tw-text-sm tw-whitespace-nowrap">
         <div v-if="!!item.delivery_fullname" :class="['tw-text-emerald-800', 'tw-bg-emerald-100']" class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-pl-1.5 tw-py-0.5 tw-rounded tw-w-fit tw-flex tw-items-center tw-gap-2">
@@ -54,13 +52,6 @@
             class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">No Delivery</span>
         </div>
       </td>
-      <td
-        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
-      >
-        <span
-        :class="[deliveryState.bgLight, deliveryState.textLight]"
-        class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (!deliveryState.value ? 'Not Selected' : deliveryState.name ) }}</span>
-      </td>
 
       <td class="tw-px-4 tw-py-2 tw-text-sm tw-whitespace-nowrap">
         <div>
@@ -72,8 +63,8 @@
 
 <script>
 import moment from 'moment';
-import { confirmationsFollowup as confirmations, deliveryStatus } from '@/config/orders';
-import TableActions from '@/views/followup/partials/table/TableActions'
+import { confirmations, deliveryStatus } from '@/config/orders';
+import TableActions from '@/views/agent/partials/table/TableActions'
 
 export default {
   components: {TableActions},
@@ -92,7 +83,7 @@ export default {
 
   computed: {
     confirmation() {
-      return confirmations.find(c => c.value == this.item.followup_confirmation)
+      return confirmations.find(c => c.value == this.item.confirmation)
     },
 
     deliveryState() {

@@ -11,6 +11,7 @@ import notification from './modules/notification'
 import warehouse from './modules/warehouse'
 import factorisation from './modules/factorisation'
 import sheet from './modules/sheet'
+import agent from './modules/agent'
 
 
 export default createStore({
@@ -34,6 +35,7 @@ export default createStore({
     notification,
     warehouse,
     factorisation,
-    sheet
+    sheet,
+    agent
   }
 })

@@ -25,70 +25,39 @@
                                 <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Client
                                 </th>
-                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    Phone
-                                </th>
                                 <th scope="col" class="tw-w-10 tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Confirmation
                                 </th>
-                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    Affected
-                                </th>
                                 <th scope="col" class="tw-w-10 tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Delivery
+                                </th>
+                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                    Affected
                                 </th>
 
 
 
                                 <th scope="col" class="tw-relative tw-py-3.5 tw-px-4">
-                                    <span class="tw-sr-only">Actions</span>
+                                    <span class="tw-sr-only">Edit</span>
                                 </th>
                             </tr>
                         </thead>
 
-                        <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
+                        <tbody v-if="!loading" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <TableRow @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
-                        </tbody>
 
-                        <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
-                            <td colspan="8">
-                              <div class="tw-p-5 tw-text-center tw-text-gray-600 tw-font-medium">
-                                No Order was found !
-                              </div>
-                            </td>
+                            
                           </tr>
                         </tbody>
 
-                        <tbody v-if="loading" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
+                        <tbody v-else class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
                             <td
-                              v-if="false"
-                              colspan="8"
+                              colspan="7"
                               class="tw-px-4 tw-py-4 tw-text-sm tw-font-medium tw-whitespace-nowrap"
                             >
                               <loading />
-                            </td>
-                            <td
-                              colspan="8"
-                            >
-                            
-                              <div role="status" class="tw-w-full tw-p-4 tw-space-y-4  tw-border-gray-200 tw-divide-y tw-divide-gray-200 tw-rounded tw-shadow tw-animate-pulse dark:tw-divide-gray-700 md:tw-p-6 dark:tw-border-gray-700">
-                                  <div class="tw-flex tw-items-center tw-justify-between">
-                                      <div>
-                                          <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-600 tw-w-24 tw-mb-2.5"></div>
-                                          <div class="tw-w-32 tw-h-2 tw-bg-gray-200 tw-rounded-full dark:tw-bg-gray-700"></div>
-                                      </div>
-                                      <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-700 tw-w-12"></div>
-                                  </div>
-                                  <div v-for="i in (perPage - 1)" :key="i" class="tw-flex tw-items-center tw-justify-between tw-pt-4">
-                                      <div>
-                                          <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-600 tw-w-24 tw-mb-2.5"></div>
-                                          <div class="tw-w-32 tw-h-2 tw-bg-gray-200 tw-rounded-full dark:tw-bg-gray-700"></div>
-                                      </div>
-                                      <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-700 tw-w-12"></div>
-                                  </div>
-                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -106,8 +75,8 @@
 </template>
 
 <script>
-import TablePaginationNoNums from '@/views/followup/partials/table/TablePaginationNoNums';
-import TableRow from '@/views/followup/partials/table/TableRow';
+import TablePaginationNoNums from '@/views/agent/partials/table/TablePaginationNoNums';
+import TableRow from '@/views/agent/partials/table/TableRow';
 
 export default {
   components: { TablePaginationNoNums, TableRow },

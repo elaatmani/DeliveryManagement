@@ -5,6 +5,8 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import OrderListView from '@/views/order/OrderListView'
 import OrderView from '@/views/order/OrderView'
 import ConfirmedOrderListView from '@/views/order/ConfirmedOrderListView'
+import AgentOrders from '@/views/agent/AgentOrders'
+import AgentConfirmedOrders from '@/views/agent/AgentConfirmedOrders'
 
 
 export default 
@@ -50,6 +52,29 @@ export default
                 meta: {
                     module: 'order',
                     subModule: 'order/confirmed',
+                    title: 'Confirmed Orders',
+                    gate: 'show_all_orders'
+                }
+            },
+
+            { 
+                name: 'agent/orders',
+                path: '/agent/orders',
+                component: AgentOrders,
+                meta: {
+                    module: 'order',
+                    subModule: 'agent/orders',
+                    title: 'Orders',
+                    gate: 'show_all_orders'
+                }
+            },
+            { 
+                name: 'agent/orders/confirmed',
+                path: '/agent/orders/confirmed',
+                component: AgentConfirmedOrders,
+                meta: {
+                    module: 'order',
+                    subModule: 'agent/orders/confirmed',
                     title: 'Confirmed Orders',
                     gate: 'show_all_orders'
                 }

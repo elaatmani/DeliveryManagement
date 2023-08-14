@@ -34,12 +34,12 @@
       <v-spacer></v-spacer>
 
       <div v-if="l.id != 1" class="tw-w-fit tw-h-[24px] tw-flex tw-items-center tw-justify-center tw-px-1 tw-bg-orange-500 tw-text-sm tw-text-white tw-rounded tw-ml-2">
-        <v-icon v-if="!fetched" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
-        <p v-if="fetched" class="tw-text-xs">{{ l.id == 2 ? (myOrders.length) : confirmedOrders.length }}</p>
+        <v-icon v-if="!state.fetched" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
+        <p v-if="state.fetched" class="tw-text-xs">{{ l.id == 4 ? (state.totalNotConfirmed) : state.totalConfirmed }}</p>
       </div>
       <div v-if="l.id == 1" class="tw-w-fit tw-h-[24px] tw-flex tw-items-center tw-justify-center tw-px-1 tw-bg-orange-500 tw-text-sm tw-text-white tw-rounded tw-ml-2">
-        <v-icon v-if="isCountLoading" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
-        <p v-if="!isCountLoading" class="tw-text-xs">{{ available }}</p>
+        <v-icon v-if="!state.fetched" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
+        <p v-if="state.fetched" class="tw-text-xs">{{ state.totalAvailable }}</p>
       </div>
     </div>
   </v-list-item>
@@ -48,8 +48,6 @@
 
 <script>
 import { localUrl } from '@/config/config'
-import Dashboard from '@/api/Dashboard';
-import Sale from '@/api/Sale';
 
 export default {
   props: [],
@@ -59,8 +57,6 @@ export default {
         localUrl,
         isActive: false,
         isLoaded: false,
-        isCountLoading: false,
-        available: 0,
         link: {
         id: 6,
         module: 'order',
@@ -80,20 +76,36 @@ export default {
                 to: '/order',
                 icon: 'mdi-plus-box'
             },
+            // {
+            //     id: 2,
+            //     title: 'My Orders',
+            //     subModule: 'order/list',
+            //     gate: 'show_all_orders',
+            //     to: '/orders',
+            //     icon: 'mdi-package-variant-closed'
+            // },
+            // {
+            //     id: 3,
+            //     title: 'Confirmed Orders',
+            //     subModule: 'order/confirmed',
+            //     gate: 'show_all_orders',
+            //     to: '/orders/confirmed',
+            //     icon: 'mdi-checkbox-marked'
+            // },
             {
-                id: 2,
-                title: 'My Orders',
-                subModule: 'order/list',
+                id: 4,
+                title: 'Orders',
+                subModule: 'agent/orders',
                 gate: 'show_all_orders',
-                to: '/orders',
+                to: '/agent/orders',
                 icon: 'mdi-package-variant-closed'
             },
             {
-                id: 3,
+                id: 5,
                 title: 'Confirmed Orders',
-                subModule: 'order/confirmed',
+                subModule: 'agent/orders/confirmed',
                 gate: 'show_all_orders',
-                to: '/orders/confirmed',
+                to: '/agent/orders/confirmed',
                 icon: 'mdi-checkbox-marked'
             },
         ]
@@ -120,41 +132,15 @@ export default {
     
       return this.link.to === this.$route.path 
     },
-    getOrders() {
-        this.isLoaded = false
-        return Dashboard.agente().then(
-          res => {
-            if (res?.data.code == "SUCCESS") {
-              const orders = res.data.data.orders
-              this.$store.dispatch('order/setAllOrders', orders)
-              this.$store.dispatch('order/setFetched', true)
-              this.isLoaded = true
-            }
-            console.log(res);
-          }
-        ).catch(this.$handleApiError)
-      },
-
-      getCountOrders() {
-        this.isCountLoading = true;
-
-        Sale.availableOrders()
-        .then(res => {
-          console.log(res);
-          if(res.data.code == 'SUCCESS') {
-            this.available = res.data.data.availble
-          }
-        }, this.$handleApiError)
-        .finally(() => {
-          this.isCountLoading = false
-        })
-      }
   },
 
   computed: {
     allowedChildren() {
       // return this.link?.children
       return this.link?.children.filter((item) => this.$can(item.gate) || item.gate === 'all')
+    },
+    state() {
+      return this.$store.getters['agent/state']
     },
     orders() {
         return this.$store.getters['order/allOrders']
@@ -175,17 +161,10 @@ export default {
     $route() {
       this.isActive = this.isLinkActive()
     },
-    orders() {
-      this.getCountOrders()
-    }
   },
 
   mounted() {
     this.isActive = this.isLinkActive();
-    if(this.$can(this.link.gate)) {
-      this.getOrders();
-    this.getCountOrders()
-    }
 
   }
 };
