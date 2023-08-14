@@ -33,6 +33,7 @@
             />
           </svg>
         </button>
+
         <button
           v-if="activeStatistics && !!statistics"
           @click="showStatistics = !showStatistics"
@@ -40,6 +41,15 @@
         >
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2c-.6 0-1 .4-1 1v18c0 .6.4 1 1 1s1-.4 1-1V3c0-.6-.4-1-1-1zM5 12c-.6 0-1 .4-1 1v8c0 .6.4 1 1 1s1-.4 1-1v-8c0-.6-.4-1-1-1zm10-4c-.6 0-1 .4-1 1v12c0 .6.4 1 1 1s1-.4 1-1V9c0-.6-.4-1-1-1zm5 8c-.6 0-1 .4-1 1v4c0 .6.4 1 1 1s1-.4 1-1v-4c0-.6-.4-1-1-1z"/></svg>
         </button>
+
+        <button
+          @click="$emit('fresh')"
+          :disabled="loading"
+          class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 10.75h-3m12.5-2c0 3-2.798 5.5-6.25 5.5c-3.75 0-6.25-3.5-6.25-3.5v3.5m9.5-9h3m-12.5 2c0-3 2.798-5.5 6.25-5.5c3.75 0 6.25 3.5 6.25 3.5v-3.5"/></svg>
+        </button>
+
         <div class="tw-relative">
           <select
             @change="(e) => $emit('perPageChange', e.target.value)"
@@ -70,28 +80,19 @@
       </div>
 
       <div class="tw-relative tw-flex tw-items-center tw-mt-4 md:tw-mt-0">
-        <span class="tw-absolute">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="tw-w-5 tw-h-5 tw-mx-3 tw-text-gray-400 darkx:tw-text-gray-600"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-            />
-          </svg>
-        </span>
 
         <input
           type="text"
           placeholder="Search"
-          class="tw-block tw-w-full tw-py-1.5 tw-pr-5 tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pl-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40"
+          :value="search"
+          @input="e => $emit('update:search', e.target.value)"
+          @keyup.enter="$emit('filter')"
+          class="tw-block tw-w-full tw-py-1.5  tw-pl-5 tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pr-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40"
         />
+
+        <button @click="$emit('filter')" class="tw-absolute tw-right-0 tw-px-2 tw-py-1 tw-w-[38px] tw-h-[36px] tw-border-solid tw-rounded-r-lg  tw-border-l tw-text-orange-500/80  tw-border-orange-500/20 hover:tw-bg-orange-500/10 hover:tw-border-orange-500/70 tw-duration-300 tw-flex tw-items-center tw-justify-center">
+            <v-icon size="small" >mdi-magnify</v-icon>
+        </button>
       </div>
     </div>
 
@@ -99,9 +100,11 @@
       :class="[showFilters ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
       class="tw-grid tw-duration-300 tw-transition-all"
     >
+
       <div class="tw-overflow-hidden tw-col-span-1">
-        <FiltersWrapper />
+        <FiltersWrapper @filter="$emit('filter')" :filters="filters" @update="v => $emit('update:filters', v)" />
       </div>
+
     </div>
 
     <div
@@ -134,6 +137,15 @@ export default {
     activeStatistics: {
       type: Boolean,
       default: false
+    },
+    loading: {
+      default: true
+    },
+    search: {
+      default: ''
+    },
+    filters: {
+      required: true,
     }
   },
 
@@ -144,6 +156,7 @@ export default {
       showStatistics: false
     };
   },
+
 };
 </script>
 

@@ -120,12 +120,12 @@
                 >
                 <div class="tw-relative">
                   <select
-                    v-model="itemCopy.confirmation"
-                    @change="errors.confirmation = null"
-                  :class="[errors.confirmation && '!tw-border-red-400']"
+                    v-model="itemCopy.followup_confirmation"
+                    @change="errors.followup_confirmation = null"
+                  :class="[errors.followup_confirmation && '!tw-border-red-400']"
                     class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
                   >
-                    <option :value="c.value" :class="[c.text, !c.value && '!tw-text-green-500']" v-for="c in confirmations" :key="c.id">{{ c.name }}</option>
+                    <option :value="c.value" :class="[c.text, !c.value && '!tw-text-green-500']" v-for="c in confirmationsFollowup" :key="c.id">{{ c.name }}</option>
                   </select>
                   <div
                     class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"
@@ -142,13 +142,13 @@
                   </div>
                 </div>
                 <label
-                  v-if="errors.confirmation"
+                  v-if="errors.followup_confirmation"
                   class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
-                  >{{ errors.confirmation }}</label
+                  >{{ errors.followup_confirmation }}</label
                 >
               </div>
 
-              <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.confirmation == 'reporter'">
+              <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.followup_confirmation == 'reporter'">
                 <label
                   class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
                   >Reported Date</label
@@ -168,7 +168,7 @@
                 >
               </div>
 
-              <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.confirmation == 'reporter'">
+              <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.followup_confirmation == 'reporter'">
                 <label
                   class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
                   >Reported Note</label
@@ -277,7 +277,7 @@
 <script>
 import { validate } from "../lib/validate";
 import { update } from "../lib/update";
-import { confirmations, upsells } from '@/config/orders';
+import { confirmationsFollowup, upsells } from '@/config/orders';
 import OrderItems from '@/views/followup/partials/components/OrderItems'
 import OrderAffectation from '@/views/followup/partials/components/OrderAffectation'
 import Product from '@/api/Product';
@@ -296,7 +296,7 @@ export default {
 
   data() {
     return {
-      confirmations: confirmations,
+      confirmationsFollowup: confirmationsFollowup,
       upsells: upsells,
       isLoading: false,
 

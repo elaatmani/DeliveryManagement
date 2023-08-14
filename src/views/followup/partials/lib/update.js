@@ -9,6 +9,7 @@ const success = (app, res) => {
 
     const order = res.data.order;
     app.$emit('update', order);
+    app.isLoading = false;
     app.cancel();
     app.errors  = {};
 }
@@ -16,10 +17,14 @@ const success = (app, res) => {
 const failed = (app, res) => {
     app.$alert({
         title: res.message,
-        type: 'warning'
+        type: 'error'
     });
 
-    app.errors  = res.errors;
+    if(res.code == 'VALIDATION_ERROR') {
+        app.errors  = res.errors;
+    }
+    
+    app.isLoading = false;
 }
 
 export const update = (app, order) => {

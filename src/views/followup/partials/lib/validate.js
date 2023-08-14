@@ -5,7 +5,7 @@ export const validate = (app, order) => {
     }
 
     if(!order.phone) {
-        app.errors.fullname = "Phone Number is required";
+        app.errors.phone = "Phone Number is required";
         return false;
     }
 
@@ -15,15 +15,15 @@ export const validate = (app, order) => {
     }
 
 
-    if(!order.note && order.confirmation == "annuler") {
+    if(!order.note && order.followup_confirmation == "annuler") {
         app.errors.note = "Add Cancelation note !";
         return false;
     }
 
-    if(!!order.affectation && order.confirmation != "confirmer") {
-        app.errors.affectation = "Cannot update affectation: Order not confirmed.";
-        return false;
-    }
+    // if(!!order.affectation && order.confirmation != "confirmer") {
+    //     app.errors.affectation = "Cannot update affectation: Order not confirmed.";
+    //     return false;
+    // }
 
     if(!validateItems(app, order.items)) {
         return false;

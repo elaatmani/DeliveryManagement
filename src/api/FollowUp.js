@@ -3,10 +3,10 @@ import Csrf from './Csrf'
 
 class FollowUp {
 
-    // async all() {
-    //     await Csrf.getCookie();
-    //     return Api.get('api/followup');
-    // }
+    async statistics() {
+        await Csrf.getCookie();
+        return Api.post('api/v1/followup/statistics');
+    }
 
     async paginate(url = '/', options) {
         await Csrf.getCookie();

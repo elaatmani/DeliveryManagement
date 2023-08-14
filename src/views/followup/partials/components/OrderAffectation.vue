@@ -8,12 +8,12 @@
         <select
         :value="affectation"
         @change="handleChange"
-        :disabled="item.confirmation != 'confirmer'"
-        :class="[error && '!tw-border-red-400', item.confirmation != 'confirmer' && 'tw-cursor-not-allowed']"
+        :disabled="item.followup_confirmation != 'reconfirmer'"
+        :class="[error && '!tw-border-red-400', item.followup_confirmation != 'reconfirmer' && 'tw-cursor-not-allowed']"
         class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
         >
         <option value="">Choose a Delivery</option>
-        <option v-for="u in deliveries" :value="u.id" :key="u.id">{{ u.name }}</option>
+        <option v-for="u in availableDeliveries" :value="u.id" :key="u.id">{{ u.name }}</option>
         </select>
         <div
         class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"
@@ -68,7 +68,7 @@ export default {
         },
         item: {
             required: true,
-        }
+        },
     },
 
     data() {
@@ -78,13 +78,32 @@ export default {
         }
     },
 
+    computed: {
+        availableDeliveries() {
+            return this.deliveries.filter(d => d.has.some(id => this.item.items.some(p =>p.product_id == id)));
+        },
+        delivery() {
+            return this.deliveries.find(d => d.id == this.affectation);
+        }
+    },
+
     watch: {
         'item.confirmation': {
             deep: true,
             handler() {
-                this.$emit('update:affectation', null)
+                // this.$emit('update:affectation', null)
             }
-        }
+        },
+        'item.items': {
+            deep: true,
+            handler() {
+                if(!this.affectation) return false;
+
+                if(!this.delivery.has.some(id => this.item.items.some(p =>p.product_id == id))) {
+                    this.$emit('update:affectation', null)
+                }
+            }
+        },
     },
 
   methods: {

@@ -18,8 +18,17 @@ export default function (to) {
         return { name: 'login' }
     }
 
+    // let logged = true;
     // Update user's last action
-    User.online();
+    User.online()
+    .catch(err => {
+        const code = err?.response?.data?.code;
+        if (code == "NOT_AUTHENTICATED") {
+            store.dispatch('user/logout')
+            // logged = false;
+        }
+    });
+
 
     // handle if user is logged and want to show login
     if (to.path == '/login') {
