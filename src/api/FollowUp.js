@@ -3,26 +3,19 @@ import Csrf from './Csrf'
 
 class FollowUp {
 
-    // async all() {
-    //     await Csrf.getCookie();
-    //     return Api.get('api/followup');
-    // }
-
-    async paginate(url = 'followup', options) {
+    async statistics() {
         await Csrf.getCookie();
-        return Api.post('api/' + url, options);
+        return Api.post('api/v1/followup/statistics');
     }
 
-    async update(id, sheet) {
+    async paginate(url = '/', options) {
         await Csrf.getCookie();
+        return Api.post('api/v1/followup/orders' + url, options);
+    }
 
-        const data = {
-            name: sheet.name,
-            sheet_id: sheet.sheet_id,
-            sheet_name: sheet.sheet_name,
-            auto_fetch: sheet.auto_fetch
-        }
-        return Api.post('api/sheets/' + id, data);
+    async update(id, order) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/followup/orders/' + id + '/update', order);
     }
 }
 

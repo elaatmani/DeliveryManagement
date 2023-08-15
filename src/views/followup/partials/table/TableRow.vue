@@ -11,9 +11,9 @@
         class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
         <div>
-          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white">
+          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-flex tw-items-center tw-gap-2">
             <!-- {{ getDate(item.created_at) }} -->
-            <p>{{ moment(item.created_at).format("MM[/]DD[/]YY") }}</p>
+            <p>{{ moment(item.created_at).format("DD[/]MM[/]YY") }}</p>
             <p v-if="false">{{ moment(item.created_at).format("HH[:]mm[:]ss") }}</p>
           </h2>
         </div>
@@ -28,57 +28,56 @@
         </div>
       </td>
       <td
-        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
+        class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
-        <div
-          class="tw-inline tw-px-3 tw-py-1 tw-text-sm tw-font-normal tw-text-green-500 tw-bg-green-100 tw-rounded-full darkx:tw-text-green-400 tw-gap-x-2 darkx:tw-bg-green-800"
-        >
-          Confirmed
+        <div>
+          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]">
+            {{ item.phone }}
+          </h2>
         </div>
       </td>
       <td
         class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
-        <div
-          class="tw-inline tw-px-3 tw-py-1 tw-text-sm tw-font-normal tw-text-red-500 tw-bg-red-100 tw-rounded-full darkx:tw-text-red-400 tw-gap-x-2 darkx:tw-bg-red-800"
-        >
-          Cancelled
-        </div>
+        <span
+        :class="[confirmation.bgLight, confirmation.textLight]"
+        class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (confirmation.name) }}</span>
       </td>
       <td class="tw-px-12 tw-py-2 tw-text-sm tw-whitespace-nowrap">
-        <div>
-          <h4 class="tw-text-gray-700 darkx:tw-text-gray-200">
-            Design software
-          </h4>
+        <div v-if="!!item.delivery_fullname" :class="['tw-text-emerald-800', 'tw-bg-emerald-100']" class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-pl-1.5 tw-py-0.5 tw-rounded tw-w-fit tw-flex tw-items-center tw-gap-2">
+          <div class="tw-w-1.5 tw-h-1.5 tw-rounded-full tw-bg-emerald-500"></div>
+          <span>{{ item.delivery_fullname }}</span>
         </div>
+        <div v-else>
+          <span
+            :class="['tw-text-gray-800', 'tw-bg-gray-100']"
+            class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">No Delivery</span>
+        </div>
+      </td>
+      <td
+        class="tw-px-12 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
+      >
+        <span
+        :class="[deliveryState.bgLight, deliveryState.textLight]"
+        class="tw-text-xs tw-font-medium tw-mr-2 tw-px-2.5 tw-py-0.5 tw-rounded ">{{ (!deliveryState.value ? 'Not Selected' : deliveryState.name ) }}</span>
       </td>
 
       <td class="tw-px-4 tw-py-2 tw-text-sm tw-whitespace-nowrap">
-        <button
-          class="tw-px-1 tw-py-1 tw-text-gray-500 tw-transition-colors tw-duration-200 tw-rounded-lg darkx:tw-text-gray-300 hover:tw-bg-gray-100"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="tw-w-6 tw-h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-            />
-          </svg>
-        </button>
+        <div>
+          <TableActions @update="newItem => $emit('update', newItem)" :item="item" />
+        </div>
       </td>
     </tr>
 </template>
 
 <script>
 import moment from 'moment';
+import { confirmationsFollowup as confirmations, deliveryStatus } from '@/config/orders';
+import TableActions from '@/views/followup/partials/table/TableActions'
+
 export default {
+  components: {TableActions},
+
   props: {
     item: {
       required: true,
@@ -91,7 +90,19 @@ export default {
     }
   },
 
+  computed: {
+    confirmation() {
+      return confirmations.find(c => c.value == this.item.followup_confirmation)
+    },
+
+    deliveryState() {
+      return deliveryStatus.find(v => v.value == this.item.delivery)
+    },
+
+  },
+
   methods: {
+
   }
 };
 </script>

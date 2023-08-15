@@ -1,78 +1,7 @@
 <template>
   <div>
-    <!-- component -->
-<section class="tw-px-4 tw-mx-auto">
-    <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
-        <div>
-            <div class="tw-flex tw-items-center tw-gap-x-3">
-                <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Orders</h2>
 
-                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ total }} order</span>
-            </div>
-
-            <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">These orders have needs to reconfirmed.</p>
-        </div>
-
-        <div class="tw-flex tw-items-center tw-mt-4 tw-gap-x-3">
-
-            <button class="tw-flex tw-items-center tw-justify-center  tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-500 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-
-                <span>Create</span>
-            </button>
-        </div>
-    </div>
-
-    <div class="tw-mt-6 md:tw-flex md:tw-items-center md:tw-justify-between">
-        <div class="tw-inline-flex tw-overflow-hidden tw-bg-white tw-border tw-divide-x tw-rounded-lg darkx:tw-bg-gray-900 rtl:tw-flex-row-reverse darkx:tw-border-gray-700 darkx:tw-divide-gray-700">
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 tw-bg-gray-100 sm:tw-text-sm darkx:tw-bg-gray-800 darkx:tw-text-gray-300">
-                View all
-            </button>
-
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                Today
-            </button>
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                Yesterday
-            </button>
-            <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M9 5a1 1 0 1 0 0 2a1 1 0 0 0 0-2zM6.17 5a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 0 1 0-2h1.17zM15 11a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-1.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h7.17zM9 17a1 1 0 1 0 0 2a1 1 0 0 0 0-2zm-2.83 0a3.001 3.001 0 0 1 5.66 0H19a1 1 0 1 1 0 2h-7.17a3.001 3.001 0 0 1-5.66 0H5a1 1 0 1 1 0-2h1.17z"/></svg>
-            </button>
-            <div class="tw-relative">
-                        
-            <select
-                @change="(e) => $emit('perPageChange', e.target.value)"
-                class="tw-h-full tw-px-5 tw-py-2 tw-w-20 focus:tw-outline-none tw-text-xs tw-font-medium tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-            </select>
-            <div
-                class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700">
-                <svg class="tw-fill-current tw-h-4 tw-w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-            </div>
-        </div>
-        </div>
-
-        <div class="tw-relative tw-flex tw-items-center tw-mt-4 md:tw-mt-0">
-            <span class="tw-absolute">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5 tw-mx-3 tw-text-gray-400 darkx:tw-text-gray-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-            </span>
-
-            <input type="text" placeholder="Search" class="tw-block tw-w-full tw-py-1.5 tw-pr-5 tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pl-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40">
-        </div>
-    </div>
-
-    <div class="tw-flex tw-flex-col tw-mt-6">
+    <div class="tw-flex tw-flex-col">
         <div class="tw-overflow-x-auto">
             <div class="tw-inline-block tw-min-w-full tw-align-middle">
                 <div class="tw-overflow-hidden tw-border tw-border-gray-200 darkx:tw-border-gray-700 md:tw-rounded-lg">
@@ -83,7 +12,7 @@
                                         <span>ID</span>
                                 </th>
                                 <th scope="col" class="tw-py-3.5 tw-px-4 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    <button class="tw-flex tw-items-center tw-gap-x-3 focus:tw-outline-none">
+                                    <button @click="$emit('sortOrder', {name: 'created_at'})" class="tw-flex tw-items-center tw-gap-x-3 focus:tw-outline-none">
                                         <span>Created</span>
 
                                         <svg class="tw-h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,35 +25,70 @@
                                 <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Client
                                 </th>
+                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                    Phone
+                                </th>
                                 <th scope="col" class="tw-w-10 tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Confirmation
                                 </th>
+                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                    Affected
+                                </th>
                                 <th scope="col" class="tw-w-10 tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Delivery
-                                </th>
-                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    Product
                                 </th>
 
 
 
                                 <th scope="col" class="tw-relative tw-py-3.5 tw-px-4">
-                                    <span class="tw-sr-only">Edit</span>
+                                    <span class="tw-sr-only">Actions</span>
                                 </th>
                             </tr>
                         </thead>
 
-                        <tbody v-if="!loading" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
-                          <TableRow v-for="item in items" :key="item.id" :item="item" />
+                        <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
+                          <TableRow @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
                         </tbody>
 
-                        <tbody v-else class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
+                        <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
+                          <tr>
+                            <td colspan="8">
+                              <div class="tw-p-5 tw-text-center tw-text-gray-600 tw-font-medium">
+                                No Order was found !
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+
+                        <tbody v-if="loading" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
                             <td
-                              colspan="7"
+                              v-if="false"
+                              colspan="8"
                               class="tw-px-4 tw-py-4 tw-text-sm tw-font-medium tw-whitespace-nowrap"
                             >
                               <loading />
+                            </td>
+                            <td
+                              colspan="8"
+                            >
+                            
+                              <div role="status" class="tw-w-full tw-p-4 tw-space-y-4  tw-border-gray-200 tw-divide-y tw-divide-gray-200 tw-rounded tw-shadow tw-animate-pulse dark:tw-divide-gray-700 md:tw-p-6 dark:tw-border-gray-700">
+                                  <div class="tw-flex tw-items-center tw-justify-between">
+                                      <div>
+                                          <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-600 tw-w-24 tw-mb-2.5"></div>
+                                          <div class="tw-w-32 tw-h-2 tw-bg-gray-200 tw-rounded-full dark:tw-bg-gray-700"></div>
+                                      </div>
+                                      <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-700 tw-w-12"></div>
+                                  </div>
+                                  <div v-for="i in (perPage - 1)" :key="i" class="tw-flex tw-items-center tw-justify-between tw-pt-4">
+                                      <div>
+                                          <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-600 tw-w-24 tw-mb-2.5"></div>
+                                          <div class="tw-w-32 tw-h-2 tw-bg-gray-200 tw-rounded-full dark:tw-bg-gray-700"></div>
+                                      </div>
+                                      <div class="tw-h-2.5 tw-bg-gray-300 tw-rounded-full dark:tw-bg-gray-700 tw-w-12"></div>
+                                  </div>
+                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -138,7 +102,6 @@
     <div class="tw-mt-6">
       <TablePaginationNoNums :from="from" :to="to" :last-page="lastPage" :per-page="perPage" :total="total" :current-page="currentPage" @page-change="(n) => $emit('pageChange', n)" />
     </div>
-</section>
   </div>
 </template>
 
@@ -167,7 +130,7 @@ export default {
     },
     perPage: {
         type: Number,
-        default: 5
+        default: 10
     },
     total: {
         type: Number,
@@ -181,7 +144,8 @@ export default {
       type: Number,
       default: 1
     }
-  }
+  },
+
 
 }
 </script>

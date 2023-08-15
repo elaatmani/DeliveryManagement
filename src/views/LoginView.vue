@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="mt-5">
-                                <v-btn :loading="isLoading" @click="login" block size="large" color="primary-color" variant="flat"  class="!tw-text-white">
+                                <v-btn :disabled="isLoading || !cookiesCleared" :loading="isLoading || !cookiesCleared" @click="login" block size="large" color="primary-color" variant="flat"  class="!tw-text-white disabled:!tw-bg-gray-200">
                                     <span class="text-capitalize text-white">Login</span>
                                 </v-btn>
                             </div>
@@ -67,6 +67,7 @@ export default {
         return {
             localUrl,
             isLoading: false,
+            cookiesCleared: false,
             error: {
                 active: false,
                 message: ''
@@ -192,6 +193,11 @@ export default {
         // .then(res => {
         //     console.log(res.data);
         // })
+        User.clear()
+        .then(() => {
+            this.cookiesCleared = true;
+        })
+        // document.cookie = "";
     }
 
 }

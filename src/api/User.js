@@ -79,6 +79,11 @@ class User {
         return Api.get('api/auth/logout')
     }
 
+    async clear() {
+        await Csrf.getCookie();
+        return Api.get('api/auth/clear')
+    }
+
 
     async permession() {
         await Csrf.getCookie();
