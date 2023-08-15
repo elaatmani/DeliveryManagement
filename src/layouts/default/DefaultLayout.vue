@@ -47,6 +47,7 @@ export default {
             fetching: null,
             delay: 60000,
             showScrollUpButton: false,
+            firstFetch: false,
             // delay: 6000,
         }
     },
@@ -166,12 +167,14 @@ export default {
             );
         },
         fetchNewOrders() {
-            if(this.salesFetched) {
+            if(this.salesFetched || !this.firstFetch) {
                 const ids = this.sales.map(s => s.id);
-                Sale.getNewOrders(ids)
+                return Sale.getNewOrders(ids)
                 .then(res => {
                     if(res.data.code == 'SUCCESS') {
                         const newSales = res.data.data.orders;
+                        const count = res.data.data.count;
+                            this.$store.dispatch('sale/setCount', count);
                         if(newSales.length > 0) {
                             this.$store.dispatch('sale/addSales', newSales);
                             this.$alert({
@@ -179,11 +182,27 @@ export default {
                                 title: newSales.length + ' New orders has been added'
                             })
                         }
+
+                        this.firstFetch = true;
                     }
                 })
             }
             // .catch(this.$handleApiError)
-        }
+        },
+
+        getSales() {
+        this.isLoaded = false
+        return Sale.all().then(
+          res => {
+            if (res?.data.code == "SUCCESS") {
+              const sales = res.data.data.orders
+              this.$store.dispatch('sale/setSales', sales)
+              this.$store.dispatch('sale/setFetched', true)
+              this.isLoaded = true
+            }
+          }
+        ).catch(this.$handleApiError)
+      },
     },
 
     mounted() {
@@ -191,6 +210,13 @@ export default {
         // !this.subscribed && this.subscribe();
 
         if(this.user.role == 'admin') {
+            this.fetchNewOrders()
+            .finally(() => {
+                if(this.$can('access_to_sales')) {
+                    this.getSales();
+                }
+            })
+
             // this.fetching = setInterval(this.sync_sheets, this.delay);
             this.fetching = setInterval(this.fetchNewOrders, this.delay);
         }

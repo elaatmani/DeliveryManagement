@@ -5,6 +5,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import SaleListView from '@/views/sale/SaleListView'
 import SaleExpidationView from '@/views/sale/SaleExpidationView'
 import SaleShippedView from '@/views/sale/SaleShippedView'
+import AdminSales from '@/views/newsales/AdminSales'
 
 
 
@@ -27,6 +28,17 @@ export default
                 meta: {
                     module: 'sale',
                     subModule: 'sale/list',
+                    title: 'Sales List',
+                    gate: 'show_all_sales'
+                }
+            },
+            { 
+                name: 'sale/newlist',
+                path: 'new',
+                component: AdminSales,
+                meta: {
+                    module: 'sale',
+                    subModule: 'sale/newlist',
                     title: 'Sales List',
                     gate: 'show_all_sales'
                 }

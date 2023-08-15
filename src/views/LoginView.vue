@@ -197,7 +197,6 @@ export default {
         .then(() => {
             this.cookiesCleared = true;
         })
-        // document.cookie = "";
     }
 
 }

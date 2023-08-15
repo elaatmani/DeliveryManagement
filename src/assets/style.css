@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'cairo';
+    src: url('./font/Cairo/Cairo-VariableFont_slnt,wght.ttf') format('truetype-variations');
+  }
+  

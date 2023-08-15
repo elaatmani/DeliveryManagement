@@ -396,9 +396,9 @@ import { getPrice } from '@/helpers/methods'
         },
 
         mounted() {
-            if(!this.isLoaded) {
-                this.getSales();
-            }
+            // if(!this.isLoaded) {
+            //     this.getSales();
+            // }
         }
     }
 </script>

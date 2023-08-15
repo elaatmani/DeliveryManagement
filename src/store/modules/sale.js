@@ -2,7 +2,8 @@
 
 let initialState = {
     fetched: false,
-    sales: []
+    sales: [],
+    count: 0
 }
 
 export default {
@@ -13,12 +14,17 @@ export default {
 
     getters: {
         sales: (state) => state.sales,
+        count: (state) => state.count,
         fetched: (state) => state.fetched
     },
 
     mutations: {
         SET_SALES: (state, payload) => {
             state.sales = payload
+        },
+
+        SET_COUNT: (state, payload) => {
+            state.count = payload
         },
 
         SET_FETCHED: (state, payload) => {
@@ -149,6 +155,10 @@ export default {
     actions: {
         setSales: ({ commit }, payload) => {
             commit('SET_SALES', payload)
+        },
+
+        setCount: ({ commit }, payload) => {
+            commit('SET_COUNT', payload)
         },
 
         setFetched: ({ commit }, payload) => {

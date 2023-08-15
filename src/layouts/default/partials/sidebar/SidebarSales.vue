@@ -39,8 +39,8 @@
       <!-- /Item Title -->
 
       <div class="tw-w-fit tw-h-[24px] tw-flex tw-items-center tw-justify-center tw-px-1 tw-bg-orange-500 tw-text-sm tw-text-white tw-rounded tw-ml-2">
-        <v-icon v-if="!isLoaded" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
-        <p v-if="isLoaded" class="tw-text-xs">{{ sales.length }}</p>
+        <v-icon v-if="!isLoaded && false" color="white" class="tw-animate-spin" size="x-small">mdi-loading</v-icon>
+        <p v-if="isLoaded || true" class="tw-text-xs">{{ count }}</p>
       </div>
 
       <v-spacer></v-spacer>
@@ -75,7 +75,6 @@
 
 <script>
 import { localUrl } from '@/config/config'
-import Sale from '@/api/Sale';
 
 export default {
   props: [],
@@ -102,6 +101,13 @@ export default {
                 subModule: 'sale/list',
                 gate: 'show_all_sales',
                 to: '/sales'
+            },
+            {
+                id: 4,
+                title: 'New Sales list',
+                subModule: 'sale/newlist',
+                gate: 'show_all_sales',
+                to: '/sales/new'
             },
             {
                 id: 2,
@@ -141,19 +147,7 @@ export default {
     
       return this.link.to === this.$route.path 
     },
-    getSales() {
-        this.isLoaded = false
-        return Sale.all().then(
-          res => {
-            if (res?.data.code == "SUCCESS") {
-              const sales = res.data.data.orders
-              this.$store.dispatch('sale/setSales', sales)
-              this.$store.dispatch('sale/setFetched', true)
-              this.isLoaded = true
-            }
-          }
-        ).catch(this.$handleApiError)
-      },
+    
   },
 
   computed: {
@@ -164,6 +158,10 @@ export default {
     sales() {
         return this.$store.getters['sale/sales']
       },
+
+      count() {
+        return this.$store.getters['sale/count'];
+      }
   },
 
   watch: {
@@ -174,9 +172,7 @@ export default {
 
   mounted() {
     this.isActive = this.isLinkActive();
-    if(this.$can(this.link.gate)) {
-      this.getSales();
-    }
+    
   }
 };
 </script>
