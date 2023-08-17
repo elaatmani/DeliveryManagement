@@ -15,6 +15,7 @@ import warehouse from './routes/warehouse'
 import factorisation from './routes/factorisation'
 import sheet from './routes/sheet'
 import followup from './routes/followup'
+import dashboard from './routes/dashboard'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -23,6 +24,7 @@ import TestView from '@/views/TestView'
 const routes = [
   auth,
   main,
+  dashboard,
   product,
   user,
   sale,

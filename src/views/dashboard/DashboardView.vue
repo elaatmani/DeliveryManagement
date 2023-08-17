@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="exists">
     <component :is="dashboard"></component>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             localUrl,
+            exists: false
         }
     },
     computed: {
@@ -36,8 +37,23 @@ export default {
         },
         
     },
+    methods: {
+        check() {
+            switch (this.user.role) {
+            case 'admin':
+                this.$router.push({name: 'dashboards/admin'})
+            break;
+        
+            default:
+                this.exists = true;
+            break;
+        }
+        }
+    },
+
     mounted() {
-        console.log(this.user);
+        // this.check();
+        this.exists = true
     }
 
 }

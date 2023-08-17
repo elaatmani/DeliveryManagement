@@ -3,9 +3,9 @@ import Csrf from './Csrf'
 
 class Admin {
 
-    async statistics() {
+    async statistics(filters) {
         await Csrf.getCookie();
-        return Api.post('api/v1/admin/statistics');
+        return Api.post('api/v1/admin/statistics', filters);
     }
 
     async paginate(url = '/', options) {

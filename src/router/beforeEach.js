@@ -7,7 +7,8 @@ export default function (to) {
     document.title = to.meta?.title + ' | Vldo Shop'
     // return true
 
-    console.log(to);
+    console.log(to)
+    // const user = store.getters['user/user']
     
     // handle if user is not logged
     if (!store.getters['user/isLoggedIn']) {
@@ -17,6 +18,7 @@ export default function (to) {
 
         return { name: 'login' }
     }
+
 
     // Update user's last action
     User.online();
@@ -28,6 +30,10 @@ export default function (to) {
 
     const { gate: permission } = to.meta;
     const permissions = store.getters['user/permissions'];
+
+    // if(to.name.startsWith('dashboards/')) {
+    //     return true;
+    // }
 
     if(permission === 'all') {
         return true
