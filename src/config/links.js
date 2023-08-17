@@ -78,60 +78,19 @@ export const links = [
         ]
     },
 
-    {
-        id: 3,
-        module: 'track',
-        title: 'Tracking',
-        hasChildren: true,
-        gate: 'none', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-radar'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Deliveries',
-                subModule: 'track/delivery',
-                gate: 'none',
-                to: '/tracking/delivery'
-            },
-        ]
-    },
+ 
 
     {
         id: 4,
         module: 'sale',
         title: 'Sales',
-        hasChildren: true,
+        hasChildren: false,
         gate: 'access_to_sales', 
+        to : '/sales',
         icon: {
             type: 'icon',
             value: 'mdi-sale'
         },
-        children: [
-            {
-                id: 1,
-                title: 'Sales list',
-                subModule: 'sale/list',
-                gate: 'show_all_sales',
-                to: '/sales'
-            },
-            {
-                id: 2,
-                title: 'Expidation',
-                subModule: 'sale/expidation',
-                gate: 'show_all_expidations',
-                to: '/sales/expidation'
-            },
-            {
-                id: 3,
-                title: 'Shipping',
-                subModule: 'sale/shipping',
-                gate: 'show_all_expidations',
-                to: '/sales/shipping'
-            }
-        ]
     },
 
     {
@@ -156,151 +115,7 @@ export const links = [
     },
 
 
-    {
-        id: 6,
-        module: 'order',
-        title: 'Orders',
-        hasChildren: true,
-        gate: 'access_to_orders', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-barcode-scan'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Order',
-                subModule: 'order/show',
-                gate: 'show_all_orders',
-                to: '/order'
-            },
-            {
-                id: 2,
-                title: 'My Orders',
-                subModule: 'order/list',
-                gate: 'show_all_orders',
-                to: '/orders'
-            },
-            {
-                id: 3,
-                title: 'Confirmed Orders',
-                subModule: 'order/confirmed',
-                gate: 'show_all_orders',
-                to: '/orders/confirmed'
-            },
-        ]
-    },
 
-    {
-        id: 7,
-        module: 'delivery',
-        title: 'Orders',
-        hasChildren: true,
-        gate: 'access_to_delivery', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-bike'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Orders List',
-                subModule: 'delivery/list',
-                gate: 'show_all_deliveries',
-                to: '/deliveries'
-            },
-            {
-                id: 2,
-                title: 'Orders Delivered',
-                subModule: 'delivery/delivered',
-                gate: 'show_all_deliveries',
-                to: '/delivered'
-            },
-        ]
-    },
-
-    {
-        id: 8,
-        module: 'inventory',
-        title: 'Inventory',
-        hasChildren: true,
-        gate: 'access_to_inventory', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-warehouse'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Inventory State',
-                gate: 'show_all_inventory_states',
-                subModule: 'inventory/state',
-                to: '/inventories'
-            },
-            {
-                id: 2,
-                title: 'Inventory Movements',
-                gate: 'show_all_inventory_movements',
-                subModule: 'inventory/movements',
-                to: '/inventories/movements'
-            },
-            {
-                id: 4,
-                title: 'Add Movement',
-                gate: 'create_inventory_movement',
-                subModule: 'inventory/add',
-                to: '/inventories/add'
-            }
-        ]
-    },
-
-    {
-        id: 9,
-        module: 'shop',
-        title: 'Shop',
-        hasChildren: true,
-        gate: 'access_to_shop', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-store'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Shop List',
-                gate: 'show_all_shops',
-                subModule: 'shop/list',
-                to: '/shops'
-            },
-            {
-                id: 2,
-                title: 'Add Shop',
-                gate: 'create_shop',
-                subModule: 'shop/add',
-                to: '/shops/add'
-            }
-        ]
-    },
-    {
-        id: 10,
-        module: 'warehouse',
-        title: 'Warehouses',
-        hasChildren: true,
-        gate: 'access_to_warehouse', 
-        icon: {
-            type: 'icon',
-            value: 'mdi-home-group'
-        },
-        children: [
-            {
-                id: 1,
-                title: 'Warehouses list',
-                subModule: 'warehouse/list',
-                gate: 'show_all_warehouses',
-                to: '/warehouses'
-            },
-        ]
-    },
     {
         id: 11,
         title: 'Users',
@@ -355,20 +170,6 @@ export const links = [
             value: 'mdi-note-text-outline'
         }
     },
-
-    {
-        id: 12,
-        title: 'Settings',
-        module: 'settings',
-        to: '/settings',
-        gate: 'access_to_account',
-        hasChildren: false,
-        icon: {
-            type: 'svg',
-            value: 'assets/img/icons/settings.svg'
-        }
-    },
-
     {
         id: 10,
         title: 'Test',
@@ -381,29 +182,6 @@ export const links = [
             value: 'mdi-hammer-wrench'
         }
     },
-    {
-        id: 13,
-        title: 'Orders',
-        module: 'followup',
-        to: '/followup',
-        hasChildren: false,
-        gate: 'follow_up_orders',
-        icon: {
-            type: 'icon',
-            value: 'mdi-package-variant-closed'
-        }
-    },
 
-    // {
-    //     id: 10,
-    //     title: 'Test',
-    //     module: 'test',
-    //     to: '/test',
-    //     hasChildren: false,
-    //     gate: 'all',
-    //     icon: {
-    //         type: 'icon',
-    //         value: 'mdi-hammer-wrench'
-    //     }
-    // }
+
 ]

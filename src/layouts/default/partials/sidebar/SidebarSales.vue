@@ -89,35 +89,14 @@ export default {
         id: 4,
         module: 'sale',
         title: 'Sales',
-        hasChildren: true,
+        hasChildren: false,
         gate: 'access_to_sales', 
+        to:'/sales',
         icon: {
             type: 'icon',
             value: 'mdi-sale'
         },
-        children: [
-            {
-                id: 1,
-                title: 'Sales list',
-                subModule: 'sale/list',
-                gate: 'show_all_sales',
-                to: '/sales'
-            },
-            {
-                id: 2,
-                title: 'Expidation',
-                subModule: 'sale/expidation',
-                gate: 'show_all_expidations',
-                to: '/sales/expidation'
-            },
-            {
-                id: 3,
-                title: 'Shipping',
-                subModule: 'sale/shipping',
-                gate: 'show_all_expidations',
-                to: '/sales/shipping'
-            }
-        ]
+        
     },
     }
   },
