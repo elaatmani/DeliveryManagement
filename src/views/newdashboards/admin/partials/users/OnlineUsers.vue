@@ -88,7 +88,7 @@ export default {
             return this.$store.getters["user/users"].filter(u => u.role_name != 'admin').sort((a, b) => !b.last_action ? -1 : moment(a.last_action).isAfter(b.last_action) ? -1 : 1);
         }
 
-        return this.$store.getters["user/users"].slice(0, 5).filter(u => u.role_name != 'admin').sort((a, b) => !b.last_action ? -1 : moment(a.last_action).isAfter(b.last_action) ? -1 : 1);
+        return this.$store.getters["user/users"].filter(u => u.role_name != 'admin').sort((a, b) => !b.last_action ? -1 : moment(a.last_action).isAfter(b.last_action) ? -1 : 1).slice(0, 8);
     },
   },
 
