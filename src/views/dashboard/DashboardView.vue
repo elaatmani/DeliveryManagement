@@ -52,8 +52,8 @@ export default {
     },
 
     mounted() {
-        // this.check();
-        this.exists = true
+        this.check();
+        // this.exists = true
     }
 
 }

@@ -5,56 +5,9 @@
     </div>
     <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-p-1">
 
-      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
-        <label
-          for="countries"
-          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
-          >Created From</label
-        >
-        <input
-          v-model="filters.created_from"
-          type="date"
-          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-        />
-      </div>
+      <DateFilter v-model:from="filters.created_from" v-model:to="filters.created_to" label="Created" />
 
-      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
-        <label
-          for="countries"
-          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
-          >Created To</label
-        >
-        <input
-          v-model="filters.created_to"
-          type="date"
-          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-        />
-      </div>
-      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
-        <label
-          for="countries"
-          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
-          >Dropped From</label
-        >
-        <input
-          v-model="filters.dropped_from"
-          type="date"
-          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-        />
-      </div>
-
-      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
-        <label
-          for="countries"
-          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
-          >Dropped To</label
-        >
-        <input
-          v-model="filters.dropped_to"
-          type="date"
-          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-        />
-      </div>
+      <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
       <AgentFilter :filters="filters" @update="f => filters = f" />
 
@@ -151,9 +104,10 @@ import { confirmations, deliveryStatus } from "@/config/orders";
 import AffectationFilter from '@/views/newdashboards/admin/partials/filters/components/AffectationFilter'
 import AgentFilter from '@/views/newdashboards/admin/partials/filters/components/AgentFilter'
 import ProductFilter from '@/views/newdashboards/admin/partials/filters/components/ProductFilter'
+import DateFilter from '@/views/newdashboards/admin/partials/filters/components/DateFilter'
 
 export default {
-  components: { AffectationFilter, AgentFilter, ProductFilter },
+  components: { AffectationFilter, AgentFilter, ProductFilter, DateFilter },
 
   props: {},
 

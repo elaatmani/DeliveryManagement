@@ -5,7 +5,9 @@
 
         <IndexFilters @update="f => filters= f" @filter="handleFilter" />
 
-        <IndexStatistics :statistics="statistics" :fetching="fetching" />
+        <IndexRevenue :statistics="statistics" :fetching="fetching" />
+        
+        <IndexStatistics :statistics="statistics" :fetching="fetching" />        
 
     </div>
   </div>
@@ -15,10 +17,12 @@
 import OnlineUsers from '@/views/newdashboards/admin/partials/users/OnlineUsers';
 import IndexStatistics from '@/views/newdashboards/admin/partials/statistics/IndexStatistics'
 import IndexFilters from '@/views/newdashboards/admin/partials/filters/IndexFilters'
+import IndexRevenue from '@/views/newdashboards/admin/partials/statistics/IndexRevenue'
+
 import Admin from '@/api/Admin';
 
 export default {
-    components: { OnlineUsers, IndexStatistics, IndexFilters },
+    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue },
 
     data() {
         return {

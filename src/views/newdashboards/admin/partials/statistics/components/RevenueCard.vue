@@ -44,6 +44,12 @@ export default {
             required: true,
             default: '#6b7280'
         }
+    },
+
+    methods: {
+        format() {
+            Intl.NumberFormat('en', {style: 'currency', currency: 'USD', notation: 'compact', compactDisplay: 'long'});
+        }
     }
 }
 </script>

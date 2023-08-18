@@ -77,7 +77,8 @@
           class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
         >
           <option value="all" selected>All</option>
-          <option :class="[c.text, c.value == null && '!tw-text-green-500']" :value="c.value" class="tw-capitalize" v-for="c in confirmations" :key="c.id">
+          <!-- <option value="" class="tw-text-green-500">New</option> -->
+          <option :class="[c.text, c.value == null && '!tw-text-green-500']" :value="!c.value ? '' : c.value" class="tw-capitalize" v-for="c in confirmations" :key="c.value">
             {{ c.name }}
           </option>
         </select>
@@ -98,7 +99,7 @@
           class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
         >
           <option value="all"  selected>All</option>
-          <option :class="[d.text, d.value == null && '!tw-text-gray-500']" :value="d.value" class="tw-capitalize" v-for="d in deliveries" :key="d.id">
+          <option :class="[d.text, d.value == null && '!tw-text-gray-500']" :value="!d.value ? '' : d.value" class="tw-capitalize" v-for="d in deliveries" :key="d.id">
             {{ d.name }}
           </option>
         </select>
