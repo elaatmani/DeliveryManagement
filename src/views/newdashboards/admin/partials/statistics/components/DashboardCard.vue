@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :style="{borderColor: color}" class="tw-bg-white tw-border tw-border-solid tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-fit">
+    <div :style="{borderColor: color}" class="tw-bg-white tw-border tw-border-dashed tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-fit">
         <div class="tw-flex tw-justify-between">
             <div>
             <div class="tw-flex tw-w-full tw-items-center tw-gap-2">

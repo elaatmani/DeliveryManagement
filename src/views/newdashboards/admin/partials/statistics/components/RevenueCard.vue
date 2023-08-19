@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :style="{borderColor: color}" class="tw-bg-white tw-border tw-border-solid tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-fit">
+    <div class="tw-bg-white tw-border tw-border-solid tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-fit">
         <div class="tw-flex tw-justify-between">
             <div>
             <div class="tw-flex tw-w-full tw-items-center tw-gap-2">
@@ -9,7 +9,7 @@
             </div>
             <div class="tw-flex tw-w-full tw-items-center tw-gap-2">
                 <span class="tw-text-gray-700 tw-text-xl tw-font-bold">
-                    {{ value }}
+                    {{ format(value) }}
                 </span>
             </div>
             </div>
@@ -47,8 +47,8 @@ export default {
     },
 
     methods: {
-        format() {
-            Intl.NumberFormat('en', {style: 'currency', currency: 'USD', notation: 'compact', compactDisplay: 'long'});
+        format(n) {
+            return Intl.NumberFormat('en', {style: 'currency', currency: 'USD', notation: 'compact', compactDisplay: 'long'}).format(n);
         }
     }
 }
