@@ -3,12 +3,10 @@ import Admin from "@/api/Admin";
 
 const success = (app, res) => {
     app.$alert({
-        title: 'Updated Successfully',
+        title: 'Created Successfully',
         type: 'success'
     });
-
-    const order = res.data.order;
-    app.$emit('update', order);
+    console.log(res);
     app.isLoading = false;
     app.cancel();
     app.errors  = {};
@@ -27,10 +25,10 @@ const failed = (app, res) => {
     app.isLoading = false;
 }
 
-export const update = (app, order) => {
+export const create = (app, order) => {
     app.isLoading = true;
     app.errors  = {};
-    Admin.update(order.id, order)
+    Admin.create(order)
     .then((res) => success(app, res.data))
     .catch((err) => failed(app, err.response.data))
     .finally(() => app.isLoading = false);

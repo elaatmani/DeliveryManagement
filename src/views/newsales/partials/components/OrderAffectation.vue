@@ -91,7 +91,7 @@ export default {
         'item.confirmation': {
             deep: true,
             handler() {
-                // this.$emit('update:affectation', null)
+                this.$emit('update:affectation', null)
             }
         },
         'item.items': {

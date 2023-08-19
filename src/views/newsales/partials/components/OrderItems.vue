@@ -1,11 +1,24 @@
 <template>
   <div>
-    <p
-      v-if="!items.length"
-      class="tw-col-span-12 tw-rounded-lg tw-text-center tw-p-5 tw-text-gray-700 tw-bg-gray-50"
-    >
-      No Order items
-    </p>
+    <div v-if="!items.length">
+
+      <p
+        
+        class="tw-col-span-12 tw-rounded-lg tw-text-center tw-p-5 tw-text-gray-700 tw-bg-gray-50"
+      >
+        No Order items
+      </p>
+
+      <div class="tw-flex tw-justify-end tw-items-center tw-py-3">
+        <button @click="addItem" class="tw-flex tw-items-center tw-justify-center  tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-400 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="tw-w-5 tw-h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+
+            <span>Add Item</span>
+        </button>
+      </div>
+    </div>
 
     <div v-if="items.length" class="md:tw-col-span-12 tw-col-span-12">
       <div class="tw-max-w-full tw-overflow-auto">
@@ -109,7 +122,6 @@ export default {
     },
     productsFetched: {
       required: true,
-      default: false
     },
     order: {
       required: true,
@@ -141,10 +153,10 @@ export default {
 
     addItem() {
       // Find the last item in the list
-      const lastItem = this.items.length > 0 ? this.items[this.items.length - 1] : 1;
+      const lastItem = this.items.length > 0 ? this.items[this.items.length - 1].id : 1;
 
       // Get the last ID and add 1 to it
-      const newId = lastItem ? lastItem.id + 1 : 1;
+      const newId = lastItem ? lastItem + 1 : 1;
 
       const item = {
         id: newId,

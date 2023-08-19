@@ -205,41 +205,6 @@
                 <OrderAffectation :item="itemCopy" v-model:error="errors.affectation" v-model:affectation="itemCopy.affectation" />
               </div>
 
-              <div class="tw-col-span-1">
-                <label
-                  class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
-                  >Delivery</label
-                >
-                <div class="tw-relative">
-                  <select
-                    v-model="itemCopy.delivery"
-                    @change="errors.delivery = null"
-                  :class="[errors.delivery && '!tw-border-red-400']"
-                    class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-                  >
-                    <option :value="c.value" :class="[c.text, !c.value && '!tw-text-green-500']" v-for="c in deliveryStatus" :key="c.id">{{ c.name }}</option>
-                  </select>
-                  <div
-                    class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"
-                  >
-                    <svg
-                      class="tw-fill-current tw-h-4 tw-w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <label
-                  v-if="errors.delivery"
-                  class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
-                  >{{ errors.delivery }}</label
-                >
-              </div>
-
               <div class="md:tw-col-span-1 tw-col-span-2">
                 <label
                   class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
@@ -291,7 +256,7 @@
             Cancel
           </button>
           <button
-            @click="handleUpdate"
+            @click="handleCreate"
             :disabled="isLoading"
             class="tw-py-2 tw-px-7 tw-flex tw-items-center  tw-rounded tw-text-sm tw-bg-orange-400 tw-border tw-border-solid tw-border-tansparent hover:tw-border-orange-600 dark:tw-border-neutral-900 dark:hover:tw-border-orange-500 hover:tw-bg-orange-500/80 dark:hover:tw-bg-orange-400 tw-duration-300 tw-text-white"
           >
@@ -301,7 +266,7 @@
               :class="[isLoading && '!tw-max-w-[50px] !tw-mr-3']"
               >mdi-loading</v-icon
             >
-            <span>Update</span>
+            <span>Create</span>
           </button>
         </div>
       </div>
@@ -311,8 +276,8 @@
 
 <script>
 import { validate } from "../lib/validate";
-import { update } from "../lib/update";
-import { confirmations, upsells, deliveryStatus } from '@/config/orders';
+import { create } from "../lib/create";
+import { confirmations, upsells } from '@/config/orders';
 import OrderItems from '@/views/newsales/partials/components/OrderItems'
 import OrderAffectation from '@/views/newsales/partials/components/OrderAffectation'
 import Product from '@/api/Product';
@@ -324,15 +289,11 @@ export default {
     visible: {
       required: true,
     },
-    item: {
-      required: true,
-    },
   },
 
   data() {
     return {
       confirmations: confirmations,
-      deliveryStatus: deliveryStatus,
       upsells: upsells,
       isLoading: false,
 
@@ -360,10 +321,11 @@ export default {
   },
 
   methods: {
-    handleUpdate() {
+    handleCreate() {
       const validated = validate(this, this.itemCopy);
       if (!validated) return false;
-      update(this, this.itemCopy);
+
+      create(this, this.itemCopy);
     },
 
     cancel() {
@@ -388,7 +350,11 @@ export default {
   },
 
   mounted() {
-    this.itemCopy = JSON.parse(JSON.stringify(this.item));
+    this.itemCopy = {
+        confirmation: null,
+        upsell: null,
+        items: []
+    }
     this.getProducts();
   
   }
