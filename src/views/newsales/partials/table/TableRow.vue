@@ -22,7 +22,7 @@
         class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
         <div>
-          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]">
+          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[150px] tw-truncate">
             {{ item.fullname }}
           </h2>
         </div>
@@ -40,7 +40,7 @@
         class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
         <div>
-          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]">
+          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[120px] tw-truncate">
             {{ item.phone }}
           </h2>
         </div>
