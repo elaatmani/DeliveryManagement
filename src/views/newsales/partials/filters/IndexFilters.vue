@@ -126,7 +126,7 @@
       class="tw-grid tw-duration-300 tw-transition-all"
     >
       <div class="tw-overflow-hidden tw-col-span-1">
-          <IndexExport />
+          <IndexExport :filters="filters" />
       </div>
     </div>
 

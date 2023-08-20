@@ -22,6 +22,11 @@ class Admin {
         await Csrf.getCookie();
         return Api.post('api/v1/admin/orders/create', order);
     }
+
+    async export(options = {}) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/admin/orders/export', options);
+    }
 }
 
 

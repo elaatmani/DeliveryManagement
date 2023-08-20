@@ -56,8 +56,8 @@
         @fresh="paginateOrders"
         :loading="fetching"
         :statistics="statistics"
-        active-statistics
         :per-page="per_page"
+        active-statistics
       />
 
       <div>

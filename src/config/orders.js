@@ -13,7 +13,6 @@ export const confirmations = [
     { id: 10, value: 'reporter' , name: 'Reported', text: 'tw-text-teal-500', textLight: 'tw-text-teal-800', bg: 'tw-bg-teal-500/10', bgLight: 'tw-bg-teal-100', ring: 'tw-ring-teal-300' },
     { id: 11, value: 'annuler' , name: 'Canceled', text: 'tw-text-red-500', textLight: 'tw-text-red-800', bg: 'tw-bg-red-500/10', bgLight: 'tw-bg-red-100', ring: 'tw-ring-red-300' },
     { id: 12, value: 'wrong-number' , name: 'Wrong number', text: 'tw-text-fuchsia-500', textLight: 'tw-text-fuchsia-800', bg: 'tw-bg-fuchsia-500/10', bgLight: 'tw-bg-fuchsia-100', ring: 'tw-ring-fuchsia-300' },
-    // { id: 13, value: 'livre' , name: 'Livré', text: 'tw-text-green-500', bg: 'tw-bg-green-500/10', ring: 'tw-ring-green-300' },
     { id: 13, value: 'confirmer' , name: 'Confirmed', text: 'tw-text-green-500', textLight: 'tw-text-green-800', bg: 'tw-bg-green-500/10', bgLight: 'tw-bg-green-100', ring: 'tw-ring-green-300' },
     { id: 14, value: 'double' , name: 'Double', text: 'tw-text-purple-500', textLight: 'tw-text-purple-800', bg: 'tw-bg-purple-500/10', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
 ]
