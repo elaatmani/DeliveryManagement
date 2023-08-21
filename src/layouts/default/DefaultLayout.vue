@@ -210,7 +210,7 @@ export default {
         // !this.subscribed && this.subscribe();
 
         if(this.user.role == 'admin') {
-            // this.fetchNewOrders()
+            this.fetchNewOrders()
             // .finally(() => {
             //     if(this.$can('access_to_sales')) {
             //         this.getSales();
