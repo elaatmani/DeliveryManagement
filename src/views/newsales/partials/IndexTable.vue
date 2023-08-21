@@ -8,6 +8,9 @@
                     <table class="tw-min-w-full tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700">
                         <thead class="tw-bg-gray-50 darkx:tw-bg-gray-800">
                             <tr>
+                                <th scope="col" class="rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                        
+                                </th>
                                 <th scope="col" class="tw-py-3.5 tw-px-4 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                         <span>ID</span>
                                 </th>
@@ -53,7 +56,7 @@
                         </thead>
 
                         <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
-                          <TableRow @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
+                          <TableRow v-model:selected="selectedOrders" @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
                         </tbody>
 
                         <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
@@ -70,13 +73,13 @@
                           <tr>
                             <td
                               v-if="false"
-                              colspan="9"
+                              colspan="11"
                               class="tw-px-4 tw-py-4 tw-text-sm tw-font-medium tw-whitespace-nowrap"
                             >
                               <loading />
                             </td>
                             <td
-                              colspan="9"
+                              colspan="11"
                             >
                             
                               <div role="status" class="tw-w-full tw-p-4 tw-space-y-4  tw-border-gray-200 tw-divide-y tw-divide-gray-200 tw-rounded tw-shadow tw-animate-pulse dark:tw-divide-gray-300 md:tw-p-6 dark:tw-border-gray-300">
@@ -149,8 +152,26 @@ export default {
     lastPage: {
       type: Number,
       default: 1
+    },
+    selected: {
+      required: true
     }
   },
+
+  computed: {
+    selectedOrders:{
+      get() {
+        return this.selected
+      },
+      set(v) {
+        this.$emit('update:selected', v)
+      }
+    }
+  },
+
+  mounted() {
+    console.log(this.selected);
+  }
 
 
 }

@@ -62,6 +62,7 @@
 
       <div>
         <IndexTable
+          v-model:selected="selected"
           @update="handleItemUpdate"
           @page-change="handlePageChange"
           @sort-order="handleSortOrderChange"
@@ -99,6 +100,7 @@ export default {
       create_popup: false,
 
       items: [],
+      selected: [],
 
       statistics: null,
 
@@ -129,6 +131,7 @@ export default {
         upsell: "all",
         confirmation: "all",
         delivery: "all",
+        reported_first: false,
       },
     };
   },
@@ -187,6 +190,7 @@ export default {
         upsell: "all",
         confirmation: "all",
         delivery: "all",
+        reported_first: false,
       };
 
       this.handlePageChange(1);
