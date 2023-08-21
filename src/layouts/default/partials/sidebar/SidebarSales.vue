@@ -95,13 +95,13 @@ export default {
             value: 'mdi-sale'
         },
         children: [
-            {
-                id: 1,
-                title: 'Sales list',
-                subModule: 'sale/list',
-                gate: 'show_all_sales',
-                to: '/sales'
-            },
+            // {
+            //     id: 1,
+            //     title: 'Sales list',
+            //     subModule: 'sale/list',
+            //     gate: 'show_all_sales',
+            //     to: '/sales'
+            // },
             {
                 id: 4,
                 title: 'New Sales list',

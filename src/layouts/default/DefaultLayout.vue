@@ -210,15 +210,15 @@ export default {
         // !this.subscribed && this.subscribe();
 
         if(this.user.role == 'admin') {
-            this.fetchNewOrders()
-            .finally(() => {
-                if(this.$can('access_to_sales')) {
-                    this.getSales();
-                }
-            })
+            // this.fetchNewOrders()
+            // .finally(() => {
+            //     if(this.$can('access_to_sales')) {
+            //         this.getSales();
+            //     }
+            // })
 
             // this.fetching = setInterval(this.sync_sheets, this.delay);
-            this.fetching = setInterval(this.fetchNewOrders, this.delay);
+            // this.fetching = setInterval(this.fetchNewOrders, this.delay);
         }
         if(this.$can('show_all_products')) {
             this.getProducts();

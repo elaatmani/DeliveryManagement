@@ -130,6 +130,7 @@ export default {
         agente_id: "all",
         upsell: "all",
         confirmation: "all",
+        product_id: "all",
         delivery: "all",
         reported_first: false,
       },
@@ -189,6 +190,7 @@ export default {
         agente_id: "all",
         upsell: "all",
         confirmation: "all",
+        product_id: "all",
         delivery: "all",
         reported_first: false,
       };

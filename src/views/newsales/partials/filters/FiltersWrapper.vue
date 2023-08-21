@@ -63,6 +63,8 @@
         />
       </div>
 
+      <ProductFilter :filters="filters" @update="f => $emit('update', f)" />
+
       <AgentFilter :filters="filters" @update="f => $emit('update', f)" />
 
       <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
@@ -160,9 +162,10 @@ import { confirmations, deliveryStatus } from "@/config/orders";
 import DateFilter from '@/views/newsales/partials/filters/DateFilter'
 import AffectationFilter from '@/views/newsales/partials/filters/AffectationFilter'
 import AgentFilter from '@/views/newsales/partials/filters/AgentFilter'
+import ProductFilter from '@/views/newsales/partials/filters/ProductFilter'
 
 export default {
-  components: { DateFilter, AffectationFilter, AgentFilter },
+  components: { DateFilter, AffectationFilter, AgentFilter, ProductFilter },
 
   props: {
     filters: {
