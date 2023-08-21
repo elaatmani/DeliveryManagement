@@ -17,6 +17,11 @@ class FollowUp {
         await Csrf.getCookie();
         return Api.post('api/v1/followup/orders/' + id + '/update', order);
     }
+
+    async create(order) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/followup/orders/create', order);
+    }
 }
 
 

@@ -54,7 +54,9 @@
     </div>
 </section>
 
-      
+      <div v-if="create_popup">
+        <CreatePopup v-model:visible="create_popup" />
+      </div>
 
   </div>
 </template>
@@ -62,15 +64,17 @@
 <script>
 import FollowUp from '@/api/FollowUp';
 import IndexTable from '@/views/followup/partials/IndexTable'
-import IndexFilters from '@/views/followup/partials/filters/IndexFilters'
+import IndexFilters from '@/views/followup/partials/filters/IndexFilters';
+import CreatePopup from '@/views/followup/partials/components/CreatePopup'
 import { getPath } from '@/helpers/methods';
 
 export default {
-  components: { IndexTable, IndexFilters },
+  components: { IndexTable, IndexFilters, CreatePopup },
 
   data() {
     return {
       fetching: true,
+      create_popup: false,
 
       items: [],
 
