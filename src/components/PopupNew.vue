@@ -10,7 +10,7 @@
                 "
                 >
                 
-                <v-dialog-transition>
+                <v-fade-transition>
                         <div
                             v-if="showContent"
                             @click.self="resolve(false)"
@@ -19,7 +19,7 @@
                             <slot></slot>
                             
                         </div>
-                </v-dialog-transition>
+                </v-fade-transition>
 
                 <div
                     @click="resolve(false)"
@@ -32,6 +32,7 @@
                     tw-h-full
                     
                     tw-backdrop-blur-sm
+                    tw-bg-black/20
                     tw-opacity-0
                     "
                     :class="{'!tw-opacity-100': visible}"
@@ -81,14 +82,14 @@ export default {
     computed: {},
 
     mounted() {
-        document.body.style.overflow = 'hidden'
-        document.body.style.height = '100vh'
+        // document.body.style.overflow = 'hidden'
+        // document.body.style.height = '100vh'
         this.showContent = this.visible;
     },
 
     unmounted() {
-        document.body.style.height = 'none'
-        document.body.style.overflow = 'visible'
+        // document.body.style.height = 'none'
+        // document.body.style.overflow = 'visible'
     }
 };
 </script>

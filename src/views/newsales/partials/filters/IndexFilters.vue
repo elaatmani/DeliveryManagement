@@ -91,7 +91,8 @@
             <option :value="20">20</option>
             <option :value="50">50</option>
             <option :value="100">100</option>
-            <option :value="200">200</option>
+            <option :value="250">250</option>
+            <option :value="500">500</option>
           </select>
           <div
             class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"

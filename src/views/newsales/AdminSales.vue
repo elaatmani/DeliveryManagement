@@ -31,6 +31,7 @@
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
+              width="16" height="16" 
               stroke="currentColor"
               class="tw-w-5 tw-h-5"
             >
@@ -59,6 +60,15 @@
         :per-page="per_page"
         active-statistics
       />
+
+      <div
+        :class="[selected.length > 0 ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
+        class="tw-grid tw-duration-300 tw-transition-all"
+      >
+        <div class="tw-overflow-hidden tw-col-span-1">
+            <BulkActions @update="handleBulkUpdate" v-model:selected="selected" />
+        </div>
+      </div>
 
       <div>
         <IndexTable
@@ -90,9 +100,10 @@ import IndexTable from "@/views/newsales/partials/IndexTable";
 import IndexFilters from "@/views/newsales/partials/filters/IndexFilters";
 import { getPath } from "@/helpers/methods";
 import CreatePopup from '@/views/newsales/partials/components/CreatePopup'
+import BulkActions from "./partials/components/bulk/BulkActions.vue";
 
 export default {
-  components: { IndexTable, IndexFilters, CreatePopup },
+  components: { IndexTable, IndexFilters, CreatePopup, BulkActions },
 
   data() {
     return {
@@ -198,9 +209,10 @@ export default {
       this.handlePageChange(1);
     },
 
-    handleNext() {},
-
-    handlePrev() {},
+    handleBulkUpdate() {
+      this.selected = [];
+      this.paginateOrders();
+    },
 
     handleItemUpdate(item) {
       this.items = this.items.map((i) => (i.id == item.id ? item : i));
