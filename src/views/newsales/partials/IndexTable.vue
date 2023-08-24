@@ -4,7 +4,7 @@
     <div class="tw-flex tw-flex-col">
         <div class="tw-overflow-x-auto">
             <div class="tw-inline-block tw-min-w-full tw-align-middle">
-                <div class="tw-overflow-hidden tw-border tw-border-gray-200 darkx:tw-border-gray-700 md:tw-rounded-lg">
+                <div class="tw-border tw-overflow-auto tw-border-gray-200 darkx:tw-border-gray-700 md:tw-rounded-lg">
                     <table class="tw-min-w-full tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700">
                         <thead class="tw-bg-gray-50 darkx:tw-bg-gray-800">
                             <tr>
@@ -59,25 +59,25 @@
                                         </svg>
                                     </button>
                                 </th>
-                                <th scope="col" class="tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Client
                                 </th>
-                                <th scope="col" class="tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     City
                                 </th>
-                                <th scope="col" class="tw-px-6  !tw-w-5 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-px-3  !tw-w-5 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Phone
                                 </th>
-                                <th scope="col" class="tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Product
                                 </th>
-                                <th scope="col" class="tw-w-10 tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-w-10 tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Confirmation
                                 </th>
-                                <th scope="col" class="tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Affected
                                 </th>
-                                <th scope="col" class="tw-w-10 tw-px-6 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th scope="col" class="tw-w-10 tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Delivery
                                 </th>
 
@@ -90,7 +90,7 @@
                         </thead>
 
                         <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
-                          <TableRow v-model:selected="selectedOrders" @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
+                          <TableRow v-model:selected="selectedOrders" :deliveries="deliveries" @update="newItem => $emit('update', newItem)" :all="all" :index="index" v-for="(item, index, all) in items" :key="item.id" :item="item" />
                         </tbody>
 
                         <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
@@ -189,7 +189,10 @@ export default {
     },
     selected: {
       required: true
-    }
+    },
+    deliveries: {
+      required: true
+    },
   },
 
   data() {

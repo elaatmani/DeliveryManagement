@@ -137,7 +137,12 @@
       </div>
     </td>
     <td class="tw-px-2 tw-py-2 tw-text-sm tw-whitespace-nowrap">
+
       <div>
+        <TableRowAffectation @update="(newItem) => $emit('update', newItem)" :deliveries="deliveries" :item="item" />
+      </div>
+
+      <div v-if="false">
         <div
           v-if="!!item.delivery_fullname"
           :class="['tw-text-emerald-800', 'tw-bg-emerald-100']"
@@ -184,15 +189,25 @@
 import moment from "moment";
 import { confirmations, deliveryStatus } from "@/config/orders";
 import TableActions from "@/views/newsales/partials/table/TableActions";
+import TableRowAffectation from "./TableRowAffectation.vue";
 
 export default {
-  components: { TableActions },
+  components: { TableActions, TableRowAffectation },
 
   props: {
     item: {
       required: true,
     },
     selected: {
+      required: true
+    },
+    deliveries: {
+      required: true
+    },
+    all: {
+      required: true
+    },
+    index: {
       required: true
     }
   },

@@ -84,6 +84,7 @@
           :total="total"
           :current-page="current_page"
           :items="items"
+          :deliveries="deliveries"
         />
       </div>
 
@@ -101,6 +102,7 @@ import IndexFilters from "@/views/newsales/partials/filters/IndexFilters";
 import { getPath } from "@/helpers/methods";
 import CreatePopup from '@/views/newsales/partials/components/CreatePopup'
 import BulkActions from "./partials/components/bulk/BulkActions.vue";
+import User from '@/api/User';
 
 export default {
   components: { IndexTable, IndexFilters, CreatePopup, BulkActions },
@@ -112,6 +114,10 @@ export default {
 
       items: [],
       selected: [],
+      deliveries: {
+        fetched: false,
+        items: []
+      },
 
       statistics: null,
 
@@ -224,7 +230,6 @@ export default {
     },
 
     handlePerPageChange(n) {
-      console.log(n);
       this.per_page = parseInt(n);
       this.handlePageChange(1);
     },
@@ -233,10 +238,24 @@ export default {
       this.sort_order = this.sort_order == "asc" ? "desc" : "asc";
       this.paginateOrders();
     },
+
+    getDeliveries() {
+        this.deliveries.fetched = false;
+        User.allDeliveries()
+        .then((res) => {
+            if (res?.data.code == "SUCCESS") {
+            this.deliveries.items = res.data.data.deliveries;
+
+            this.deliveries.fetched = true;
+            }
+        })
+        .catch(this.$handleApiError);
+    },
   },
 
   mounted() {
     this.paginateOrders();
+    this.getDeliveries();
   },
 };
 </script>
