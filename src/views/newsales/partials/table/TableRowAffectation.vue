@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="item.confirmation == 'confirmer'">
     <div v-if="deliveries.fetched" v-click-outside="handleClickOutside" class="tw-relative tw-inline-block tw-text-left">
         <div>
             <button 

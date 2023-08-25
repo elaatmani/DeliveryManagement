@@ -3,9 +3,11 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
 import SaleListView from '@/views/sale/SaleListView'
-import SaleExpidationView from '@/views/sale/SaleExpidationView'
-import SaleShippedView from '@/views/sale/SaleShippedView'
+// import SaleExpidationView from '@/views/sale/SaleExpidationView'
+// import SaleShippedView from '@/views/sale/SaleShippedView'
 import AdminSales from '@/views/newsales/AdminSales'
+import DispatchedSales from '@/views/newsales/DispatchedSales'
+import ShippedSales from '@/views/newsales/ShippedSales'
 
 
 
@@ -46,7 +48,7 @@ export default
             { 
                 name: 'sale/expidation',
                 path: 'expidation',
-                component: SaleExpidationView,
+                component: DispatchedSales,
                 meta: {
                     module: 'sale',
                     subModule: 'sale/expidation',
@@ -57,7 +59,7 @@ export default
             { 
                 name: 'sale/shipping',
                 path: 'shipping',
-                component: SaleShippedView,
+                component: ShippedSales,
                 meta: {
                     module: 'sale',
                     subModule: 'sale/shipping',

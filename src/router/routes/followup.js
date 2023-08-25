@@ -1,5 +1,6 @@
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
-import FollowUpOrders from '@/views/followup/FollowUpOrders'
+// import FollowUpOrders from '@/views/followup/FollowUpOrders'
+import FollowUpOrders from '@/views/newfollowup/FollowUpOrders'
 
 
 export default {

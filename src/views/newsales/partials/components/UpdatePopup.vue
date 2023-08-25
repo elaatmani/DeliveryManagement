@@ -278,8 +278,12 @@
                 </div>
               </div>
 
+                <div class="tw-col-span-2" v-if="products_fetched">
+                    <ProductOffersTable :products="products" :item="itemCopy" />
+                </div>
               </div>
         </div>
+
 
         <div
           class="tw-flex tw-justify-end tw-items-center tw-p-4 tw-gap-3 dark:tw-bg-neutral-900 tw-bg-gray-50 tw-border-t tw-border-solid"
@@ -315,10 +319,11 @@ import { update } from "../lib/update";
 import { confirmations, upsells, deliveryStatus } from '@/config/orders';
 import OrderItems from '@/views/newsales/partials/components/OrderItems'
 import OrderAffectation from '@/views/newsales/partials/components/OrderAffectation'
+import ProductOffersTable from "./ProductOffersTable.vue";
 import Product from '@/api/Product';
 
 export default {
-  components: { OrderItems, OrderAffectation },
+  components: { OrderItems, OrderAffectation, ProductOffersTable },
 
   props: {
     visible: {
