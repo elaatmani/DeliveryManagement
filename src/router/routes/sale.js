@@ -8,6 +8,7 @@ import SaleListView from '@/views/sale/SaleListView'
 import AdminSales from '@/views/newsales/AdminSales'
 import DispatchedSales from '@/views/newsales/DispatchedSales'
 import ShippedSales from '@/views/newsales/ShippedSales'
+import FollowUpSales from '@/views/newsales/FollowUpSales'
 
 
 
@@ -64,6 +65,17 @@ export default
                     module: 'sale',
                     subModule: 'sale/shipping',
                     title: 'Shipping',
+                    gate: 'show_all_expidations'
+                }
+            },
+            { 
+                name: 'sale/followup',
+                path: 'followup',
+                component: FollowUpSales,
+                meta: {
+                    module: 'followup',
+                    subModule: 'sale/followup',
+                    title: 'Follow Up',
                     gate: 'show_all_expidations'
                 }
             },

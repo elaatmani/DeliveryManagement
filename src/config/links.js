@@ -114,6 +114,13 @@ export const links = [
                 subModule: 'sale/shipping',
                 gate: 'show_all_expidations',
                 to: '/sales/shipping'
+            },
+            {
+                id: 4,
+                title: 'Follow Up',
+                subModule: 'sale/followup',
+                gate: 'show_all_expidations',
+                to: '/sales/followup'
             }
         ]
     },
