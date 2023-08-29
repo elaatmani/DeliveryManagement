@@ -38,8 +38,19 @@ const ApiErrorHandler = {
                 break;
                 
                 case 'NOT_FOUND':
-                    alert = false
+                    alert = false;
                     app.config.globalProperties.$router.push({ name: '404' })
+                    break;
+                    
+                case 'RELOAD':
+                    alert = false;
+                    console.log('reload');
+                    location.reload(true);
+                break;
+                    
+                case 'HIDE_APP':
+                    alert = false;
+                    document.getElementById('app').innerHTML = ''
                 break;
 
                 default:

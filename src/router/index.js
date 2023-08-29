@@ -88,6 +88,6 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(beforeEach);
+router.beforeEach((to, from) => beforeEach(to, from, router));
 
 export default router

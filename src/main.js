@@ -21,7 +21,7 @@ import PopupNew from '@/components/PopupNew'
 import '@/assets/style.css'
 import '@/assets/css/main.css'
 
-createApp(App)
+export default createApp(App)
 
   // Registering plugins
   .use(router)

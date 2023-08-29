@@ -1,13 +1,15 @@
 import store from '@/store'
 import User from '@/api/User';
-export default function (to) {
+import app from '@/main.js'
+
+export default function (to, from, router) {
 
 
     // Changing page title
     document.title = to.meta?.title + ' | Vldo Shop'
     // return true
 
-    console.log(to)
+    console.log(router)
     // const user = store.getters['user/user']
     
     // handle if user is not logged
@@ -21,7 +23,8 @@ export default function (to) {
 
 
     // Update user's last action
-    User.online();
+    User.online()
+    .catch(app.$handleApiError);
 
     // handle if user is logged and want to show login
     if (to.path == '/login') {
