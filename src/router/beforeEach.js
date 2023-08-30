@@ -2,14 +2,13 @@ import store from '@/store'
 import User from '@/api/User';
 import app from '@/main.js'
 
+/* eslint-disable*/
 export default function (to, from, router) {
-
 
     // Changing page title
     document.title = to.meta?.title + ' | Vldo Shop'
     // return true
 
-    console.log(router)
     // const user = store.getters['user/user']
     
     // handle if user is not logged
@@ -53,7 +52,6 @@ export default function (to, from, router) {
 
 
     return true
-    /* eslint-disable*/
 
     // check if route doesn't have a gate (permission)
     if (!permission || to.path === '/404') {

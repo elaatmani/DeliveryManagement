@@ -377,7 +377,6 @@ export default {
         User.deliveries()
         .then(
             res => {
-                console.log(res.data.data);
                 this.$store.dispatch('user/setDeliveries', res.data.data);
             },
             this.$handleApiError

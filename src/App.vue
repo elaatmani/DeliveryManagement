@@ -6,18 +6,27 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { version } from '@/config/config.js';
 
 export default {
   name: 'App',
 
   data: () => ({
-    theme: 'light'
+    theme: 'light',
+    version: version
   }),
 
   methods: {
     ...mapActions('user', ['setIsLoggedIn', 'setPermissions']),
 
+    checkVersion() {
+      const v = localStorage.getItem('app_version');
 
+      if(v != this.version) {
+        localStorage.setItem('app_version', this.version);
+        location.reload(true);
+      }
+    }
   },
 
   mounted() {

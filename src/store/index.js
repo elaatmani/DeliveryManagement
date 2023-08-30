@@ -5,6 +5,7 @@ import product from './modules/product'
 import sale from './modules/sale'
 import order from './modules/order'
 import inventory from './modules/inventory'
+import agent from './modules/agent'
 import city from './modules/city'
 import shop from './modules/shop'
 import notification from './modules/notification'
@@ -30,6 +31,7 @@ export default createStore({
     order,
     inventory,
     city,
+    agent,
     shop,
     notification,
     warehouse,

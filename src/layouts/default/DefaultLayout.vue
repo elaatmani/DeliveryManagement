@@ -205,23 +205,27 @@ export default {
       },
     },
 
+    watch: {
+        $route() {
+            if(this.user.role == 'agente') {
+                this.$store.dispatch('agent/refreshCounts');
+            }
+        }
+    },
+
     mounted() {
         this.getCities();
         // !this.subscribed && this.subscribe();
 
         if(this.user.role == 'admin') {
             this.fetchNewOrders()
-            // .finally(() => {
-            //     if(this.$can('access_to_sales')) {
-            //         this.getSales();
-            //     }
-            // })
-
-            // this.fetching = setInterval(this.sync_sheets, this.delay);
-            // this.fetching = setInterval(this.fetchNewOrders, this.delay);
         }
         if(this.$can('show_all_products')) {
             this.getProducts();
+        }
+
+        if(this.user.role == 'agente') {
+            this.$store.dispatch('agent/refreshCounts')
         }
         
         this.getUsers();

@@ -43,6 +43,9 @@ export default {
             case 'admin':
                 this.$router.push({name: 'dashboards/admin'})
             break;
+            case 'agente':
+                this.$router.push({name: 'dashboards/agent'})
+            break;
         
             default:
                 this.exists = true;
@@ -51,7 +54,7 @@ export default {
         }
     },
 
-    mounted() {
+    created() {
         this.check();
         // this.exists = true
     }
