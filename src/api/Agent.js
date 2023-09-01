@@ -37,6 +37,11 @@ class Agent {
         await Csrf.getCookie();
         return Api.get('api/orders/add');
     }
+
+    async create(order) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/agent/orders/create', order);
+    }
 }
 
 

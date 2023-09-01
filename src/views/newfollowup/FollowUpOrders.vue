@@ -62,6 +62,7 @@
       />
 
       <div
+        v-if="false"
         :class="[selected.length > 0 ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
         class="tw-grid tw-duration-300 tw-transition-all"
       >

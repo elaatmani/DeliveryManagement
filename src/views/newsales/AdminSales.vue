@@ -17,7 +17,7 @@
           </div>
 
           <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">
-            These orders have needs to reconfirmed.
+            List of all orders.
           </p>
         </div>
 
