@@ -243,6 +243,10 @@
                 </div>
               </div>
 
+              <div class="tw-col-span-2" v-if="products_fetched">
+                    <ProductOffersTable :products="products" :item="itemCopy" />
+                </div>
+
               </div>
         </div>
 
@@ -281,9 +285,11 @@ import { confirmations, upsells } from '@/config/orders';
 import OrderItems from '@/views/newagent/partials/components/OrderItems'
 import OrderAffectation from '@/views/newagent/partials/components/OrderAffectation'
 import Product from '@/api/Product';
+import ProductOffersTable from "./ProductOffersTable.vue";
+
 
 export default {
-  components: { OrderItems, OrderAffectation },
+  components: { OrderItems, OrderAffectation, ProductOffersTable },
 
   props: {
     visible: {

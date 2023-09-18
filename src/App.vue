@@ -1,6 +1,6 @@
 <template>
   <v-app class="my-application">
-      <router-view/>
+      <router-view />
   </v-app>
 </template>
 
@@ -30,6 +30,7 @@ export default {
   },
 
   mounted() {
+    this.checkVersion();
   },
 }
 </script>
