@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 import DashboardView from '@/views/newdashboards/admin/DashboardView'
 import AgentDashboard from '@/views/newdashboards/agent/AgentDashboard'
+import DashboardAnalytics from '@/views/dashboardanalytics/DashboardAnalytics'
 
 export default 
     {
@@ -26,6 +27,17 @@ export default
                     subModule: 'dashboards/admin',
                     title: 'Dashboard',
                     gate: 'all'
+                }
+            },
+            { 
+                name: 'dashboards/analytics',
+                path: '/analytics',
+                component: DashboardAnalytics,
+                meta: {
+                    module: 'dashboards',
+                    subModule: 'dashboards/analytics',
+                    title: 'Dashboard Analytics',
+                    gate: 'show_all_ads'
                 }
             },
             { 

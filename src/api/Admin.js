@@ -8,6 +8,11 @@ class Admin {
         return Api.post('api/v1/admin/statistics', filters);
     }
 
+    async analytics(filters) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/admin/analytics', filters);
+    }
+    
     async paginate(url = '/', options) {
         await Csrf.getCookie();
         return Api.post('api/v1/admin/orders' + url, options);

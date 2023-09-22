@@ -25,13 +25,28 @@ export const links = [
         id: 1,
         title: 'Dashboard',
         module: 'dashboard',
-        to: '/',
-        hasChildren: false,
+        hasChildren: true,
         gate: 'all',
         icon: {
             type: 'svg',
             value: 'assets/img/icons/dashboard.svg'
-        }
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Dashboard',
+                subModule: 'dashboard/dashboard',
+                gate: 'all',
+                to: '/'
+            },
+            {
+                id: 2,
+                title: 'Dashboard Analytics',
+                subModule: 'dashboard/analytics',
+                gate: 'show_all_ads',
+                to: '/analytics'
+            },
+        ]
     },
 
     {
@@ -146,7 +161,27 @@ export const links = [
         ]
     },
 
-
+    {
+        id: 20,
+        module: 'ads',
+        title: 'Ads',
+        hasChildren: true,
+        gate: 'access_to_ads', 
+        icon: {
+            type: 'icon',
+            value: 'mdi-google-ads'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Ads list',
+                subModule: 'ads/list',
+                gate: 'show_all_factorisations',
+                to: '/ads'
+            },
+        ]
+    },
+    
     {
         id: 6,
         module: 'order',
