@@ -102,7 +102,7 @@
     >
 
       <div class="tw-overflow-hidden tw-col-span-1">
-        <FiltersWrapper @filter="$emit('filter')" :filters="filters" @update="v => $emit('update:filters', v)" />
+        <FiltersWrapper @clear="$emit('clear')" @filter="$emit('filter')" :filters="filters" @update="v => $emit('update:filters', v)" />
       </div>
 
     </div>

@@ -30,6 +30,7 @@
       v-model:search="search" 
       v-model:filters="filters"
       @filter="handlePerPageChange(per_page)" 
+      @clear="handleClearFilters"
       @per-page-change="handlePerPageChange" 
       @fresh="paginateOrders" 
       :loading="fetching" 
@@ -94,7 +95,13 @@ export default {
       current_page: 1,
 
       filters: {
-        created_at: 'all',
+        created_from: null,
+        created_to: null,
+        ads_from: null,
+        ads_to: null,
+        marketer_id:'all',
+        product_id:'all',
+        source:'all'
       }
 
     }
@@ -126,6 +133,19 @@ export default {
       })
     },
 
+    handleClearFilters() {
+      this.filters = {
+        created_from: null,
+        created_to: null,
+        ads_from: null,
+        ads_to: null,
+        marketer_id:'all',
+        product_id:'all',
+        source:'all'
+      };
+
+      this.handlePageChange(1);
+    },
     setOptions(options) {
       this.items = (options.data)
       this.first_page_url = getPath(options.first_page_url)

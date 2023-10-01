@@ -26,7 +26,6 @@ const failed = (app, res) => {
 }
 
 export const create = (app, items) => {
-    console.log(items);
     app.isLoading = true;
     app.errors  = {};
     Ads.create(items)
