@@ -14,26 +14,24 @@
           <div
             class="tw-grid tw-gap-6 tw-gap-y-5 tw-grid-cols-1 md:tw-grid-cols-2"
           >
-            <div class="tw-col-span-2 md:tw-col-span-1">
-              <label
-                class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
-                >Source</label
-              >
-              <input
-                v-model="items.source"
-                @input="errors.source = null"
-                type="text"
-                :class="[errors.source && '!tw-border-red-400']"
-                class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
-                placeholder="John"
-                required
-              />
-              <label
-                v-if="errors.source"
-                class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
-                >{{ errors.source }}</label
-              >
-            </div>
+
+          <div class="tw-col-span-2 md:tw-col-span-1">
+            <label
+              class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Source</label>
+            <select @change="errors.source = null" v-model="items.source"
+              :class="[errors.source && '!tw-border-red-400']" required
+              class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500">
+              <option :value="0" selected>Choose Source</option>
+              <option v-for="s in sources" :key="s" :value="s" class="tw-capitalize">
+                {{ s }}
+              </option>
+            </select>
+            <label v-if="errors.source"
+              class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white">{{
+              errors.source }}</label>
+          </div>
+
+           
 
             <div class="tw-col-span-2 md:tw-col-span-1">
               <label
@@ -79,6 +77,31 @@
                 v-if="errors.product_id"
                 class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
                 >{{ errors.product_id }}</label
+              >
+            </div>
+
+            <div class="tw-col-span-2 md:tw-col-span-1">
+              <label
+                class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
+                >Marketer</label
+              >
+              <select
+                @change="errors.marketer_id = null"
+                v-model="items.marketer_id"
+                :class="[errors.marketer_id && '!tw-border-red-400']"
+                required
+
+                class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
+              >
+                <option :value="0" selected>Choose Marketer</option>
+                <option v-for="m in marketers" :key="m.id" :value="m.id">
+                  {{ m.firstname }} {{ m.lastname }}
+                </option>
+              </select>
+              <label
+                v-if="errors.marketer_id"
+                class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
+                >{{ errors.marketer_id }}</label
               >
             </div>
 
@@ -172,6 +195,7 @@ export default {
 
       isLoading: false,
 
+      sources: ['facebook', 'Google', 'tiktok','snapchat'],
       products_fetched: null,
       products: null,
       items:{
@@ -192,6 +216,15 @@ export default {
   },
 
   computed: {
+     users() {
+        return this.$store.getters['user/users']
+      },
+      marketers() {
+        return this.fetched ? this.users.filter(u => u.role.name == 'marketer') : []
+      },
+      fetched() {
+        return this.$store.getters['user/fetched']
+      },
   },
 
   methods: {
