@@ -3,6 +3,12 @@ import Csrf from './Csrf'
 
 class Product {
 
+    async paginate(url = '/', options) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/products' + url, options);
+    }
+
+
     async create(product) {
         await Csrf.getCookie();
         ApiForm;

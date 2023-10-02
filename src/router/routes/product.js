@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 // Views
 import ProductListView from '@/views/product/ProductListView'
+import IndexProducts from '@/views/newproducts/IndexProducts'
 import AddProductView from '@/views/product/AddProductView'
 import UpdateProductView from '@/views/product/UpdateProductView'
 import ShowProductView from '@/views/product/ShowProductView'
@@ -27,6 +28,17 @@ export default
                 meta: {
                     module: 'product',
                     subModule: 'product/list',
+                    title: 'Products List',
+                    gate: 'show_all_products'
+                }
+            },
+            { 
+                name: 'product/newlist',
+                path: '/newproducts',
+                component: IndexProducts,
+                meta: {
+                    module: 'product',
+                    subModule: 'product/newlist',
                     title: 'Products List',
                     gate: 'show_all_products'
                 }

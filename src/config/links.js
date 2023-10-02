@@ -69,6 +69,13 @@ export const links = [
             },
             {
                 id: 2,
+                title: 'New Products List',
+                subModule: 'product/newlist',
+                gate: 'show_all_products',
+                to: '/newproducts'
+            },
+            {
+                id: 3,
                 title: 'Add Product',
                 subModule: 'product/add',
                 gate: 'create_product',
