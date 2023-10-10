@@ -2,10 +2,8 @@
   <tr
     class="hover:tw-bg-gray-50"
     :class="[
-      item.reported_diff != null &&
-        item.confirmation == 'reporter' &&
-        item.reported_diff <= 0 &&
-        ' !tw-shadow-sm !tw-border !tw-border-emerald-300',
+      availableQuantity <= 0 &&
+        '!tw-border !tw-border-red-300 tw-bg-red-100 hover:tw-bg-red-100',
     ]"
   >
     <td class="tw-p-2 tw-py-1 tw-text-sm tw-font-medium tw-whitespace-nowrap">
@@ -55,7 +53,7 @@
     <td class="tw-px-4 tw-py-1 tw-text-sm tw-font-medium tw-whitespace-nowrap">
       <div>
         <h2
-          class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[150px] tw-truncate"
+          class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[70px] tw-truncate"
         >
           {{ item.ref }}
         </h2>
@@ -64,7 +62,7 @@
     <td class="tw-px-4 tw-py-1 tw-text-sm tw-font-medium tw-whitespace-nowrap">
       <div>
         <h2
-          class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[150px] tw-truncate"
+          class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo] tw-max-w-[350px] tw-truncate"
         >
           {{ item.name }}
         </h2>
@@ -110,9 +108,9 @@
       </div>
     </td>
     <td class="tw-px-4 tw-py-1 tw-text-sm tw-font-medium tw-whitespace-nowrap">
-      <div class="tw-flex tw-font-medium tw-text-blue-600 tw-rounded  tw-items-center">
+      <div :class="{'tw-text-red-500 !tw-font-bold': availableQuantity <= 0}" class="tw-flex tw-font-medium tw-text-blue-600 tw-rounded  tw-items-center">
         <h2
-          class="tw-font-medium tw-p-1 tw-w-fit darkx:tw-text-white tw-font-[cairo] tw-max-w-[120px] tw-truncate"
+          class="tw-p-1 tw-w-fit darkx:tw-text-white tw-font-[cairo] tw-max-w-[120px] tw-truncate"
         >
           {{ availableQuantity }}
         </h2>

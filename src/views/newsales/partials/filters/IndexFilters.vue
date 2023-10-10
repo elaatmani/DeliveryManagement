@@ -111,14 +111,25 @@
       </div>
 
       <div class="tw-relative tw-flex tw-items-center tw-mt-4 md:tw-mt-0">
-
+        <select 
+        :value="searchByField"
+          @input="e => $emit('update:search-by-field', e.target.value)"
+        class="tw-block !tw-w-fit tw-px-2 tw-py-1.5 tw-border-r-0 tw-rounded-r-none tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70  darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40">
+          <option value="all">All</option>
+          <option value="id">ID</option>
+          <option value="fullname">Fullname</option>
+          <option value="phone">Phone</option>
+          <option value="adresse">Address</option>
+          <option value="city">City</option>
+          <option value="note">Note</option>
+        </select>
         <input
           type="text"
           placeholder="Search"
           :value="search"
           @input="e => $emit('update:search', e.target.value)"
           @keyup.enter="$emit('filter')"
-          class="tw-block tw-w-full tw-py-1.5  tw-pl-5 tw-text-gray-700 tw-bg-white tw-border tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pr-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40"
+          class="tw-block tw-w-full tw-py-1.5 tw-pl-5 tw-text-gray-700 tw-bg-white tw-border tw-rounded-l-none tw-border-solid tw-border-gray-200 tw-rounded-lg md:tw-w-80 placeholder-gray-400/70 tw-pr-11 rtl:tw-pr-11 rtl:tw-pl-5 darkx:tw-bg-gray-900 darkx:tw-text-gray-300 darkx:tw-border-gray-600 focus:tw-border-orange-400 darkx:focus:tw-border-orange-300 focus:tw-ring-orange-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-40"
         />
 
         <button @click="$emit('filter')" class="tw-absolute tw-right-0 tw-px-2 tw-py-1 tw-w-[38px] tw-h-[36px] tw-border-solid tw-rounded-r-lg  tw-border-l tw-text-orange-500/80  tw-border-orange-500/20 hover:tw-bg-orange-500/10 hover:tw-border-orange-500/70 tw-duration-300 tw-flex tw-items-center tw-justify-center">
@@ -185,6 +196,9 @@ export default {
     },
     search: {
       default: ''
+    },
+    searchByField: {
+      default: 'all'
     },
     filters: {
       required: true,

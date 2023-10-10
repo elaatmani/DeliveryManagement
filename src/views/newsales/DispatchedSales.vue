@@ -50,6 +50,7 @@
         <!-- Filters Section -->
         <IndexFilters
           v-model:search="search"
+          v-model:search-by-field="searchByField"
           v-model:filters="filters"
           @filter="handlePerPageChange(per_page)"
           @clear="handleClearFilters"
@@ -132,6 +133,7 @@
         totalOrders: 0,
         links: null,
         search: "",
+        searchByField: "all",
   
         sort_by: "created_at",
         sort_order: "desc",
@@ -163,6 +165,7 @@
           per_page: this.per_page,
           current_page: this.current_page,
           search: this.search,
+          searchByField: this.searchByField,
           filters: this.filters,
         };
   

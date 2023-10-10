@@ -124,6 +124,34 @@
         </select>
       </div>
 
+      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
+        <label
+          for="countries"
+          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
+          >Delivered From</label
+        >
+        <input
+          :value="filters.delivered_from"
+          type="date"
+          @change="e => $emit('update', {...filters, delivered_from: e.target.value})"
+          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
+        />
+      </div>
+
+      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
+        <label
+          for="countries"
+          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
+          >Delivered To</label
+        >
+        <input
+          :value="filters.delivered_to"
+          type="date"
+          @change="e => $emit('update', {...filters, delivered_to: e.target.value})"
+          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
+        />
+      </div>
+
       <div  class="tw-col-span-12 tw-flex tw-justify-end tw-gap-2">
         <button
         @click="$emit('clear')"
@@ -153,6 +181,8 @@
           <span>Filter</span>
         </button>
       </div>
+
+
     </div>
   </div>
 </template>

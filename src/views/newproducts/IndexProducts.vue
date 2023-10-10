@@ -99,7 +99,7 @@ export default {
       search: "",
 
       sort_by: "created_at",
-      sort_order: "desc",
+      sort_order: "asc",
       per_page: 10,
       current_page: 1,
 

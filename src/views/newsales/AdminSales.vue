@@ -50,6 +50,7 @@
       <!-- Filters Section -->
       <IndexFilters
         v-model:search="search"
+        v-model:search-by-field="searchByField"
         v-model:filters="filters"
         @filter="handlePerPageChange(per_page)"
         @clear="handleClearFilters"
@@ -132,6 +133,7 @@ export default {
       totalOrders: 0,
       links: null,
       search: "",
+      searchByField: "all",
 
       sort_by: "created_at",
       sort_order: "desc",
@@ -143,6 +145,8 @@ export default {
         created_to: null,
         dropped_from: null,
         dropped_to: null,
+        delivered_from: null,
+        delivered_to: null,
         affectation: "all",
         agente_id: "all",
         upsell: "all",
@@ -163,6 +167,7 @@ export default {
         per_page: this.per_page,
         current_page: this.current_page,
         search: this.search,
+        searchByField: this.searchByField,
         filters: this.filters,
       };
 
@@ -203,6 +208,8 @@ export default {
         created_to: null,
         dropped_from: null,
         dropped_to: null,
+        delivered_from: null,
+        delivered_to: null,
         affectation: "all",
         agente_id: "all",
         upsell: "all",
