@@ -277,7 +277,7 @@
   <script>
   import { validate } from "../lib/validate";
   import { create } from "../lib/create";
-  import { confirmations, upsells } from '@/config/orders';
+  import { addOrderConfirmations, upsells } from '@/config/orders';
   import OrderItems from '@/views/newagent/partials/components/OrderItems'
   import OrderAffectation from '@/views/newagent/partials/components/OrderAffectation'
   import Product from '@/api/Product';
@@ -293,7 +293,7 @@
   
     data() {
       return {
-        confirmations: confirmations,
+        confirmations: addOrderConfirmations,
         upsells: upsells,
         isLoading: false,
   

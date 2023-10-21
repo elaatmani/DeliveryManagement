@@ -11,9 +11,9 @@
         </div>
 
         <div class="tw-bg-white tw-p-4">
-            <div v-if="!isLoaded">
-                <loading />
-            </div>
+          <div v-if="!isLoaded">
+            <loading />
+          </div>
           <div v-if="isLoaded" class="tw-p-5">
             <v-timeline density="compact" side="end">
               <v-timeline-item
@@ -48,11 +48,26 @@
                       label
                       size="small"
                     >
-                      {{ (!event.historique && ['affectation', 'delivery', 'confirmation'].includes(event.type)) ? event.type == 'confirmation' ? 'New' : 'Select' : event.historique }}
+                      {{
+                        !event.historique &&
+                        ["affectation", "delivery", "confirmation"].includes(
+                          event.type
+                        )
+                          ? event.type == "confirmation"
+                            ? "New"
+                            : "Select"
+                          : event.historique
+                      }}
                     </v-chip>
                   </div>
-                  <div class="tw-text-sm tw-capitalize tw-text-gray-500 tw-flex tw-items-center tw-mt-2 tw-gap-2 tw-font-bold tw-font-['cairo']">
-                    <v-icon>mdi-account</v-icon><span>{{ event.users.firstname }} {{ event.users.lastname }}</span>
+                  <div
+                    class="tw-text-sm tw-capitalize tw-text-gray-500 tw-flex tw-items-center tw-mt-2 tw-gap-2 tw-font-bold tw-font-['cairo']"
+                  >
+                    <v-icon>mdi-account</v-icon
+                    ><span
+                      >{{ event.users.firstname }}
+                      {{ event.users.lastname }}</span
+                    >
                   </div>
                   <div
                     class="flex-shrink-0 tw-text-neutral-500 tw-flex tw-items-center tw-gap-2 tw-text-sm"
@@ -82,15 +97,26 @@
                     </v-chip>
                     <div>New Order Created</div>
                   </div>
-                  <div
-                    class="flex-shrink-0 tw-flex tw-items-center tw-gap-2 tw-text-sm"
-                  >
-                    <span>
-                      {{ item.created_at?.split("T")[0] }}
-                    </span>
-                    <span>
-                      {{ item.created_at?.split("T")[1].split(".")[0] }}
-                    </span>
+                  <div class="tw-flex tw-flex-col">
+                    <div
+                      class="tw-text-sm tw-capitalize tw-text-gray-500 tw-flex tw-items-center tw-mt-2 tw-gap-2 tw-font-bold tw-font-['cairo']"
+                    >
+                      <v-icon>mdi-account</v-icon
+                      ><span
+                        >{{ item.created_by.firstname }}
+                        {{ item.created_by.lastname }}</span
+                      >
+                    </div>
+                    <div
+                      class="flex-shrink-0 tw-text-neutral-500 tw-flex tw-items-center tw-gap-2 tw-text-sm"
+                    >
+                      <span>
+                        {{ item.created_at?.split("T")[0] }}
+                      </span>
+                      <span>
+                        {{ item.created_at?.split("T")[1].split(".")[0] }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </v-timeline-item>
@@ -137,8 +163,8 @@ export default {
 
   computed: {
     events() {
-        return [...this.allEvents].reverse()
-    }
+      return [...this.allEvents].reverse();
+    },
   },
 
   methods: {
@@ -157,15 +183,19 @@ export default {
         });
     },
     eventColor(type) {
-            let colors = {
-                'confirmation': 'primary-color',
-                'delivery': 'blue',
-                'upsell': 'purple',
-                'affectation': 'cyan'
-            }
+      let colors = {
+        confirmation: "primary-color",
+        delivery: "blue",
+        upsell: "purple",
+        affectation: "cyan",
+      };
 
-        return ['confirmation', 'delivery', 'upsell', 'affectation'].includes(type) ? colors[type] : 'primary-color'
-    }
+      return ["confirmation", "delivery", "upsell", "affectation"].includes(
+        type
+      )
+        ? colors[type]
+        : "primary-color";
+    },
   },
 
   mounted() {
@@ -174,5 +204,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

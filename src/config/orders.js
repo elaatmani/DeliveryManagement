@@ -17,6 +17,13 @@ export const confirmations = [
     { id: 14, value: 'double' , name: 'Double', text: 'tw-text-purple-500', textLight: 'tw-text-purple-800', bg: 'tw-bg-purple-500/10', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
 ]
 
+export const addOrderConfirmations = [
+    { id: 0, value: null , name: 'New', text: 'tw-text-white', textLight: 'tw-text-emerald-800', bg: 'tw-bg-green-500', bgLight: 'tw-bg-emerald-100', ring: 'tw-ring-green-300' },
+    { id: 1, value: 'change' , name: 'Change', text: 'tw-text-fuchsia-500', textLight: 'tw-text-fuchsia-800', bg: 'tw-bg-fuchsia-500/10', bgLight: 'tw-bg-fuchsia-100', ring: 'tw-ring-fuchsia-300' },
+    { id: 2, value: 'refund' , name: 'Refund', text: 'tw-text-rose-500', textLight: 'tw-text-rose-800', bg: 'tw-bg-rose-400/10', bgLight: 'tw-bg-rose-100', ring: 'tw-ring-rose-300' },
+    { id: 3, value: 'confirmer' , name: 'Confirmed', text: 'tw-text-green-500', textLight: 'tw-text-green-800', bg: 'tw-bg-green-500/10', bgLight: 'tw-bg-green-100', ring: 'tw-ring-green-300' },
+]
+
 export const confirmationsFollowup = [
     { id: 0, value: null , name: 'New', text: 'tw-text-white', textLight: 'tw-text-emerald-800', bg: 'tw-bg-green-500', bgLight: 'tw-bg-emerald-100', ring: 'tw-ring-green-300' },
     { id: 1, value: 'day-one-call-one' , name: 'No reply 1 / day1', text: 'tw-text-rose-500', textLight: 'tw-text-rose-700', bg: 'tw-bg-rose-200/10', bgLight: 'tw-bg-rose-100', ring: 'tw-ring-rose-200' },
