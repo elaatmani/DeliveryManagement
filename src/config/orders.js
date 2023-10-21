@@ -10,6 +10,8 @@ export const confirmations = [
     { id: 7, value: 'day-three-call-one' , name: 'No reply 1 / day3', text: 'tw-text-blue-500', textLight: 'tw-text-blue-700', bg: 'tw-bg-blue-200/10', bgLight: 'tw-bg-blue-100', ring: 'tw-ring-blue-200' },
     { id: 8, value: 'day-three-call-two' , name: 'No reply 2 / day3', text: 'tw-text-blue-500', textLight: 'tw-text-blue-800', bg: 'tw-bg-blue-400/10', bgLight: 'tw-bg-blue-100', ring: 'tw-ring-blue-300' },
     { id: 9, value: 'day-three-call-three' , name: 'No reply 3 / day3', text: 'tw-text-blue-500', textLight: 'tw-text-blue-900', bg: 'tw-bg-blue-600/10', bgLight: 'tw-bg-blue-100', ring: 'tw-ring-blue-400' },
+    { id: 16, value: 'change' , name: 'Change', text: 'tw-text-fuchsia-500', textLight: 'tw-text-fuchsia-800', bg: 'tw-bg-fuchsia-500/10', bgLight: 'tw-bg-fuchsia-100', ring: 'tw-ring-fuchsia-300' },
+    { id: 15, value: 'refund' , name: 'Refund', text: 'tw-text-rose-500', textLight: 'tw-text-rose-800', bg: 'tw-bg-rose-400/10', bgLight: 'tw-bg-rose-100', ring: 'tw-ring-rose-300' },
     { id: 10, value: 'reporter' , name: 'Reported', text: 'tw-text-teal-500', textLight: 'tw-text-teal-800', bg: 'tw-bg-teal-500/10', bgLight: 'tw-bg-teal-100', ring: 'tw-ring-teal-300' },
     { id: 11, value: 'annuler' , name: 'Canceled', text: 'tw-text-red-500', textLight: 'tw-text-red-800', bg: 'tw-bg-red-500/10', bgLight: 'tw-bg-red-100', ring: 'tw-ring-red-300' },
     { id: 12, value: 'wrong-number' , name: 'Wrong number', text: 'tw-text-fuchsia-500', textLight: 'tw-text-fuchsia-800', bg: 'tw-bg-fuchsia-500/10', bgLight: 'tw-bg-fuchsia-100', ring: 'tw-ring-fuchsia-300' },
