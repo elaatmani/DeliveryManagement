@@ -55,7 +55,7 @@
                 errors.product_id }}</label>
             </div>
 
-            <div class="tw-col-span-2 md:tw-col-span-1">
+            <div v-if="user.role == 'admin' " class="tw-col-span-2 md:tw-col-span-1">
               <label
                 class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Marketer </label>
               <select @change="errors.marketer_id = null" v-model="items.marketer_id"
@@ -155,7 +155,9 @@
       cities() {
         return this.$store.getters["city/cities"];
       },
-
+      user() {
+      return this.$store.getters["user/user"];
+      },
       users() {
         return this.$store.getters['user/users']
       },
