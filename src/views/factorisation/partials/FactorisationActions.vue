@@ -1,5 +1,22 @@
 <template>
   <div class="tw-flex tw-items-center tw-gap-1">
+
+    <v-btn
+      :href="serverUrl + 'api/export/factorisations/' + factorisation.factorisation_id"
+      class="mr-2 !tw-px-0 !tw-py-0"
+      min-height="25px"
+      min-width="30"
+      color="green"
+      variant="flat"
+      density="comfortable"
+      :ripple="false"
+      size="small"
+      target="_blank"
+    >
+      <v-icon color="white">mdi-microsoft-excel</v-icon>
+      <!-- <span class="text-white text-capitalize">Edit</span> -->
+    </v-btn>
+
     <v-btn
       @click="showUpdateCommentPopup = true"
       v-if="$can(`update_factorisation`)"
@@ -15,6 +32,7 @@
       <v-icon color="white">mdi-comment-text</v-icon>
       <!-- <span class="text-white text-capitalize">Edit</span> -->
     </v-btn>
+    
     <v-btn
       @click="showUpdatePopup = true"
       v-if="$can(`update_factorisation`)"
@@ -78,6 +96,7 @@
 import Factorisation from "@/api/Factorisation";
 import UpdateFactorisation from "./UpdateFactorisation";
 import UpdateComment from "./UpdateComment";
+import { serverUrl } from '@/config/config'
 // myVue.vue
 
 // your vue component
@@ -92,6 +111,7 @@ export default {
       isLoading: false,
       showUpdatePopup: false,
       showUpdateCommentPopup: false,
+      serverUrl
     };
   },
   methods: {
