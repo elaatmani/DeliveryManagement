@@ -42,6 +42,9 @@
                                 <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Amount
                                 </th>
+                                <th scope="col" class="tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                    Leads
+                                </th>
                                 <th scope="col" class="tw-w-10 tw-px-12 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Product
                                 </th>

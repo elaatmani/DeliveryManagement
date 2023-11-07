@@ -93,6 +93,11 @@ class Sale {
         return Api.get('api/orders/history/show/' + id)
     }
 
+    async itemHistory(id) {
+        await Csrf.getCookie();
+        return Api.get('api/orders/item/history/show/' + id)
+    }
+
     async resetSale(ids) {
         await Csrf.getCookie();
         return Api.post('api/sales/reset',{ids})

@@ -41,6 +41,19 @@
 
             <div class="tw-col-span-2 md:tw-col-span-1">
               <label
+                class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Leads</label>
+              <input v-model="items.leads" @input="errors.leads = null"
+                :class="[errors.leads && '!tw-border-red-400']" type="text"
+                class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
+                required />
+
+              <label v-if="errors.leads"
+                class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white">{{ errors.leads
+                }}</label>
+            </div>
+
+            <div class="tw-col-span-2 md:tw-col-span-1">
+              <label
                 class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Product</label>
               <select @change="errors.product_id = null" v-model="items.product_id"
                 :class="[errors.product_id && '!tw-border-red-400']" required
@@ -137,6 +150,7 @@
           marketer_id:0,
           source: 0,
           amount: 0,
+          leads:0,
           ads_at: null,
           note: null
         },
@@ -146,6 +160,7 @@
           marketer_id:null,
           source: null,
           amount: null,
+          leads:null,
           ads_at: null,
         },
       };

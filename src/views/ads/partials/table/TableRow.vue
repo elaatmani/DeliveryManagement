@@ -56,6 +56,15 @@
           </h2>
         </div>
       </td>
+      <td
+        class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
+      >
+        <div>
+          <h2 class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]">
+            {{ item.leads }}
+          </h2>
+        </div>
+      </td>
  
       <td
       class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
