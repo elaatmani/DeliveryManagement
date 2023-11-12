@@ -89,14 +89,14 @@
                         </thead>
 
                         <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
-                          <TableRow v-model:selected="selectedOrders" @update="newItem => $emit('update', newItem)" :all="all" :index="index" v-for="(item, index, all) in items" :key="item.id" :item="item" />
+                          <TableRow @refresh="$emit('pageChange', 1)" v-model:selected="selectedOrders" @update="newItem => $emit('update', newItem)" :all="all" :index="index" v-for="(item, index, all) in items" :key="item.id" :item="item" />
                         </tbody>
 
                         <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
                             <td colspan="8">
                               <div class="tw-p-5 tw-text-center tw-text-gray-600 tw-font-medium">
-                                No Order was found !
+                                No product is found !
                               </div>
                             </td>
                           </tr>

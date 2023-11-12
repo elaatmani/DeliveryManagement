@@ -3,7 +3,7 @@
     class="hover:tw-bg-gray-50"
     :class="[
       item.reported_diff != null &&
-        item.confirmation == 'reporter' &&
+        item.followup_confirmation == 'reporter' &&
         item.reported_diff <= 0 &&
         ' !tw-shadow-sm !tw-border !tw-border-emerald-300',
     ]"
@@ -187,7 +187,7 @@
 
 <script>
 import moment from "moment";
-import { confirmations, deliveryStatus } from "@/config/orders";
+import { confirmationsFollowup, deliveryStatus } from "@/config/orders";
 import TableActions from "@/views/newfollowup/partials/table/TableActions";
 import TableRowAffectation from "./TableRowAffectation.vue";
 
@@ -220,7 +220,7 @@ export default {
 
   computed: {
     confirmation() {
-      return confirmations.find((c) => c.value == this.item.confirmation);
+      return confirmationsFollowup.find((c) => c.value == this.item.followup_confirmation);
     },
 
     deliveryState() {

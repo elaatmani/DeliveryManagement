@@ -127,10 +127,11 @@
       </div>
     </td>
     <td class="tw-px-4 tw-py-1 tw-text-sm tw-whitespace-nowrap">
-      <div v-if="false">
+      <div>
         <TableActions
           @update="(newItem) => $emit('update', newItem)"
           :item="item"
+          @refresh="$emit('refresh')"
         />
       </div>
     </td>

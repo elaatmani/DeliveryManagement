@@ -32,6 +32,7 @@
       @filter="handlePerPageChange(per_page)" 
       @per-page-change="handlePerPageChange" 
       @fresh="paginateOrders" 
+      @clear="handleClearFilters"
       :loading="fetching" 
       :statistics="statistics" 
       active-statistics
@@ -96,6 +97,8 @@ export default {
       filters: {
         confirmation: 'all',
         created_at: 'all',
+        dropped_from: null,
+        dropped_to: null,
       }
 
     }
@@ -148,6 +151,17 @@ export default {
 
     handlePrev() {
 
+    },
+
+    handleClearFilters() {
+      this.filters = {
+        confirmation: 'all',
+        created_at: 'all',
+        dropped_from: null,
+        dropped_to: null,
+      };
+
+      this.handlePageChange(1);
     },
 
     handleItemUpdate(item) {

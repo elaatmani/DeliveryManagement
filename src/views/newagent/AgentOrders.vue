@@ -113,9 +113,11 @@ export default {
       current_page: 1,
 
       filters: {
-        confirmation: 'all',
         delivery: 'all',
+        confirmation: 'all',
         created_at: 'all',
+        dropped_from: null,
+        dropped_to: null,
       }
 
     }
@@ -167,6 +169,16 @@ export default {
 
     handlePrev() {
 
+    },
+
+    handleClearFilters() {
+      this.filters = {
+        delivery: 'all',
+        confirmation: 'all',
+        created_at: 'all',
+        dropped_from: null,
+        dropped_to: null,
+      };
     },
 
     handleItemUpdate(item) {
