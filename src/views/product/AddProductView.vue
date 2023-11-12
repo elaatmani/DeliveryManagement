@@ -375,6 +375,54 @@
         </v-row>
 
         <v-row>
+          <v-col class="!tw-py-2" cols="12" sm="6" md="6">
+            <div class="tw-w-full">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                Store Link
+              </div>
+              <v-text-field
+                :error="!formStatus.link_store.valid"
+                @keyup="resetError('link_store')"
+                :hide-details="true"
+                v-model="product.link_store"
+                clearable
+                clear-icon="mdi-close"
+                class="tw-w-full"
+                variant="outlined"
+                color="primary-color"
+                density="compact"
+              ></v-text-field>
+              <div
+                class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+              >
+                {{ formStatus.link_store.message }}
+              </div>
+            </div>
+          </v-col>
+          <v-col class="!tw-py-2" cols="12" sm="6" md="6">
+            <div class="tw-w-full">
+              <div class="mb-1 text-body-2 tw-text-zinc-700">
+                Video Link
+              </div>
+              <v-text-field
+                :error="!formStatus.link_video.valid"
+                @keyup="resetError('link_video')"
+                :hide-details="true"
+                v-model="product.link_video"
+                clearable
+                clear-icon="mdi-close"
+                class="tw-w-full"
+                variant="outlined"
+                color="primary-color"
+                density="compact"
+              ></v-text-field>
+              <div
+                class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs"
+              >
+                {{ formStatus.link_video.message }}
+              </div>
+            </div>
+          </v-col>
           <v-col cols="12">
             <div>
               <h1 class="tw-font-medium">Deliveries</h1>
@@ -497,6 +545,8 @@ export default {
         reference: "",
         buyingPrice: 0,
         sellingPrice: 0,
+        link_video:"",
+        link_store:"",
         description: "",
       },
       selectedDeliveries:[],
@@ -515,6 +565,14 @@ export default {
           message: "",
         },
         sellingPrice: {
+          valid: true,
+          message: "",
+        },
+        link_video: {
+          valid: true,
+          message: "",
+        },
+        link_store: {
           valid: true,
           message: "",
         },
@@ -607,6 +665,8 @@ export default {
               name: "",
               reference: "",
               buyingPrice: 0,
+              link_video:"",
+              link_store:"",
               sellingPrice: 0,
               description: "",
             };
@@ -672,6 +732,14 @@ export default {
         this.product.description,
         "Description"
       );
+      this.formStatus.link_store = validateName(
+        this.product.link_store,
+        "Link store"
+      );
+      this.formStatus.link_video = validateName(
+        this.product.link_video,
+        "Link video"
+      );
       this.formStatus.variants = validateVariants(this.variants);
 
       if(!this.addVariants) {
@@ -686,6 +754,8 @@ export default {
         this.formStatus.buyingPrice.valid &&
         this.formStatus.reference.valid &&
         this.formStatus.sellingPrice &&
+        this.formStatus.link_video.valid &&
+        this.formStatus.link_store.valid &&
         this.formStatus.description.valid &&
         (this.addVariants ? this.formStatus.variants.valid : true) &&
         (this.addVariants ? true : this.formStatus.quantity.valid) &&

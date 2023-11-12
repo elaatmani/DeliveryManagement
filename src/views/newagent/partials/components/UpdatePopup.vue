@@ -242,7 +242,48 @@
                   <OrderItems :order="itemCopy" :error="errors.items" :products="products" :products-fetched="products_fetched" v-model:items="itemCopy.items" />
                 </div>
               </div>
-
+              <div class="tw-col-span-2" v-if="products_fetched">
+                <div v-for="p in product" :key="p.id">
+                <div
+                  class="tw-grid lg:tw-grid-cols-2 md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-5 tw-divide-x-2"
+                >
+                  <div class="tw-space-y-2 tw-px-5">
+                    <div class="tw-flex tw-items-center tw-gap-2">
+                      <i
+                        class="mdi mdi-youtube tw-text-orange-400 tw-text-2xl"
+                      ></i>
+                      <span
+                        class="tw-font-[cairo] tw-text-sm tw-font-medium tw-text-gray-600"
+                        >Video Link</span
+                      >
+                    </div>
+                    <a
+                      target="_blank"
+                      class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
+                      :href="p.video"
+                      >{{ truncateText(p.video,30) }}</a
+                    >
+                  </div>
+  
+                  <div class="tw-space-y-2 tw-px-5">
+                    <div class="tw-flex tw-items-center tw-gap-2">
+                      <i class="mdi mdi-store tw-text-orange-400 tw-text-2xl"></i>
+                      <span
+                        class="tw-font-[cairo] tw-text-sm tw-font-medium tw-text-gray-600"
+                        >Store Link</span
+                      >
+                    </div>
+                    <a
+                      target="_blank"
+                      class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
+                      :href="p.store"
+                      >{{ truncateText(p.store,30) }}</a
+                    >
+                  </div>
+                </div>
+                </div>
+              </div>
+  
               <div class="tw-col-span-2" v-if="products_fetched">
                     <ProductOffersTable :products="products" :item="itemCopy" />
                 </div>

@@ -38,6 +38,14 @@
               <p class="tw-font-light tw-text-neutral-500">Total Sent:</p>
               <p class="tw-text-neutral-800 tw-font-medium tw-px-3">{{ qtyTotalSent }}</p>
             </div>
+            <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-gap-2 tw-items-center tw-justify-between tw-flex-wrap">
+              <p class="tw-font-light tw-text-neutral-500">Store Link:</p>
+              <a target="_blank" :href="product.link_store" class="tw-text-blue-800 tw-font-medium tw-underline tw-px-3">{{ product.link_store }}</a>
+            </div>
+            <div class="tw-col-span-12 md:tw-col-span-6 tw-flex tw-gap-2 tw-items-center tw-justify-between tw-flex-wrap">
+              <p class="tw-font-light tw-text-neutral-500">Video Link:</p>
+              <a target="_blank" :href="product.link_video" class="tw-text-blue-800 tw-font-medium tw-underline tw-px-3">{{ product.link_video }}</a>
+            </div>
             <div class="tw-col-span-12 md:tw-col-span-12 tw-flex tw-gap-2 tw-flex-col tw-flex-wrap">
               <p class="tw-font-light tw-text-neutral-500">Description:</p>
               <p class="tw-text-neutral-800 tw-font-medium">{{ product.description }}</p>
