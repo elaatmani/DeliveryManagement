@@ -72,7 +72,7 @@
                                     Product
                                 </th>
                                 <th scope="col" class="tw-w-10 tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
-                                    Confirmation
+                                    Reconfirmation
                                 </th>
                                 <th scope="col" class="tw-px-3 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     Affected

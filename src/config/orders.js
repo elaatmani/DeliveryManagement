@@ -58,14 +58,15 @@ export const deliveryStatus = [
     
     { id: 5, value:'refuser', name: 'Refused', text: 'tw-text-pink-500', bg: 'tw-bg-pink-500/10', textLight: 'tw-text-pink-800', bgLight: 'tw-bg-pink-100', ring: 'tw-ring-pink-300'  },
     { id: 6, value:'annuler', name: 'Canceled', text: 'tw-text-red-500', bg: 'tw-bg-red-500/10', textLight: 'tw-text-red-800', bgLight: 'tw-bg-red-100', ring: 'tw-ring-red-300' },
-    // { id: 8, value:'hors-zone', name: 'Hors zone', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
     { id: 9, value:'pas-de-reponse', name: 'No Answer', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', textLight: 'tw-text-yellow-800', bgLight: 'tw-bg-yellow-100', ring: 'tw-ring-yellow-300' },
+    { id: 8, value:'printed', name: 'Printed', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
     { id: 10, value:'retourner', name: 'Retourned', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', textLight: 'tw-text-purple-800', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
     { id: 11, value:'reconfirmer', name: 'Reconfirmed', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', textLight: 'tw-text-indigo-800', bgLight: 'tw-bg-indigo-100', ring: 'tw-ring-indigo-300' },
     { id: 12, value:'paid', name: 'Paid', text: 'tw-text-emerald-500', bg: 'tw-bg-emerald-500/10', textLight: 'tw-text-emerald-800', bgLight: 'tw-bg-emerald-100', ring: 'tw-ring-emerald-300' },
     { id: 13, value:'transfer', name: 'Transferd', text: 'tw-text-violet-500', bg: 'tw-bg-violet-500/10', textLight: 'tw-text-violet-800', bgLight: 'tw-bg-violet-100', ring: 'tw-ring-violet-300' },
     { id: 14, value:'livrer-et-retourner', name: 'Delivered & Return', text: 'tw-text-cyan-500', bg: 'tw-bg-cyan-500/10', textLight: 'tw-text-cyan-800', bgLight: 'tw-bg-cyan-100', ring: 'tw-ring-cyan-300' },
     { id: 15, value:'reconfirmer', name: 'Reconfirmed', text: 'tw-text-emerald-500', bg: 'tw-bg-emerald-500/10', textLight: 'tw-text-emerald-800', bgLight: 'tw-bg-emerald-100', ring: 'tw-ring-emerald-300' },
+    { id: 16, value:'returned', name: 'Returned', text: 'tw-text-rose-500', bg: 'tw-bg-rose-500/10', ring: 'tw-ring-rose-300' },
 ]
 
 export const disabledForDelivery = [null, 'expidier', 'paid', 'transfer', 'dispatch'];

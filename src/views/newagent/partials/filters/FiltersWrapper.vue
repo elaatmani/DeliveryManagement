@@ -16,6 +16,34 @@
         />
       </div>
 
+      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
+        <label
+          for="countries"
+          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
+          >Dropped From</label
+        >
+        <input
+          :value="filters.dropped_from"
+          type="date"
+          @change="e => $emit('update', {...filters, dropped_from: e.target.value})"
+          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
+        />
+      </div>
+
+      <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
+        <label
+          for="countries"
+          class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
+          >Dropped To</label
+        >
+        <input
+          :value="filters.dropped_to"
+          type="date"
+          @change="e => $emit('update', {...filters, dropped_to: e.target.value})"
+          class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
+        />
+      </div>
+
       <div class="md:tw-col-span-4 tw-col-span-12 tw-rounded">
         <label
           for="countries"
@@ -69,7 +97,16 @@
         </select>
       </div>
 
-      <div @click="$emit('filter')" class="tw-col-span-12 tw-flex tw-justify-end">
+      <div @click="$emit('filter')" class="tw-col-span-12 tw-flex tw-justify-end gap-2">
+        <button
+        @click="$emit('clear')"
+          class="tw-flex tw-items-center tw-text-gray-500 tw-justify-center tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-transition-colors tw-duration-200 tw-bg-gray-200 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-gray-300 darkx:hover:tw-bg-gray-500 darkx:tw-bg-gray-600"
+        >
+          <svg class="tw-stroke-gray-500" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M18.3 5.71a.996.996 0 0 0-1.41 0L12 10.59L7.11 5.7A.996.996 0 1 0 5.7 7.11L10.59 12L5.7 16.89a.996.996 0 1 0 1.41 1.41L12 13.41l4.89 4.89a.996.996 0 1 0 1.41-1.41L13.41 12l4.89-4.89c.38-.38.38-1.02 0-1.4z"/></svg>
+
+          <span>Clear</span>
+        </button>
+
         <button
           class="tw-flex tw-items-center tw-justify-center tw-px-5 tw-py-2 tw-text-sm tw-tracking-wide tw-text-white tw-transition-colors tw-duration-200 tw-bg-orange-500 tw-rounded-lg shrink-0 sm:tw-w-auto tw-gap-x-2 hover:tw-bg-orange-600 darkx:hover:tw-bg-orange-500 darkx:tw-bg-orange-600"
         >
