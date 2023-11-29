@@ -257,7 +257,7 @@
                         >Video Link</span
                       >
                     </div>
-                    <a
+                    <a v-if="product.video"
                       target="_blank"
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
                       :href="product.video"
@@ -273,7 +273,7 @@
                         >Store Link</span
                       >
                     </div>
-                    <a
+                    <a v-if="product.store"
                       target="_blank"
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
                       :href="product.store"
@@ -393,7 +393,6 @@ export default {
           this.products = [];
         }
         this.product = this.products.find(data => data.id == this.itemCopy.items[0].id)
-        console.log(this.product.video)
         this.products_fetched = true;
       })
       .catch(this.$handleApiError)
