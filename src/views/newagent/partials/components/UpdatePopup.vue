@@ -392,6 +392,7 @@ export default {
         } else {
           this.products = [];
         }
+        console.log(this.products)
         this.product = this.products.find(data => data.id == this.itemCopy.items[0].id)
         this.products_fetched = true;
       })
