@@ -262,7 +262,7 @@
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
                       :href="product.video"
                       >{{ truncateText(product.video,30) }}</a
-                    >
+                    ><span class="tw-font-[cairo] tw-text-gray-500" v-else>No video link in this product</span>
                   </div>
   
                   <div class="tw-space-y-2 tw-px-5">
@@ -278,7 +278,7 @@
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
                       :href="product.store"
                       >{{ truncateText(product.store,30) }}</a
-                    >
+                    ><span class="tw-font-[cairo] tw-text-gray-500" v-else>No store link in this product</span>
                   </div>
                 </div>
                 <!-- </div> -->
@@ -392,8 +392,7 @@ export default {
         } else {
           this.products = [];
         }
-        console.log(this.products)
-        this.product = this.products.find(data => data.id == this.itemCopy.items[0].id)
+        this.product = this.products.find(data => data.id == this.itemCopy.items[0].product_id)
         this.products_fetched = true;
       })
       .catch(this.$handleApiError)
