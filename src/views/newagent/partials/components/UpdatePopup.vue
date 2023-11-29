@@ -374,6 +374,7 @@ export default {
     handleUpdate() {
       const validated = validate(this, this.itemCopy);
       if (!validated) return false;
+      console.log(this.itemCopy)
       update(this, this.itemCopy);
     },
 

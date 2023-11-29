@@ -69,7 +69,6 @@ export const getOrder = (app) => {
     Agent.getOrder()
     .then(res => {
         let data = res.data;
-        
         if (data.code == "ORDER_NOT_CONFIRMED") {
             app.$alert({
                 type: 'warning',

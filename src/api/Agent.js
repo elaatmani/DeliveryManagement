@@ -8,9 +8,9 @@ class Agent {
     //     return Api.get('api/Agent');
     // }
 
-    async statistics() {
+    async statistics(filters) {
         await Csrf.getCookie();
-        return Api.post('api/v1/agent/statistics');
+        return Api.post('api/v1/agent/statistics', filters);
     }
 
     async paginate(url = '/', options) {
