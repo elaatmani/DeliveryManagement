@@ -243,7 +243,7 @@
                 </div>
               </div>
               <div class="tw-col-span-2" v-if="products_fetched">
-                <div v-for="p in product" :key="p.id">
+                <!-- <div v-for="p in product" :key="p.id"> -->
                 <div
                   class="tw-grid lg:tw-grid-cols-2 md:tw-grid-cols-2 tw-grid-cols-1 tw-gap-5 tw-divide-x-2"
                 >
@@ -260,8 +260,8 @@
                     <a
                       target="_blank"
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
-                      :href="p.video"
-                      >{{ truncateText(p.video,30) }}</a
+                      :href="product.video"
+                      >{{ truncateText(product.video,30) }}</a
                     >
                   </div>
   
@@ -276,12 +276,12 @@
                     <a
                       target="_blank"
                       class="tw-underline truncate-link tw-max-w-xs tw-overflow-hidden tw-overflow-ellipsis"
-                      :href="p.store"
-                      >{{ truncateText(p.store,30) }}</a
+                      :href="product.store"
+                      >{{ truncateText(product.store,30) }}</a
                     >
                   </div>
                 </div>
-                </div>
+                <!-- </div> -->
               </div>
   
               <div class="tw-col-span-2" v-if="products_fetched">
@@ -350,6 +350,7 @@ export default {
       products_fetched: null,
       products: null,
       itemCopy: null,
+      product: null,
 
       errors: {
         fullname: null,
@@ -374,7 +375,6 @@ export default {
     handleUpdate() {
       const validated = validate(this, this.itemCopy);
       if (!validated) return false;
-      console.log(this.itemCopy)
       update(this, this.itemCopy);
     },
 
@@ -392,17 +392,25 @@ export default {
         } else {
           this.products = [];
         }
-
+        this.product = this.products.find(data => data.id == this.itemCopy.items[0].id)
+        console.log(this.product.video)
         this.products_fetched = true;
       })
       .catch(this.$handleApiError)
-    }
+    },
+
+    truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.slice(0, maxLength) + '...';
+      }
+      return text;
+    },
   },
 
   mounted() {
     this.itemCopy = JSON.parse(JSON.stringify(this.item));
     this.getProducts();
-  
+    
   }
 };
 </script>
