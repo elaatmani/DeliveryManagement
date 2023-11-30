@@ -118,6 +118,7 @@ export default {
         created_at: 'all',
         dropped_from: null,
         dropped_to: null,
+        reported_first: false,
       }
 
     }
@@ -178,6 +179,7 @@ export default {
         created_at: 'all',
         dropped_from: null,
         dropped_to: null,
+        reported_first: false,
       };
     },
 

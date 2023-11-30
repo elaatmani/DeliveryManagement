@@ -99,6 +99,7 @@
                   </div>
                   <div class="tw-flex tw-flex-col">
                     <div
+                      v-if="!!item.created_by"
                       class="tw-text-sm tw-capitalize tw-text-gray-500 tw-flex tw-items-center tw-mt-2 tw-gap-2 tw-font-bold tw-font-['cairo']"
                     >
                       <v-icon>mdi-account</v-icon

@@ -106,7 +106,7 @@ export default {
 
   methods: {
 
-    paginateOrders() {
+    async paginateOrders() {
       const url = '?page=' + this.current_page;
       const options = {
         sort_by: this.sort_by,
