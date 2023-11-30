@@ -4,6 +4,7 @@ import beforeEach from './beforeEach'
 // Routes
 import auth from './routes/auth'
 import main from './routes/main'
+import settings from './routes/settings'
 import product from './routes/product'
 import user from './routes/user'
 import sale from './routes/sale'
@@ -27,6 +28,7 @@ const routes = [
   auth,
   ads,
   main,
+  settings,
   dashboard,
   product,
   user,
