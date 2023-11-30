@@ -17,6 +17,7 @@ export const confirmations = [
     { id: 12, value: 'wrong-number' , name: 'Wrong number', text: 'tw-text-fuchsia-500', textLight: 'tw-text-fuchsia-800', bg: 'tw-bg-fuchsia-500/10', bgLight: 'tw-bg-fuchsia-100', ring: 'tw-ring-fuchsia-300' },
     { id: 13, value: 'confirmer' , name: 'Confirmed', text: 'tw-text-green-500', textLight: 'tw-text-green-800', bg: 'tw-bg-green-500/10', bgLight: 'tw-bg-green-100', ring: 'tw-ring-green-300' },
     { id: 14, value: 'double' , name: 'Double', text: 'tw-text-purple-500', textLight: 'tw-text-purple-800', bg: 'tw-bg-purple-500/10', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
+    { id: 15, value: 'banned' , name: 'Banned', text: 'tw-text-yellow-500 tw-font-semibold', textLight: 'tw-text-yellow-500 tw-font-semibold', bg: 'tw-bg-black', bgLight: 'tw-bg-black', ring: 'tw-ring-black/50' },
 ]
 
 export const addOrderConfirmations = [
@@ -60,7 +61,7 @@ export const deliveryStatus = [
     { id: 6, value:'annuler', name: 'Canceled', text: 'tw-text-red-500', bg: 'tw-bg-red-500/10', textLight: 'tw-text-red-800', bgLight: 'tw-bg-red-100', ring: 'tw-ring-red-300' },
     { id: 9, value:'pas-de-reponse', name: 'No Answer', text: 'tw-text-yellow-500', bg: 'tw-bg-yellow-500/10', textLight: 'tw-text-yellow-800', bgLight: 'tw-bg-yellow-100', ring: 'tw-ring-yellow-300' },
     { id: 8, value:'printed', name: 'Printed', text: 'tw-text-blue-500', bg: 'tw-bg-blue-500/10', ring: 'tw-ring-blue-300' },
-    { id: 10, value:'retourner', name: 'Retourned', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', textLight: 'tw-text-purple-800', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
+    { id: 10, value:'retourner', name: 'Returned', text: 'tw-text-purple-500', bg: 'tw-bg-purple-500/10', textLight: 'tw-text-purple-800', bgLight: 'tw-bg-purple-100', ring: 'tw-ring-purple-300' },
     { id: 11, value:'reconfirmer', name: 'Reconfirmed', text: 'tw-text-indigo-500', bg: 'tw-bg-indigo-500/10', textLight: 'tw-text-indigo-800', bgLight: 'tw-bg-indigo-100', ring: 'tw-ring-indigo-300' },
     { id: 12, value:'paid', name: 'Paid', text: 'tw-text-emerald-500', bg: 'tw-bg-emerald-500/10', textLight: 'tw-text-emerald-800', bgLight: 'tw-bg-emerald-100', ring: 'tw-ring-emerald-300' },
     { id: 13, value:'transfer', name: 'Transferd', text: 'tw-text-violet-500', bg: 'tw-bg-violet-500/10', textLight: 'tw-text-violet-800', bgLight: 'tw-bg-violet-100', ring: 'tw-ring-violet-300' },
