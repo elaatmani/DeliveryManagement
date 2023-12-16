@@ -46,13 +46,13 @@ export const links = [
                 gate: 'access_to_analytics',
                 to: '/analytics'
             },
-            // {
-            //     id: 3,
-            //     title: 'Charts',
-            //     subModule: 'admin/charts',
-            //     role: 'admin',
-            //     to: '/dashboards/admin/charts'
-            // },
+            {
+                id: 3,
+                title: 'Charts',
+                subModule: 'admin/charts',
+                role: 'admin',
+                to: '/dashboards/admin/charts'
+            },
         ]
     },
 

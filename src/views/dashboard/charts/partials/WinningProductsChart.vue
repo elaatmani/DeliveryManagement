@@ -57,9 +57,15 @@ const getData = async () => {
     await Dashboard.productPerformance()
     .then(
         res => {
-            console.log(res.data)
             if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data;
+                data.value = res.data.data.sort((a, b) => {
+                    const getCount = (obj) => Object.values(obj).reduce((acc, curr) => acc + curr, 0);
+
+                    const totalA = getCount(a.confirmation_counts);
+                    const totalB = getCount(b.confirmation_counts);
+
+                    return totalB - totalA; // Sort in descending order
+                });
             }
         }
     );
@@ -111,9 +117,9 @@ var options = computed(() => loading.value ? null : ({
         colors: ['#fff']
     },
     dataLabels: {
-        // formatter: (val) => {
-        //     return val / 1000 + 'K'
-        // }
+        formatter: () => {
+            return ''
+        }
     },
     plotOptions: {
         bar: {
