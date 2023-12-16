@@ -16,16 +16,17 @@ import { computed, ref } from 'vue';
 
 const data = ref([]);
 const loading = ref(true);
-const noAnswerStatuses = ['day-one-call-one', 'day-one-call-two', 'day-one-call-three', 'day-two-call-one', 'day-two-call-two', 'day-two-call-three', 'day-three-call-one', 'day-three-call-two', 'day-three-call-three'];
+const shippedStatuses = ['expidier', 'transfer'];
 const products = computed(() => loading.value ? null : data.value.map(getStatuses))
 
 const getStatuses = product => {
     const statuses = {
-        confirmer: 0,
+        noStatus: 0,
+        livrer: 0,
+        dispatch: 0,
+        shipped: 0,
         annuler: 0,
-        noAnswer: 0,
-        new: 0,
-        double: 0,
+        retourner: 0,
         others: 0
     };
 
@@ -34,7 +35,7 @@ const getStatuses = product => {
         const status = product.confirmation_counts[k];
 
         if(!k) {
-            statuses.new += status;
+            statuses.noStatus += status;
             return;
         }
         if(k in statuses) {
@@ -42,8 +43,8 @@ const getStatuses = product => {
             return;
         }
 
-        if(noAnswerStatuses.includes(k)) {
-            statuses.noAnswer += status;
+        if(shippedStatuses.includes(k)) {
+            statuses.shipped += status;
             return;
         }
 
@@ -54,7 +55,7 @@ const getStatuses = product => {
 
 const getData = async () => {
     loading.value = true;
-    await Dashboard.productPerformance()
+    await Dashboard.productPerformanceByDelivery()
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
@@ -77,14 +78,19 @@ getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
-            name: 'New',
+            name: 'Delivered',
             group: 'actual',
-            data: products.value.map(p => p.new)
+            data: products.value.map(p => p.livrer)
         },
         {
-            name: 'Confirmed',
+            name: 'Shipped',
             group: 'actual',
-            data: products.value.map(p => p.confirmer)
+            data: products.value.map(p => p.shipped)
+        },
+        {
+            name: 'Dispatched',
+            group: 'actual',
+            data: products.value.map(p => p.dispatch)
         },
         {
             name: 'Cancelled',
@@ -92,20 +98,20 @@ var options = computed(() => loading.value ? null : ({
             data: products.value.map(p => p.annuler)
         },
         {
-            name: 'No Answer',
+            name: 'Returned',
             group: 'actual',
-            data: products.value.map(p => p.noAnswer)
-        },
-        {
-            name: 'Double',
-            group: 'actual',
-            data: products.value.map(p => p.double)
+            data: products.value.map(p => p.retourner)
         },
         {
             name: 'Others',
             group: 'actual',
             data: products.value.map(p => p.others)
-        }
+        },
+        {
+            name: 'No Status',
+            group: 'actual',
+            data: products.value.map(p => p.noStatus)
+        },
     ],
     chart: {
         type: 'bar',

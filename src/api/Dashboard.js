@@ -14,9 +14,14 @@ class Dashboard {
         return Api.get('api/dashboard/agente');
     }
 
-    async productPerformance() {
+    async productPerformanceByConfirmation() {
         await Csrf.getCookie();
-        return Api.get('api/charts/productsPerformance');
+        return Api.get('api/charts/products-performance/confirmation');
+    }
+
+    async productPerformanceByDelivery() {
+        await Csrf.getCookie();
+        return Api.get('api/charts/products-performance/delivery');
     }
 
 }
