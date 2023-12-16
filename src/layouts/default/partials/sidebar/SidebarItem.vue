@@ -2,7 +2,7 @@
   <div>
     <div
     v-if="
-      ($can(link.gate) || link.gate == 'all') && !disabled_links.includes(link.id)
+      ($can(link.gate) || link.gate == 'all' || link.role?.includes(user.role)) && !disabled_links.includes(link.id)
     "
     >
       <v-list-item
@@ -158,9 +158,12 @@ export default {
     allowedChildren() {
       // return this.link?.children
       return this.link?.children.filter(
-        (item) => this.$can(item.gate) || item.gate === "all"
+        (item) => this.$can(item.gate) || item.gate === "all" || item.role?.includes(this.user.role)
       );
     },
+    user() {
+      return this.$store.getters['user/user'];
+    }
   },
 
   watch: {

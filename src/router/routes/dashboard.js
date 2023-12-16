@@ -4,6 +4,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import DashboardView from '@/views/newdashboards/admin/DashboardView'
 import AgentDashboard from '@/views/newdashboards/agent/AgentDashboard'
 import DashboardAnalytics from '@/views/dashboardanalytics/DashboardAnalytics'
+import DashboardChartsView from '@/views/dashboard/charts/DashboardChartsView'
 
 export default 
     {
@@ -49,6 +50,17 @@ export default
                     subModule: 'dashboards/agent',
                     title: 'Dashboard',
                     gate: 'all'
+                }
+            },
+            { 
+                name: 'dashboards/admin/charts',
+                path: 'admin/charts',
+                component: DashboardChartsView,
+                meta: {
+                    module: 'dashboards',
+                    subModule: 'admin/charts',
+                    title: 'Charts',
+                    role: 'admin'
                 }
             },
 

@@ -7,6 +7,7 @@ import ability from './plugins/ability'
 import alert from './plugins/alert'
 import apiErrorHandler from './plugins/apiErrorHandler'
 import VueNumber from 'vue-number-animation'
+import VueApexCharts from 'vue3-apexcharts'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
 import LoadingCss from '@/components/LoadingCss'
@@ -31,6 +32,7 @@ export default createApp(App)
   .use(alert)
   .use(apiErrorHandler)
   .use(VueNumber)
+  .use(VueApexCharts)
 
   // Registering Global Components
   .component('LoadingAnimation', LoadingAnimation)

@@ -41,6 +41,10 @@ export default function (to, from, router) {
         return true
     }
 
+    if(to.meta.role?.includes(store.getters['user/user'].role)) {
+        return true;
+    }
+
     if (!permission && to.path !== '/404') {
         return { name: '404' }
     }

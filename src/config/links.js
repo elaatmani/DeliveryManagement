@@ -34,18 +34,25 @@ export const links = [
         children: [
             {
                 id: 1,
-                title: 'Dashboard',
+                title: 'Overview',
                 subModule: 'dashboard/dashboard',
                 gate: 'all',
                 to: '/'
             },
             {
                 id: 2,
-                title: 'Dashboard Analytics',
+                title: 'Analytics',
                 subModule: 'dashboard/analytics',
                 gate: 'access_to_analytics',
                 to: '/analytics'
             },
+            // {
+            //     id: 3,
+            //     title: 'Charts',
+            //     subModule: 'admin/charts',
+            //     role: 'admin',
+            //     to: '/dashboards/admin/charts'
+            // },
         ]
     },
 
