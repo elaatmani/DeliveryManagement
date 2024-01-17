@@ -172,6 +172,13 @@ export const links = [
                 gate: 'show_all_factorisations',
                 to: '/factorisations'
             },
+            {
+                id: 2,
+                title: 'New Factorisation list',
+                subModule: 'factorisation/newlist',
+                gate: 'show_all_factorisations',
+                to: '/newfactorisations'
+            }
         ]
     },
 

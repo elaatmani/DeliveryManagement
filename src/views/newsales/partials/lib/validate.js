@@ -19,6 +19,11 @@ export const validate = (app, order) => {
         app.errors.note = "Add Cancelation note !";
         return false;
     }
+    
+    if(!order.affectation && order.confirmation == 'confirmer'){
+        app.errors.affectation = "Warning: Order is confirmed but not affected.";
+        return false;
+    }
 
     if(!!order.affectation && !['confirmer', 'refund', 'change'].includes(order.confirmation)) {
         app.errors.affectation = "Cannot update affectation: Order not confirmed.";

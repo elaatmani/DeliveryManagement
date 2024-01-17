@@ -9,6 +9,8 @@
 
       <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
+      <DateFilter v-model:from="filters.delivered_from" v-model:to="filters.delivered_to" label="Delivered" />
+
       <AgentFilter :filters="filters" @update="f => filters = f" />
 
       <div class="md:tw-col-span-3 tw-col-span-12 tw-rounded">
@@ -137,6 +139,8 @@ export default {
                 created_to: null,
                 dropped_from: null,
                 dropped_to: null,
+                delivered_from: null,
+                delivered_to: null,
                 affectation: 'all',
                 agente_id: 'all',
                 upsell: 'all',

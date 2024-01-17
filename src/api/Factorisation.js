@@ -35,19 +35,46 @@ class Factorisation {
         });
     }
 
-    async all() {
+    async updateFees(id , fees) {
         await Csrf.getCookie();
-        return Api.get('api/factorisations');
+        return Api.post('api/factorisations/update/fees/' + id, {
+            fees: fees
+        });
     }
 
-    async getFactorisation(id) {
-        await Csrf.getCookie();
-        return Api.get('api/factorisations/' + id);
-    }
+    // async all() {
+    //     await Csrf.getCookie();
+    //     return Api.get('api/factorisations');
+    // }
+
+    // async getFactorisation(id) {
+    //     await Csrf.getCookie();
+    //     return Api.get('api/factorisations/' + id);
+    // }
+
+    // async delete(id) {
+    //     await Csrf.getCookie();
+    //     return Api.delete('api/factorisations/delete/' + id)
+    // }
+
+    // async create(ads) {
+    //     await Csrf.getCookie();
+    //     return Api.post('api/v1/factorisation/new', ads);
+    // }
+
+    // async update(id, ads) {
+    //     await Csrf.getCookie();
+    //     return Api.post('api/v1/factorisation/update/' + id , ads);
+    // }
 
     async delete(id) {
         await Csrf.getCookie();
-        return Api.delete('api/factorisations/delete/' + id)
+        return Api.delete('api/v1/factorisation/delete/' + id)
+    }
+
+    async paginate(url = '/', options) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/factorisation' + url, options);
     }
 }
 
