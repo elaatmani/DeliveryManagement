@@ -7,3 +7,7 @@ export const getPrice = (order) => {
 export const getPath = (url) => {
     return !url ? null : url.split('api/')[1]
 }
+
+export const clone = (target) => {
+    return JSON.parse(JSON.stringify(target));
+} 

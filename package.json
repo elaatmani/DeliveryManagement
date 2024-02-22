@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@iconify/vue": "^4.1.1",
     "@mdi/font": "5.9.55",
     "@vuepic/vue-datepicker": "^5.0.1",
     "apexcharts": "^3.45.0",

@@ -19,6 +19,7 @@ import ads from './routes/ads'
 import sheet from './routes/sheet'
 import followup from './routes/followup'
 import dashboard from './routes/dashboard'
+import sourcing from './routes/sourcing'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -42,6 +43,7 @@ const routes = [
   factorisation,
   sheet,
   followup,
+  sourcing,
   
   {
     name: 'default',

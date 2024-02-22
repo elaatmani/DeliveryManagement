@@ -91,6 +91,8 @@ export const links = [
         ]
     },
 
+    
+
     {
         id: 3,
         module: 'track',
@@ -151,6 +153,34 @@ export const links = [
                 gate: 'show_all_expidations',
                 to: '/sales/followup'
             }
+        ]
+    },
+
+    {
+        id: 2,
+        module: 'sourcing',
+        title: 'Sourcing',
+        hasChildren: true,
+        role: ['admin', 'seller'], 
+        icon: {
+            type: 'icon',
+            value: 'mdi-truck-outline'
+        },
+        children: [
+            {
+                id: 1,
+                title: 'Add new sourcing',
+                subModule: 'sourcing/new',
+                role: ['admin'],
+                to: '/sourcings/new'
+            },
+            {
+                id: 2,
+                title: 'All sourcings',
+                subModule: 'sourcing/index',
+                role: ['admin'],
+                to: '/sourcings'
+            },
         ]
     },
 

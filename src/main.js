@@ -8,6 +8,7 @@ import alert from './plugins/alert'
 import apiErrorHandler from './plugins/apiErrorHandler'
 import VueNumber from 'vue-number-animation'
 import VueApexCharts from 'vue3-apexcharts'
+import attributes from './plugins/attributes'
 
 import LoadingAnimation from '@/components/LoadingAnimation'
 import LoadingCss from '@/components/LoadingCss'
@@ -17,6 +18,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 import JsonCSV from 'vue-json-csv';
 import PopupNew from '@/components/PopupNew'
+import { Icon } from '@iconify/vue';
 
 // import styling and tailwind
 import '@/assets/style.css'
@@ -31,6 +33,7 @@ export default createApp(App)
   .use(ability)
   .use(alert)
   .use(apiErrorHandler)
+  .use(attributes)
   .use(VueNumber)
   .use(VueApexCharts)
 
@@ -42,5 +45,6 @@ export default createApp(App)
   .component('VueDatePicker', VueDatePicker)
   .component('downloadCsv', JsonCSV)
   .component('popupNew', PopupNew)
+  .component('icon', Icon)
 
   .mount('#app')
