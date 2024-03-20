@@ -20,7 +20,8 @@
                 </button>
 
                 <div class="tw-relative tw-h-[40px]">
-                    <select :value="5"
+                    <select :value="10"
+                    @change="v => handlePerPageChange(v.target.value)"
                         class="tw-h-full tw-px-5 tw-py-2 tw-w-20 focus:tw-outline-none tw-text-xs tw-font-medium tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                         <option :value="i" :key="i" v-for="i in [5, 10, 20, 50, 100, 250, 500]">{{ i }}</option>
                     </select>
@@ -49,13 +50,20 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, inject } from 'vue';
 import FilterOption from './partials/FilterOption';
 import SearchOption from './partials/SearchOption';
 
 const visible = reactive({
     filters: false
 })
+
+const ioptions = inject('options');
+
+const handlePerPageChange = (n) => {
+    ioptions.setOptions({...ioptions.options, per_page: parseInt(n)})
+    ioptions.getData();
+}
 </script>
 
 <style></style>
