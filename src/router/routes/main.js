@@ -1,6 +1,7 @@
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import DashboardView from '@/views/dashboard/DashboardView.vue'
-import IndexView from '@/views/notification/IndexView'
+import NotificationView from '@/views/NotificationView.vue'
+// import IndexView from '@/views/notification/IndexView'
 
 
 export default {
@@ -22,10 +23,20 @@ export default {
               gate: 'all'
             }
           },
+          // {
+          //   path: '/notifications/:tab',
+          //   name: 'notifications',
+          //   component: IndexView,
+          //   meta: {
+          //     module: 'notification',
+          //     title: 'Notifications',
+          //     gate: 'all'
+          //   }
+          // },
           {
-            path: '/notifications/:tab',
+            path: '/notifications',
             name: 'notifications',
-            component: IndexView,
+            component: NotificationView,
             meta: {
               module: 'notification',
               title: 'Notifications',
