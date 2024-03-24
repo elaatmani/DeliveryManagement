@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import user from './modules/user'
 import alert from './modules/alert'
 import product from './modules/product'
+import app from './modules/app'
 import sale from './modules/sale'
 import order from './modules/order'
 import inventory from './modules/inventory'
@@ -36,6 +37,7 @@ export default createStore({
     notification,
     warehouse,
     factorisation,
-    sheet
+    sheet,
+    app
   }
 })

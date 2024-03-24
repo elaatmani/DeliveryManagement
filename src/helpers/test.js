@@ -1,4 +1,4 @@
-export const path = 'api/orders/count'
+export const path = 'api/NewNotification'
 export const method = 'get'
 
 export default {
