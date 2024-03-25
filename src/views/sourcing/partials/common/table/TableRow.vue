@@ -11,7 +11,18 @@
     <td class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap">
         {{ item.product_name }}
     </td>
+    <td class="tw-px-4 tw-text-sm tw-font-medium tw-whitespace-nowrap">
+    <p :class="{
+        'tw-text-xs tw-text-center  tw-py-1 tw-font-medium tw-rounded tw-bg-blue-100 darkx:tw-bg-gray-800 darkx:tw-text-orange-400': item.shipping_method === 'ocean-freight',
+        'tw-text-xs tw-text-center tw-py-1 tw-font-medium tw-bg-yellow-100  tw-rounded': item.shipping_method === 'air-freight'
+    }">
+        {{ item.shipping_method === 'air-freight' ? 'By Air' : item.shipping_method === 'ocean-freight' ? 'By Ocean' : item.shipping_method }}
+    </p>
+    </td>
 
+    <td class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap">
+        ${{ item.total_cost }}
+    </td>
     <td class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap">
         {{ item.estimated_quantity }}
     </td>
