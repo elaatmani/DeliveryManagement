@@ -12,6 +12,7 @@ import sale from './routes/sale'
 import agent from './routes/agent'
 import delivery from './routes/delivery'
 import inventory from './routes/inventory'
+import scanner from './routes/scanner'
 import shop from './routes/shop'
 import warehouse from './routes/warehouse'
 import factorisation from './routes/factorisation'
@@ -44,7 +45,7 @@ const routes = [
   sheet,
   followup,
   sourcing,
-  
+  scanner,
   {
     name: 'default',
     path: '/test',
