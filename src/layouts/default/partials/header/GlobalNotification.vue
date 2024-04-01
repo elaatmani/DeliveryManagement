@@ -39,21 +39,25 @@
                 <p class="tw-text-center tw-py-4">No messages available. </p>
             </div>
             <div
-              v-for="notification in notifications.data"
-              :key="notification.id"
-            >
-              <div
-              :class="{'bg-white': notification.status == 'read'}"
-                class="tw-bg-orange-50 tw-p-2 tw-border-y tw-flex tw-flex-col tw-border-neutral-100"   
-             >
-                  <p class="tw-text-sm">{{ notification.message }}</p>
-                <div
-                    class="tw-ml-auto tw-mt-2 tw-text-xs tw-font-normal tw-text-gray-400 tw-whitespace-nowrap"
+                  v-for="notification in notifications.data"
+                  :key="notification.id"
+                >
+                  <div
+                    :class="notificationClass(notification)"
+                    class="tw-p-2 tw-border-y tw-flex tw-flex-col tw-border-neutral-100"   
                   >
-                    {{ moment(notification.created_at).fromNow() }}
+                  <router-link :to="`/sourcings/${notification.action}`">
+                    <p class="tw-text-sm">{{ notification.message }} 
+                    </p>
+                  </router-link>
+                 
+                    <div
+                      class="tw-ml-auto tw-mt-2 tw-text-xs tw-font-normal tw-text-gray-400 tw-whitespace-nowrap"
+                    >
+                      {{ moment(notification.created_at).fromNow() }}
+                    </div>
                   </div>
-              </div>
-            </div>
+                </div>
           </div>
           <div class="tw-flex tw-justify-evenly tw-items-center tw-p-2">
             <router-link to="/notifications">
@@ -81,6 +85,18 @@ const isLoaded = ref(false);
 
 const toggleMenu = () => {
   isActive.value = !isActive.value;
+};
+const notificationClass = (notification) => {
+  switch (notification.priority) {
+    case 'low':
+      return 'tw-bg-blue-50';
+    case 'medium':
+      return 'tw-bg-orange-100';
+    case 'high':
+      return 'tw-bg-red-100';
+    default:
+      return 'tw-bg-gray-50'; // Default background color if priority is not set
+  }
 };
 
 const closeMenu = () => {

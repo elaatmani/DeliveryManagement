@@ -12,19 +12,21 @@
         elevation="2"
         density="compact"
       >
-        <template v-slot:append>
-          <button
-            @click="ChangeStatus"
-            class="tw-text-gray-400 hover:tw-text-gray-500"
-          >
-            x
-          </button>
-        </template>
-        <div
-          class="tw-mb-1 tw-text-xs tw-font-normal tw-text-gray-400 sm:tw-order-last sm:tw-mb-0 tw-whitespace-nowrap tw-ml-[70%]"
-        >
-          {{ moment(Alertnotif.created_at).fromNow() }}
-        </div>
+      <template #text>
+            <p>
+              {{ Alertnotif.message }}
+            </p>
+
+            <div class="tw-flex tw-items-center tw-justify-between tw-text-neutral-400 tw-mt-2">
+              <span class="tw-text-xs">
+                {{ moment(Alertnotif.created_at).fromNow() }}
+              </span>
+              <button :disabled="loading" @click="ChangeStatus" class="tw-p-0.5 tw-px-4 hover:tw-bg-neutral-100 tw-text-sm">
+                {{ loading ? 'Closing...' : 'Close' }}
+              </button>
+            </div>
+          </template>
+      
       </v-alert>
     </div>
   </teleport>
@@ -37,21 +39,21 @@ import { useStore } from "vuex";
 import App from "@/api/App";
 
 
+const loading = ref(false);
 
 const showAlert = ref(true);
 const store = useStore();
 
-const ChangeStatus = () => { 
-  console.log("ixi");
-  App.Changestatus().then((res) => { if (res.data.code == "SUCCESS") {
-        store.dispatch("app/updatestatus", res.data.data);
-      }}).catch((error) =>{     
-         console.error("API Error", error);
-    }).finally(() =>{
+const ChangeStatus = async () => { 
+    loading.value = true;
+    await App.Changestatus().then((res) => { if (res.data.code == "SUCCESS") {
+          store.dispatch("app/updatestatus", res.data.data);
+        }}).catch((error) =>{     
+           console.error("API Error", error);
+      })
       showAlert.value = false;
-    }
-    )
- }
+      loading.value = false;
+   }
 const Alertnotif = computed(() => store.getters["app/notifications"].highlighted);
 console.log(Alertnotif.value);
 

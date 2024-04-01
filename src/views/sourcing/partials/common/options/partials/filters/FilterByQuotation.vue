@@ -7,7 +7,7 @@
         >
 
         <select
-          @change="e=> emit('update', {...filters, user_id: e.target.value})"
+        @change="e => ioptions.setFilter('quotation_status', e.target.value)"
           
           class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
         >
@@ -20,12 +20,11 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, toRef } from 'vue';
+import {inject } from 'vue';
 import { quotation_statuses } from '@/config/sourcing'
 
-const props = defineProps(['filters']);
-const emit = defineEmits(['update']);
-const filters = toRef(props, 'filters');
+const ioptions = inject('options');
+
 
 </script>
 
