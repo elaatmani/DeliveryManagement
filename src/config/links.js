@@ -434,6 +434,18 @@ export const links = [
     },
 
     {
+        id: 15,
+        title: 'Alerts',
+        module: 'alert',
+        role: ['admin'],
+        to: "/alerts",
+        icon: {
+            type: 'icon',
+            value: 'mdi-bell-alert-outline'
+        }
+    },
+
+    {
         id: 12,
         title: 'Settings',
         module: 'settings',
