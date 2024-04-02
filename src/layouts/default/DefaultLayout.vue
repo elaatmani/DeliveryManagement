@@ -7,7 +7,7 @@
       <!-- Application Header -->
       <AppHeader @toggleSidebar="toggleSidebar" />
 
-      <!-- Alert component -->
+      <!-- Alert component -->j
       <Alert />
       <!-- Alert Notification -->
       <AlertNotification />
@@ -15,6 +15,7 @@
       <!-- Application container -->
       <v-main class="tw-bg-gray-50 tw-min-h-screen tw-overflow-y-auto">
         <v-container fluid class="py-6 px-6">
+          <AppAnnonces />
           <router-view></router-view>
         </v-container>
       </v-main>
@@ -33,7 +34,9 @@
 <script>
 import AppHeader from "@/layouts/default/partials/AppHeader";
 import AppSidebar from "@/layouts/default/partials/AppSidebar";
+import AppAnnonces from '@/layouts/default/partials/AppAnnonces'
 import Alert from "@/components/AlertVue";
+import AlertApi from '@/api/Alert'
 import AlertNotification from "@/components/AlertNotification";
 import User from "@/api/User";
 import Pusher from "pusher-js";
@@ -43,7 +46,7 @@ import Product from "@/api/Product";
 import Sale from "@/api/Sale";
 
 export default {
-  components: { AppHeader, AppSidebar, Alert, AlertNotification },
+  components: { AppHeader, AppSidebar, Alert, AlertNotification, AppAnnonces },
 
   data() {
     return {
@@ -205,6 +208,19 @@ export default {
         })
         .catch(this.$handleApiError);
     },
+    async getAlerts() {
+            return AlertApi.alerts()
+            .then(
+                res => {
+                    if (res?.data.code == "SUCCESS") {
+                        const alerts = res.data.alerts
+                        this.$store.dispatch('app/setAlertsData', alerts)
+                        this.$store.dispatch('app/setAlertsFetched', true)
+                        this.isLoaded = true
+                    }
+                }
+            ).catch(this.$handleApiError)
+        }
   },
 
   watch: {
@@ -217,6 +233,7 @@ export default {
 
   mounted() {
     this.getCities();
+    this.getAlerts();
     // !this.subscribed && this.subscribe();
 
     if (this.user.role == "admin") {
