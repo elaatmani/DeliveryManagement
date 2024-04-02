@@ -20,6 +20,7 @@
                         :constraints="{ deviceId: selectedDevice.deviceId }"
                         :track="trackFunctionSelected.value"
                         :formats="selectedBarcodeFormats"
+                        :facing-mode="'environment'"
                         @error="onError"
                         @detect="onDetect"
                         v-if="selectedDevice !== null"
