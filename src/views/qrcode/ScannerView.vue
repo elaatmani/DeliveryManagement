@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ScanPopup v-model:visible="showPopupShow" />
+        <ScanPopup v-model:visible="showPopupShow" @detect="handleDetect" />
     </div>
     <div class="py-5 px-2 tw-border tw-h-[calc(100vh-150px)] tw-bg-white tw-w-full tw-rounded-md tw-mb-5" >
         <div class="tw-grid tw-px-2 tw-grid-cols-12 tw-justify-center tw-h-full ">
@@ -15,7 +15,7 @@
                     <hr class="tw-flex-grow tw-border-t tw-border-gray-600 tw-w-[60px]"> 
                 </div>    
                 <div class="tw-grid tw-grid-cols-8 col-span-12 tw-gap-2 tw-w-full tw-max-w-[23rem]">
-                    <input id="code" type="text"  class="tw-bg-gray-50 border tw-col-span-6 tw-rounded-lg focus:tw-ring-gray-500 focus:tw-border-gray-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-gray-400 dark:tw-focus:tw-ring-blue-500 dark:focus:tw-border-blue-500">
+                    <input id="code" type="text" v-model="id"  class="tw-bg-gray-50 border tw-col-span-6 tw-rounded-lg focus:tw-ring-gray-500 focus:tw-border-gray-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-gray-400 dark:tw-focus:tw-ring-blue-500 dark:focus:tw-border-blue-500">
                     <button @click='Copy' class="tw-col-span-2 tw-text-white tw-bg-gray-700 tw-hover:bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-gray-300 tw-font-medium tw-rounded-lg tw-text-sm w-full sm:tw-w-auto tw-py-2.5 tw-text-center dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800 tw-items-center tw-inline-flex tw-justify-center">
                         <span id="success-message" class="tw-inline-flex tw-items-center">
                             <icon icon="mdi:content-copy"/>
@@ -40,7 +40,11 @@
 <script setup>
 import {ref} from "vue";
 import ScanPopup from "./ScanPopUp.vue";
-    const showPopupShow = ref(false)
+    const showPopupShow = ref(false);
+    const id=ref("");
+    const handleDetect = (v) => { 
+        id.value = v;
+     }
     const Copy = () => { 
         var copyText = document.getElementById("code");
         copyText.select();
