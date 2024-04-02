@@ -119,14 +119,24 @@ const selectedDevice = ref(null)
 const devices = ref([])
 
 onMounted(async () => {
-  devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
-    ({ kind }) => kind === 'videoinput'
-  )
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    devices.value = (await  navigator.mediaDevices.getUserMedia({ video: true })).filter(
+      ({ kind }) => kind === 'videoinput'
+    )
 
-  if (devices.value.length > 0) {
-    selectedDevice.value = devices.value[0]
+    if (devices.value.length > 0) {
+      selectedDevice.value = devices.value[0]
+    }
+  } else {
+    devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
+      ({ kind }) => kind === 'videoinput'
+    )
+
+    if (devices.value.length > 0) {
+      selectedDevice.value = devices.value[0]
+    }
   }
-})
+});
 
 const result = ref('')
 
