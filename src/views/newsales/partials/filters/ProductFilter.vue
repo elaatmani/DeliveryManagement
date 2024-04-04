@@ -6,31 +6,20 @@
       >Product</label
     >
 
-    <select
-      @change="
-        (e) => $emit('update', { ...filters, product_id: e.target.value })
-      "
-      :value="filters.product_id"
-      class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
-    >
-      <option value="all">All</option>
-      <option
-        :value="p.id"
-        class="tw-capitalize"
-        v-for="p in products"
-        :key="p.id"
-      >
-        {{ p.name }}
-      </option>
-    </select>
+    <vue-select :reduce="(o) => o.id" @option:selected="e=> $emit('update', {...filters, product_id: e.id})" :clearable="false" class="tw-bg-gray-50 tw-border-solid tw-outline-none  tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full"
+          placeholder="All" :v-model="products" :options="allProducts" label="name">
+        </vue-select>
   </div>
 </template>
 
 <script>
 import Product from '@/api/Product'
+import vueSelect from 'vue-select';
 
 export default {
-
+  components: {
+      'vue-select': vueSelect
+    },
     props: {
         filters: {
             required: true,
@@ -49,6 +38,9 @@ export default {
         fetched() {
             return this.$store.getters['product/fetched']
         },
+        allProducts() {
+        return [{ id: 0, name: 'All' }, ...this.products]
+      },
     },
 
     methods: {

@@ -118,12 +118,19 @@ const selectedDevice = ref(null)
 const devices = ref([])
 
 onMounted(async () => {
-  devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
-    ({ kind }) => kind === 'videoinput'
-  )
+  if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+    devices.value = (await navigator.mediaDevices.enumerateDevices()).filter(
+      ({ kind }) => kind === 'videoinput'
+    )
 
-  if (devices.value.length > 0) {
-    selectedDevice.value = devices.value[0]
+    if (devices.value.length > 0) {
+      const phoneCamera = devices.value.find(({ label }) =>
+        label.toLowerCase().includes('back') || label.toLowerCase().includes('rear')
+      )
+      selectedDevice.value = phoneCamera || devices.value[0]
+    }
+  } else {
+    console.error('MediaDevices API not supported')
   }
 })
 

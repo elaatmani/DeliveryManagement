@@ -8,11 +8,11 @@
                 <p class="tw-text-xl tw-font-semibold tw-py-4">Scan the order reference ID.</p>
                 <icon class="tw-w-[150px] tw-h-[150px] tw-border-2 tw-rounded-3xl" icon="mage:qr-code"/>
                 <div class="tw-flex tw-items-center tw-py-5"> 
-                    <hr class="tw-flex-grow tw-border-t tw-border-gray-600 tw-w-[60px] "> 
+                    <hr class="tw-flex-grow tw-border-t tw-border-gray-600 lg:tw-w-[60px] tw-w-[20px]  "> 
                     <span class="tw-px-3 tw-text-gray-500"> 
                         Or enter the code manually
                     </span> 
-                    <hr class="tw-flex-grow tw-border-t tw-border-gray-600 tw-w-[60px]"> 
+                    <hr class="tw-flex-grow tw-border-t tw-border-gray-600 lg:tw-w-[60px] tw-w-[20px]"> 
                 </div>    
                 <div class="tw-grid tw-grid-cols-8 col-span-12 tw-gap-2 tw-w-full tw-max-w-[23rem]">
                     <input id="code" type="text" v-model="id"  class="tw-bg-gray-50 border tw-col-span-6 tw-rounded-lg focus:tw-ring-gray-500 focus:tw-border-gray-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-gray-400 dark:tw-focus:tw-ring-blue-500 dark:focus:tw-border-blue-500">
