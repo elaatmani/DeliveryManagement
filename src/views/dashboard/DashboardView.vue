@@ -46,6 +46,9 @@ export default {
             case 'agente':
                 this.$router.push({name: 'dashboards/agent'})
             break;
+            case 'marketer':
+                this.$router.push({name: 'dashboards/marketer'})
+            break;
         
             default:
                 this.exists = true;
