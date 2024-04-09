@@ -23,6 +23,14 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/products-performance/delivery');
     }
+    async CostPerDay(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/cost_per_day',{ params: { date_avant, date_apres, period } });
+    }
+    async LeadsPerDay(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/leads_per_day',{ params: { date_avant, date_apres, period } });
+    }
 
 }
 

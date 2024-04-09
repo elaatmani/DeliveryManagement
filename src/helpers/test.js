@@ -1,4 +1,4 @@
-export const path = 'api/NewNotification'
+export const path = 'api/charts/cost_per_day'
 export const method = 'get'
 
 export default {
