@@ -1,8 +1,7 @@
 <template >
     <div :add="audiourl = $frontend('assets/bip.mp3')">
-        <button @click="togglePopUp(true)" class="tw-flex tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-border-neutral-200 tw-rounded-md tw-mb-2">
-            <icon icon="iconamoon:scanner-light" class="tw-text-xl" />
-            <span>Scan</span>
+        <button  @click="togglePopUp(true)" class="tw-fixed tw-bottom-5 tw-shadow tw-shadow-orange-300 tw-right-5 tw-flex tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-border-orange-300 tw-rounded-md tw-mb-2">
+            <icon icon="iconamoon:scanner-light" class="lg:tw-text-3xl tw-text-2xl" />
         </button>
 
         <popup-new :visible="props.visible"  >
@@ -52,7 +51,6 @@
 <script setup>
 import { QrcodeStream } from 'vue-qrcode-reader'
 import {ref,computed,onMounted, defineEmits, defineProps} from "vue";
-import { useAlert } from '@/composables/useAlert';
 
 const audiourl = ref('')
 const emit = defineEmits(['update:visible',"detect"])
@@ -139,8 +137,8 @@ const result = ref('')
 
 function onDetect(detectedCodes) {
     const numbersonly = detectedCodes.map((code) => code.rawValue.replace(/[^0-9]/g, '')).join(', ');
-    useAlert('Your order ID is: ' + numbersonly)
-    emit("detect",numbersonly);
+    const lettersOnly = detectedCodes.map((code) => code.rawValue.replace(/[^a-zA-Z]/g, '')).join(', ');
+    emit("detect",numbersonly, lettersOnly);
     togglePopUp(false);
     var audio = new Audio(audiourl.value);
     audio.play();

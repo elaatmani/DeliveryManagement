@@ -17,8 +17,13 @@
             </div>
         </td>
         <td class="tw-px-6 tw-py-4">
-            <div>
+            <div class="tw-max-w-[120px] tw-truncate">
                 {{ sheet.sheet_name }} 
+            </div>
+        </td>
+        <td class="tw-px-6 tw-py-4">
+            <div class="tw-max-w-[120px] tw-truncate">
+                {{ sheet.user_name }} 
             </div>
         </td>
         <td class="tw-px-6 tw-py-4">

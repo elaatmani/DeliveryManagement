@@ -26,7 +26,8 @@ class User {
             product_id: user.product_id,
             city: user?.city,
             deliverycity: user?.deliveryCities,
-            having_all: user.having_all
+            having_all: user.having_all,
+            commission: parseFloat(user.commission)
         })
     }
 
@@ -45,7 +46,8 @@ class User {
             city: user?.city,
             deliverycity: user?.deliveryCities,
             updatePassword: updatePassword,
-            having_all: user.having_all
+            having_all: user.having_all,
+            commission: parseFloat(user.commission)
         })
     }
 

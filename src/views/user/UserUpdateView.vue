@@ -159,6 +159,25 @@
                   ></v-switch>
                 </div>
               </v-col>
+              <v-col v-if="isMarketer" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Commission</div>
+                  <v-text-field
+                    :error="!formStatus.commission.valid"
+                    :hide-details="true"
+                    @keyup="resetError('commission')"
+                    v-model="commission"
+                    type="number"
+                    clearable
+                    clear-icon="mdi-close"
+                    class="tw-w-full"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.commission.message }}</div>
+                </div>
+              </v-col>
               <v-col v-if="isAgente" class="!tw-py-2" cols="12" md="6">
                 <div>
                   <!-- <div>
@@ -341,6 +360,10 @@ export default {
           valid: true,
           message: "",
         },
+        commission: {
+          valid: true,
+          message: "",
+        },
         confirmPassword: {
           valid: true,
           message: "",
@@ -358,6 +381,7 @@ export default {
       user_image: null,
       status: false,
       product: null,
+      commission: 0,
 
       products: [],
       selectedProducts: [],
@@ -381,6 +405,9 @@ export default {
     isDelivery() {
       return this.role === 3;
     },
+    isMarketer() {
+      return this.roles.find(r => r.name.toLocaleLowerCase() == 'marketer')?.id == this.role;
+    },
     user() {
         return {
             id: this.id,
@@ -391,6 +418,7 @@ export default {
             password: this.password,
             product_id: this.product,
             deliveryCities: this.deliveryCities,
+            commission: this.commission,
             city: this.city,
             role: this.role,
             status: this.status ? 1 : 0,
@@ -548,6 +576,7 @@ export default {
                   this.email = user.email
                   this.phone = user.phone
                   this.role = user.role
+                  this.commission = user.commission
 
                   if (user.role == 2) {
                     this.isHavingAllProducts = user.having_all == 1;

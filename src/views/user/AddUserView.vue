@@ -141,6 +141,25 @@
                   </select>
                 </div>
               </v-col>
+              <v-col v-if="isMarketer" class="!tw-py-2" cols="12" md="6">
+                <div>
+                  <div class="mb-1 text-body-2 tw-text-zinc-700">Commission</div>
+                  <v-text-field
+                    :error="!formStatus.commission.valid"
+                    :hide-details="true"
+                    @keyup="resetError('commission')"
+                    v-model="user.commission"
+                    type="number"
+                    clearable
+                    clear-icon="mdi-close"
+                    class="tw-w-full"
+                    variant="outlined"
+                    color="primary-color"
+                    density="compact"
+                  ></v-text-field>
+                  <div class="tw-h-[3px] tw-text-red-700 tw-mb-3 tw-mt-1 tw-text-xs">{{ formStatus.commission.message }}</div>
+                </div>
+              </v-col>
               <v-col v-if="isDelivery" class="!tw-py-2" cols="12" md="6">
                 <div>
                   <div class="mb-1 text-body-2 tw-text-zinc-700">Delivery cities</div>
@@ -329,6 +348,10 @@ export default {
           valid: true,
           message: "",
         },
+        commission: {
+          valid: true,
+          message: "",
+        },
         password: {
           valid: true,
           message: "",
@@ -347,6 +370,7 @@ export default {
         password: "",
         confirmPassword: "",
         status: true,
+        commission: 0
       },
       role: 3
     };
@@ -382,6 +406,10 @@ export default {
 
     isDelivery() {
       return this.role === 3;
+    },
+
+    isMarketer() {
+      return this.roles.find(r => r.name.toLocaleLowerCase() == 'marketer')?.id == this.role;
     },
     selectProducts() {
       if(this.isMultipleProducts) {
@@ -451,6 +479,7 @@ export default {
               phone: "",
               email: "",
               password: "",
+              commission: 0,
               confirmPassword: "",
               status: true,
             };

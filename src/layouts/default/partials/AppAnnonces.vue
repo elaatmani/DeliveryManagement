@@ -5,7 +5,7 @@
       leave-to-class="!tw-opacity-0"
     >
         <div v-if="alerts.fetched &&  data.length" class="tw-space-y-2 tw-mb-5 tw-opacity-100">
-          <div v-for="a in data" :key="a.id"
+          <div v-for="a in data" :key="a.id" :dir="a.direction"
           :class="[a.variant == 'danger' && 'tw-bg-rose-500', a.variant == 'info' && 'tw-bg-cyan-500', a.variant == 'warning' && 'tw-bg-amber-500', a.variant == 'success' && 'tw-bg-emerald-500']"
           class="tw-h-fit tw-w-full tw-border tw-border-solid ">
               <div class="tw-flex tw-items-start ">

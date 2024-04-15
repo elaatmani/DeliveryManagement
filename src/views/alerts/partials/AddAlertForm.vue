@@ -98,6 +98,25 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900">Direction</label>
+                            <div class="tw-grid tw-grid-cols-2 tw-gap-2">
+                                <button 
+                                @click="form.direction = 'rtl'"
+                                :class="[form.direction == 'rtl' && ' !tw-border-orange-500']"
+                                class="tw-py-2 tw-px-4 tw-rounded tw-border tw-border-solid tw-border-neutral-200">
+                                    Right To Left
+                                </button>
+                                <button 
+                                @click="form.direction = 'ltr'"
+                                :class="[form.direction == 'ltr' && ' !tw-border-orange-500']"
+                                class="tw-py-2 tw-px-4 tw-rounded tw-border tw-border-solid tw-border-neutral-200">
+                                    Left To Right
+                                </button>
+                                
+                            </div>
+                        </div>
+
 
                         <div>
                             <label class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900">Content</label>
@@ -153,7 +172,8 @@ const form = ref({
     type: 'global',
     target: null,
     content: '',
-    closeable: true
+    closeable: true,
+    direction: 'rtl'
 });
 
 watch(() => form.value.target, v => {

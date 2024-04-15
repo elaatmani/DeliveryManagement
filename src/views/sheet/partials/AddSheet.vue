@@ -8,6 +8,8 @@
         <h1 class="tw-text-lg">Create Sheet</h1>
 
         <div class="tw-grid tw-grid-cols-12 tw-gap-y-1 tw-gap-x-3 mt-5">
+          <SelectUser v-model:user-id="sheet.user_id" />
+
           <div class="md:tw-col-span-6 tw-col-span-12">
             <div class="mb-1 text-body-2 tw-text-zinc-700">Name</div>
             <input
@@ -73,8 +75,10 @@
 
 <script>
 import Sheet from '@/api/Sheet';
+import SelectUser from './SelectUser'
 
 export default {
+  components: { SelectUser },
   props: ["visible"],
 
   data() {
@@ -86,6 +90,7 @@ export default {
         sheet_id: "",
         sheet_name: "",
         auto_fetch: true,
+        user_id: null
       },
     };
   },
@@ -104,6 +109,7 @@ export default {
 
   methods: {
     create() {
+
       if(!this.isFormValid) {
         this.$alert({
               type: "warning",

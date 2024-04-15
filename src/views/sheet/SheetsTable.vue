@@ -68,7 +68,7 @@
                 allowedLimit: [5, 10, 20, 50, 100],
                 currentPage: 1,
                 paginationLimit: 10,
-                columns: ['id', 'name', 'sheet name', 'auto fetch', 'created', 'actions']
+                columns: ['id', 'name', 'sheet name', 'Marketer', 'auto fetch', 'created', 'actions']
             };
         },
 

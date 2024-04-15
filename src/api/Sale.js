@@ -112,6 +112,12 @@ class Sale {
         await Csrf.getCookie();
         return Api.get('api/orders/count')
     }
+    
+    async get(id) {
+        await Csrf.getCookie();
+        return Api.get('api/orders/show/' + id)
+        
+    }
 }
 
 
