@@ -1,6 +1,6 @@
 <template >
-    <div :add="audiourl = $frontend('assets/bip.mp3')">
-        <button  @click="togglePopUp(true)" class="tw-fixed tw-bottom-5 tw-shadow tw-shadow-orange-300 tw-right-5 tw-flex tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-border-orange-300 tw-rounded-md tw-mb-2">
+    <div>
+        <button  @click="togglePopUp(true)" class="tw-fixed tw-bottom-5 tw-shadow tw-shadow-orange-300 tw-right-5 tw-flex tw-items-center tw-justify-center tw-w-[60px] tw-h-[60px] tw-gap-2  tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-border-orange-300 tw-rounded-md tw-mb-2 tw-z-20">
             <icon icon="iconamoon:scanner-light" class="lg:tw-text-3xl tw-text-2xl" />
         </button>
 
@@ -51,8 +51,9 @@
 <script setup>
 import { QrcodeStream } from 'vue-qrcode-reader'
 import {ref,computed,onMounted, defineEmits, defineProps} from "vue";
+import { localUrl } from "@/config/config"
 
-const audiourl = ref('')
+const audio = new Audio( localUrl + 'assets/bip.mp3');
 const emit = defineEmits(['update:visible',"detect"])
 const props = defineProps(['visible'])
 const togglePopUp = (value) => { 
@@ -136,13 +137,14 @@ onMounted(async () => {
 const result = ref('')
 
 function onDetect(detectedCodes) {
-    const numbersonly = detectedCodes.map((code) => code.rawValue.replace(/[^0-9]/g, '')).join(', ');
-    const lettersOnly = detectedCodes.map((code) => code.rawValue.replace(/[^a-zA-Z]/g, '')).join(', ');
-    emit("detect",numbersonly, lettersOnly);
+  const detectedCode = detectedCodes.map(i => i.rawValue).join(', ');
+  console.log('Detected Code: ');
+  console.log(detectedCode);
+    
+    emit("detect", detectedCode);
     togglePopUp(false);
-    var audio = new Audio(audiourl.value);
     audio.play();
-    result.value = numbersonly;
+    result.value = detectedCode;
 }
 const barcodeFormats = ref({
   qr_code: true,
