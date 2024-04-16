@@ -22,7 +22,7 @@
 
                     <div v-if="!props.order.loading && props.order.check"  class="tw-flex tw-items-center tw-gap-2">
                         <icon  icon="solar:user-id-bold-duotone" class="tw-text-lg tw-text-gray-500" />
-                        <span v-if="props.order.fullname" style="line-height: 10px" class="tw-text-sm tw-font-medium tw-max-w-[120px] tw-truncate">{{ props.order.fullname }}</span>
+                        <span v-if="props.order.fullname" style="line-height: 16px" class="tw-text-sm tw-font-medium tw-max-w-[120px] tw-truncate">{{ props.order.fullname }}</span>
                     </div>
                     <div v-if="!props.order.loading && !props.order.check" class="tw-w-fit tw-px-2 tw-bg-rose-100 tw-text-rose-500 tw-text-sm tw-uppercase tw-h-[25px] tw-rounded-md tw-flex tw-items-center tw-justify-center">Not Found</div>
                 </div>
