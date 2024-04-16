@@ -24,7 +24,7 @@ export default {
             state.sheets = payload
         },
         ADD_SHEET: (state, payload ) => {
-            state.sheets.push(payload)
+            state.sheets.unshift(payload)
         },
         DELETE_SHEET:(state , payload) => {
             state.sheets = state.sheets.filter((i) => i.id != payload)

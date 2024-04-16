@@ -1,5 +1,7 @@
 <template >
     <div class="tw-p-5">
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Amounts Per Leads</h1>
+
         <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex">
             <button @click="getData(null,null,'week')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Week</button>
@@ -23,33 +25,18 @@
     </div>
 </template>
 <script setup>
-import Dashboard from '@/api/Dashboard';
-import { computed,ref } from 'vue';
-const data = ref([]);
+import { computed,defineProps } from 'vue';
+const props = defineProps({
+  chartData: Object,
+  loading: Boolean
 
-const loading = ref(true);
-const getData = async (date_avant = null, date_apres = null, period = null) => {
-    console.log(date_avant, date_apres, period);
-    loading.value = true;
-    await Dashboard.AmountPerLead(date_avant, date_apres, period)
-    .then(
-        res => {
-            if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.amount_per_lead;
-                console.log(res.data.data);
-                loading.value = false;
-            }
-        }
-    );
-}
+})
 
-getData();
-
-var options = computed(() => loading.value ? null : ({
+var options = computed(() => props.loading ? null : ({
     series: [
         {
             name: 'Amount Per Leads',
-            data: data.value.map(p => p ? p.average_cost_per_lead : null) // add a check here
+            data: props.chartData.map(p => p ? p.average_cost_per_lead : null) // add a check here
         },],
 
     chart: {
@@ -72,7 +59,7 @@ var options = computed(() => loading.value ? null : ({
         }
     },
     xaxis: {
-        categories: data.value.map(p => p.date),
+        categories: props.chartData.map(p => p.date),
         labels: {
             // formatter: (val) => {
             //     return val / 1000 + 'K'

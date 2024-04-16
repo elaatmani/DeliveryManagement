@@ -1,7 +1,9 @@
 <template>
   <div class="tw-flex">
     <div class="tw-p-5 tw-w-[50%]">
-        <div v-if="!loading">
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmations Rates</h1>
+
+        <div v-if="!props.loading">
             <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
         </div>
         <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
@@ -9,7 +11,9 @@
         </div>
     </div>
     <div class="tw-p-5 tw-w-[50%]">
-        <div v-if="!loading">
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rates</h1>
+
+        <div v-if="!props.loading">
             <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>
         </div>
         <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
@@ -20,34 +24,19 @@
 </template>
 
 <script setup>
-import Dashboard from '@/api/Dashboard';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { confirmations, deliveryStatus } from '@/config/orders'
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  chartData: Object,
+  loading: Boolean
+
+})
 
 
-
-const data = ref([]);
-const loading = ref(true);
-
-
-const getData = async () => {
-    loading.value = true;
-    await Dashboard.ConfirmationStatesDonuts()
-    .then(
-        res => {
-            if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.confirmation_state_donuts[0];
-                loading.value = false;
-            }
-        }
-    );
-    loading.value = false;
-}
-
-getData();
-
-var options = computed(() => loading.value ? null : ({
-    series: data.value.orders.map(i => i.total),
+var options = computed(() => props.loading ? null : ({
+    series: props.chartData.orders.map(i => i.total),
     chart: {
         type: 'donut',
     },
@@ -60,10 +49,10 @@ var options = computed(() => loading.value ? null : ({
         position: 'top',
         horizontalAlign: 'left'
     },
-    labels: data.value.orders.map(i => confirmations.find(j => j.value == i.confirmation)?.name)
+    labels: props.chartData.orders.map(i => confirmations.find(j => j.value == i.confirmation)?.name)
 }));
-var optionss = computed(() => loading.value ? null : ({
-    series: data.value.delivery.map(i => i.total),
+var optionss = computed(() => props.loading ? null : ({
+    series: props.chartData.delivery.map(i => i.total),
     chart: {
         type: 'donut',
     },
@@ -76,8 +65,9 @@ var optionss = computed(() => loading.value ? null : ({
         position: 'top',
         horizontalAlign: 'left'
     },
-    labels: data.value.delivery.map(i => deliveryStatus.find(j => j.value == i.delivery)?.name)
+    labels: props.chartData.delivery.map(i => deliveryStatus.find(j => j.value == i.delivery)?.name)
 }));
+
 </script>
 
 <style></style>

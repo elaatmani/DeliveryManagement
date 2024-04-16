@@ -15,7 +15,8 @@ class Sheet {
             name: sheet.name,
             sheet_id: sheet.sheet_id,
             sheet_name: sheet.sheet_name,
-            auto_fetch: sheet.auto_fetch
+            auto_fetch: sheet.auto_fetch,
+            user_id: sheet.user_id
         }
         return Api.post('api/sheets', data);
     }
@@ -27,7 +28,8 @@ class Sheet {
             name: sheet.name,
             sheet_id: sheet.sheet_id,
             sheet_name: sheet.sheet_name,
-            auto_fetch: sheet.auto_fetch
+            auto_fetch: sheet.auto_fetch,
+            user_id: sheet.user_id
         }
         return Api.post('api/sheets/' + id, data);
     }

@@ -14,7 +14,7 @@
 
       <!-- Application container -->
       <v-main class="tw-bg-gray-50 tw-min-h-screen tw-overflow-y-auto">
-        <v-container fluid class="py-6 px-6">
+        <v-container fluid :class="[$route.name == 'scanner/code' ? 'tw-p-0' : 'tw-p-2']">
           <AppAnnonces />
           <router-view></router-view>
         </v-container>
@@ -23,6 +23,7 @@
       <button
         v-if="showScrollUpButton"
         @click="scrollToTop"
+        :class="[$route.name == 'scanner/code' ? 'tw-left-3' : 'tw-right-3']"
         class="tw-fixed tw-shadow tw-text-sm tw-bottom-5 tw-right-3 tw-w-10 tw-h-10 tw-z-10 tw-rounded-full tw-bg-orange-400 tw-text-white"
       >
         <v-icon>mdi-transfer-up</v-icon>
