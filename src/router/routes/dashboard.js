@@ -5,7 +5,7 @@ import DashboardView from '@/views/newdashboards/admin/DashboardView'
 import AgentDashboard from '@/views/newdashboards/agent/AgentDashboard'
 import MarketerDashboard from '@/views/newdashboards/marketer/DashboardView'
 import DashboardAnalytics from '@/views/dashboardanalytics/DashboardAnalytics'
-import DashboardChartsView from '@/views/dashboard/charts/DashboardChartsView'
+import DashboardChartsView from '@/views/newdashboards/admin/charts/DashboardChartsView'
 
 export default 
     {

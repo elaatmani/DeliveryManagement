@@ -1,6 +1,6 @@
 <template >
     <div class="tw-p-5">
-        <div class="tw-flex tw-justify-between tw-items-center">
+        <div class="tw-flex  tw-flex-wrap tw-justify-between tw-items-center">
         <div class="tw-flex">
             <button @click="getData(null,null,'week')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Week</button>
             <button @click="getData(null,null,'month')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Month</button>
@@ -8,6 +8,7 @@
             <button @click="getData(null,null,'lastmonth')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Month</button>
             <button @click="getData(null,null,'year')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Year</button>
         </div>
+      
         <div  class="tw-flex">
             <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_avant">
             <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_apres">
@@ -25,18 +26,17 @@
 <script setup>
 import Dashboard from '@/api/Dashboard';
 import { computed,ref } from 'vue';
+
 const data = ref([]);
 
 const loading = ref(true);
-const getData = async (date_avant = null, date_apres = null, period = null) => {
-    console.log(date_avant, date_apres, period);
+const getData = async (date_avant = null, date_apres = null, period = null,selectedOption = null) => {
     loading.value = true;
-    await Dashboard.CostPerDay(date_avant, date_apres, period)
+    await Dashboard.CostPerProduct(date_avant, date_apres, period,selectedOption)
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.cost_per_day;
-                console.log(res.data.data);
+                data.value = res.data.data.cost_per_product;
                 loading.value = false;
             }
         }
@@ -45,51 +45,36 @@ const getData = async (date_avant = null, date_apres = null, period = null) => {
 
 getData();
 
-var options = computed(() => loading.value ? null : ({
-    series: [
-        {
-            name: 'Total Cost Per Day',
-            data: data.value.map(p => p ? p.cost : null) // add a check here
-        },],
+var options = computed(() => {
 
-    chart: {
-        type: 'bar',
-        stacked: true,
-    },
-    theme: {
-        palette: 'palette9' 
-    },
-    stroke: {
-        width: 1,
-        colors: ['#fff']
-    },
-    dataLabels: {
-        formatter: () => {
-            return ''
+    return {
+        series: [...data.value.map(i=> ({...i, data: i.data.map(j => j.cost_per_product)}))],
+
+        chart: {
+            type: 'area',
+        },
+        xaxis: {
+            type: 'category',
+            categories: data.value[0].data.map(c => c.date), 
+        },
+
+        theme: {
+            palette: 'palette7'
+        },
+        stroke: {
+            curve: 'smooth',
+            },
+       
+        fill: {
+            opacity: 1,
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left'
         }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false
-        }
-    },
-    xaxis: {
-        categories: data.value.map(p => p.date),
-        labels: {
-            // formatter: (val) => {
-            //     return val / 1000 + 'K'
-            // }
-        }
-    },
-    fill: {
-        opacity: 1,
-    },
-    // colors: ['#22c55e', '#f43f5e'],
-    legend: {
-        position: 'top',
-        horizontalAlign: 'left'
-    }
-}));
+    };
+});
+
 </script>
 <style lang="">
     

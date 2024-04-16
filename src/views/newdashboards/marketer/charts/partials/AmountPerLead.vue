@@ -31,11 +31,11 @@ const loading = ref(true);
 const getData = async (date_avant = null, date_apres = null, period = null) => {
     console.log(date_avant, date_apres, period);
     loading.value = true;
-    await Dashboard.CostPerDay(date_avant, date_apres, period)
+    await Dashboard.AmountPerLead(date_avant, date_apres, period)
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.cost_per_day;
+                data.value = res.data.data.amount_per_lead;
                 console.log(res.data.data);
                 loading.value = false;
             }
@@ -48,29 +48,27 @@ getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
-            name: 'Total Cost Per Day',
-            data: data.value.map(p => p ? p.cost : null) // add a check here
+            name: 'Amount Per Leads',
+            data: data.value.map(p => p ? p.average_cost_per_lead : null) // add a check here
         },],
 
     chart: {
-        type: 'bar',
+        type: 'area',
         stacked: true,
     },
     theme: {
-        palette: 'palette9' 
+        palette: 'palette5' 
     },
     stroke: {
-        width: 1,
-        colors: ['#fff']
+        curve: 'smooth',
     },
-    dataLabels: {
-        formatter: () => {
-            return ''
-        }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false
+    fill: {
+        type: "gradient",
+        gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.7,
+        opacityTo: 0.9,
+        stops: [0, 90, 100]
         }
     },
     xaxis: {
@@ -81,10 +79,18 @@ var options = computed(() => loading.value ? null : ({
             // }
         }
     },
-    fill: {
-        opacity: 1,
+    yaxis: {
+        labels: {
+            formatter: function (value) {
+                return value.toFixed(2); // limit to 2 decimal places
+            }
+        }
     },
-    // colors: ['#22c55e', '#f43f5e'],
+    dataLabels: {
+        formatter: function (value) {
+                return value.toFixed(2); // limit to 2 decimal places
+            }
+    },
     legend: {
         position: 'top',
         horizontalAlign: 'left'

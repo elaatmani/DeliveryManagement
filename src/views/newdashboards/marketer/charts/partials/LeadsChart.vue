@@ -28,8 +28,7 @@ import { computed,ref } from 'vue';
 const data = ref([]);
 
 const loading = ref(true);
-const getData = async (date_avant = null, date_apres = null, period = 'week') => {
-    console.log(date_avant, date_apres, period);
+const getData = async (date_avant = null, date_apres = null, period = null) => {
     loading.value = true;
     await Dashboard.LeadsPerDay(date_avant, date_apres, period)
     .then(
@@ -45,7 +44,6 @@ const getData = async (date_avant = null, date_apres = null, period = 'week') =>
 
 getData();
 
-getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
@@ -58,8 +56,7 @@ var options = computed(() => loading.value ? null : ({
         stacked: true,
     },
     stroke: {
-        width: 1,
-        colors: ['#fff']
+        curve: 'straight',
     },
     dataLabels: {
         formatter: () => {
