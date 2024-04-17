@@ -1,6 +1,6 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total spend Per day</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend Per Day</h1>
 
         <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex">
@@ -25,18 +25,33 @@
     </div>
 </template>
 <script setup>
-import { computed,defineProps } from 'vue';
+import Dashboard from '@/api/Dashboard';
+import { computed,ref } from 'vue';
+const data = ref([]);
 
-const props = defineProps({
-  chartData: Object,
-  loading: Boolean
+const loading = ref(true);
+const getData = async (date_avant = null, date_apres = null, period = null) => {
+    console.log(date_avant, date_apres, period);
+    loading.value = true;
+    await Dashboard.CostPerDay(date_avant, date_apres, period)
+    .then(
+        res => {
+            if(res.data.code == 'SUCCESS') {
+                data.value = res.data.data.cost_per_day;
+                console.log(res.data.data);
+                loading.value = false;
+            }
+        }
+    );
+}
 
-})
-var options = computed(() => props.loading ? null : ({
+getData();
+
+var options = computed(() => loading.value ? null : ({
     series: [
         {
             name: 'Total Cost Per Day',
-            data: props.chartData.map(p => p ? p.cost : null) // add a check here
+            data: data.value.map(p => p ? p.cost : null) // add a check here
         },],
 
     chart: {
@@ -61,7 +76,7 @@ var options = computed(() => props.loading ? null : ({
         }
     },
     xaxis: {
-        categories: props.chartData.map(p => p.date),
+        categories: data.value.map(p => p.date),
         labels: {
             // formatter: (val) => {
             //     return val / 1000 + 'K'

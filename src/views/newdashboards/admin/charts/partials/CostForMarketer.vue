@@ -1,6 +1,7 @@
 <template >
     <div class="tw-p-5">
         <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend For Each Marketer</h1>
+
         <div class="tw-flex  tw-flex-wrap tw-justify-between tw-items-center">
         <div class="tw-flex">
             <button @click="getData(null,null,'week')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Week</button>
@@ -25,24 +26,38 @@
     </div>
 </template>
 <script setup>
-import { computed ,defineProps} from 'vue';
+import Dashboard from '@/api/Dashboard';
+import { computed,ref } from 'vue';
 
-const props = defineProps({
-  chartData: Object,
-  loading: Boolean
+const data = ref([]);
 
-})
+const loading = ref(true);
+const getData = async (date_avant = null, date_apres = null, period = null,selectedOption = null) => {
+    loading.value = true;
+    await Dashboard.CostPerMarketer(date_avant, date_apres, period,selectedOption)
+    .then(
+        res => {
+            if(res.data.code == 'SUCCESS') {
+                data.value = res.data.data.cost_per_marketer;
+                loading.value = false;
+            }
+        }
+    );
+}
+
+getData();
+
 var options = computed(() => {
 
     return {
-        series: [...props.chartData.map(i=> ({...i, data: i.data.map(j => j.cost_per_marketer)}))],
+        series: [...data.value.map(i=> ({...i, data: i.data.map(j => j.cost_per_marketer)}))],
 
         chart: {
             type: 'area',
         },
         xaxis: {
             type: 'category',
-            categories: props.chartData[0].data.map(c => c.date), 
+            categories: data.value[0].data.map(c => c.date), 
         },
 
         theme: {
