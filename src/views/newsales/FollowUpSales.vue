@@ -150,6 +150,7 @@ export default {
         product_id: "all",
         delivery: "all",
         reported_first: false,
+        in_warehouse: 'all'
       },
     };
   },
@@ -210,6 +211,7 @@ export default {
         product_id: "all",
         delivery: "all",
         reported_first: false,
+        in_warehouse: 'all'
       };
 
       this.handlePageChange(1);

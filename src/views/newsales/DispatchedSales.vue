@@ -152,6 +152,7 @@
           product_id: "all",
           delivery: "dispatch",
           reported_first: false,
+          in_warehouse: 'all'
         },
       };
     },
@@ -213,6 +214,7 @@
           product_id: "all",
           delivery: "dispatch",
           reported_first: false,
+          in_warehouse: 'all'
         };
   
         this.handlePageChange(1);
