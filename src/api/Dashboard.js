@@ -39,9 +39,9 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/cost_per_marketer',{ params: { date_avant, date_apres, period } });
     }
-    async CostPerProduct(date_avant, date_apres, period) {
+    async CostPerProduct(date_avant, date_apres, period,selectedOption) {
         await Csrf.getCookie();
-        return Api.get('api/charts/cost_per_product',{ params: { date_avant, date_apres, period } });
+        return Api.get('api/charts/cost_per_product',{ params: { date_avant, date_apres, period,selectedOption } });
     }
     async ConfirmationStatesDonuts(date_avant, date_apres, period) {
         await Csrf.getCookie();
