@@ -9,3 +9,4 @@ export const serverUrl = 'http://localhost:8000/'
 export const version = '1.0.1';
 
 export const currency = "$";
+export const prefix = 'vlds';

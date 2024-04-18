@@ -11,12 +11,12 @@
 
                         <div class="tw-grid tw-grid-cols-2 tw-gap-5 tw-mt-2">
                             <button @click="target = 'in'" :class="[target == 'in' && '!tw-bg-orange-500 !tw-text-white']" class="tw-px-4 tw-py-2 tw-border tw-justify-center tw-border-solid tw-flex tw-items-center tw-gap-2 tw-rounded-lg">
-                                <icon icon="iconamoon:sign-minus" class="tw-text-2xl" :class="[target == 'in' ? 'tw-text-white' : 'tw-text-neutral-500']" />
+                                <icon icon="iconamoon:sign-plus" class="tw-text-2xl" :class="[target == 'in' ? 'tw-text-white' : 'tw-text-neutral-500']" />
                                 <span style="line-height: 10px" :class="[target == 'in' ? 'tw-text-white' : 'tw-text-neutral-500']">IN</span>
                             </button>
 
                             <button @click="target = 'out'" :class="[target == 'out' && '!tw-bg-orange-500 !tw-text-white']" class="tw-px-4 tw-py-2 tw-border tw-justify-center tw-border-solid tw-flex tw-items-center tw-gap-2 tw-rounded-lg">
-                                <icon icon="iconamoon:sign-plus" class="tw-text-2xl" :class="[target == 'out' ? 'tw-text-white' : 'tw-text-neutral-500']" />
+                                <icon icon="iconamoon:sign-minus" class="tw-text-2xl" :class="[target == 'out' ? 'tw-text-white' : 'tw-text-neutral-500']" />
                                 <span style="line-height: 10px" :class="[target == 'out' ? 'tw-text-white' : 'tw-text-neutral-500']">OUT</span>
                             </button>
                         </div>
@@ -82,6 +82,7 @@
 import { ref, computed } from "vue";
 import ScanPopup from "./ScanPopUp";
 // import AnimateCheck from "./AnimateCheck";
+import { prefix } from '@/config/config'
 import OrderRow from "./OrderRow";
 import { useAlert } from "@/composables/useAlert";
 
@@ -94,9 +95,9 @@ const target = ref("in");
 const isOrderIDInvalid = computed(() => {
     if(detected.value == '') return false;
 
-    const prefix = detected.value.replace(/[^a-zA-Z]/g, '').toLocaleLowerCase();
+    const scannedPrefix = detected.value.replace(/[^a-zA-Z]/g, '').toLocaleLowerCase();
     const id = detected.value.replace(/[^0-9]/g, '');
-    return prefix != 'vlds' || !id
+    return scannedPrefix != prefix || !id
 });
 
 const handleDetect = (v) => { 
@@ -115,7 +116,7 @@ const handleUpdate = (scan_id, newValue) => {
 }
 
 const checkAlreadyScanned = (qr) => {
-    return orders.value.some(o => (o.scanned == qr && o.target == target.value))
+    return orders.value.some(o => (o.scanned == qr))
 }
 
 const generateRandomId = () => {
