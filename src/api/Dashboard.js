@@ -23,9 +23,33 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/products-performance/delivery');
     }
-    async AllCharts(date_avant, date_apres, period) {
+    async CostPerDay(date_avant, date_apres, period) {
         await Csrf.getCookie();
-        return Api.get('api/charts/allcharts',{ params: { date_avant, date_apres, period } });
+        return Api.get('api/charts/cost_per_day',{ params: { date_avant, date_apres, period } });
+    }
+    async LeadsPerDay(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/leads_per_day',{ params: { date_avant, date_apres, period } });
+    }
+    async AmountPerLead(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/amount_per_lead',{ params: { date_avant, date_apres, period } });
+    }
+    async CostPerMarketer(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/cost_per_marketer',{ params: { date_avant, date_apres, period } });
+    }
+    async CostPerProduct(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/cost_per_product',{ params: { date_avant, date_apres, period } });
+    }
+    async ConfirmationStatesDonuts(date_avant, date_apres, period) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/confirmation_state_donuts',{ params: { date_avant, date_apres, period } });
+    }
+    async statistics(filters) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/marketer/statistics', filters);
     }
 
 }

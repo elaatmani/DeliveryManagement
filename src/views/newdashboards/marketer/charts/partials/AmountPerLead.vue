@@ -25,18 +25,33 @@
     </div>
 </template>
 <script setup>
-import { computed,defineProps } from 'vue';
-const props = defineProps({
-  chartData: Object,
-  loading: Boolean
+import Dashboard from '@/api/Dashboard';
+import { computed,ref } from 'vue';
+const data = ref([]);
 
-})
+const loading = ref(true);
+const getData = async (date_avant = null, date_apres = null, period = null) => {
+    console.log(date_avant, date_apres, period);
+    loading.value = true;
+    await Dashboard.AmountPerLead(date_avant, date_apres, period)
+    .then(
+        res => {
+            if(res.data.code == 'SUCCESS') {
+                data.value = res.data.data.amount_per_lead;
+                console.log(res.data.data);
+                loading.value = false;
+            }
+        }
+    );
+}
 
-var options = computed(() => props.loading ? null : ({
+getData();
+
+var options = computed(() => loading.value ? null : ({
     series: [
         {
             name: 'Amount Per Leads',
-            data: props.chartData.map(p => p ? p.average_cost_per_lead : null) // add a check here
+            data: data.value.map(p => p ? p.average_cost_per_lead : null) // add a check here
         },],
 
     chart: {
@@ -59,7 +74,7 @@ var options = computed(() => props.loading ? null : ({
         }
     },
     xaxis: {
-        categories: props.chartData.map(p => p.date),
+        categories: data.value.map(p => p.date),
         labels: {
             // formatter: (val) => {
             //     return val / 1000 + 'K'
