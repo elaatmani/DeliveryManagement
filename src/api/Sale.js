@@ -116,7 +116,11 @@ class Sale {
     async get(id) {
         await Csrf.getCookie();
         return Api.get('api/orders/show/' + id)
-        
+    }
+
+    async warehouseControl(id, target) {
+        await Csrf.getCookie();
+        return Api.post('api/warehouse-control', { id, target })
     }
 }
 

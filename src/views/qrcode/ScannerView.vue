@@ -42,7 +42,7 @@
                             <div class="tw-grid tw-grid-cols-8 tw-mt-16 col-span-12 tw-gap-2 tw-w-full tw-max-w-[23rem]">
                                 <input placeholder="Reference ID" id="code" type="text" v-model="detected"  class="tw-bg-gray-50 border tw-col-span-6 tw-rounded-lg tw-outline-none focus:tw-ring-gray-500 focus:tw-border-gray-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-gray-400 dark:tw-focus:tw-ring-blue-500 dark:focus:tw-border-blue-500">
                                 
-                                <button @click='Copy' class="tw-col-span-2 tw-text-white tw-bg-gray-700 tw-hover:bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-gray-300 tw-font-medium tw-rounded-lg tw-text-sm w-full sm:tw-w-auto tw-py-2.5 tw-text-center dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800 tw-items-center tw-inline-flex tw-justify-center">
+                                <button type="button" @click='Copy' class="tw-col-span-2 tw-text-white tw-bg-gray-700 tw-hover:bg-blue-800 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-gray-300 tw-font-medium tw-rounded-lg tw-text-sm w-full sm:tw-w-auto tw-py-2.5 tw-text-center dark:tw-bg-blue-600 dark:hover:tw-bg-blue-700 dark:focus:tw-ring-blue-800 tw-items-center tw-inline-flex tw-justify-center">
                                     <span id="success-message" class="tw-inline-flex tw-items-center">
                                         <icon icon="mdi:content-copy"/>
                                     </span>
@@ -70,7 +70,7 @@
                             enter-from-class="tw-translate-y-[10px] tw-opacity-0"
                             
                             >
-                            <OrderRow v-for="order in orders" @update="handleUpdate" :order="order" :key="order.scanned + order.target" />
+                            <OrderRow v-for="order in orders" @update="handleUpdate" :order="order" :key="order.scan_id" />
                         </transition-group>
                     </div>
                 </div>
@@ -109,30 +109,37 @@ const Copy = () => {
     navigator.clipboard.writeText(copyText.value)
 }
 
-const handleUpdate = (payload, newValue) => {
-    console.log(payload)
-    console.log(newValue)
-    orders.value = orders.value.map(i => (i.scanned == payload.scanned && i.target == payload.target) ? newValue : i);
-    console.log(orders.value)
+const handleUpdate = (scan_id, newValue) => {
+    orders.value = orders.value.map(i => (i.scan_id == scan_id) ? newValue : i);
+
 }
 
 const checkAlreadyScanned = (qr) => {
     return orders.value.some(o => (o.scanned == qr && o.target == target.value))
 }
 
+const generateRandomId = () => {
+  const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
+  const randomNum = Math.random().toString(36).substr(2, 5); // Generate random string and take a substring
+
+  return timestamp + randomNum;
+}
+
 const handleConfirm = () => {
+    const order = {scan_id: generateRandomId(), scanned: detected.value, loading: true, check: false, target: target.value}
+
     if(detected.value == '') {
         useAlert('Reference ID is not valid', 'warning')
         return false;
     }
     
     if(checkAlreadyScanned(detected.value)) {
-        useAlert('Already scanned or change target', 'info')
-        return false;
+        // useAlert('Already scanned or change target', 'info')
+        order.already_scanned = true;
     }
 
     if(!isOrderIDInvalid.value && detected.value != '') {
-        orders.value.unshift({scanned: detected.value, loading: true, check: false, target: target.value});
+        orders.value.unshift(order);
         detected.value = '';
     } 
     
