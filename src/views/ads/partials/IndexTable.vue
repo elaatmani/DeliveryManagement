@@ -63,7 +63,7 @@
                           <tr>
                             <td colspan="8">
                               <div class="tw-p-5 tw-text-center tw-text-gray-600 tw-font-medium">
-                                No Order was found !
+                                No ads yet !
                               </div>
                             </td>
                           </tr>

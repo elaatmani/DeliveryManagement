@@ -1,7 +1,7 @@
 <template>
   <div class="tw-flex">
     <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Source Rates</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Sources</h1>
 
         <div v-if="!loading">
             <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmations Rates</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmation Rate</h1>
 
         <div v-if="!loading">
             <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rates</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rate</h1>
 
         <div v-if="!loading">
             <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>

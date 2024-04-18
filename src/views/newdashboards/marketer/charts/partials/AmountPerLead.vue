@@ -1,6 +1,6 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Amounts Per Leads</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Cost Per Lead</h1>
 
         <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex">
@@ -50,7 +50,7 @@ getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
-            name: 'Amount Per Leads',
+            name: 'CPL',
             data: data.value.map(p => p ? p.average_cost_per_lead : null) // add a check here
         },],
 

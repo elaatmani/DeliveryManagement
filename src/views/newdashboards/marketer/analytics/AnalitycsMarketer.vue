@@ -1,7 +1,7 @@
 <template>
     <div>
       <div v-if="fetching" class="tw-grid tw-gap-2 lg:tw-grid-cols-4 sm:tw-grid-cols-2 tw-grid-cols-1">
-          <div v-for="item in 4" :key="item" class="tw-bg-white tw-animate-pulse tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
+          <div v-for="item in 4" :key="item" class="tw-bg-white tw-animate-pulse tw-border tw-border-dashed tw-border-neutral-200 tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
             <div class="tw-flex tw-justify-between tw-w-full">
                 <div>
                 <div class="tw-flex tw-w-full tw-items-center tw-gap-2">

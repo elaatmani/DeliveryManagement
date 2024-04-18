@@ -1,6 +1,6 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Leads Per Day</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Leads Per Day</h1>
 
         <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex">
@@ -49,7 +49,7 @@ getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
-            name: 'Total Leads Per Day',
+            name: 'Leads',
             data: data.value ? data.value.map(p => p ? p.leads : null) : [] 
         },],
 

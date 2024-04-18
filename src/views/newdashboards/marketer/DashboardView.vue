@@ -1,6 +1,6 @@
 <template>
     <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-        <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+        <div class="tw-col-span-12">
           <AnalitycsMarketer :statistics="statistics" :fetching="fetching"/>
         </div>
         <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">

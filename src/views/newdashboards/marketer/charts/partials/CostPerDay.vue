@@ -1,6 +1,6 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend Per Day</h1>
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Spend Per Day</h1>
 
         <div class="tw-flex tw-justify-between tw-items-center">
         <div class="tw-flex">
@@ -50,7 +50,7 @@ getData();
 var options = computed(() => loading.value ? null : ({
     series: [
         {
-            name: 'Total Cost Per Day',
+            name: 'Spent',
             data: data.value.map(p => p ? p.cost : null) // add a check here
         },],
 
@@ -90,7 +90,14 @@ var options = computed(() => loading.value ? null : ({
     legend: {
         position: 'top',
         horizontalAlign: 'left'
-    }
+    },
+    yaxis: {
+        labels: {
+            formatter: function (value) {
+            return value + "$";
+            }
+        },
+    },
 }));
 </script>
 <style lang="">
