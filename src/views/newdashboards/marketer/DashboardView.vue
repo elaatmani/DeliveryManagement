@@ -3,7 +3,10 @@
         <div class="tw-col-span-12">
           <AnalitycsMarketer :statistics="statistics" :fetching="fetching"/>
         </div>
-        <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+        <div class="tw-col-span-4 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+          <SourceDonutsCharts />
+        </div>
+        <div class="tw-col-span-8 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
           <CostPerDay/>
         </div>
         <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
@@ -20,6 +23,7 @@
 import AmountPerLead from './charts/partials/AmountPerLead';
 import LeadsChart from './charts/partials/LeadsChart';
 import {ref} from 'vue'
+import SourceDonutsCharts  from './charts/partials/SourceDonutsCharts';
 import CostPerDay from './charts/partials/CostPerDay';
 import AnalitycsMarketer from './analytics/AnalitycsMarketer';
 import Dashboard from '@/api/Dashboard';
