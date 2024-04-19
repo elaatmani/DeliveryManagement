@@ -1,36 +1,45 @@
 <template>
-  <div class="tw-flex">
-    <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Sources</h1>
+    <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-w-full">
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
-        <div v-if="!loading">
-            <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
-        </div>
-        <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
-            <Loading />
+        <div class="tw-p-5">
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Sources</h1>
+
+            <div v-if="!loading">
+                <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
+            </div>
+            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+                <Loading />
+            </div>
         </div>
     </div>
-    <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmation Rate</h1>
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
-        <div v-if="!loading">
-            <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
-        </div>
-        <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
-            <Loading />
+        <div class="tw-p-5">
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmation Rate</h1>
+
+            <div v-if="!loading">
+                <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
+            </div>
+            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+                <Loading />
+            </div>
         </div>
     </div>
-    <div class="tw-p-5 tw-w-[33%]">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rate</h1>
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
-        <div v-if="!loading">
-            <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>
+        <div class="tw-p-5">
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rate</h1>
+
+            <div v-if="!loading">
+                <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>
+            </div>
+            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+                <Loading />
+            </div>
         </div>
-        <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
-            <Loading />
         </div>
-    </div>
-  </div>
+</div>
 </template>
 
 <script setup>

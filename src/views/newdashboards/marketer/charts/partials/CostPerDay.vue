@@ -50,7 +50,6 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
     } else {
         dateRange.value = null
     }
-    console.log(date_avant, date_apres, period);
     loading.value = true;
     await Dashboard.CostPerDay(date_avant, date_apres, period)
     .then(

@@ -1,13 +1,13 @@
 <template>
     <div>
-      <div class="tw-grid tw-grid-cols-12 tw-gap-2">
-          <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+      <div class="tw-gap-2">
+          <div class="tw-mb-2">
               <StatusDonutChart />
           </div>
-          <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+          <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
               <CostForMarketer />
           </div>
-          <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+          <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
               <CostPerProduct />
           </div>
          
