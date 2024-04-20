@@ -1,7 +1,15 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Cost Per Lead</h1>
-
+        <div class="tw-flex tw-justify-between">
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Cost Per Lead</h1>
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
+                <Loading />
+                <p>Updating</p>
+            </div>
+            <div v-else class="tw-text-neutral-500">
+                Already Up To date
+            </div>
+            </div>
         <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-w-full">
             <button :class="[dateRange == 'lastsevendays' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'lastsevendays')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Seven Days </button>
@@ -43,23 +51,54 @@ const isCustom = ref(false);
 const dateRange = ref('lastsevendays');
 const date_avant_field = ref(null);
 const date_apres_field = ref(null);
+const loadingUpdating = ref(true);
+
 const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays') => {
+    const cachedData = sessionStorage.getItem('cachedAmountPerLead');
+    let parsedData = null;
+
+    if (cachedData) {
+        parsedData = JSON.parse(cachedData);
+        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period ) {
+            data.value = parsedData.amount_per_lead;
+            loading.value = false;
+        }
+    }
     if(!date_apres || !date_apres) {
         isCustom.value = false;
         dateRange.value = period
     } else {
         dateRange.value = null
     }
-    loading.value = true;
+    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period) {
+        loading.value = true;
+        loadingUpdating.value = true;
+
+    }
     await Dashboard.AmountPerLead(date_avant, date_apres, period)
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.amount_per_lead;
-                console.log(res.data.data);
+                if (res.data.code === 'SUCCESS') {
+                const newData = {
+                    date_avant,
+                    date_apres,
+                    period,
+                    amount_per_lead: res.data.data.amount_per_lead
+                };
+                if (!parsedData || JSON.stringify(parsedData.amount_per_lead) !== JSON.stringify(newData.amount_per_lead)) {
+                    sessionStorage.setItem('cachedAmountPerLead', JSON.stringify(newData));
+                    data.value = res.data.data.amount_per_lead;
+                    loadingUpdating.value = true
+                } else {
+                    loadingUpdating.value = false;
+
+                }
+                loadingUpdating.value = false
                 loading.value = false;
             }
         }
+    }
     );
 }
 

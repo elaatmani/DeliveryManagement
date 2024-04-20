@@ -1,6 +1,15 @@
 <template >
     <div class="tw-p-5">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend For Each Marketer</h1>
+        <div class="tw-flex tw-justify-between">
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend For Each Marketer</h1>
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
+                <Loading />
+                <p>Updating</p>
+            </div>
+            <div v-else class="tw-text-neutral-500">
+                Already Up To date
+            </div>
+        </div>
 
         <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-w-full">
@@ -44,26 +53,61 @@ const date_avant_field = ref(null);
 const date_apres_field = ref(null);
 
 const loading = ref(true);
-const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays',selectedOption = null) => {
-    if(!date_apres || !date_apres) {
-        isCustom.value = false;
-        dateRange.value = period
-    } else {
-        dateRange.value = null
+const loadingUpdating = ref(true);
+const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null) => {
+    const cachedData = sessionStorage.getItem('cachedCostPerMarketer');
+    let parsedData = null;
+
+    if (cachedData) {
+        parsedData = JSON.parse(cachedData);
+        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period && parsedData.selectedOption === selectedOption) {
+            data.value = parsedData.cost_per_marketer;
+            loading.value = false;
+        }
     }
-    loading.value = true;
-    await Dashboard.CostPerMarketer(date_avant, date_apres, period,selectedOption)
-    .then(
-        res => {
-            if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.cost_per_marketer;
+
+    if (!date_avant || !date_apres) {
+        isCustom.value = false;
+        dateRange.value = period;
+    } else {
+        dateRange.value = null;
+    }
+
+    // Show loading state only if the request parameters have changed
+    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period || parsedData.selectedOption !== selectedOption) {
+        loading.value = true;
+        loadingUpdating.value = true;
+
+    }
+
+    await Dashboard.CostPerMarketer(date_avant, date_apres, period, selectedOption)
+        .then(res => {
+            if (res.data.code === 'SUCCESS') {
+                const newData = {
+                    date_avant,
+                    date_apres,
+                    period,
+                    selectedOption,
+                    cost_per_marketer: res.data.data.cost_per_marketer
+                };
+
+                // If the data has changed, update the cache and the displayed data
+                if (!parsedData || JSON.stringify(parsedData.cost_per_marketer) !== JSON.stringify(newData.cost_per_marketer)) {
+                    sessionStorage.setItem('cachedCostPerMarketer', JSON.stringify(newData));
+                    data.value = res.data.data.cost_per_marketer;
+                    loadingUpdating.value = true
+                } else {
+                    loadingUpdating.value = false;
+
+                }
+                loadingUpdating.value = false
                 loading.value = false;
             }
-        }
-    );
-}
+        });
+};
 
 getData();
+
 
 var options = computed(() => {
 

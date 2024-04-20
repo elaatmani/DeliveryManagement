@@ -3,8 +3,16 @@
     <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
         <div class="tw-p-5">
+            <div class="tw-flex tw-justify-between">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Sources</h1>
-
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
+                <Loading />
+                <p>Updating</p>
+            </div>
+            <div v-else class="tw-text-neutral-500">
+                Already Up To date
+            </div>
+        </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
             </div>
@@ -16,8 +24,17 @@
     <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
         <div class="tw-p-5">
+            
+            <div class="tw-flex tw-justify-between">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmation Rate</h1>
-
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
+                <Loading />
+                <p>Updating</p>
+            </div>
+            <div v-else class="tw-text-neutral-500">
+                Already Up To date
+            </div>
+            </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
             </div>
@@ -29,8 +46,16 @@
     <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
 
         <div class="tw-p-5">
+            <div class="tw-flex tw-justify-between">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rate</h1>
-
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
+                <Loading />
+                <p>Updating</p>
+            </div>
+            <div v-else class="tw-text-neutral-500">
+                Already Up To date
+            </div>
+            </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>
             </div>
@@ -51,20 +76,44 @@ import { confirmations, deliveryStatus } from '@/config/orders'
 
 const data = ref([]);
 const loading = ref(true);
+const loadingUpdating = ref(true);
 
 
 const getData = async () => {
-    loading.value = true;
+    const cachedData = sessionStorage.getItem('cachedStatusDonut');
+    let parsedData = null;
+
+    if (cachedData) {
+        parsedData = JSON.parse(cachedData);
+        data.value = parsedData.confirmation_state_donuts;
+        loading.value = false;
+        console.log(data.value);
+    }
+  
     await Dashboard.ConfirmationStatesDonuts()
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
-                data.value = res.data.data.confirmation_state_donuts[0];
+                const newData = {
+                    confirmation_state_donuts: res.data.data.confirmation_state_donuts[0]
+                };
+
+                if (!parsedData || JSON.stringify(parsedData.confirmation_state_donuts) !== JSON.stringify(newData.confirmation_state_donuts)) {
+                    sessionStorage.setItem('cachedStatusDonut', JSON.stringify(newData));
+                    data.value = res.data.data.confirmation_state_donuts[0];
+                  
+                    loadingUpdating.value = true
+                } else {
+                   
+                    loadingUpdating.value = false;
+
+                }
+                loadingUpdating.value = false
+
                 loading.value = false;
             }
         }
     );
-    loading.value = false;
 }
 
 getData();
