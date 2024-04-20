@@ -11,7 +11,7 @@
           (e) => $emit('update', { ...filters, source: e.target.value })
         "
         :value="filters.source"
-        class="tw-bg-gray-50 tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
+        class="tw-bg-gray-50 tw-capitalize tw-border-solid tw-outline-none tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5"
       >
         <option value="all">All</option>
         <option
@@ -38,7 +38,7 @@
   
       data() {
           return {
-            sources: ['facebook', 'Google', 'tiktok','snapchat'],
+            sources: ['facebook', 'google', 'tiktok','snapchat'],
           }
       },
   }

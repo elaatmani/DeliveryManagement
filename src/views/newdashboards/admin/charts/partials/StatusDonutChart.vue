@@ -1,65 +1,56 @@
 <template>
     <div class="tw-grid tw-grid-cols-3 tw-gap-4 tw-w-full">
-    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-relative">
 
         <div class="tw-p-5">
             <div class="tw-flex tw-justify-between">
-            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Sources</h1>
-            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
-                <Loading />
-                <p>Updating</p>
-            </div>
-            <div v-else class="tw-text-neutral-500">
-                Already Up To date
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium ">Sources</h1>
+            <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
+                <Loading class="tw-scale-50" />
+                <p class=" tw-tetx-xs">Updating...</p>
             </div>
         </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
             </div>
-            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+            <div v-else class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
                 <Loading />
             </div>
         </div>
     </div>
-    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-relative">
 
         <div class="tw-p-5">
             
             <div class="tw-flex tw-justify-between">
-            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Confirmation Rate</h1>
-            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
-                <Loading />
-                <p>Updating</p>
-            </div>
-            <div v-else class="tw-text-neutral-500">
-                Already Up To date
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium ">Confirmation Rate</h1>
+            <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
+                <Loading class="tw-scale-50" />
+                <p class=" tw-tetx-xs">Updating...</p>
             </div>
             </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="options.series" :chart="options.chart" :options="options"></apexchart>
             </div>
-            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+            <div v-else class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
                 <Loading />
             </div>
         </div>
     </div>
-    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+    <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-relative">
 
         <div class="tw-p-5">
             <div class="tw-flex tw-justify-between">
-            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Delivery Rate</h1>
-            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
-                <Loading />
-                <p>Updating</p>
-            </div>
-            <div v-else class="tw-text-neutral-500">
-                Already Up To date
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium ">Delivery Rate</h1>
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
+                <Loading class="tw-scale-50" />
+                <p class=" tw-tetx-xs">Updating...</p>
             </div>
             </div>
             <div v-if="!loading">
                 <apexchart :height="400" :series="optionss.series" :chart="optionss.chart" :options="optionss"></apexchart>
             </div>
-            <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
+            <div v-else class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
                 <Loading />
             </div>
         </div>

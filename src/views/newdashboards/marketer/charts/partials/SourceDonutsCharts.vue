@@ -1,14 +1,11 @@
 <template>
     <div class="tw-flex">
-      <div class="tw-p-5 tw-w-full">
+      <div class="tw-p-5 tw-w-full tw-relative">
         <div class="tw-flex tw-justify-between">
             <h1 class="tw-text-xl tw-font-medium tw-py-2">Sources</h1>
-            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
-                <Loading />
-                <p>Updating</p>
-            </div>
-            <div v-else class="tw-text-neutral-500">
-                Already Up To date
+            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
+                <Loading class="tw-scale-50" />
+                <p class=" tw-tetx-xs">Updating</p>
             </div>
             </div>
           <div v-if="!loading">
