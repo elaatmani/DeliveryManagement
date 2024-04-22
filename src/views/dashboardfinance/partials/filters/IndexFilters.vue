@@ -14,9 +14,9 @@
           View all
         </button>
 
-        <button title="Orders Created Today" :class="[showToday && '!tw-bg-gray-100']" :disabled="showToday" @click="filterToday(true)" class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
+        <!-- <button title="Orders Created Today" :class="[showToday && '!tw-bg-gray-100']" :disabled="showToday" @click="filterToday(true)" class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
             Today
-        </button>
+        </button> -->
         <!-- 
             <button class="tw-px-5 tw-py-2 tw-text-xs tw-font-medium tw-border-solid tw-text-gray-600 tw-transition-colors tw-duration-200 sm:tw-text-sm darkx:hover:tw-bg-gray-800 darkx:tw-text-gray-300 hover:tw-bg-gray-100">
                 Yesterday
