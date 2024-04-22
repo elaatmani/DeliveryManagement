@@ -35,11 +35,11 @@
         </div>
         <div class="tw-flex">
             <vue-select 
+                :multiple="true"
                 :reduce="(series) => series" 
                 @input="updateChart" 
                 :clearable="false" 
                 class="tw-bg-white tw-items-center tw-border-solid tw-outline-none  tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-[200px] tw-h-[44px]"
-                placeholder="All" 
                 v-model="selectedSeries" 
                 :options="seriesOptions" 
                 label="name">
@@ -68,7 +68,7 @@ defineComponent({
   },
 });
 const data = ref([]);
-const selectedSeries = ref('all');
+const selectedSeries = ref([]);
 const loading = ref(true);
 const isCustom = ref(false);
 const dateRange = ref('lastsevendays');
@@ -77,8 +77,7 @@ const date_apres_field = ref(null);
 
 const allData = ref([]); 
 const loadingUpdating = ref(true);
-const seriesOptions = computed(() => ['all', ...allData.value.map((series) => series.name)]);
-
+const seriesOptions = computed(() => allData.value.map((series) => series.name));
 const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays') => {
     const cachedData = sessionStorage.getItem('cachedCostPerProduct');
     let parsedData = null;
@@ -111,7 +110,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     period,
                     cost_per_product: res.data.data.cost_per_product
                 };
-                if (!parsedData || JSON.stringify(parsedData.cost_per_marketer) !== JSON.stringify(newData.cost_per_marketer)) {
+                if (!parsedData || JSON.stringify(parsedData.cost_per_product) !== JSON.stringify(newData.cost_per_product)) {
                     sessionStorage.setItem('cachedCostPerProduct', JSON.stringify(newData));
                     data.value = res.data.data.cost_per_product;
                     loadingUpdating.value = true
@@ -120,10 +119,8 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 
                 }
                 allData.value = res.data.data.cost_per_product;
-                if (selectedSeries.value && selectedSeries.value !== 'all') {
-                    data.value = allData.value.filter(product => product.name === selectedSeries.value)
-                } else {
-                    data.value = allData.value; 
+                if (!selectedSeries.value) {
+                    selectedSeries.value = allData.value[0].name;
                 }
                 loading.value = false;
                 updateChart();
@@ -134,21 +131,17 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 getData();
 
 const updateChart = async () => {
-    if (selectedSeries.value === 'all') {
-        options.value.series = data.value.map(series => ({
-            name: series.name,
-            data: series.data.map(item => item.cost_per_product)
-        }));
-    } else {
-        const selectedData = data.value.find(series => series.name === selectedSeries.value);
-        if (selectedData) {
-            options.value.series = [{
-                name: selectedData.name,
-                data: selectedData.data.map(item => item.cost_per_product)
-            }];
-        }
+  
+        options.value.series = selectedSeries.value.map(productName => {
+            const selectedData = data.value.find(series => series.name === productName);
+            if (selectedData) {
+                return {
+                    name: selectedData.name,
+                    data: selectedData.data.map(item => item.cost_per_product)
+                };
+            }
+        }).filter(Boolean);
     }
-}
 watch(selectedSeries, () => {
     getData(null, null, null, selectedSeries.value);
     updateChart();
@@ -186,9 +179,9 @@ var options = computed(() => {
         fill: {
             opacity: 1,
         },
+      
         legend: {
-            position: 'top',
-            horizontalAlign: 'left'
+            show: false
         }
     };
 });

@@ -75,10 +75,9 @@
       chart: {
           type: 'donut',
       },
-  
       fill: {
-          opacity: 1,
-      },
+        colors: ['#F44336', '#E91E63', '#9C27B0','#9C27B5']
+     },
       // colors: ['#22c55e', '#f43f5e'],
       legend: {
           position: 'top',
