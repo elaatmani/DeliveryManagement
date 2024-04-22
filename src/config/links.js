@@ -438,6 +438,7 @@ export const links = [
         module: 'scanner',
         to: '/scanner',
         role: 'admin',
+        gate: 'stock_management',
         hasChildren: false,
         icon: {
             type: 'icon',

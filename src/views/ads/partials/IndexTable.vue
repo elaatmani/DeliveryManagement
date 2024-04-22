@@ -33,7 +33,7 @@
                                       </svg>
                                   </button>
                               </th>
-                                <th scope="col" class="tw-px-4 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
+                                <th v-if="$user.role == 'admin'" scope="col" class="tw-px-4 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                    Marketer
                                </th>
                                 <th scope="col" class="tw-px-4 tw-py-3.5 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">

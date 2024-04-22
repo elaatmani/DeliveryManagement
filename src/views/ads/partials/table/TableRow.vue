@@ -30,11 +30,12 @@
         </div>
       </td>
       <td
+        v-if="$user.role == 'admin'"
       class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
     >
       <div>
         <h2 class="tw-font-semibold tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]x">
-          {{ item.marketers.firstname }} {{ item.marketers.lastname }}
+          {{ item.marketers.firstname }} {{ item.marketers.lastname }} {{ $user.role }}
         </h2>
       </div>
     </td>
