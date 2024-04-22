@@ -1,13 +1,23 @@
 <template >
-    <div class="tw-p-5 tw-mb-3 tw-relative">
+    <div class="tw-p-5 tw-relative">
         <div class="tw-flex tw-justify-between">
-            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend For Each Product</h1>
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Top Selling Product</h1>
             <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
                 <Loading class="tw-scale-50" />
-                <p class=" tw-tetx-xs">Updating...</p>
+                <p class=" tw-tetx-xs">Updating</p>
             </div>
         </div>
-        <div class="tw-flex tw-justify-between tw-items-center">
+        <div class="tw-flex tw-justify-between tw-items-center" >
+            <select v-model="perPage" @change="e => getData(null,null,null,null,e.target.value)" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+            <input v-model.number="lineHeight" type="number" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" />
+        </div>
+
+        <div v-if="false" class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-w-full">
             <button :class="[dateRange == 'lastsevendays' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'lastsevendays')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Seven Days </button>
             <button :class="[dateRange == 'week' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'week')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Week</button>
@@ -19,8 +29,7 @@
                 <span>Custom</span>
             </button>
         </div>
-     
-        <div
+        <div v-if="false"
             :class="[isCustom ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
             class="tw-grid tw-duration-300 tw-transition-all"
             >
@@ -30,22 +39,9 @@
                 <button @click="getData(date_avant_field, date_apres_field)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
             </div>
         </div>
-        <div class="tw-flex">
-            <vue-select 
-                :multiple="true"
-                :reduce="(series) => series" 
-                @input="updateChart" 
-                :clearable="false" 
-                class="tw-bg-white tw-items-center tw-border-solid tw-outline-none tw-mb-5 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-[200px] tw-h-[44px]"
-                v-model="selectedSeries" 
-                :options="seriesOptions" 
-                label="name">
-            </vue-select>
-      </div>
         </div>
-       
-        <div v-if="!loading">
-            <apexchart :height="400"  :series="options.series" :chart="options.chart" :options="options"></apexchart>
+        <div v-if="!loading" >
+            <apexchart :height="perPage * lineHeight" :key="lineHeight"  :series="options.series" :chart="options.chart" :options="options"></apexchart>
         </div>
         <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
             <Loading />
@@ -54,131 +50,122 @@
 </template>
 <script setup>
 import Dashboard from '@/api/Dashboard';
-import vueSelect from 'vue-select';
-import { computed ,ref,defineComponent} from 'vue';
-import { watch } from 'vue';
+import { computed,ref } from 'vue';
 
-
-defineComponent({
-  components: {
-    'vue-select': vueSelect
-  },
-});
 const data = ref([]);
-const selectedSeries = ref([]);
-const loading = ref(true);
 const isCustom = ref(false);
 const dateRange = ref('lastsevendays');
+const perPage = ref(10);
+const lineHeight = ref(80);
 const date_avant_field = ref(null);
 const date_apres_field = ref(null);
 
-const allData = ref([]); 
+const loading = ref(true);
 const loadingUpdating = ref(true);
-const seriesOptions = computed(() => allData.value.map((series) => series.name));
-const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays') => {
-    const cachedData = sessionStorage.getItem('cachedCostPerProduct');
+function sliceObject(obj, nb) {
+    const keys = Object.keys(obj).slice(0, nb);
+    const slicedObj = {};
+    keys.forEach(key => {
+        slicedObj[key] = obj[key];
+    });
+    return slicedObj;
+}
+const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null, nb = 10) => {
+    const cachedData = sessionStorage.getItem('cachedTopProduct');
     let parsedData = null;
 
     if (cachedData) {
         parsedData = JSON.parse(cachedData);
-        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period ) {
-            data.value = parsedData.cost_per_product;
+        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period && parsedData.selectedOption === selectedOption) {
+            data.value = parsedData.topProducts;
             loading.value = false;
         }
     }
-     if(!date_apres || !date_apres) {
+
+    if (!date_avant || !date_apres) {
         isCustom.value = false;
-        dateRange.value = period
+        dateRange.value = period;
     } else {
-        dateRange.value = null
+        dateRange.value = null;
     }
-    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period) {
+
+    // Show loading state only if the request parameters have changed
+    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period || parsedData.selectedOption !== selectedOption) {
         loading.value = true;
         loadingUpdating.value = true;
 
     }
-    await Dashboard.CostPerProduct(date_avant, date_apres, period)
-    .then(
-        res => {
-            if(res.data.code == 'SUCCESS') {
-                const newData = {
-                    date_avant,
-                    date_apres,
-                    period,
-                    cost_per_product: res.data.data.cost_per_product
-                };
-                if (!parsedData || JSON.stringify(parsedData.cost_per_product) !== JSON.stringify(newData.cost_per_product)) {
-                    sessionStorage.setItem('cachedCostPerProduct', JSON.stringify(newData));
-                    data.value = res.data.data.cost_per_product;
-                    loadingUpdating.value = true
-                } else {
-                    loadingUpdating.value = false;
 
-                }
-                allData.value = res.data.data.cost_per_product;
-                if (!selectedSeries.value) {
-                    selectedSeries.value = allData.value[0].name;
-                }
-                loading.value = false;
-                updateChart();
+    await Dashboard.TopProductSelles(date_avant, date_apres, period, selectedOption)
+    .then(res => {
+        if (res.data.code === 'SUCCESS') {
+            const newData = {
+                date_avant,
+                date_apres,
+                period,
+                selectedOption,
+                topProducts: Object.values(sliceObject(res.data.data.topProducts, nb))
+            };
+
+            if (!parsedData || JSON.stringify(parsedData.topProducts) !== JSON.stringify(newData.topProducts)) {
+                sessionStorage.setItem('cachedTopProduct', JSON.stringify(newData));
+                data.value = newData.topProducts;
+                loadingUpdating.value = true
+            } else {
+                loadingUpdating.value = false;
             }
+            loadingUpdating.value = false
+            loading.value = false;
         }
-    );
-}
-getData();
+    });
+};
 
-const updateChart = async () => {
-  
-        options.value.series = selectedSeries.value.map(productName => {
-            const selectedData = data.value.find(series => series.name === productName);
-            if (selectedData) {
-                return {
-                    name: selectedData.name,
-                    data: selectedData.data.map(item => item.cost_per_product)
-                };
-            }
-        }).filter(Boolean);
-    }
-watch(selectedSeries, () => {
-    getData(null, null, null, selectedSeries.value);
-    updateChart();
-});
+getData(perPage.value);
+
+
 var options = computed(() => {
-    let series = [];
-
-    if (selectedSeries.value === 'all') {
-        series = data.value.map(series => ({
-            name: series.name,
-            data: series.data.map(item => item.cost_per_product)
-        }));
-    } else if (data.value[selectedSeries.value]) {
-        series = [{
-            name: data.value[selectedSeries.value].name,
-            data: data.value[selectedSeries.value].data.map(item => item.cost_per_product)
-        }];
-    }
+    const series = [
+        {
+            name: "Total Orders",
+            data: data.value.map(product => product.total_orders)
+        },
+        {
+            name: "Total Quantity",
+            data: data.value.map(product => product.total_quantity)
+        }
+    ];
 
     return {
-        series: series,
+        series:series,
+
         chart: {
-            type: 'area',
+            type: 'bar',
         },
+        plotOptions: {
+                bar: {
+                horizontal: true,
+
+                }
+                
+            },
         xaxis: {
             type: 'category',
-            categories: data.value[0].data.map(c => c.date), 
+            categories: data.value.map(product => product.product_name), 
         },
+
         theme: {
-            palette: 'palette7'
+            palette: 'palette8'
         },
         stroke: {
             curve: 'smooth',
+            },
+       
+        fill:{
+            height: 1,
         },
-        fill: {
-            opacity: 1,
-        },
-      
         legend: {
-            show: false
+            position: 'top',
+            horizontalAlign: 'left'
         }
     };
 });
