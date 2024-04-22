@@ -1,13 +1,10 @@
 <template >
-    <div class="tw-p-5">
+    <div class="tw-p-5 tw-relative">
         <div class="tw-flex tw-justify-between">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend For Each Product</h1>
-            <div v-if="loadingUpdating" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1">
-                <Loading />
-                <p>Updating</p>
-            </div>
-            <div v-else class="tw-text-neutral-500">
-                Already Up To date
+            <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
+                <Loading class="tw-scale-50" />
+                <p class=" tw-tetx-xs">Updating...</p>
             </div>
         </div>
         <div class="tw-flex tw-justify-between tw-items-center">

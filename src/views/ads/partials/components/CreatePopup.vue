@@ -141,7 +141,7 @@
       return {
         isLoading: false,
 
-        sources: ['facebook', 'Google', 'tiktok','snapchat'],
+        sources: ['facebook', 'google', 'tiktok','snapchat'],
 
         products_fetched: null,
         products: null,
