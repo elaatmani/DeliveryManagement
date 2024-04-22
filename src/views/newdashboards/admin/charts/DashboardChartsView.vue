@@ -7,8 +7,11 @@
           <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
               <CostForMarketer />
           </div>
-          <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+          <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
               <CostPerProduct />
+          </div>
+          <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+              <TopProductChart />
           </div>
          
       </div>
@@ -16,6 +19,7 @@
   </template>
   
   <script setup>
+  import TopProductChart from './partials/TopProductChart';
   import CostPerProduct from './partials/CostPerProduct';
   import CostForMarketer from './partials/CostForMarketer';
   import StatusDonutChart from './partials/StatusDonutChart';
