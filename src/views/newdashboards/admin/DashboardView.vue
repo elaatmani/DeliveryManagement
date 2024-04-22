@@ -7,7 +7,7 @@
 
         <IndexRevenue :statistics="statistics" :fetching="fetching" />
         
-        <IndexStatistics :statistics="statistics" :fetching="fetching" />        
+        <IndexStatistics :statistics="statistics" :fetching="fetching" />     
 
     </div>
   </div>
