@@ -49,7 +49,7 @@ class Dashboard {
     }
     async TopProductSelles(date_avant, date_apres, period) {
         await Csrf.getCookie();
-        return Api.get('https://api.vldo.shop/v1/admin/get_top_products',{ params: { date_avant, date_apres, period } });
+        return Api.get('api/v1/admin/get_top_products',{ params: { date_avant, date_apres, period } });
     }
     async statistics(filters) {
         await Csrf.getCookie();
