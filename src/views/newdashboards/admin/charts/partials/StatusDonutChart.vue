@@ -114,8 +114,7 @@ var options = computed(() => loading.value ? null : ({
     chart: {
         type: 'donut',
     },
-
-    fill: {
+    fill: { 
         opacity: 1,
     },
     // colors: ['#22c55e', '#f43f5e'],
@@ -123,8 +122,14 @@ var options = computed(() => loading.value ? null : ({
         position: 'top',
         horizontalAlign: 'left'
     },
-    labels: data.value.orders.map(i => confirmations.find(j => j.value == i.confirmation)?.name)
-}));
+    labels: data.value.orders.map(i => {
+            const confirmation = confirmations.find(j => j.value == i.confirmation);
+            if(i.confirmation == 'no-answer') {
+                return 'No Answer';
+            }
+            return confirmation ? confirmation.name : '';
+
+        })}));
 var optionss = computed(() => loading.value ? null : ({
     series: data.value.delivery.map(i => i.total),
     chart: {

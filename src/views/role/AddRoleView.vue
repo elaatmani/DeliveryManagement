@@ -209,16 +209,30 @@ export default {
         })
         .catch(this.$handleApiError);
     },
+
+    async getPermissions() {
+      return await User.permessions()
+        .then((res) => {
+          if (res?.data.code == "SUCCESS") {
+            const permissions = res.data.permissions;
+            this.permissions = permissions.map(p => p.name);
+            this.isFormReady = true;
+          }
+        })
+        .catch(this.$handleApiError);
+    },
   },
 
   async mounted() {
-    if (this.roles.length == 0) {
-      await this.getRoles();
-    } else {
-      this.isFormReady = true;
-    }
-
-    this.permissions = this.$store.getters["user/permissions"];
+    // if (this.roles.length == 0) {
+    //   await this.getRoles();
+    // } else {
+      // this.isFormReady = true;
+      // }
+      
+    await this.getPermissions();
+    this.isFormReady = true;
+    // this.permissions = this.$store.getters["user/permissions"];
   },
 };
 </script>

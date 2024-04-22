@@ -6,15 +6,18 @@
         <h2 class="tw-text-gray-500 tw-text-sm">Manage all Roles</h2>
       </div>
 
-
-      <div v-if="$can('create_role')">
-        <v-btn color="primary-color" link :to="{name: 'user/addRole'}" variant="flat" class="text-capitalize">
-          <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
-          <span class="text-white">
-            Add Role
-          </span>
-        </v-btn>
+      <div class="tw-flex tw-items-center tw-gap-2">
+        <CreatePermission v-model:visible="visible"/>
+        <div v-if="$can('create_role')">
+          <v-btn color="primary-color" link :to="{name: 'user/addRole'}" variant="flat" class="text-capitalize">
+            <v-icon icon="mdi-plus" class="mr-2 text-white "></v-icon>
+            <span class="text-white">
+              Role
+            </span>
+          </v-btn>
+        </div>
       </div>
+
     </div>
 
     <div v-if="!fetched">
@@ -44,13 +47,15 @@
 import {localUrl} from '@/config/config'
 import User from '@/api/User';
 import RolesTable from '@/views/role/RolesTable'
+import CreatePermission from '@/views/role/partials/CreatePermission'
 
 
 export default {
-  components: { RolesTable },
+  components: { RolesTable, CreatePermission },
   data() {
     return {
       localUrl,
+      visible: false,
       
       search: '',
       columns: 

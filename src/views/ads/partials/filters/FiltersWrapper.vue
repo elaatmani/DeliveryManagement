@@ -58,7 +58,7 @@
         />
       </div>
 
-      <MarketerFilter :filters="filters" @update="f => $emit('update', f)" />
+      <MarketerFilter v-if="$user.role == 'admin'" :filters="filters" @update="f => $emit('update', f)" />
       <ProductFilter :filters="filters" @update="f => $emit('update', f)" />
       <SourceFilter :filters="filters" @update="f => $emit('update', f)" />
 

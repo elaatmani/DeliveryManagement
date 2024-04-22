@@ -26,6 +26,7 @@ export default
                     module: 'scaanner',
                     subModule: 'scaanner/code',
                     title: 'Scanner',
+                    gate: 'stock_management',
                     role:'admin'
                 }
             },
