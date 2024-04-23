@@ -5,8 +5,8 @@
         <div class="py-md-5 py-10 pb-0 tw-flex tw-justify-center md:tw-items-center">
             <v-container class="py-0">
                 <div class="px-md-10 tw-w-full">
-                    <div class="tw-w-[150px]">
-                        <img class="tw-w-full" :src="localUrl + 'assets/img/logo.png'" />
+                    <div class="tw-w-[250px] tw-h-[60px] tw-flex tw-items-center tw-justify-center">
+                        <img class="tw-w-full" :src="localUrl + 'images/logo.png'" />
                     </div>
                     <div class="mt-md-10 mt-15 pt-5 px-md-5  px-lg-16 tw-w-full d-felx justify-center align-center">
                         <div class="pa-5 py-7 tw-border bg-white tw-rounded-lg tw-mx-auto tw-max-w-[450px]">
