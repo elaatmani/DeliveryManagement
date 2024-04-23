@@ -8,43 +8,32 @@
             </div>
         </div>
         <div class="tw-flex tw-justify-between tw-items-center" >
-            <select v-model="perPage" @change="e => getData(null,null,null,null,e.target.value)" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-            </select>
-            <input v-model.number="lineHeight" type="number" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" />
-        </div>
-
-        <div v-if="false" class="tw-flex tw-justify-between tw-items-center">
-            <div class="tw-flex tw-w-full">
-            <button :class="[dateRange == 'lastsevendays' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'lastsevendays')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Seven Days </button>
-            <button :class="[dateRange == 'week' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'week')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Week</button>
-            <button :class="[dateRange == 'month' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'month')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Month</button>
-            <button :class="[dateRange == 'lastmonth' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'lastmonth')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Month</button>
-            <button :class="[dateRange == 'year' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'year')"  class=" tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">This Year</button>
-            <button @click="isCustom = !isCustom" :class="[isCustom && '!tw-bg-orange-500 !tw-text-white']" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
-                <icon icon="ph:gear-six-duotone" class="tw-text-2xl" />
-                <span>Custom</span>
-            </button>
-        </div>
-        <div v-if="false"
-            :class="[isCustom ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
-            class="tw-grid tw-duration-300 tw-transition-all"
-            >
-            <div class="tw-flex tw-w-full tw-justify-end tw-overflow-hidden">
-                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_avant_field">
-                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_apres_field">
-                <button @click="getData(date_avant_field, date_apres_field)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
+            <div class="tw-flex tw-items-center">
+                <select v-model="nb" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+                <select v-model="filterBytype" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                    <option value="asc">The best selling product</option>
+                    <option value="des">the lowest selling product</option>
+                </select>
+                <select v-model="filterByQO" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                    <option value="default">By Default</option>
+                    <option value="order">By Total Order</option>
+                    <option value="quantity">By Total Quantity</option>
+                </select>
+                <button @click="getData(filterBytype, filterByQO, nb)" class="tw-items-center tw-text-white hover:tw-text-neutral-700  tw-gap-2 tw-py-2 tw-px-4 tw-bg-orange-500 hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
             </div>
-        </div>
+            <div>
+                <input v-model.number="lineHeight" type="number" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" />
+            </div>
         </div>
         <div v-if="!loading" >
             <apexchart :height="perPage * lineHeight" :key="lineHeight"  :series="options.series" :chart="options.chart" :options="options"></apexchart>
         </div>
-        <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center">
-            <Loading />
+        <div v-else class="tw-h-[500px] tw-flex tw-items-center tw-justify-center"><Loading />
         </div>
     </div>
 </template>
@@ -53,12 +42,12 @@ import Dashboard from '@/api/Dashboard';
 import { computed,ref } from 'vue';
 
 const data = ref([]);
-const isCustom = ref(false);
-const dateRange = ref('lastsevendays');
 const perPage = ref(10);
 const lineHeight = ref(80);
-const date_avant_field = ref(null);
-const date_apres_field = ref(null);
+const filterBytype =ref('asc')
+const filterByQO =ref('default')
+const nb = ref(10)
+
 
 const loading = ref(true);
 const loadingUpdating = ref(true);
@@ -70,40 +59,29 @@ function sliceObject(obj, nb) {
     });
     return slicedObj;
 }
-const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null, nb = 10) => {
+const getData = async (filterByQO,filterBytype,nb) => {
     const cachedData = sessionStorage.getItem('cachedTopProduct');
     let parsedData = null;
 
     if (cachedData) {
         parsedData = JSON.parse(cachedData);
-        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period && parsedData.selectedOption === selectedOption) {
+        if (parsedData.filterByQO === filterByQO && parsedData.filterBytype === filterBytype) {
             data.value = parsedData.topProducts;
             loading.value = false;
         }
     }
 
-    if (!date_avant || !date_apres) {
-        isCustom.value = false;
-        dateRange.value = period;
-    } else {
-        dateRange.value = null;
-    }
-
-    // Show loading state only if the request parameters have changed
-    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period || parsedData.selectedOption !== selectedOption) {
+    if (!parsedData || parsedData.filterByQO !== filterByQO || parsedData.filterBytype !== filterBytype ) {
         loading.value = true;
         loadingUpdating.value = true;
-
     }
 
-    await Dashboard.TopProductSelles(date_avant, date_apres, period, selectedOption)
+    await Dashboard.TopProductSelles({filterByQO: filterByQO, filterBytype: filterBytype, per_page: nb})
     .then(res => {
         if (res.data.code === 'SUCCESS') {
             const newData = {
-                date_avant,
-                date_apres,
-                period,
-                selectedOption,
+                filterByQO,
+                filterBytype,
                 topProducts: Object.values(sliceObject(res.data.data.topProducts, nb))
             };
 
@@ -120,7 +98,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
     });
 };
 
-getData(perPage.value);
+getData(null,null,perPage.value);
 
 
 var options = computed(() => {

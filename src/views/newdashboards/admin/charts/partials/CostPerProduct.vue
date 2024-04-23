@@ -120,6 +120,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     selectedSeries.value = allData.value[0].name;
                 }
                 loading.value = false;
+                loadingUpdating.value = false;
                 updateChart();
             }
         }
