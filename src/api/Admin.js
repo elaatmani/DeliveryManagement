@@ -12,6 +12,11 @@ class Admin {
         await Csrf.getCookie();
         return Api.post('api/v1/admin/analytics', filters);
     }
+
+    async get_top_products(){
+        await Csrf.getCookie();
+        return Api.get('api/v1/admin/get_top_products')
+    }
     
     async paginate(url = '/', options) {
         await Csrf.getCookie();

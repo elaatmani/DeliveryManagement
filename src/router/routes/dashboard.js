@@ -6,6 +6,7 @@ import AgentDashboard from '@/views/newdashboards/agent/AgentDashboard'
 import MarketerDashboardView from '@/views/newdashboards/marketer/DashboardView'
 import DashboardAnalytics from '@/views/dashboardanalytics/DashboardAnalytics'
 import DashboardChartsView from '@/views/newdashboards/admin/charts/DashboardChartsView'
+import DashboardFinanceView from '@/views/dashboardfinance/DashboardFinanceView.vue'
 
 export default 
     {
@@ -39,6 +40,17 @@ export default
                     module: 'dashboards',
                     subModule: 'dashboards/analytics',
                     title: 'Dashboard Analytics',
+                    gate: 'show_all_ads'
+                }
+            },
+            { 
+                name: 'dashboards/finance',
+                path: '/finance',
+                component: DashboardFinanceView,
+                meta: {
+                    module: 'dashboards',
+                    subModule: 'dashboards/finance',
+                    title: 'Dashboard Finance',
                     gate: 'show_all_ads'
                 }
             },
