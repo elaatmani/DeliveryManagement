@@ -81,7 +81,7 @@ export default {
       links: null,
       search: "",
 
-      sort_by: "total_quantity",
+      sort_by: "total_orders",
       sort_order: "desc",
       per_page: 10,
       current_page: 1,

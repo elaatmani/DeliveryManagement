@@ -47,9 +47,9 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/confirmation_state_donuts',{ params: { date_avant, date_apres, period } });
     }
-    async TopProductSelles(filterByQO, filterBytype, nb) {
+    async TopProductSelles(sort_by, sort_order, per_page) {
         await Csrf.getCookie();
-        return Api.get('api/v1/admin/get_top_products',{ params: { filterByQO, filterBytype, nb } });
+        return Api.get('api/v1/admin/get_top_products',{ params: { sort_by, sort_order, per_page } });
     }
     async statistics(filters) {
         await Csrf.getCookie();

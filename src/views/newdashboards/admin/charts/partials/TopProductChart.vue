@@ -9,22 +9,21 @@
         </div>
         <div class="tw-flex tw-justify-between tw-items-center" >
             <div class="tw-flex tw-items-center">
-                <select v-model="nb" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                <select v-model="per_page" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
                     <option value="20">20</option>
                 </select>
-                <select v-model="filterBytype" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
-                    <option value="asc">The best selling product</option>
-                    <option value="des">the lowest selling product</option>
+                <select v-model="sort_order" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                    <option value="desc">The best selling product</option>
+                    <option value="asc">the lowest selling product</option>
                 </select>
-                <select v-model="filterByQO" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
-                    <option value="default">By Default</option>
-                    <option value="order">By Total Order</option>
-                    <option value="quantity">By Total Quantity</option>
+                <select v-model="sort_by" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">
+                    <option value="total_orders">By Total Order</option>
+                    <option value="total_quantity">By Total Quantity</option>
                 </select>
-                <button @click="getData(filterBytype, filterByQO, nb)" class="tw-items-center tw-text-white hover:tw-text-neutral-700  tw-gap-2 tw-py-2 tw-px-4 tw-bg-orange-500 hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
+                <button @click="getData(sort_by, sort_order, per_page)" class="tw-items-center tw-text-white hover:tw-text-neutral-700  tw-gap-2 tw-py-2 tw-px-4 tw-bg-orange-500 hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
             </div>
             <div>
                 <input v-model.number="lineHeight" type="number" class="tw-flex tw-justify-center tw-gap-2 tw-items-center tw-text-neutral-700 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" />
@@ -44,45 +43,45 @@ import { computed,ref } from 'vue';
 const data = ref([]);
 const perPage = ref(10);
 const lineHeight = ref(80);
-const filterBytype =ref('asc')
-const filterByQO =ref('default')
-const nb = ref(10)
+const sort_by =ref('total_orders')
+const sort_order =ref('desc')
+const per_page = ref(10)
 
 
 const loading = ref(true);
 const loadingUpdating = ref(true);
-function sliceObject(obj, nb) {
-    const keys = Object.keys(obj).slice(0, nb);
+function sliceObject(obj, per_page) {
+    const keys = Object.keys(obj).slice(0, per_page);
     const slicedObj = {};
     keys.forEach(key => {
         slicedObj[key] = obj[key];
     });
     return slicedObj;
 }
-const getData = async (filterByQO,filterBytype,nb) => {
+const getData = async (sort_order,sort_by,per_page) => {
     const cachedData = sessionStorage.getItem('cachedTopProduct');
     let parsedData = null;
 
     if (cachedData) {
         parsedData = JSON.parse(cachedData);
-        if (parsedData.filterByQO === filterByQO && parsedData.filterBytype === filterBytype) {
+        if (parsedData.sort_order === sort_order && parsedData.sort_by === sort_by) {
             data.value = parsedData.topProducts;
             loading.value = false;
         }
     }
 
-    if (!parsedData || parsedData.filterByQO !== filterByQO || parsedData.filterBytype !== filterBytype ) {
+    if (!parsedData || parsedData.sort_order !== sort_order || parsedData.sort_by !== sort_by ) {
         loading.value = true;
         loadingUpdating.value = true;
     }
 
-    await Dashboard.TopProductSelles({filterByQO: filterByQO, filterBytype: filterBytype, per_page: nb})
+    await Dashboard.TopProductSelles(sort_order, sort_by, per_page)
     .then(res => {
         if (res.data.code === 'SUCCESS') {
             const newData = {
-                filterByQO,
-                filterBytype,
-                topProducts: Object.values(sliceObject(res.data.data.topProducts, nb))
+                sort_order,
+                sort_by,
+                topProducts: Object.values(sliceObject(res.data.data.topProducts.data, per_page))
             };
 
             if (!parsedData || JSON.stringify(parsedData.topProducts) !== JSON.stringify(newData.topProducts)) {
@@ -98,7 +97,7 @@ const getData = async (filterByQO,filterBytype,nb) => {
     });
 };
 
-getData(null,null,perPage.value);
+getData(sort_by.value, sort_order.value,perPage.value);
 
 
 var options = computed(() => {
