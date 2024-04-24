@@ -108,19 +108,80 @@ const getData = async () => {
 }
 
 getData();
-
+const getColor = (confirmation) => {
+    switch (confirmation) {
+        case 'no-answer':
+            return '#fbbf24'; 
+        case null:
+            return '#10b981'; 
+        case 'change':
+            return '#d946ef'; 
+        case 'livrer-et-retourner':
+            return '#06b6d4'; 
+        case 'in-warehouse':
+            return '#84cc16'; 
+        case 'expidier':
+            return '#d946ef'; 
+        case 'transfer':
+            return '#8b5cf6'; 
+        case 'confirmer':
+            return '#22c55e'; 
+        case 'paid':
+            return '#22c55e'; 
+        case 'livrer':
+            return '#22c55e'; 
+        case 'reporter':
+            return '#14b8a6'; 
+        case 'annuler':
+            return '#ef4444'; 
+        case 'refund':
+            return '#f43f5e'; 
+        case 'wrong-number':
+            return '#d946ef'; 
+        case 'double':
+            return '#a855f7'; 
+        case 'retourner':
+            return '#a855f7'; 
+        case 'reconfirmer':
+            return '#6366f1'; 
+        case 'banned':
+            return '#eab308'; 
+        case 'pas-de-reponse':
+            return '#eab308'; 
+        case 'dispatch':
+            return '#eab308'; 
+        case 'printed':
+            return '#3b82f6'; 
+        case 'refuser':
+            return '#ec4899'; 
+        default:
+            return '#0000ff'; 
+    }
+};
 var options = computed(() => loading.value ? null : ({
     series: data.value.orders.map(i => i.total),
     chart: {
         type: 'donut',
     },
     fill: { 
-        opacity: 1,
-    },
-    // colors: ['#22c55e', '#f43f5e'],
+       colors: data.value.orders.map(i => getColor(i.confirmation))   
+      },
+
     legend: {
         position: 'top',
-        horizontalAlign: 'left'
+        horizontalAlign: 'left',
+        markers: {
+            fillColors: data.value.orders.map(i => getColor(i.confirmation))
+        }
+    },  
+
+    theme: {
+        monochrome: {
+            enabled: true,
+            color: '#616161',
+          
+        },
+       
     },
     labels: data.value.orders.map(i => {
             const confirmation = confirmations.find(j => j.value == i.confirmation);
@@ -135,14 +196,25 @@ var optionss = computed(() => loading.value ? null : ({
     chart: {
         type: 'donut',
     },
+    fill: { 
+       colors: data.value.orders.map(i => getColor(i.confirmation))   
+      },
 
-    fill: {
-        opacity: 1,
-    },
-    // colors: ['#22c55e', '#f43f5e'],
     legend: {
         position: 'top',
-        horizontalAlign: 'left'
+        horizontalAlign: 'left',
+        markers: {
+            fillColors: data.value.orders.map(i => getColor(i.confirmation))
+        }
+    },  
+
+    theme: {
+        monochrome: {
+            enabled: true,
+            color: '#616161',
+          
+        },
+       
     },
     labels: data.value.delivery.map(i => deliveryStatus.find(j => j.value == i.delivery)?.name)
 }));
