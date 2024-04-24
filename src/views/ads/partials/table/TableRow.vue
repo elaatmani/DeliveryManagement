@@ -35,7 +35,7 @@
     >
       <div>
         <h2 class="tw-font-semibold tw-text-gray-800 darkx:tw-text-white tw-font-[cairo]x">
-          {{ item.marketers.firstname }} {{ item.marketers.lastname }} {{ $user.role }}
+          {{ item.marketers.firstname }} {{ item.marketers.lastname }}
         </h2>
       </div>
     </td>
