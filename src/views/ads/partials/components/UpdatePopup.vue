@@ -76,24 +76,15 @@
               >
             </div>
 
-            <div class="tw-col-span-2 md:tw-col-span-1">
+            <div v-if="products_fetched" class="tw-col-span-2 md:tw-col-span-1">
               <label
                 class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
                 >Product</label
               >
-              <select
-                @change="errors.product_id = null"
-                v-model="items.product_id"
-                :class="[errors.product_id && '!tw-border-red-400']"
-                required
-
-                class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
-              >
-                <option :value="0" selected>Choose Product</option>
-                <option v-for="p in products" :key="p.id" :value="p.id">
-                  {{ p.name }}
-                </option>
-              </select>
+            
+              <vue-select :reduce="(o) => o.id" @option:selected="e=> items.product_id = e.id"  :clearable="false" class="tw-bg-gray-50 tw-border-solid tw-outline-none  tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full"
+                  placeholder="All" v-model="items.product_id" :options="products" label="name">
+                </vue-select>
               <label
                 v-if="errors.product_id"
                 class="tw-block tw-mb-2 tw-text-xs tw-font-medium tw-text-red-400 dark:tw-text-white"
@@ -198,9 +189,13 @@
 import { validate } from "../lib/validate";
 import { update } from "../lib/update";
 import Product from '@/api/Product';
+import vueSelect from 'vue-select';
 
 export default {
-  components: {  },
+  components: {
+      'vue-select': vueSelect
+    },
+
 
   props: {
     visible: {
@@ -218,7 +213,7 @@ export default {
 
       sources: ['facebook', 'google', 'tiktok','snapchat'],
       products_fetched: null,
-      products: null,
+      products: [{id: 0, name: "Choose a product"}],
       items:{
         product_id: 0,
         source:null,
@@ -266,19 +261,19 @@ export default {
     },
 
     getProducts() {
-      this.products_fetched = false;
-      Product.allForOrder()
-      .then((res) => {
-        if(res.data.code == 'SUCCESS') {
-          this.products = res.data.data.products;
-        } else {
-          this.products = [];
-        }
+        this.products_fetched = false;
+        Product.allForOrder()
+          .then((res) => {
+            if (res.data.code == "SUCCESS") {
+              this.products = [{id: 0, name: "Choose a product"} , ...res.data.data.products];
+            } else {
+              this.products = [{id: 0, name: "Choose a product"}];
+            }
 
-        this.products_fetched = true;
-      })
-      .catch(this.$handleApiError)
-    }
+            this.products_fetched = true;
+          })
+          .catch(this.$handleApiError);
+      },
   },
 
   mounted() {
