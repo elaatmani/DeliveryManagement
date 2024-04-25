@@ -108,6 +108,7 @@
           <h2 class="tw-font-bold tw-text-cyan-500 darkx:tw-text-white">
             {{ item.leads }}
           </h2>
+          <span v-if="$user.role == 'admin'" class="tw-text-sm tw-text-green-500 tw-font-medium">({{ item.real_leads }})</span>
         </div>
       </td>
  
@@ -122,7 +123,7 @@
     </td>
       <td class="tw-px-4 tw-py-2 tw-text-sm tw-whitespace-nowrap">
         <div>
-          <TableActions @update=" newItem => $emit('update', newItem)" :item="item" />
+          <TableActions @update=" newItem => $emit('update', newItem)" @delete="id => $emit('delete', id)" :item="item" />
         </div>
       </td>
     </tr>

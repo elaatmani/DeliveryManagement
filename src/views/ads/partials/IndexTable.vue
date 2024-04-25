@@ -56,12 +56,12 @@
                         </thead>
 
                         <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
-                          <TableRow @update="newItem => $emit('update', newItem)" v-for="item in items" :key="item.id" :item="item" />
+                          <TableRow @update="newItem => $emit('update', newItem)" @delete="id => $emit('delete', id)" v-for="item in items" :key="item.id" :item="item" />
                         </tbody>
 
                         <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
-                            <td colspan="8">
+                            <td colspan="9">
                               <div class="tw-p-5 tw-text-center tw-text-gray-600 tw-font-medium">
                                 No ads yet !
                               </div>
@@ -79,7 +79,7 @@
                               <loading />
                             </td>
                             <td
-                              colspan="8"
+                              colspan="9"
                             >
                             
                               <div role="status" class="tw-w-full tw-p-4 tw-space-y-4  tw-border-gray-200 tw-divide-y tw-divide-gray-200 tw-rounded tw-shadow tw-animate-pulse dark:tw-divide-gray-700 md:tw-p-6 dark:tw-border-gray-700">

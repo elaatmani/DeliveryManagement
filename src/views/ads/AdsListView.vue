@@ -39,6 +39,7 @@
     <div>
       <IndexTable 
       @update="handleItemUpdate" 
+      @delete="handleItemDelete" 
       @page-change="handlePageChange" 
       @sort-order="handleSortOrderChange"  
       :loading="fetching" 
@@ -171,6 +172,10 @@ export default {
 
     handleItemUpdate(item) {
       this.items = this.items.map(i => i.id == item.id ? item : i);
+    },
+
+    handleItemDelete(id) {
+      this.items = this.items.filter(i => i.id != id);
     },
 
     handlePageChange(page) {
