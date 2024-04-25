@@ -5,8 +5,12 @@
       class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900"
       >Product</label
     >
+    <vue-select :reduce="(o) => o.id" @option:selected="e=> $emit('update', { ...filters, product_id: e.id })"  :clearable="false" class="tw-bg-gray-50 tw-border-solid tw-outline-none  tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full"
+        placeholder="All" :value="filters.product_id" :options="products" label="name">
+      </vue-select>
 
     <select
+     v-if="false"
       @change="
         (e) => $emit('update', { ...filters, product_id: e.target.value })
       "
@@ -27,9 +31,14 @@
 </template>
 
 <script>
-import Product from '@/api/Product'
+import Product from '@/api/Product';
+import vueSelect from 'vue-select';
 
 export default {
+
+  components: {
+    'vue-select': vueSelect
+  },
 
     props: {
         filters: {
@@ -39,32 +48,32 @@ export default {
 
     data() {
         return {
+          products: [{id: 'all', name: "All"}],
+          fetched: false
         }
     },
 
     computed: {
-        products() {
-            return this.$store.getters['product/products']
-        },
-        fetched() {
-            return this.$store.getters['product/fetched']
-        },
     },
 
     methods: {
         getProducts() {
-            return Product.all().then(
+            return Product.allForOrder().then(
             (res) => {
                 if (res.data.code == "SUCCESS") {
-                    this.$store.dispatch("product/setProducts", res.data.data.products);
-                    this.$store.dispatch("product/setFetched", true);
-                }
+                    this.products.push(...res.data.data.products);
+                    this.fetched = true;
+                  }
                 },
                 (err) => {
                 this.$handleApiError(err);
                 }
             );
         }
+    },
+
+    mounted() {
+        this.getProducts();
     }
 }
 </script>

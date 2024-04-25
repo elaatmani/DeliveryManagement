@@ -1,9 +1,11 @@
 <template>
   <div class="tw-h-full">
-    <div class="tw-flex tw-items-center tw-gap-2">
-    <button @click="popup = true" class="tw-px-2 tw-py-1 tw-w-[25px] tw-h-[25px] tw-border tw-border-solid tw-border-orange-500/20 hover:tw-bg-orange-500/10 hover:tw-border-orange-500/70 tw-duration-300 tw-text-orange-500/80 tw-rounded-md tw-flex tw-items-center tw-justify-center">
-        <v-icon size="x-small" >mdi-pencil-outline</v-icon>
-    </button>
+    <div class="tw-flex tw-items-center tw-gap-2 tw-justify-end tw-w-full">
+        <button @click="popup = true" class="tw-px-2 tw-py-1 tw-w-[25px] tw-h-[25px] tw-border tw-border-solid tw-border-orange-500/20 hover:tw-bg-orange-500/10 hover:tw-border-orange-500/70 tw-duration-300 tw-text-orange-500/80 tw-rounded-md tw-flex tw-items-center tw-justify-center">
+            <v-icon size="x-small" >mdi-pencil-outline</v-icon>
+        </button>
+
+        <TableActionsDelete v-if="$user.role == 'admin'" :item="item" @delete="id => $emit('delete', id)" />
     </div>
 
     <div v-if="popup">
@@ -15,9 +17,10 @@
 
 <script>
 import UpdatePopup from '@/views/ads/partials/components/UpdatePopup'
+import TableActionsDelete from './TableActionsDelete'
 
 export default {
-    components: { UpdatePopup },
+    components: { UpdatePopup, TableActionsDelete },
 
     props: {
         item: {

@@ -9,7 +9,7 @@ export const validate = (app, items) => {
         return false;
     }
 
-    if(!items.amount || parseInt(items.amount) <= 0) {
+    if(!items.amount || parseFloat(items.amount) <= 0) {
         app.errors.amount = "Amount is required";
         return false;
     }
