@@ -57,7 +57,8 @@
 
                         <tbody v-if="!loading && items.length > 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <TableRow @update="newItem => $emit('update', newItem)" @delete="id => $emit('delete', id)" v-for="item in items" :key="item.id" :item="item" />
-                        </tbody>
+                          <TableRowTotal :items="items" />
+                          </tbody>
 
                         <tbody v-if="!loading && items.length == 0" class="tw-bg-white tw-divide-y tw-divide-gray-200 darkx:tw-divide-gray-700 darkx:tw-bg-gray-900">
                           <tr>
@@ -117,9 +118,10 @@
 <script>
 import TablePaginationNoNums from '@/views/ads/partials/table/TablePaginationNoNums';
 import TableRow from '@/views/ads/partials/table/TableRow';
+import TableRowTotal from '@/views/ads/partials/table/TableRowTotal';
 
 export default {
-  components: { TablePaginationNoNums, TableRow },
+  components: { TablePaginationNoNums, TableRow, TableRowTotal },
 
   props: {
     items: {

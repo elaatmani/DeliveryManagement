@@ -108,7 +108,7 @@
           <h2 class="tw-font-bold tw-text-cyan-500 darkx:tw-text-white">
             {{ item.leads }}
           </h2>
-          <span v-if="$user.role == 'admin'" class="tw-text-sm tw-text-green-500 tw-font-medium">({{ item.real_leads }})</span>
+          <span v-if="$user.role == 'admin' && false" class="tw-text-sm tw-text-green-500 tw-font-medium">({{ item.real_leads }})</span>
         </div>
       </td>
  
