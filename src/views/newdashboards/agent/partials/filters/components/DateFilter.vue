@@ -114,6 +114,16 @@ export default {
                 default:
                     break;
             }
+        },
+        from(newVal) {
+            if (newVal === null && this.to === null) {
+                this.filterBy = 'all';
+            }
+        },
+        to(newVal) {
+            if (newVal === null && this.from === null) {
+                this.filterBy = 'all';
+            }
         }
     },
 

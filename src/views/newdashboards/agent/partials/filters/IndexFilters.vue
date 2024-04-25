@@ -7,6 +7,9 @@
 
       <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
+      <DateFilter v-model:from="filters.treated_from" v-model:to="filters.treated_to" label="Treated" />
+
+
 
       <div  class="tw-col-span-12 tw-flex tw-justify-end tw-gap-2">
         <button
@@ -73,6 +76,8 @@ export default {
             this.filters = {
                 dropped_from: null,
                 dropped_to: null,
+                treated_from: null,
+                treated_to: null,
             }
         },
         filter() {

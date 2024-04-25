@@ -7,6 +7,8 @@
 
       <DateFilter v-model:from="filters.created_from" v-model:to="filters.created_to" label="Created" />
 
+      <DateFilter v-model:from="filters.treated_from" v-model:to="filters.treated_to" label="Treated" />
+
       <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
       <DateFilter v-model:from="filters.delivered_from" v-model:to="filters.delivered_to" label="Delivered" />
@@ -137,6 +139,8 @@ export default {
             this.filters = {
                 created_from: null,
                 created_to: null,
+                treated_from: null,
+                treated_to: null,
                 dropped_from: null,
                 dropped_to: null,
                 delivered_from: null,
