@@ -85,7 +85,6 @@ const getData = async (date_avant_field,date_apres_field) => {
         parsedData = JSON.parse(cachedData);
         data.value = parsedData.confirmation_state_donuts;
         loading.value = false;
-        console.log(data.value);
     }
   
     await Dashboard.ConfirmationStatesDonuts(date_avant_field,date_apres_field)
