@@ -3,8 +3,13 @@
     <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-relative">
 
         <div class="tw-p-5">
-            <div class="tw-flex tw-justify-between">
+            <div class="">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium ">Sources</h1>
+            <div class="tw-flex tw-w-full tw-justify-end tw-overflow-hidden">
+                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_avant_field">
+                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_apres_field">
+                <button @click="getData(date_avant_field, date_apres_field)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
+            </div>
             <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
                 <Loading class="tw-scale-50" />
                 <p class=" tw-tetx-xs">Updating...</p>
@@ -66,11 +71,13 @@ import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 const data = ref([]);
+const date_avant_field = ref(null);
+const date_apres_field = ref(null);
 const loading = ref(true);
 const loadingUpdating = ref(true);
 
 
-const getData = async () => {
+const getData = async (date_avant_field,date_apres_field) => {
     const cachedData = sessionStorage.getItem('cachedStatusDonut');
     let parsedData = null;
 
@@ -81,7 +88,7 @@ const getData = async () => {
         console.log(data.value);
     }
   
-    await Dashboard.ConfirmationStatesDonuts()
+    await Dashboard.ConfirmationStatesDonuts(date_avant_field,date_apres_field)
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {

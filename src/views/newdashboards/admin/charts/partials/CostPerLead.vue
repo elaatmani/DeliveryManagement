@@ -105,7 +105,7 @@ const averageData = computed(() => {
     return sum / data.value.length;
 });
 const formattedAverageData = computed(() => {
-    return averageData.value.toFixed(2); // limit to 2 decimal places
+    return averageData.value.toFixed(2); 
 });
 var options = computed(() => loading.value ? null : ({
     series: [
