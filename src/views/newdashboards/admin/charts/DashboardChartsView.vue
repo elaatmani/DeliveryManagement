@@ -8,6 +8,9 @@
               <CostForMarketer />
           </div>
           <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
+              <LeadPerMarketer />
+          </div>
+          <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
               <CostPerLead />
           </div>
           <div class="tw-mb-2 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
@@ -26,6 +29,7 @@
   import CostPerProduct from './partials/CostPerProduct';
   import CostPerLead from './partials/CostPerLead';
   import CostForMarketer from './partials/CostForMarketer';
+  import LeadPerMarketer from './partials/LeadPerMarketer';
   import StatusDonutChart from './partials/StatusDonutChart';
 
   

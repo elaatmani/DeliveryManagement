@@ -86,7 +86,6 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                 if (!parsedData || JSON.stringify(parsedData.cost_per_day) !== JSON.stringify(newData.cost_per_day)) {
                     sessionStorage.setItem('cachedCostPerDay', JSON.stringify(newData));
                     data.value = res.data.data.cost_per_day;
-                    console.log(data.value);
                     loadingUpdating.value = true
                 } else {
                     loadingUpdating.value = false;
