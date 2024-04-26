@@ -96,7 +96,7 @@
       >
         <div>
           <h2 class="tw-font-bold tw-text-green-500 darkx:tw-text-white tw-font-[cairo]">
-            {{ currency }}{{ item.amount }}
+            {{ currency }}{{ parseFloat(item.amount).toFixed(2) }}
           </h2>
         </div>
       </td>
