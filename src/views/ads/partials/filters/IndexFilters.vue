@@ -50,6 +50,10 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.75 10.75h-3m12.5-2c0 3-2.798 5.5-6.25 5.5c-3.75 0-6.25-3.5-6.25-3.5v3.5m9.5-9h3m-12.5 2c0-3 2.798-5.5 6.25-5.5c3.75 0 6.25 3.5 6.25 3.5v-3.5"/></svg>
         </button>
 
+        <div>
+          <AdsData :statistics="statistics" :loading="loading" />
+        </div>
+
         <div class="tw-relative">
           <select
             @change="(e) => $emit('perPageChange', e.target.value)"
@@ -77,6 +81,8 @@
             </svg>
           </div>
         </div>
+
+        
       </div>
 
       <div class="tw-relative tw-flex tw-items-center tw-mt-4 md:tw-mt-0">
@@ -107,24 +113,15 @@
 
     </div>
 
-    <div
-      v-if="!!statistics"
-      :class="[showStatistics ? 'tw-grid-rows-[1fr]' : 'tw-grid-rows-[0fr]']"
-      class="tw-grid tw-duration-300 tw-transition-all"
-    >
-      <div class="tw-overflow-hidden tw-col-span-1">
-          <IndexStatistics :statistics="statistics" />
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import IndexStatistics from '@/views/ads/partials/filters/IndexStatistics'
 import FiltersWrapper from '@/views/ads/partials/filters/FiltersWrapper'
+import AdsData from '@/views/ads/partials/components/AdsData'
 
 export default {
-  components: { IndexStatistics, FiltersWrapper },
+  components: { FiltersWrapper, AdsData },
   
   props: {
     perPage: {
@@ -146,7 +143,7 @@ export default {
     },
     filters: {
       required: true,
-    }
+    },
   },
 
 

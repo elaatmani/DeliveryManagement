@@ -118,7 +118,7 @@ const getColor = (confirmation) => {
     switch (confirmation) {
         case 'no-answer':
             return '#fbbf24'; 
-        case null:
+        case '':
             return '#10b981'; 
         case 'change':
             return '#d946ef'; 
@@ -191,9 +191,8 @@ var options = computed(() => loading.value ? null : ({
     },
     labels: data.value.orders.map(i => {
             const confirmation = confirmations.find(j => j.value == i.confirmation);
-            if(i.confirmation == 'no-answer') {
-                return 'No Answer';
-            }
+            if(i.confirmation == 'no-answer') return 'No Answer';
+            if(!i.confirmation) return 'New';
             return confirmation ? confirmation.name : '';
 
         })}));
@@ -203,14 +202,14 @@ var optionss = computed(() => loading.value ? null : ({
         type: 'donut',
     },
     fill: { 
-       colors: data.value.orders.map(i => getColor(i.confirmation))   
+       colors: data.value.delivery.map(i => getColor(i.delivery))   
       },
 
     legend: {
         position: 'top',
         horizontalAlign: 'left',
         markers: {
-            fillColors: data.value.orders.map(i => getColor(i.confirmation))
+            fillColors: data.value.delivery.map(i => getColor(i.delivery))
         }
     },  
 

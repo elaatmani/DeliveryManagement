@@ -34,6 +34,7 @@
       @per-page-change="handlePerPageChange" 
       @fresh="paginateOrders" 
       :loading="fetching" 
+      :statistics="statistics"
     />
 
     <div>
@@ -77,6 +78,7 @@ export default {
       create_popup: false,
 
       items: [],
+      statistics: {},
 
       first_page_url: null,
       lase_page_url: null,
@@ -127,6 +129,8 @@ export default {
       return Ads.paginate(url, options)
       .then(({data}) => {
         const options = data.data.ads;
+        this.statistics = data.data.statistics;
+
         this.setOptions(options);
       })
       .then(() => {
