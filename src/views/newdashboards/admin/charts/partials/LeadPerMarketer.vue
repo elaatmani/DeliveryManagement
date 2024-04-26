@@ -52,7 +52,7 @@ const date_apres_field = ref(null);
 const loading = ref(true);
 const loadingUpdating = ref(true);
 const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null) => {
-    const cachedData = sessionStorage.getItem('cachedCostPerMarketer');
+    const cachedData = sessionStorage.getItem('cachedLeadPerMarketer');
     let parsedData = null;
 
     if (cachedData) {
@@ -90,7 +90,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 
                 // If the data has changed, update the cache and the displayed data
                 if (!parsedData || JSON.stringify(parsedData.lead_per_marketer) !== JSON.stringify(newData.lead_per_marketer)) {
-                    sessionStorage.setItem('cachedCostPerMarketer', JSON.stringify(newData));
+                    sessionStorage.setItem('cachedLeadPerMarketer', JSON.stringify(newData));
                     data.value = res.data.data.cost_per_marketer;
                     loadingUpdating.value = true
                 } else {
