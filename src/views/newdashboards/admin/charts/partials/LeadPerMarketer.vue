@@ -1,12 +1,13 @@
 <template >
     <div class="tw-p-5 tw-relative">
         <div class="tw-flex tw-justify-between">
-            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Leads Per Day</h1>
+            <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Lead For Each Marketer</h1>
             <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
                 <Loading class="tw-scale-50" />
                 <p class=" tw-tetx-xs">Updating</p>
             </div>
         </div>
+
         <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex tw-w-full">
             <button :class="[dateRange == 'lastsevendays' && '!tw-bg-orange-500 tw-text-white']" @click="getData(null,null,'lastsevendays')" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Last Seven Days </button>
@@ -41,52 +42,56 @@
 <script setup>
 import Dashboard from '@/api/Dashboard';
 import { computed,ref } from 'vue';
-const data = ref([]);
 
-const loading = ref(true);
+const data = ref([]);
 const isCustom = ref(false);
 const dateRange = ref('lastsevendays');
 const date_avant_field = ref(null);
 const date_apres_field = ref(null);
 
+const loading = ref(true);
 const loadingUpdating = ref(true);
-
-const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays') => {
-    const cachedData = sessionStorage.getItem('cachedLeadPerDay');
+const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null) => {
+    const cachedData = sessionStorage.getItem('cachedCostPerMarketer');
     let parsedData = null;
 
     if (cachedData) {
         parsedData = JSON.parse(cachedData);
-        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period) {
-            data.value = parsedData.leads_per_day;
+        if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period && parsedData.selectedOption === selectedOption) {
+            data.value = parsedData.lead_per_marketer;
             loading.value = false;
         }
     }
-    if(!date_apres || !date_apres) {
+
+    if (!date_avant || !date_apres) {
         isCustom.value = false;
-        dateRange.value = period
+        dateRange.value = period;
     } else {
-        dateRange.value = null
+        dateRange.value = null;
     }
-    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period) {
+
+    // Show loading state only if the request parameters have changed
+    if (!parsedData || parsedData.date_avant !== date_avant || parsedData.date_apres !== date_apres || parsedData.period !== period || parsedData.selectedOption !== selectedOption) {
         loading.value = true;
         loadingUpdating.value = true;
 
     }
-    await Dashboard.LeadsPerDay(date_avant, date_apres, period)
-    .then(
-        res => {
-            if(res.data.code == 'SUCCESS') {
-                if (res.data.code === 'SUCCESS') {
+
+    await Dashboard.CostPerMarketer(date_avant, date_apres, period, selectedOption)
+        .then(res => {
+            if (res.data.code === 'SUCCESS') {
                 const newData = {
                     date_avant,
                     date_apres,
                     period,
-                    leads_per_day: res.data.data.leads_per_day
+                    selectedOption,
+                    lead_per_marketer: res.data.data.cost_per_marketer
                 };
-                if (!parsedData || JSON.stringify(parsedData.leads_per_day) !== JSON.stringify(newData.leads_per_day)) {
-                    sessionStorage.setItem('cachedLeadPerDay', JSON.stringify(newData));
-                    data.value = res.data.data.leads_per_day;
+
+                // If the data has changed, update the cache and the displayed data
+                if (!parsedData || JSON.stringify(parsedData.lead_per_marketer) !== JSON.stringify(newData.lead_per_marketer)) {
+                    sessionStorage.setItem('cachedCostPerMarketer', JSON.stringify(newData));
+                    data.value = res.data.data.cost_per_marketer;
                     loadingUpdating.value = true
                 } else {
                     loadingUpdating.value = false;
@@ -95,54 +100,42 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                 loadingUpdating.value = false
                 loading.value = false;
             }
-        }
-    }
-    );
-}
+        });
+};
 
 getData();
 
-var options = computed(() => loading.value ? null : ({
-    series: [
-        {
-            name: 'Leads',
-            data: data.value ? data.value.map(p => p ? p.leads : null) : [] 
-        },],
 
-    chart: {
-        type: 'line',
-        stacked: true,
-    },
-    stroke: {
-        curve: 'straight',
-    },
-    dataLabels: {
-        formatter: () => {
-            return ''
+var options = computed(() => {
+
+    return {
+        series: [...data.value.map(i=> ({...i, data: i.data.map(j => j.lead_per_marketer)}))],
+
+        chart: {
+            type: 'area',
+        },
+        xaxis: {
+            type: 'category',
+            categories: data.value[0].data.map(c => c.date), 
+        },
+
+        theme: {
+            palette: 'palette1'
+        },
+        stroke: {
+            curve: 'smooth',
+            },
+       
+        fill: {
+            opacity: 1,
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left'
         }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false
-        }
-    },
-    xaxis: {
-        categories: data.value.map(p => p.date),
-        labels: {
-            // formatter: (val) => {
-            //     return val / 1000 + 'K'
-            // }
-        }
-    },
-    fill: {
-        opacity: 1,
-    },
-    // colors: ['#22c55e', '#f43f5e'],
-    legend: {
-        position: 'top',
-        horizontalAlign: 'left'
-    }
-}));
+    };
+});
+
 </script>
 <style lang="">
     

@@ -97,7 +97,6 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     loadingUpdating.value = false;
 
                 }
-                console.log(averageCostPerLeadGeneral.value);
                 loadingUpdating.value = false
                 loading.value = false;
             }
