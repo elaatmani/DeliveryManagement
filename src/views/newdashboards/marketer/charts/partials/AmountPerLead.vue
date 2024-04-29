@@ -49,6 +49,8 @@ const dateRange = ref('lastsevendays');
 const date_avant_field = ref(null);
 const date_apres_field = ref(null);
 const loadingUpdating = ref(true);
+const averageCostPerLeadGeneral = ref(0);
+
 
 const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays') => {
     const cachedData = sessionStorage.getItem('cachedAmountPerLead');
@@ -58,6 +60,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
         parsedData = JSON.parse(cachedData);
         if (parsedData.date_avant === date_avant && parsedData.date_apres === date_apres && parsedData.period === period ) {
             data.value = parsedData.amount_per_lead;
+            averageCostPerLeadGeneral.value = parsedData.average_cost_per_lead_general;
             loading.value = false;
         }
     }
@@ -86,6 +89,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                 if (!parsedData || JSON.stringify(parsedData.amount_per_lead) !== JSON.stringify(newData.amount_per_lead)) {
                     sessionStorage.setItem('cachedAmountPerLead', JSON.stringify(newData));
                     data.value = res.data.data.amount_per_lead;
+                    averageCostPerLeadGeneral.value = res.data.data.average_cost_per_lead_general;
                     loadingUpdating.value = true
                 } else {
                     loadingUpdating.value = false;
@@ -100,13 +104,10 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 }
 
 getData();
-const averageData = computed(() => {
-    const sum = data.value.reduce((a, b) => a + (b ? b.average_cost_per_lead : 0), 0);
-    return sum / data.value.length;
-});
 const formattedAverageData = computed(() => {
-    return averageData.value.toFixed(2); // limit to 2 decimal places
+    return averageCostPerLeadGeneral.value.toFixed(2); 
 });
+
 var options = computed(() => loading.value ? null : ({
     series: [
         {
@@ -136,7 +137,7 @@ var options = computed(() => loading.value ? null : ({
     annotations: {
     yaxis: [
             {
-            y: averageData.value,
+            y: averageCostPerLeadGeneral.value,
             borderColor: '#000000',
             borderWidth: 2,
             borderStyle: 'solid',
