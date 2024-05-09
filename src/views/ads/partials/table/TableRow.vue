@@ -104,8 +104,8 @@
         class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap"
       >
         <div class="tw-flex tw-items-center tw-gap-2">
-          <icon icon="material-symbols-light:leaderboard-rounded" class="tw-text-lg tw-text-cyan-400" />
           <h2 class="tw-font-bold tw-text-cyan-500 darkx:tw-text-white">
+            <icon icon="material-symbols-light:leaderboard-rounded" class="tw-text-sm tw-text-cyan-400" />
             {{ item.leads }}
           </h2>
           <span v-if="$user.role == 'admin' && false" class="tw-text-sm tw-text-green-500 tw-font-medium">({{ item.real_leads }})</span>

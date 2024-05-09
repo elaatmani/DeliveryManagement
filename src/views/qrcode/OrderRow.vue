@@ -68,7 +68,7 @@ const emit = defineEmits(['update']);
 
 const handleOrder = () => {
     const id = props.order.scanned.replace(/[^0-9]/g, '');
-    Sale.warehouseControl(id, props.order.target)
+    Sale.warehouseControl(id, {target: props.order.target, scanned: props.order.scanned})
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
