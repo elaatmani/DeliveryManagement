@@ -110,16 +110,12 @@ var options = computed(() => loading.value ? null : ({
         },],
 
     chart: {
-        type: 'line',
-        stacked: true,
-    },
-    stroke: {
-        curve: 'straight',
+        type: 'area',
     },
     dataLabels: {
-        formatter: () => {
-            return ''
-        }
+        formatter: function (value) {
+                return value.toFixed(2); // limit to 2 decimal places
+            }
     },
     plotOptions: {
         bar: {
