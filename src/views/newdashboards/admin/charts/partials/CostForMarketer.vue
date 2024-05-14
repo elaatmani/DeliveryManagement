@@ -30,6 +30,18 @@
                 <button @click="getData(date_avant_field, date_apres_field)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
             </div>
         </div>
+        <div class="tw-flex">
+            <vue-select 
+                :multiple="true"
+                @input="updateChart" 
+                :reduce="(marketer) => marketer.marketer_id" 
+                :clearable="false" 
+                class="tw-bg-white tw-items-center tw-border-solid tw-outline-none tw-mb-5 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-[200px] tw-h-[44px]"
+                v-model="selectedMarketerId" 
+                :options="[{ marketer_id: 'all', name: 'All' }, ...marketerOptions]" 
+                label="name">
+            </vue-select>
+        </div>
         </div>
         <div v-if="!loading">
             <apexchart :height="400"  :series="options.series" :chart="options.chart" :options="options"></apexchart>
@@ -41,8 +53,16 @@
 </template>
 <script setup>
 import Dashboard from '@/api/Dashboard';
-import { computed,ref } from 'vue';
+import { watch } from 'vue';
+import vueSelect from 'vue-select';
 
+import { computed,ref ,defineComponent} from 'vue';
+
+defineComponent({
+  components: {
+    'vue-select': vueSelect
+  },
+});
 const data = ref([]);
 const isCustom = ref(false);
 const dateRange = ref('lastsevendays');
@@ -51,7 +71,9 @@ const date_apres_field = ref(null);
 
 const loading = ref(true);
 const loadingUpdating = ref(true);
-const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null) => {
+const selectedMarketerId = ref(null); 
+const marketerOptions = computed(() => data.value.map((marketer) => ({ marketer_id: marketer.marketer_id, name: marketer.name })));
+const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', selectedOption = null,marketerId = null) => {
     const cachedData = sessionStorage.getItem('cachedCostPerMarketer');
     let parsedData = null;
 
@@ -77,7 +99,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 
     }
 
-    await Dashboard.CostPerMarketer(date_avant, date_apres, period, selectedOption)
+    await Dashboard.CostPerMarketer(date_avant, date_apres, period, marketerId)
         .then(res => {
             if (res.data.code === 'SUCCESS') {
                 const newData = {
@@ -85,11 +107,11 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     date_apres,
                     period,
                     selectedOption,
-                    cost_per_marketer: res.data.data.cost_per_marketer
+                    cost_per_marketer: res.data.data.cost_per_marketer,
+                    total_cost: res.data.data.total_cost
                 };
 
-                // If the data has changed, update the cache and the displayed data
-                if (!parsedData || JSON.stringify(parsedData.cost_per_marketer) !== JSON.stringify(newData.cost_per_marketer)) {
+                if (!parsedData || JSON.stringify(parsedData.cost_per_marketer) !== JSON.stringify(newData.cost_per_marketer) || JSON.stringify(parsedData.total_cost) !== JSON.stringify(newData.total_cost)) {
                     sessionStorage.setItem('cachedCostPerMarketer', JSON.stringify(newData));
                     data.value = res.data.data.cost_per_marketer;
                     loadingUpdating.value = true
@@ -99,9 +121,24 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                 }
                 loadingUpdating.value = false
                 loading.value = false;
+                updateChart();
+
             }
         });
 };
+const updateChart = () => {
+    if (selectedMarketerId.value && selectedMarketerId.value.length > 0 && !selectedMarketerId.value.includes('all')) {
+        const filteredData = data.value.filter(item => selectedMarketerId.value.includes(item.marketer_id));
+        options.value.series = filteredData.map(i => ({...i, data: i.data.map(j => j.cost_per_marketer)}));
+    } else {
+        options.value.series = data.value.map(i => ({...i, data: i.data.map(j => j.total_cost)}));
+    }
+};
+watch(selectedMarketerId, () => {
+    getData(null, null, null, selectedMarketerId.value);
+    updateChart();
+
+});
 
 getData();
 
@@ -130,6 +167,7 @@ var options = computed(() => {
             opacity: 1,
         },
         legend: {
+            show:false,
             position: 'top',
             horizontalAlign: 'left'
         }
