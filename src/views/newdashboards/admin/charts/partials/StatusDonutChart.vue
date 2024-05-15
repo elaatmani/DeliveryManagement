@@ -6,21 +6,24 @@
             <div class="">
             <h1 class="tw-mb-3 tw-text-xl tw-font-medium ">Sources</h1>
             <div class="tw-flex tw-w-full tw-justify-end tw-overflow-hidden">
-                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_avant_field">
-                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_apres_field">
-                <button @click="getData(date_avant_field, date_apres_field)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
+                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_avant">
+                <input type="date" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-w-[250px] tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2" v-model="date_apres">
+                <button @click="getData(date_avant, date_apres)" class="tw-items-center tw-gap-2 tw-py-2 tw-px-4 tw-bg-white hover:tw-bg-neutral-100 tw-duration-200 tw-border tw-border-solid tw-mx-1 tw-border-neutral-200 tw-rounded-md tw-mb-2">Filter</button>
             </div>
             <div v-if="loadingUpdating && !loading" class="tw-flex tw-text-neutral-500 tw-items-center tw-gap-1 tw-absolute tw-top-2 tw-right-3">
                 <Loading class="tw-scale-50" />
                 <p class=" tw-tetx-xs">Updating...</p>
             </div>
         </div>
-            <div v-if="!loading">
-                <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
-            </div>
-            <div v-else class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
-                <Loading />
-            </div>
+        <div v-if="!loading && optionsss">
+            <apexchart :height="400" :series="optionsss.series" :chart="optionsss.chart" :options="optionsss"></apexchart>
+        </div>
+        <div v-else-if="!loading && !optionsss" class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
+            No data
+        </div>
+        <div v-else class="tw-min-h-[400px] tw-flex tw-items-center tw-justify-center">
+            <Loading />
+        </div>
         </div>
     </div>
     <div class=" tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-relative">
@@ -71,13 +74,13 @@ import { confirmations, deliveryStatus } from '@/config/orders'
 
 
 const data = ref([]);
-const date_avant_field = ref(null);
-const date_apres_field = ref(null);
+const date_avant = ref(null);
+const date_apres = ref(null);
 const loading = ref(true);
 const loadingUpdating = ref(true);
 
 
-const getData = async (date_avant_field,date_apres_field) => {
+const getData = async (date_avant,date_apres) => {
     const cachedData = sessionStorage.getItem('cachedStatusDonut');
     let parsedData = null;
 
@@ -87,7 +90,7 @@ const getData = async (date_avant_field,date_apres_field) => {
         loading.value = false;
     }
   
-    await Dashboard.ConfirmationStatesDonuts(date_avant_field,date_apres_field)
+    await Dashboard.ConfirmationStatesDonuts(date_avant,date_apres)
     .then(
         res => {
             if(res.data.code == 'SUCCESS') {
@@ -223,22 +226,26 @@ var optionss = computed(() => loading.value ? null : ({
     },
     labels: data.value.delivery.map(i => deliveryStatus.find(j => j.value == i.delivery)?.name)
 }));
-var optionsss = computed(() => loading.value ? null : ({
-    series: data.value.lead.map(i => i.total),
-    chart: {
-        type: 'donut',
-    },
-
-    fill: {
-        opacity: 1,
-    },
-    // colors: ['#22c55e', '#f43f5e'],
-    legend: {
-        position: 'top',
-        horizontalAlign: 'left'
-    },
-    labels: data.value.lead.map(j => j.source)
-}));
+var optionsss = computed(() => {
+    if (loading.value || data.value.lead.length === 0) {
+        return null;
+    } else {
+        return {
+            series: data.value.lead.map(i => i.total),
+            chart: {
+                type: 'donut',
+            },
+            fill: {
+                opacity: 1,
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'left'
+            },
+            labels: data.value.lead.map(j => j.source)
+        };
+    }
+});
 </script>
 
 <style></style>
