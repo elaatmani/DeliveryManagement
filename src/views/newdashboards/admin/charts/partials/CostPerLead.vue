@@ -158,6 +158,14 @@ var options = computed(() => loading.value ? null : ({
     chart: {
         type: 'area',
     },
+    tooltip: {
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    const marketerCost = data.value[seriesIndex].data[dataPointIndex].average_cost_per_lead;
+                    return `${marketerCost}`;
+                }
+            },
+        },
     theme: {
         palette: 'palette5' 
     },

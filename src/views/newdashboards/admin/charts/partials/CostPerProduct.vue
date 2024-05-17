@@ -135,7 +135,7 @@ const updateChart = async () => {
             if (selectedData) {
                 return {
                     name: selectedData.name,
-                    data: selectedData.data.map(item => item.cost_per_product)
+                    data: selectedData.data.map(item => item.cost_per_lead_product)
                 };
             }
         }).filter(Boolean);
@@ -150,12 +150,12 @@ var options = computed(() => {
     if (selectedSeries.value === 'all') {
         series = data.value.map(series => ({
             name: series.name,
-            data: series.data.map(item => item.cost_per_product)
+            data: series.data.map(item => item.cost_per_lead_product)
         }));
     } else if (data.value[selectedSeries.value]) {
         series = [{
             name: data.value[selectedSeries.value].name,
-            data: data.value[selectedSeries.value].data.map(item => item.cost_per_product)
+            data: data.value[selectedSeries.value].data.map(item => item.cost_per_lead_product)
         }];
     }
 

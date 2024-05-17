@@ -164,6 +164,14 @@ var options = computed(() => {
         fill: {
             opacity: 1,
         },
+        tooltip: {
+            y: {
+                formatter: function (value, { seriesIndex, dataPointIndex }) {
+                    const marketerCost = data.value[seriesIndex].data[dataPointIndex].lead_per_marketer;
+                    return `${marketerCost}`;
+                }
+            },
+        },
         legend: {
             show:false,
             position: 'top',
