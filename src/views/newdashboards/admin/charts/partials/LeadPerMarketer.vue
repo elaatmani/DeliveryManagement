@@ -165,13 +165,29 @@ var options = computed(() => {
             opacity: 1,
         },
         tooltip: {
-            y: {
-                formatter: function (value, { seriesIndex, dataPointIndex }) {
-                    const marketerCost = data.value[seriesIndex].data[dataPointIndex].lead_per_marketer;
-                    return `${marketerCost}`;
-                }
+            
+                y: {
+                    formatter: function (value, { seriesIndex, dataPointIndex }) {
+                        let marketerValue;
+                        let marketerName;
+                        if (selectedMarketerId.value && selectedMarketerId.value.length > 0 && !selectedMarketerId.value.includes('all')) {
+                            let marketerId = selectedMarketerId.value[seriesIndex];
+                            let marketerData = data.value.find(item => item.marketer_id === marketerId);
+                            if (marketerData) {
+                                marketerValue = marketerData.data.find(item => item.date === options.value.xaxis.categories[dataPointIndex]).lead_per_marketer;
+                                marketerName = marketerData.name; // Get the marketer's name
+                            }
+                        } else {
+                            marketerValue = data.value[seriesIndex].data.find(item => item.date === options.value.xaxis.categories[dataPointIndex]).lead_per_marketer;
+                            marketerName = data.value[seriesIndex].name; // Get the marketer's name
+                        }
+                        return `${marketerName}: ${marketerValue}`; // Display the marketer's name along with the value
+                    },
+                    title: {
+                        formatter: () => '',
+                    },
+                },
             },
-        },
         legend: {
             show:false,
             position: 'top',
