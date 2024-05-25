@@ -58,10 +58,27 @@
           class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-flex tw-items-center tw-gap-2"
         >
           <!-- {{ getDate(item.created_at) }} -->
+          <div class="tw-flex tw-flex-wrap">
           <p>{{ moment(item.created_at).format("DD[/]MM[/]YY") }}</p>
-          <p v-if="false">
+          <p>
             {{ moment(item.created_at).format("HH[:]mm[:]ss") }}
           </p>
+        </div>
+        </h2>
+      </div>
+    </td>
+    <td class="tw-px-4 tw-py-2 tw-text-sm tw-font-medium tw-whitespace-nowrap">
+      <div>
+        <h2
+          class="tw-font-medium tw-text-gray-800 darkx:tw-text-white tw-flex tw-items-center tw-gap-2"
+        >
+          <!-- {{ getDate(item.created_at) }} -->
+          <div class="tw-flex tw-flex-wrap">
+          <p>{{ moment(item.updated_at).format("DD[/]MM[/]YY") }}</p>
+          <p>
+            {{ moment(item.updated_at).format("HH[:]mm[:]ss") }}
+          </p>
+        </div>
         </h2>
       </div>
     </td>
