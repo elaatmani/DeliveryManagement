@@ -61,7 +61,7 @@
                                 </th>
                                 <th scope="col" class="tw-py-3.5 tw-px-4 tw-text-sm tw-font-normal tw-text-left rtl:tw-text-right tw-text-gray-500 darkx:tw-text-gray-400">
                                     <button @click="$emit('sortOrder', {name: 'updated_at'})" class="tw-flex tw-items-center tw-gap-x-3 focus:tw-outline-none">
-                                        <span>Updated at</span>
+                                        <span>Updated</span>
 
                                         <svg class="tw-h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M2.13347 0.0999756H2.98516L5.01902 4.79058H3.86226L3.45549 3.79907H1.63772L1.24366 4.79058H0.0996094L2.13347 0.0999756ZM2.54025 1.46012L1.96822 2.92196H3.11227L2.54025 1.46012Z" fill="currentColor" stroke="currentColor" stroke-width="0.1" />
