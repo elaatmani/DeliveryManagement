@@ -59,8 +59,8 @@
         >
           <!-- {{ getDate(item.created_at) }} -->
           <div class="tw-flex tw-flex-wrap">
-          <p>{{ moment(item.created_at).format("DD[/]MM[/]YY") }}</p>
-          <p>
+          <p class="tw-ml-1">{{ moment(item.created_at).format("DD[/]MM[/]YY") }}</p>
+          <p class="tw-ml-1">
             {{ moment(item.created_at).format("HH[:]mm[:]ss") }}
           </p>
         </div>
@@ -74,8 +74,8 @@
         >
           <!-- {{ getDate(item.created_at) }} -->
           <div class="tw-flex tw-flex-wrap">
-          <p>{{ moment(item.updated_at).format("DD[/]MM[/]YY") }}</p>
-          <p>
+          <p  class="tw-ml-1">{{ moment(item.updated_at).format("DD[/]MM[/]YY") }}</p>
+          <p class="tw-ml-1">
             {{ moment(item.updated_at).format("HH[:]mm[:]ss") }}
           </p>
         </div>

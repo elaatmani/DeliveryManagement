@@ -37,12 +37,12 @@ import AppHeader from "@/layouts/default/partials/AppHeader";
 import AppSidebar from "@/layouts/default/partials/AppSidebar";
 import AppAnnonces from '@/layouts/default/partials/AppAnnonces'
 import Alert from "@/components/AlertVue";
-import AlertApi from '@/api/Alert'
+import AlertApi from '@/api/Alert';
+import Cookie from 'js-cookie'
 import AlertNotification from "@/components/AlertNotification";
 import User from "@/api/User";
-import Pusher from "pusher-js";
-import Echo from "laravel-echo";
-import Sheet from "@/api/Sheet";
+import Pusher from 'pusher-js'; // Add this line to import Pusher
+import {newNotificationHandler} from '@/channels/notification/new-notification';import Sheet from "@/api/Sheet";
 import Product from "@/api/Product";
 import Sale from "@/api/Sale";
 
@@ -57,6 +57,8 @@ export default {
       delay: 60000,
       showScrollUpButton: false,
       firstFetch: false,
+      pusher:false
+
       // delay: 6000,
     };
   },
@@ -107,29 +109,37 @@ export default {
       }
     },
 
-    subscribe() {
-      // const Pusher = window.Pusher
-      console.log(Pusher);
+  created() {
+      this.subscribe();
+  },  
+  subscribe() {
+          Pusher.logToConsole = true;
+          if (!localStorage.getItem('XSRF-TOKEN')) {
+              console.log('User is not authenticated');
+              return;
+          }
+          Pusher.Runtime.createXHR = function () {
+              var xhr = new XMLHttpRequest();
+              xhr.withCredentials = true;
+              return xhr;
+              };
+          var pusher = new Pusher('ede7da5b6ea69f4e8ee2', {
+              cluster: 'eu',
+              authEndpoint: 'http://localhost:8000/api/pusher_auth',
+              authTransport: 'ajax',
+              auth: {
+                  headers: {
+                      // 'Content-Type': 'application/json',
+                      'X-Xsrf-Token': Cookie.get("XSRF-TOKEN")
+                  }
+              }
+          });
 
-      const echo = new Echo({
-        broadcaster: "pusher",
-        key: "ABCDEFG",
-        wsHost: "127.0.0.1",
-        wsPort: 6001,
-        forceTLS: false,
-        disableStats: true,
-        cluster: "mt1",
-      });
+          var channel = pusher.subscribe('user.' + this.user.id);
+          channel.bind('new-notification', newNotificationHandler);
 
-      window.Echo = echo;
-
-      echo.channel("notification").listenToAll((e) => {
-        console.log(e);
-      });
-
-      this.subscribed = true;
-    },
-
+          this.subscribed = true;
+      },
     sync_sheets() {
       if (this.user.role == "admin") {
         Sheet.sync_all().then((res) => {
@@ -235,6 +245,8 @@ export default {
   mounted() {
     this.getCities();
     this.getAlerts();
+    this.subscribe();
+
     // !this.subscribed && this.subscribe();
 
     if (this.user.role == "admin") {
