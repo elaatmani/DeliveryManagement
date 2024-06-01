@@ -237,6 +237,13 @@ export const links = [
                 gate: 'show_all_ads',
                 to: '/ads'
             },
+            {
+                id: 2,
+                title: 'Ad Accounts',
+                subModule: 'ads/adsccounts',
+                gate: 'show_all_ads',
+                to: '/adaccounts'
+            },
         ]
     },
     
