@@ -167,14 +167,7 @@ export default {
       const validated = validate(this, this.items);
       if (!validated) return false;
       
-      try {
-         this.isLoading = true;
-         update(this, this.items);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false;
-      }
+      update(this, this.items);
   },
     cancel() {
       if (this.isLoading) return false;
