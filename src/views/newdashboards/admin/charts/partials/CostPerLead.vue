@@ -71,6 +71,16 @@ const date_avant_field = ref(null);
 const date_apres_field = ref(null);
 const loadingUpdating = ref(true);
 const averageCostPerLeadGeneral = ref(0);
+const averageCostPerLeadSelected = computed(() => {
+    if (selectedMarketerId.value && selectedMarketerId.value.length > 0 && !selectedMarketerId.value.includes('all')) {
+        const selectedData = data.value.filter(item => selectedMarketerId.value.includes(item.marketer_id));
+        const total = selectedData.reduce((sum, marketer) => sum + marketer.data.reduce((sum, item) => sum + item.average_cost_per_lead, 0), 0);
+        const count = selectedData.reduce((sum, marketer) => sum + marketer.data.reduce((sum, item) => item.average_cost_per_lead !== 0 ? sum + 1 : sum, 0), 0);
+        return (total / count).toFixed(2);
+    } else {
+        return averageCostPerLeadGeneral.value;
+    }
+});
 const selectedMarketerId = ref(null); 
 const marketerOptions = computed(() => data.value.map((marketer) => ({ marketer_id: marketer.marketer_id, name: marketer.name })));
 const getData = async (date_avant = null, date_apres = null, period = 'lastsevendays', marketerId = null) => {
@@ -106,7 +116,6 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     date_apres,
                     period,
                     amount_per_lead: res.data.data.amount_per_lead,
-                    total_amount_per_lead: res.data.data.total_amount_per_lead,
                     average_cost_per_lead_general: res.data.data.average_cost_per_lead_general
                 };
                 if (!parsedData || JSON.stringify(parsedData.amount_per_lead) !== JSON.stringify(newData.amount_per_lead) || JSON.stringify(parsedData.average_cost_per_lead_general) !== JSON.stringify(newData.average_cost_per_lead_general)) {
@@ -132,23 +141,26 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 getData();
 const updateChart = () => {
     if (options.value) {
+        let filteredData = data.value;
         if (selectedMarketerId.value && selectedMarketerId.value.length > 0 && !selectedMarketerId.value.includes('all')) {
-            const filteredData = data.value.filter(item => selectedMarketerId.value.includes(item.marketer_id));
-            options.value.series = filteredData.map(i => ({...i, data: i.data.map(j => j.average_cost_per_lead)}));
-        } else {
-            options.value.series = data.value.map(i => ({...i, data: i.data.map(j => j.total_amount_per_lead)}));
+            filteredData = data.value.filter(item => selectedMarketerId.value.includes(item.marketer_id));
         }
+
+        options.value.series = filteredData.map(marketer => {
+            return {
+                name: marketer.name,
+                data: marketer.data.map(item => item.average_cost_per_lead)
+            };
+        });
+
+        options.value.xaxis.categories = filteredData[0]?.data.map(p => p.date);
     }
 };
-
 watch(selectedMarketerId, () => {
     getData(null, null, null, selectedMarketerId.value);
     updateChart();
 });
 
-const formattedAverageData = computed(() => {
-    return averageCostPerLeadGeneral.value.toFixed(2); 
-});
 var options = computed(() => loading.value ? null : ({
     series: data.value.map(marketer => ({
         name: marketer.name,
@@ -199,7 +211,7 @@ var options = computed(() => loading.value ? null : ({
     annotations: {
     yaxis: [
             {
-            y:averageCostPerLeadGeneral.value ,
+            y:averageCostPerLeadSelected.value,
             borderColor: '#000000',
             borderWidth: 2,
             borderStyle: 'solid',
@@ -211,7 +223,7 @@ var options = computed(() => loading.value ? null : ({
                     fontSize: '20px', 
                     fontWeight: '600' 
                 },
-                text:`Average : ${formattedAverageData.value}`,
+                text:`Average : ${averageCostPerLeadSelected.value}`,
             }
             }
         ]

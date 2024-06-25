@@ -1,7 +1,10 @@
 <template>
-  <div v-if="!fetching && statistics.revenue?.length > 0">
-    <div class="tw-bg-white tw-p-5 tw-grid tw-grid-cols-4 tw-gap-5">
-        <RevenueCard v-for="r in statistics.revenue" :key="r.id" :icon="r.icon" :title="r.title" :value="r.value"  :color="r.color" />
+  <div v-if="!fetching && statistics.revenue?.length > 0"> 
+    <div class="tw-bg-white tw-p-5">
+        <h1 class="tw-mb-3 tw-text-xl tw-font-medium">Revenue</h1>
+        <div class="tw-bg-white tw-grid tw-grid-cols-4 tw-gap-5">
+            <RevenueCard v-for="r in statistics.revenue" :key="r.id" :icon="r.icon" :title="r.title" :value="r.value"  :color="r.color" />
+        </div>
     </div>
   </div>
 </template>
