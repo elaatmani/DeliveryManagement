@@ -8,6 +8,14 @@ class Ads {
         await Csrf.getCookie();
         return Api.post('api/ads/new', ads);
     }
+    async addedToday() {
+        await Csrf.getCookie();
+        return Api.get('api/ads/addedtoday');
+    }
+    async updateApprouval(id) {
+        await Csrf.getCookie();
+        return Api.post('api/ads/approuve/' + id);
+    }
 
     async update(id, ads) {
         await Csrf.getCookie();

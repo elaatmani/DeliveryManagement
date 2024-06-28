@@ -8,6 +8,8 @@
                 <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Ads</h2>
 
                 <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ totalOrders }} ad</span>
+                <router-link to="adsaddeddaily"><span class="tw-px-3 tw-py-1 tw-text-xs tw-text-cyan-500 tw-bg-blue-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ adsaddedToday }} ad(s) added Today</span></router-link>
+
             </div>
 
             <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">Ads list.</p>
@@ -79,7 +81,7 @@ export default {
 
       items: [],
       statistics: {},
-
+      adsaddedToday: 0,
       first_page_url: null,
       lase_page_url: null,
       next_page_url: null,
@@ -111,7 +113,13 @@ export default {
   },
 
   methods: {
-
+    fetchAdsAddedToday() {
+      // Replace 'your-api-endpoint' with the actual endpoint
+      return Ads.addedToday()
+        .then(({ data }) => {
+          this.adsaddedToday = data.data.count;
+        });
+    },
     paginateOrders() {
      
       const url = '?page=' + this.current_page;
@@ -202,6 +210,7 @@ export default {
 
   mounted() {
     this.paginateOrders()
+    this.fetchAdsAddedToday(); // Add this line
 
   }
 };
