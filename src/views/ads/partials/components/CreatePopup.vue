@@ -83,7 +83,7 @@
             <div class="md:tw-col-span-1 tw-col-span-2">
               <label class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Ads
                 Date</label>
-              <input v-model="items[0].ads_at" @input="errors[0].ads_at = null"
+              <input v-model="items[0].ads_at" @input="handleDateInput()"
                 :class="[errors.ads_at && '!tw-border-red-400']" type="date"
                 class="tw-bg-gray-50 tw-border tw-border-solid focus:tw-outline-none tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
                 required />
@@ -174,7 +174,7 @@
         isLoading: false,
 
         sources: ['facebook', 'google', 'tiktok','snapchat'],
-
+        initialDate: null,
         products_fetched: null,
         products: [{id: 0, name: "Choose a product"}],
         items: [{
@@ -243,7 +243,7 @@
           source: 0,
           amount: 0,
           leads:0,
-          ads_at: null,
+          ads_at: this.initialDate,
           note: null
         };
         this.errors[0] = {
@@ -254,6 +254,11 @@
           leads:null,
           ads_at: null,
         };
+      }
+    }, 
+    handleDateInput() {
+      if (!this.initialDate) {
+        this.initialDate = this.items[0].ads_at;
       }
     },
     handleCreate() {
