@@ -184,7 +184,8 @@
           amount: 0,
           leads:0,
           ads_at: null,
-          note: null
+          note: null,
+          approuved: true,
         }],
 
         errors: [{
@@ -234,6 +235,7 @@
         leads: this.items[0].leads,
         ads_at: this.items[0].ads_at,
         note: this.items[0].note,
+        approuved: this.items[0].approuved,
       };
       if (this.items[0].product_id !== 0 && this.items[0].marketer_id !== 0 && this.items[0].source !== 0) {
         this.items.push(newAd);
