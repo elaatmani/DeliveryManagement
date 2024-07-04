@@ -36,8 +36,8 @@ export default
                 meta: {
                     module: 'ads',
                     subModule: 'ads/adaccounts',
+                    role:['admin'],
                     title: 'Ad Accounts',
-                    gate: 'show_all_ads'
                 }
             },
             { 

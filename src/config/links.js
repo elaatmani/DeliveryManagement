@@ -240,8 +240,8 @@ export const links = [
             {
                 id: 2,
                 title: 'Ad Accounts',
+                role: ['admin'], 
                 subModule: 'ads/adsccounts',
-                gate: 'show_all_ads',
                 to: '/adaccounts'
             },
         ]
