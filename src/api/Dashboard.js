@@ -47,6 +47,30 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/confirmation_state_donuts',{ params: { date_avant, date_apres, period } });
     }
+    async TotalSpendFbTik(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/total_spend_tik_fb',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
+    async AmountPerLeadFbTik(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/amount_per_lead_tik_fb',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
+    async TotalCostAndLeadPerProduct(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/amount_lead_product',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
+    async compareFbTiktok(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/compare_fb_tik',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
+    async topMarketersByLeadsAndCost(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/marketer_stats',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
+    async TotalLeadFbTik(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/total_lead_tik_fb',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
     async TopProductSelles(sort_by, sort_order, per_page) {
         await Csrf.getCookie();
         return Api.get('api/v1/admin/get_top_products',{ params: { sort_by, sort_order, per_page } });
