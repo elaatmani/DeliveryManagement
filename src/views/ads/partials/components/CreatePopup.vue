@@ -237,12 +237,12 @@
         note: this.items[0].note,
         approuved: this.items[0].approuved,
       };
-      if (this.items[0].product_id !== 0 && this.items[0].marketer_id !== 0 && this.items[0].source !== 0) {
+      if (this.items[0].product_id !== 0 && this.items[0].source !== 0) {
         this.items.push(newAd);
         this.items[0] = {
           product_id: 0,
           marketer_id:0,
-          source: 0,
+          source: newAd.source,
           amount: 0,
           leads:0,
           ads_at: this.initialDate,

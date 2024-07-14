@@ -12,7 +12,12 @@ class Admin {
         await Csrf.getCookie();
         return Api.post('api/v1/admin/analytics', filters);
     }
-
+    
+    async products(url = '/', options) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/admin/products' + url, options);
+    }
+    
     async get_top_products(){
         await Csrf.getCookie();
         return Api.get('api/v1/admin/get_top_products')

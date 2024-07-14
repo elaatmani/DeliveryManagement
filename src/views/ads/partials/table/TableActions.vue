@@ -5,7 +5,7 @@
             <v-icon size="x-small" >mdi-pencil-outline</v-icon>
         </button>
 
-        <TableActionsDelete v-if="$user.role == 'admin'" :item="item" @delete="id => $emit('delete', id)" />
+        <TableActionsDelete v-if="$user.role == 'admin' || true" :item="item" @delete="id => $emit('delete', id)" />
     </div>
 
     <div v-if="popup">

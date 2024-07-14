@@ -49,10 +49,10 @@
     },
   });
   
-  const getData = async (date_avant = null, date_apres = null) => {
+  const getData = async (date_avant = null, date_apres = null, marketer_id = null, product_id = null) => {
     loading.value = true;
     try {
-      const res = await Dashboard.topMarketersByLeadsAndCost(date_avant, date_apres);
+      const res = await Dashboard.topMarketersByLeadsAndCost(date_avant, date_apres, marketer_id, product_id);
       if (res.data.code === 'SUCCESS') {
         data.value = res.data.data;
         currentIndex.value = 0; // Reset currentIndex when new data is loaded
@@ -65,14 +65,15 @@
 };
   
 watch(
-  () => props.filters,
-  (newFilters) => {
-    const { dateRange } = newFilters || {};
-    const { startDate, endDate } = dateRange || {};
-    getData(startDate, endDate);
-  },
-  { immediate: true }
-);
+    () => props.filters,
+    (newFilters) => {
+      const { dateRange, filter } = newFilters || {};
+      const { startDate, endDate } = dateRange || {};
+      const { selectedMarketerId, selectedSeries } = filter || {};
+      getData(startDate, endDate, selectedMarketerId, selectedSeries);
+    },
+    { immediate: true }
+  );
   
   const nextProduct = () => {
     if (data.value && currentIndex.value < data.value.length - 5) {
