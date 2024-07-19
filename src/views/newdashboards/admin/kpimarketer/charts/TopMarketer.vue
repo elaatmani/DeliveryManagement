@@ -88,54 +88,75 @@ watch(
   };
   
   const options = computed(() => {
-    return {
-        series: [
-        {
-          name: 'Total Leads',
-          data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.total_leads).toFixed(2)) : [],
-        },
-        {
-          name: 'Cost Per Lead',
-          data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.cost_per_lead).toFixed(2)) : [],
-        },
-      ],
-      chart: {
+  return {
+    series: [
+      {
+        name: 'Total Leads',
         type: 'bar',
+        data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.total_leads).toFixed(2)) : [],
       },
-      dataLabels: {
-        enabled: true,
+      {
+        name: 'Cost Per Lead',
+        type: 'bar',
+        data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.cost_per_lead).toFixed(2)) : [],
       },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          type: 'vertical',
-          shadeIntensity: 0.5,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 0.85,
-          opacityTo: 0.85,
-          stops: [0, 100],
+    ],
+    chart: {
+      type: 'line',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+      },
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      width: [0, 2], // Width of bars and lines
+      curve: 'smooth',
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'light',
+        type: 'vertical',
+        shadeIntensity: 0.5,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [0, 100],
+      },
+    },
+    xaxis: {
+      categories: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => marketer.name) : [],
+    },
+    yaxis: [
+      {
+        title: {
+          text: 'Total Leads',
         },
       },
-      plotOptions: {
-        bar: {
-          horizontal: true,
+      {
+        opposite: true,
+        title: {
+          text: 'Cost Per Lead',
         },
       },
-      xaxis: {
-        type: 'category',
-        categories: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => marketer.name) : [],
-        },
-      stroke: {
-        curve: 'smooth',
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'left',
-      },
-      colors: ['#37C8EB', '#E337EB'], // Red for cost, Cyan for leads
-    };
-  });
+    ],
+    tooltip: {
+      shared: true,
+      intersect: false,
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left',
+    },
+    colors: ['#37C8EB', '#E337EB'], // Cyan for leads, Red for cost
+  };
+});
+
+
   </script>
   

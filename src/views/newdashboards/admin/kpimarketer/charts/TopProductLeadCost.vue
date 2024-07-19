@@ -99,14 +99,14 @@
   const options = computed(() => {
     return {
       series: [
-        {
-          name: 'Total Cost',
-          data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(product => product.total_cost) : [],
-        },
-        {
-          name: 'Total Leads',
-          data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(product => product.total_leads) : [],
-        },
+          {
+            name: 'Total Spend',
+            data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(product => parseFloat(product.total_cost).toFixed(2)) : [],
+          },
+          {
+            name: 'Total Leads',
+            data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(product => parseFloat(product.total_leads).toFixed(2)) : [],
+          },
       ],
       chart: {
         type: 'bar',

@@ -63,6 +63,10 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.get('api/charts/compare_fb_tik',{ params: { date_avant, date_apres,marketer_id,product_id} });
     }
+    async stats(date_avant, date_apres, marketer_id,product_id) {
+        await Csrf.getCookie();
+        return Api.get('api/charts/stat',{ params: { date_avant, date_apres,marketer_id,product_id} });
+    }
     async topMarketersByLeadsAndCost(date_avant, date_apres, marketer_id,product_id) {
         await Csrf.getCookie();
         return Api.get('api/charts/marketer_stats',{ params: { date_avant, date_apres,marketer_id,product_id} });
