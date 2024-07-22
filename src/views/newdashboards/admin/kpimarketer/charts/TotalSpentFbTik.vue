@@ -1,8 +1,13 @@
 <template>
   <div>
       <div v-if="!loading" class="tw-w-full tw-shadow-md tw-p-4 tw-bg-white tw-rounded-lg">
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium tw-py-2">Total Spend :</h1>
-
+       <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
+        <h1 class="tw-text-xl tw-font-medium tw-py-2">Total Spend :</h1>
+        <div class="tw-full md:tw-mb-0 tw-mb-3">
+          <span class="tw-font-normal tw-bg-blue-800 tw-text-white tw-px-2 tw-py-1 tw-rounded">Facebook: {{ fbAverage }}</span>
+          <span class="tw-ml-2 tw-font-normal tw-bg-[#f60457] tw-text-white tw-px-2 tw-py-1 tw-rounded">TikTok: {{ tiktokAverage }}</span>
+        </div>
+       </div>
           <apexchart :height="300" :series="options.series" :chart="options.chart" :options="options"></apexchart>
       </div>
       <div v-else class=" tw-h-[350px] tw-my-auto tw-flex tw-items-center tw-justify-center">
@@ -83,6 +88,8 @@ watch(
   },
   { immediate: true }
 );
+const fbAverage = computed(() => globalFacebookAverage.value.toFixed(2));
+const tiktokAverage = computed(() => globalTiktokAverage.value.toFixed(2));
 var options = computed(() => {
   const combinedData = data.value;
   return {
@@ -129,42 +136,6 @@ var options = computed(() => {
           formatter: () => '',
         },
       },
-    },
-    annotations: {
-      yaxis: [
-        {
-          y: globalFacebookAverage.value,
-          borderColor: '#EBEBEB',
-          borderWidth: 2,
-          borderStyle: 'solid',
-          label: {
-            borderColor: '#fff',
-            style: {
-              color: '#fff',
-              background: '#4267B2',
-              fontSize: '15px',
-              fontWeight: '400',
-            },
-            text: `Facebook Average: ${globalFacebookAverage.value.toFixed(2)}`,
-          },
-        },
-        {
-          y: globalTiktokAverage.value,
-          borderColor: '#EBEBEB',
-          borderWidth: 2,
-          borderStyle: 'solid',
-          label: {
-            borderColor: '#fff',
-            style: {
-              color: '#fff',
-              background: '#f60457',
-              fontSize: '15px',
-              fontWeight: '400',
-            },
-            text: `TikTok Average: ${globalTiktokAverage.value.toFixed(2)}`,
-          },
-        },
-      ],
     },
     legend: {
       show: false,

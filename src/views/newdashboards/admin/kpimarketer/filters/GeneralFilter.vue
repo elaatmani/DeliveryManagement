@@ -143,6 +143,7 @@
     { label: 'Last 7 days', value: 'Last 7 days' },
     { label: 'Last 30 days', value: 'Last 30 days' },
     { label: 'Last 90 days', value: 'Last 90 days' },
+    { label: 'This month', value: 'This month' },
     { label: 'Last month', value: 'Last month' },
     { label: 'Last year', value: 'Last year' },
   ];
@@ -174,8 +175,10 @@
     'Last 7 days': [new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7), new Date()],
     'Last 30 days': [new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30), new Date()],
     'Last 90 days': [new Date(today.getFullYear(), today.getMonth(), today.getDate() - 90), new Date()],
+    'This month': [new Date(today.getFullYear(), today.getMonth(), 1), new Date(today.getFullYear(), today.getMonth() + 1, 0)],
     'Last month': [new Date(today.getFullYear(), today.getMonth() - 1, 1), new Date(today.getFullYear(), today.getMonth(), 0)],
     'Last year': [new Date(today.getFullYear() - 1, 0, 1), new Date(today.getFullYear() - 1, 11, 31)],
+
   };
 
   [startDate.value, endDate.value] = dateRanges[range].map(date => date.toISOString().split('T')[0]);
@@ -202,7 +205,3 @@
     selectedRange.value = `${startDate.value} → ${endDate.value}`;
   });
   </script>
-
-<!-- - Chart for top product by (Leads or cost )
-- Chart for top marketer by ( total Leads : from hight to low )
-                                                    ( cost per lead : from lowest to highest ) -->

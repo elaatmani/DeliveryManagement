@@ -1,6 +1,7 @@
 <template>
   <div>
     <GeneralFilter @filter-changed="handleFilterChange" />
+    <CardsStats />
     <div class="tw-flex tw-flex-wrap md:tw-flex-nowrap tw-w-full tw-space-y-2 md:tw-space-y-0 md:tw-space-x-4">
       <div class="tw-w-full md:tw-w-1/2 tw-shadow-md tw-rounded-lg">
         <TotalSpentFbTik :filters="filters"/>
@@ -24,6 +25,7 @@
 </template>
 
 <script setup>
+import CardsStats from '@/views/newdashboards/admin/kpimarketer/cards/CardsStats.vue'
 import TotalLeadFbTik from '@/views/newdashboards/admin/kpimarketer/charts/TotalLeadFbTik.vue'
 import TopMarketer from '@/views/newdashboards/admin/kpimarketer/charts/TopMarketer.vue'
 import TopProductLeadCost from '@/views/newdashboards/admin/kpimarketer/charts/TopProductLeadCost.vue'
