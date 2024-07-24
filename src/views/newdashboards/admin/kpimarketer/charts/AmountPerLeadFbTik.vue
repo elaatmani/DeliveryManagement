@@ -4,8 +4,8 @@
           <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
         <h1 class="tw-text-xl tw-font-medium tw-py-2">Cost Per Lead :</h1>
         <div class="tw-full md:tw-mb-0 tw-mb-3">
-          <span class="tw-font-normal tw-bg-blue-800 tw-text-white tw-px-2 tw-py-1 tw-rounded">Facebook: {{ fbAverage }}</span>
-          <span class="tw-ml-2 tw-font-normal tw-bg-[#f60457] tw-text-white tw-px-2 tw-py-1 tw-rounded">TikTok: {{ tiktokAverage }}</span>
+          <span class="tw-font-normal tw-bg-blue-800 tw-text-white tw-px-2 tw-py-1 tw-rounded">Avg FB: {{ fbAverage }}</span>
+          <span class="tw-ml-2 tw-font-normal tw-bg-[#f60457] tw-text-white tw-px-2 tw-py-1 tw-rounded">Avg TK: {{ tiktokAverage }}</span>
         </div>
        </div>
             <apexchart :height="335" :series="options.series" :chart="options.chart" :options="options"></apexchart>

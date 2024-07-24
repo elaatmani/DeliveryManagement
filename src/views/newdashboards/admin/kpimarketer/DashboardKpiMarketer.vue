@@ -1,7 +1,7 @@
 <template>
   <div>
     <GeneralFilter @filter-changed="handleFilterChange" />
-    <CardsStats />
+    <CardsStats :filters="filters"/>
     <div class="tw-flex tw-flex-wrap md:tw-flex-nowrap tw-w-full tw-space-y-2 md:tw-space-y-0 md:tw-space-x-4">
       <div class="tw-w-full md:tw-w-1/2 tw-shadow-md tw-rounded-lg">
         <TotalSpentFbTik :filters="filters"/>

@@ -5,10 +5,10 @@
             <div class="tw-flex tw-justify-between tw-flex-wrap">
                 <div>
                     <div>       
-                        <p class="tw-text-blue-700 tw-text-xl">Facebook: {{ data.globalFacebookTotalSpend ? data.globalFacebookTotalSpend : '0.00' }}</p>
+                        <p class="tw-text-blue-700 tw-text-xl">Facebook: {{ data.globalFacebookTotalSpend ? data.globalFacebookTotalSpend.toFixed(2) : '0.00' }}</p>
                     </div>
                     <div >       
-                        <p class="tw-text-[#f60457] tw-text-xl">Tiktok: {{ data.globalTiktokTotalSpend ? data.globalTiktokTotalSpend :'0.00'}}</p>
+                        <p class="tw-text-[#f60457] tw-text-xl">Tiktok: {{ data.globalTiktokTotalSpend ? data.globalTiktokTotalSpend.toFixed(2) :'0.00'}}</p>
                     </div>
                     <div class="tw-text-xl tw-font-semibold tw-text-green-500">
                         Total: {{ totalSpend }}
@@ -20,10 +20,10 @@
         <h1 class="tw-text-xl tw-font-semibold tw-text-black">Total Lead:</h1>
         <div>
             <div>
-                <p class="tw-text-blue-700 tw-text-xl">Facebook: {{ data.globalFacebookTotalLeads ? data.globalFacebookTotalLeads :'0.00'}}</p>
+                <p class="tw-text-blue-700 tw-text-xl">Facebook: {{ data.globalFacebookTotalLeads ? data.globalFacebookTotalLeads.toFixed(2):'0.00'}}</p>
             </div>
             <div >
-                <p class="tw-text-[#f60457] tw-text-xl">TikTok: {{  data.globalTiktokTotalLeads ? data.globalTiktokTotalLeads : '0.00' }}</p>
+                <p class="tw-text-[#f60457] tw-text-xl">TikTok: {{  data.globalTiktokTotalLeads ? data.globalTiktokTotalLeads.toFixed(2) : '0.00' }}</p>
             </div>
             <div class="tw-text-xl tw-font-semibold tw-text-blue-500">
                 Total: {{ totalLeads }}
@@ -51,19 +51,48 @@
 </template>
 
 <script setup>
-import { ref, onMounted,computed } from 'vue';
+import { ref, watch, defineProps,computed } from 'vue';
 import Dashboard from '@/api/Dashboard';
-
+const props = defineProps({
+  filters: {
+    type: Object,
+    default: () => ({
+      dateRange: {
+        startDate: null,
+        endDate: null,
+      },
+      selectedMarketerId: null,
+      selectedSeries: null,
+    }),
+  },
+});
 const data = ref({});
 const loading = ref(false);
-onMounted(async () => {
-    loading.value = true; 
-    const response = await Dashboard.stats();
-    if (response.data.code === 'SUCCESS') {
-        data.value = response.data.data;
-    }
-    loading.value = false; 
-});
+const getData = async (date_avant = null, date_apres = null, marketer_id = null, product_id = null) => {
+//   const cacheKey = `CardsStats-${date_avant}-${date_apres}-${marketer_id}-${product_id}`;
+
+  loading.value = true;
+  await Dashboard.stats(date_avant, date_apres, marketer_id, product_id)
+    .then(res => {
+      if (res.data.code === 'SUCCESS') {
+        data.value = res.data.data;
+      }
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
+
+watch(
+  () => props.filters,
+  (newFilters) => {
+    const { dateRange, filter } = newFilters || {};
+    const { startDate, endDate } = dateRange || {};
+    const { selectedMarketerId, selectedSeries } = filter || {};
+    getData(startDate, endDate, selectedMarketerId, selectedSeries);
+  },
+  { immediate: true } // Add this line
+);
 const globalTiktokCostPerLead = computed(() => {
     return data.value.globalTiktokCostPerLead ? data.value.globalTiktokCostPerLead.toFixed(2) : '0.00';
 });
