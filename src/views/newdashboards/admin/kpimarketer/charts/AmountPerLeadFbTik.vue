@@ -8,7 +8,7 @@
           <span class="tw-ml-2 tw-font-normal tw-bg-[#f60457] tw-text-white tw-px-2 tw-py-1 tw-rounded">Avg TK: {{ tiktokAverage }}</span>
         </div>
        </div>
-            <apexchart :height="335" :series="options.series" :chart="options.chart" :options="options"></apexchart>
+            <apexchart :height="346" :series="options.series" :chart="options.chart" :options="options"></apexchart>
         </div>
         <div v-else class=" tw-h-[350px] tw-my-auto tw-flex tw-items-center tw-justify-center">
             <Loading />
