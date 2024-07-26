@@ -36,7 +36,7 @@ export default {
 
     computed: {
         users() {
-            return this.$store.getters['user/users']
+            return this.$store.getters['user/users'].filter(u => u.status == 1);
         },
         agents() {
             return this.fetched ? this.users.filter(u => u.role.name == 'agente') : []
