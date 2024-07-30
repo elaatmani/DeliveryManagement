@@ -88,21 +88,27 @@ watch(
   };
   
   const options = computed(() => {
+  const totalLeadsData = data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => Number(parseFloat(marketer.total_leads).toFixed(2))) : [];
+  const costPerLeadData = data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => Number(parseFloat(marketer.cost_per_lead).toFixed(2))) : [];
+
+  console.log("Total Leads Data:", totalLeadsData);
+  console.log("Cost Per Lead Data:", costPerLeadData);
+
   return {
     series: [
       {
         name: 'Total Leads',
         type: 'bar',
-        data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.total_leads).toFixed(2)) : [],
+        data: totalLeadsData,
       },
       {
         name: 'Cost Per Lead',
         type: 'bar',
-        data: data.value ? data.value.slice(currentIndex.value, currentIndex.value + 5).map(marketer => parseFloat(marketer.cost_per_lead).toFixed(2)) : [],
+        data: costPerLeadData,
       },
     ],
     chart: {
-      type: 'line',
+      type: 'bar',
     },
     plotOptions: {
       bar: {
@@ -111,10 +117,27 @@ watch(
     },
     dataLabels: {
       enabled: true,
+      formatter: function (val) {
+        return val.toFixed(2); // Ensure every value is displayed with two decimal places
+      },
+      style: {
+        colors: ['#fff'],
+      },
+      background: {
+        enabled: true,
+        foreColor: '#000',
+        borderRadius: 2,
+        dropShadow: {
+          enabled: true,
+          top: 1,
+          left: 1,
+          blur: 1,
+          opacity: 0.45
+        }
+      }
     },
     stroke: {
-      width: [0, 2], // Width of bars and lines
-      curve: 'smooth',
+      width: [0, 0], // Set to 0 if no stroke is needed on bars
     },
     fill: {
       type: 'gradient',
@@ -122,8 +145,6 @@ watch(
         shade: 'light',
         type: 'vertical',
         shadeIntensity: 0.5,
-        gradientToColors: undefined,
-        inverseColors: true,
         opacityFrom: 0.85,
         opacityTo: 0.85,
         stops: [0, 100],
@@ -148,14 +169,21 @@ watch(
     tooltip: {
       shared: true,
       intersect: false,
+      y: {
+        formatter: function (val) {
+          return val.toFixed(2); // Format tooltips to two decimal places as well
+        }
+      }
     },
     legend: {
       position: 'top',
       horizontalAlign: 'left',
     },
-    colors: ['#37C8EB', '#E337EB'], // Cyan for leads, Red for cost
+    colors: ['#37C8EB', '#E337EB'],
   };
 });
+
+
 
 
   </script>
