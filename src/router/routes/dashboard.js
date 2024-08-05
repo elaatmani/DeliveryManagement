@@ -3,6 +3,7 @@ import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 
 import DashboardView from '@/views/newdashboards/admin/DashboardView'
 import DashboardKpiMarketer from '@/views/newdashboards/admin/kpimarketer/DashboardKpiMarketer'
+import DashboardKpiAgente from '@/views/newdashboards/admin/kpiagente/DashboardKpiAgente'
 import AgentDashboard from '@/views/newdashboards/agent/AgentDashboard'
 import MarketerDashboardView from '@/views/newdashboards/marketer/DashboardView'
 import DashboardAnalytics from '@/views/dashboardanalytics/DashboardAnalytics'
@@ -108,6 +109,17 @@ export default
                     module: 'dashboards',
                     subModule: 'admin/marketers',
                     title: 'Marketers',
+                    role: 'admin'
+                }
+            },
+            { 
+                name: 'dashboards/admin/agentes',
+                path: 'admin/agentes',
+                component: DashboardKpiAgente,
+                meta: {
+                    module: 'dashboards',
+                    subModule: 'admin/agentes',
+                    title: 'Agentes',
                     role: 'admin'
                 }
             },

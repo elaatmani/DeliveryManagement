@@ -67,6 +67,13 @@ export const links = [
                 role: 'admin',
                 to: '/dashboards/admin/marketers'
             },
+            {
+                id: 6,
+                title: 'Agentes',
+                subModule: 'dashboard/Agentes',
+                role: 'admin',
+                to: '/dashboards/admin/agentes'
+            },
         ]
     },
 
