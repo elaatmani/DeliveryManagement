@@ -84,6 +84,27 @@ class Dashboard {
         return Api.post('api/v1/marketer/statistics', filters);
     }
 
+    //---------- KPAI Agente -----------//
+    async treatedOrHandledOrders(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/treated_or_handled', {params: filters});
+    }
+
+    async DroppedOrders(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/dropped_orders', {params: filters});
+    }
+
+    async ConfirmedOrders(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/confirmed_orders', {params: filters});
+    }
+
+    async DeliveredOrders(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/delivered_orders', {params: filters});
+    }
+
 }
 
 

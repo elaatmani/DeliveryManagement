@@ -58,31 +58,17 @@
           <div class="tw-w-full md:tw-w-[200px] tw-mb-2 md:tw-mb-0 md:tw-mr-2 tw-mr-0 ">
             <vue-select 
               :multiple="true"
-              @input="updateChart" 
-              :reduce="marketer => marketer.marketer_id" 
+              :reduce="agente => agente.agente_id" 
               :clearable="false" 
               class="tw-bg-white tw-items-center tw-border-solid tw-outline-none tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block md:tw-w-[200px] tw-w-full"
-              v-model="selectedMarketerId" 
-              :options="[{ marketer_id: 'all', name: 'All' }, ...marketerOptions]" 
+              v-model="selectedAgenteId" 
+              :options="[...agenteOptions]" 
               label="name"
-              placeholder="Select a marketer" 
+              placeholder="Select a agente" 
             >
             </vue-select>
           </div>
-         
-          <div  class="tw-w-full md:tw-w-[200px] tw-mb-2 md:tw-mb-0">
-            <vue-select 
-              :multiple="true"
-              :reduce="product => product.id" 
-              :clearable="false" 
-              class="tw-bg-white tw-items-center tw-border-solid tw-outline-none tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block md:tw-w-[200px] tw-w-full"
-              v-model="selectedSeries" 
-              :options="allProducts" 
-              label="name"
-              placeholder="Select a product" 
-            >
-            </vue-select>
-          </div>
+        
           <div class="tw-w-full md:tw-w-fit tw-mb-2 md:tw-mb-0 md:tw-mr-2 tw-mr-0">
           <button class="tw-bg-orange-500 tw-text-white tw-rounded tw-px-4 tw-h-[33px] md:tw-ml-2 tw-ml-0 tw-w-full" @click="send">Filter</button>
         </div>
@@ -105,15 +91,12 @@
   });
   const emit = defineEmits(['filter-changed']);
   const store = useStore();
-  const selectedMarketerId = ref(null); 
-  const selectedSeries = ref([]);
+  const selectedAgenteId = ref(null); 
   
   const users = computed(() => store.getters['user/users']);
-  const products = computed(() => store.getters['product/products']);
-  const allProducts = computed(() => [{ id: 'all', name: 'All' }, ...products.value]);
   const fetched = computed(() => store.getters['user/fetched']);
-  const marketers = computed(() => fetched.value ? users.value.filter(u => u.role.name == 'marketer') : []);
-  const marketerOptions = computed(() => marketers.value.map(({ id, firstname, lastname }) => ({ marketer_id: id, name: `${firstname} ${lastname}` })));
+  const agentes = computed(() => fetched.value ? users.value.filter(u => u.role.name == 'agente') : []);
+  const agenteOptions = computed(() => agentes.value.map(({ id, firstname, lastname }) => ({ agente_id: id, name: `${firstname} ${lastname}` })));
 
   
   const selectedRange = ref('Last 7 days');
@@ -123,19 +106,7 @@
   const sevenDaysAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
   const startDate = ref(sevenDaysAgo.toISOString().split('T')[0]);
   const endDate = ref(today.toISOString().split('T')[0]);
-  // const comparisonResult = ref({});
-  // const compareFbTiktok = async () => {
-  //   try {
-  //     await Dashboard.compareFbTiktok(startDate.value, endDate.value, selectedMarketerId.value, selectedSeries.value)
-  //       .then(res => {
-  //         if (res.data.code === 'SUCCESS') {
-  //           comparisonResult.value = res.data.data;
-  //         }
-  //       });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  
   
   const dateOptions = [
     { label: 'Today', value: 'Today' },
@@ -154,7 +125,6 @@
   
   onMounted(() => {
     window.addEventListener('resize', updateViewport);
-    // compareFbTiktok();
   });
   
   onUnmounted(() => {
@@ -197,7 +167,7 @@
   const send = () => {
   emit('filter-changed', { 
     dateRange: { startDate: startDate.value, endDate: endDate.value },
-    filter: { selectedMarketerId: selectedMarketerId.value, selectedSeries: selectedSeries.value }
+    filter: { selectedAgenteId: selectedAgenteId.value }
   });
   //  compareFbTiktok();
 };
