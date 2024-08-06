@@ -4,30 +4,19 @@
       
     </td>
     <td>
-      <div class="tw-p-2">
+      <div class="tw-p-2 tw-w-[200px]">
         <div class="tw-relative">
-          <select
-            @change="handleProductChange"
-            :value="item.product_id"
-            class="tw-block tw-border-solid focus:tw-outline-none tw-w-full tw-p-2 tw-pr-6 tw-text-xs tw-text-gray-900 tw-border tw-border-gray-300 tw-rounded tw-bg-gray-50 focus:tw-ring-orange-500 focus:tw-border-orange-500 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-orange-500 dark:focus:tw-border-orange-500"
-          >
-            <option :value="0" selected>Choose Product</option>
-            <option v-for="p in products" :key="p.id" :value="p.id">{{ p.name }}</option>
-          </select>
-
-          <div
-            class="tw-pointer-events-none tw-absolute tw-inset-y-0 tw-right-0 tw-flex tw-items-center tw-px-2 tw-text-gray-700"
-          >
-            <svg
-              class="tw-fill-current tw-h-4 tw-w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-              />
-            </svg>
-          </div>
+          <vue-select 
+            :reduce="(o) => o.id" 
+            @option:selected="handleProductChange" 
+            :value="item.product_id" 
+             v-model="selectedProduct"
+            :clearable="false" 
+            class="tw-bg-gray-50 tw-border-solid tw-outline-none  tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-orange-500 focus:tw-border-orange-500 tw-block tw-w-full"
+            placeholder="Choose Product" 
+            :options="products" 
+            label="name">
+        </vue-select>
         </div>
       </div>
     </td>
@@ -108,7 +97,12 @@
 </template>
 
 <script>
+  import vueSelect from 'vue-select';
+
 export default {
+  components: {
+      'vue-select': vueSelect
+    },
     props: {
         item: {
             required: true,
@@ -118,6 +112,11 @@ export default {
         }
     },
 
+    data() {
+    return {
+      selectedProduct: null, 
+    };
+  },
     computed: {
         product() {
             if(this.item.product_id == 0) return null;
@@ -126,23 +125,20 @@ export default {
     },
 
     methods: {
-        handleProductChange(e) {
-            const id = parseInt(e.target.value);
-            if(!id) return false;
+      handleProductChange(product) {
+        if(!product.id) return false;
 
-            const product = this.products.find(p => p.id == id);
-            console.log(product.variations.length > 0 ? product.variations[0].id : null);
-            const item = {
-                ...this.item,
-                product_id: id,
-                product: product,
-                product_ref: product.ref,
-                product_variation_id: product.variations.length > 0 ? product.variations[0].id : null,
-                product_variation: product.variations.length > 0 ? product.variations[0] : null,
-            }
-            
-            this.$emit('update', item)
-        },
+        const item = {
+          ...this.item,
+          product_id: product.id,
+          product: product,
+          product_ref: product.ref,
+          product_variation_id: product.variations.length > 0 ? product.variations[0].id : null,
+          product_variation: product.variations.length > 0 ? product.variations[0] : null,
+        }
+        
+        this.$emit('update', item)
+      },
 
         handleVariationChange(e) {
             this.$emit('update', {
@@ -158,6 +154,8 @@ export default {
     },
 
     mounted() {
+      this.selectedProduct = this.product;
+
     }
 
 };
