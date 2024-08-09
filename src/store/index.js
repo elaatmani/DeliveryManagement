@@ -13,6 +13,7 @@ import notification from './modules/notification'
 import warehouse from './modules/warehouse'
 import factorisation from './modules/factorisation'
 import sheet from './modules/sheet'
+import online from './modules/online'
 
 
 export default createStore({
@@ -38,6 +39,7 @@ export default createStore({
     warehouse,
     factorisation,
     sheet,
-    app
+    app,
+    online
   }
 })

@@ -38,13 +38,16 @@ import AppSidebar from "@/layouts/default/partials/AppSidebar";
 import AppAnnonces from '@/layouts/default/partials/AppAnnonces'
 import Alert from "@/components/AlertVue";
 import AlertApi from '@/api/Alert';
-import Cookie from 'js-cookie'
+// import Cookie from 'js-cookie'
 import AlertNotification from "@/components/AlertNotification";
 import User from "@/api/User";
-import Pusher from 'pusher-js'; // Add this line to import Pusher
-import {newNotificationHandler} from '@/channels/notification/new-notification';import Sheet from "@/api/Sheet";
+// import {newNotificationHandler} from '@/channels/notification/new-notification';
+import Sheet from "@/api/Sheet";
 import Product from "@/api/Product";
 import Sale from "@/api/Sale";
+import Pusher from "pusher-js";
+import Echo from "laravel-echo";
+import { serverUrl } from '@/config/config'
 
 export default {
   components: { AppHeader, AppSidebar, Alert, AlertNotification, AppAnnonces },
@@ -57,7 +60,9 @@ export default {
       delay: 60000,
       showScrollUpButton: false,
       firstFetch: false,
-      pusher:false
+      pusher:false,
+      echo: null,
+      presenceChannelId: 2
 
       // delay: 6000,
     };
@@ -108,38 +113,71 @@ export default {
         });
       }
     },
+  async subscribe() {
+            Pusher.Runtime.createXHR = function () {
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+                return xhr;
+            };
 
-  created() {
-      this.subscribe();
-  },  
-  subscribe() {
-          Pusher.logToConsole = true;
-          if (!localStorage.getItem('XSRF-TOKEN')) {
-              console.log('User is not authenticated');
-              return;
-          }
-          Pusher.Runtime.createXHR = function () {
-              var xhr = new XMLHttpRequest();
-              xhr.withCredentials = true;
-              return xhr;
-              };
-          var pusher = new Pusher('ede7da5b6ea69f4e8ee2', {
-              cluster: 'eu',
-              authEndpoint: 'http://localhost:8000/api/pusher_auth',
-              authTransport: 'ajax',
-              auth: {
-                  headers: {
-                      // 'Content-Type': 'application/json',
-                      'X-Xsrf-Token': Cookie.get("XSRF-TOKEN")
-                  }
-              }
-          });
 
-          var channel = pusher.subscribe('user.' + this.user.id);
-          channel.bind('new-notification', newNotificationHandler);
+            window.Pusher = Pusher
+            const echo = new Echo({
+                broadcaster: "pusher",
+                key: '96c60637f1b07ace1345',
+                cluster: 'eu',
+                channelAuthorization: {
+                    // transport: "jsonp",
+                    endpoint: serverUrl + "api/pusher",
+                    withCredentials: true,
+                },
+            })
 
-          this.subscribed = true;
-      },
+            this.echo = echo;
+
+            const channelId = this.presenceChannelId;
+            echo.join(`channel.${channelId}`)
+                .here((members) => {
+                    this.$store.dispatch('online/setUsers', members);
+                    this.$store.dispatch('online/setFetched', true);
+                })
+                .joining((member) => {
+                    const members = this.$store.getters['online/users'];
+
+                    // Find the member if they already exist
+                    const existingMember = members.find(m => m.id === member.id);
+                    if (existingMember) {
+                        // Remove the `left_at` property if they rejoin
+                        delete existingMember.left_at;
+                    } else {
+                        // If they don't exist, add them as a new member
+                        members.push(member);
+                    }
+
+                    this.$store.dispatch('online/setUsers', members);
+                })
+                .leaving((member) => {
+                    let members = this.$store.getters['online/users'];
+
+                    // Update the member with the `left_at` time if they leave
+                    members = members.map(m => {
+                        if (m.id === member.id) {
+                            return {
+                                ...m,
+                                left_at: new Date().toISOString()
+                            };
+                        }
+                        return m;
+                    });
+
+                    this.$store.dispatch('online/setUsers', members);
+                });
+
+        },
+
+        unsubscribe() {
+            this.echo.leaveChannel(`channel.${this.presenceChannelId}`);
+        },
     sync_sheets() {
       if (this.user.role == "admin") {
         Sheet.sync_all().then((res) => {
@@ -183,7 +221,7 @@ export default {
         }
       );
     },
-    fetchNewOrders() {
+    async fetchNewOrders() {
       if (this.salesFetched || !this.firstFetch) {
         const ids = this.sales.map((s) => s.id);
         return Sale.getNewOrders(ids).then((res) => {
@@ -267,6 +305,7 @@ export default {
 
   unmounted() {
     window.removeEventListener("scroll", this.checkScroll);
+    this.unsubscribe();
   },
 };
 </script>

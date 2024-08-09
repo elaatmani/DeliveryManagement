@@ -1,6 +1,9 @@
 <template>
   <div class="tw-pb-40">
     <div class="tw-space-y-3">
+
+        <RealTimeOnlineUsers />
+        
         <OnlineUsers />
 
         <IndexFilters @update="f => filters= f" @filter="handleFilter" />
@@ -15,6 +18,7 @@
 
 <script>
 import OnlineUsers from '@/views/newdashboards/admin/partials/users/OnlineUsers';
+import RealTimeOnlineUsers from '@/views/newdashboards/admin/partials/users/RealTimeOnlineUsers';
 import IndexStatistics from '@/views/newdashboards/admin/partials/statistics/IndexStatistics'
 import IndexFilters from '@/views/newdashboards/admin/partials/filters/IndexFilters'
 import IndexRevenue from '@/views/newdashboards/admin/partials/statistics/IndexRevenue'
@@ -22,7 +26,7 @@ import IndexRevenue from '@/views/newdashboards/admin/partials/statistics/IndexR
 import Admin from '@/api/Admin';
 
 export default {
-    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue },
+    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue, RealTimeOnlineUsers },
 
     data() {
         return {
