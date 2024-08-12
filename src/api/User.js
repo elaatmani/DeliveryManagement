@@ -162,6 +162,12 @@ class User {
         return Api.get('api/deliveries')
     }
 
+    async lastAction() {
+        await Csrf.getCookie();
+
+        return Api.get('api/users/last-action')
+    }
+
     async cities() {
         await Csrf.getCookie()
         return Api.get('api/cities')

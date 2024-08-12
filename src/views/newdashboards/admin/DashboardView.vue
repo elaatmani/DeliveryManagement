@@ -4,7 +4,7 @@
 
         <RealTimeOnlineUsers />
         
-        <OnlineUsers />
+        <OnlineUsers v-if="false" />
 
         <IndexFilters @update="f => filters= f" @filter="handleFilter" />
 
