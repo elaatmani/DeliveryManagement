@@ -85,6 +85,12 @@ class Dashboard {
     }
 
     //---------- KPAI Agente -----------//
+    
+    async getAllAgenteKpis(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/all', {params: filters});
+    }
+
     async treatedOrHandledOrders(filters){
         await Csrf.getCookie();
         return Api.get('api/agentekpi/treated_or_handled', {params: filters});
@@ -103,6 +109,11 @@ class Dashboard {
     async DeliveredOrders(filters){
         await Csrf.getCookie();
         return Api.get('api/agentekpi/delivered_orders', {params: filters});
+    }
+
+    async TopAgentes(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/top_agentes', {params: filters});
     }
 
 }
