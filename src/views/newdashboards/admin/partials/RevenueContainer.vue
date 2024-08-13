@@ -34,7 +34,11 @@
                     style: 'currency', currency: 'USD'
                 }).format(data.orders.sum_delivered) }} <span v-if="false"
                         class="tw-text-sm tw-text-emerald-400">+2.8%</span></p>
-                <p v-if="false" class="tw-text-sm tw-text-gray-400 tw-font-medium">{{ moment('2024-07-04').format('MMMD, YYYY') }}: <span class="tw-font-bold tw-text-black">$3,123.26</span></p>
+                        <p class="tw-text-sm tw-text-gray-400 tw-font-medium">Shipping fees: <span
+                        class="tw-font-bold tw-text-black">{{ new Intl.NumberFormat('en', {
+                            style: 'currency', currency:
+                                'USD'
+                        }).format(data.shipping.inside_b + data.shipping.outside_b) }}</span></p>
             </div>
 
             <div class="tw-h-[150px]x  tw-border-gray-100 tw-p-4 tw-pl-10 tw-flex tw-flex-col tw-gap-2">
@@ -48,6 +52,16 @@
                             style: 'currency', currency:
                                 'USD'
                         }).format(data.ads) }}</span></p>
+                <p class="tw-text-sm tw-text-gray-400 tw-font-medium">Product fees({{ data.orders.total_quantity }}): <span
+                        class="tw-font-bold tw-text-black">{{ new Intl.NumberFormat('en', {
+                            style: 'currency', currency:
+                                'USD'
+                        }).format(data.orders.product_expenses) }}</span></p>
+                <p class="tw-text-sm tw-text-gray-400 tw-font-medium">Others: <span
+                        class="tw-font-bold tw-text-black">{{ new Intl.NumberFormat('en', {
+                            style: 'currency', currency:
+                                'USD'
+                        }).format(data.shipping.variant_fees) }}</span></p>
             </div>
 
             <div class="tw-h-[150px]x  tw-border-gray-100 tw-p-4 tw-pl-10 tw-flex tw-flex-col tw-gap-2">
@@ -65,7 +79,6 @@
 
 <script setup>
 import Dashboard from "@/api/Dashboard";
-import moment from "moment";
 import { ref, defineEmits, defineProps } from 'vue';
 
 const emit = defineEmits(['register']);
