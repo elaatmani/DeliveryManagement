@@ -83,6 +83,11 @@ class Dashboard {
         await Csrf.getCookie();
         return Api.post('api/v1/marketer/statistics', filters);
     }
+    
+    async revenue(filters) {
+        await Csrf.getCookie();
+        return Api.post('api/v1/admin/revenue', filters);
+    }
 
     //---------- KPAI Agente -----------//
     

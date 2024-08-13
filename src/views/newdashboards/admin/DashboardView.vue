@@ -8,7 +8,9 @@
 
         <IndexFilters @update="f => filters= f" @filter="handleFilter" />
 
-        <IndexRevenue :statistics="statistics" :fetching="fetching" />
+        <IndexRevenue v-if="false" :statistics="statistics" :fetching="fetching" />
+
+        <RevenueContainer />
         
         <IndexStatistics :statistics="statistics" :fetching="fetching" />     
 
@@ -22,11 +24,12 @@ import RealTimeOnlineUsers from '@/views/newdashboards/admin/partials/users/Real
 import IndexStatistics from '@/views/newdashboards/admin/partials/statistics/IndexStatistics'
 import IndexFilters from '@/views/newdashboards/admin/partials/filters/IndexFilters'
 import IndexRevenue from '@/views/newdashboards/admin/partials/statistics/IndexRevenue'
+import RevenueContainer from './partials/RevenueContainer.vue';
 
 import Admin from '@/api/Admin';
 
 export default {
-    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue, RealTimeOnlineUsers },
+    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue, RealTimeOnlineUsers, RevenueContainer },
 
     data() {
         return {
