@@ -40,7 +40,7 @@
                 <p class="tw-text-sm tw-text-gray-400">Expenses</p>
                 <p class="tw-text-2xl tw-font-bold">{{ new Intl.NumberFormat('en', {
                     style: 'currency', currency: 'USD'
-                }).format(data.orders.product_expenses + data.shipping.inside_b + data.shipping.outside_b + + data.shipping.variant_fees) }} <span v-if="false"
+                }).format(data.orders.product_expenses + data.shipping.inside_b + data.shipping.outside_b + data.shipping.variant_fees) }} <span v-if="false"
                         class="tw-text-sm tw-text-emerald-400">+10.8%</span></p>
                 <p class="tw-text-sm tw-text-gray-400 tw-font-medium">ADS: <span
                         class="tw-font-bold tw-text-black">{{ new Intl.NumberFormat('en', {
