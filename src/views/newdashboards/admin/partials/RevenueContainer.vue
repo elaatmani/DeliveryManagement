@@ -1,5 +1,6 @@
 <template>
-    <div v-if="loading" class="tw-p-2 tw-bg-white tw-border tw-border-solid tw-border-gray-200">
+    <div>
+        <div v-if="loading" class="tw-p-2 tw-bg-white tw-border tw-border-solid tw-border-gray-200">
         <div class="tw-grid tw-grid-cols-1 md:tw-grid-cols-3 tw-divide-x tw-gap-5">
             <div class="tw-h-[125px]  tw-border-gray-100 tw-p-4 tw-pl-10 tw-flex tw-flex-col tw-gap-2">
                 <div class="tw-flex tw-items-center tw-gap-1">
@@ -59,20 +60,23 @@
 
         </div>
     </div>
+    </div>
 </template>
 
 <script setup>
 import Dashboard from "@/api/Dashboard";
 import moment from "moment";
-import { ref } from 'vue';
+import { ref, defineEmits, defineProps } from 'vue';
 
+const emit = defineEmits(['register']);
+const props = defineProps(['filters'])
 const loading = ref(false);
 const data = ref({})
 
 
 const getData = async () => {
     loading.value = true;
-    await Dashboard.revenue({})
+    await Dashboard.revenue(props.filters)
         .then(
             res => {
                 data.value = res.data.data
@@ -85,6 +89,8 @@ const getData = async () => {
 }
 
 getData();
+
+emit('register', getData)
 </script>
 
 <style></style>

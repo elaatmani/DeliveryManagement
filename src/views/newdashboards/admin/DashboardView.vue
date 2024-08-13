@@ -10,7 +10,7 @@
 
         <IndexRevenue v-if="false" :statistics="statistics" :fetching="fetching" />
 
-        <RevenueContainer />
+        <RevenueContainer @register="register" :filters="filters"  />
         
         <IndexStatistics :statistics="statistics" :fetching="fetching" />     
 
@@ -36,6 +36,7 @@ export default {
             filters: null,
             statistics: null,
             fetching: true,
+            callbacks: []
         }
     },
 
@@ -46,7 +47,12 @@ export default {
     },
 
     methods: {
+        register(callback) {
+            this.callbacks.push(callback)
+        },
+
         handleFilter() {
+            this.callbacks.forEach(callback => callback());
             this.fetching = true;
             Admin.statistics(this.filters)
             .then(res => {
