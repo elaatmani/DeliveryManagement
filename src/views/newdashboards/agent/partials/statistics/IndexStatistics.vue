@@ -5,7 +5,7 @@
         </template>
   
         <template v-else>
-          <div v-for="item in 4" :key="item" class="tw-bg-white tw-animate-pulse tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
+          <div v-for="item in 9" :key="item" class="tw-bg-white tw-animate-pulse tw-shadow-sm tw-rounded-lg tw-p-5 tw-h-[90px]">
             <div class="tw-flex tw-justify-between tw-w-full">
                 <div>
                 <div class="tw-flex tw-w-full tw-items-center tw-gap-2">
