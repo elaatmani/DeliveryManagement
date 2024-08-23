@@ -43,7 +43,8 @@ export const links = [
                 id: 2,
                 title: 'Analytics',
                 subModule: 'dashboard/analytics',
-                gate: 'access_to_analytics',
+                // gate: 'access_to_analytics',
+                role: 'admin',
                 to: '/analytics'
             },
             {

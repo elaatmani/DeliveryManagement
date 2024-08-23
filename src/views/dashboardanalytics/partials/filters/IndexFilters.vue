@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-bg-white tw-p-5">
+  <div class="tw-bg-white tw-p-5 tw-border tw-border-solid tw-border-gray-200">
     <div>
         <h1 class="tw-mb-3 tw-text-xl tw-font-medium">Filters</h1>
     </div>
@@ -9,7 +9,7 @@
 
       <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
-      <SellerFilter :filters="filters" @update="f => filters = f" />
+      <SellerFilter v-if="false" :filters="filters" @update="f => filters = f" />
 
       <ProductFilter :filters="filters" @update="f => filters = f" />
 
