@@ -55,7 +55,7 @@
                 </tbody>
 
                 <tbody v-if="!loading && data.length">
-                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.page" :key="item" :item="item" :index="index" />
+                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.current_page" :key="item" :item="item" :index="index" />
                 </tbody>
 
                 <tbody v-if="!loading && !data.length">
