@@ -18,7 +18,7 @@
                             <div role="button" @click="loading ? null : onSortClick(c)" v-if="c.sortable"
                             class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer">
                                 <p>{{ c.label }}</p>
-                                <icon :class="[c.name in sorting && (sorting[c.name] == 'high' ? '!tw-text-gray-800' : '!tw-text-gray-800 !tw-rotate-180')]" icon="ic:round-sort" class="tw-text-lg tw-text-gray-200" />
+                                <icon :class="[c.name in sorting && (sorting[c.name] == 'desc' ? '!tw-text-gray-800' : '!tw-text-gray-800 !tw-rotate-180')]" icon="ic:round-sort" class="tw-text-lg tw-text-gray-200" />
                             </div>
                             <p v-else>{{ c.label }}</p>
                         </th>
@@ -104,7 +104,7 @@ const onSortClick = (column) => {
         const field = sorting.value[column.name];
         if(field == undefined) {
             sorting.value[column.name] = 'desc'
-        } else if(field == 'high') {
+        } else if(field == 'desc') {
             sorting.value[column.name] = 'asc'
         } else {
             delete sorting.value[column.name]
