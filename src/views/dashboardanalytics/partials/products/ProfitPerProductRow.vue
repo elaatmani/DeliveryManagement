@@ -1,9 +1,9 @@
 <template>
     <tr 
     :class=" [
-        props.index == 0 && 'tw-border-l-4 tw-border-solid tw-border-l-emerald-300',
-        props.index == 1 && 'tw-border-l-4 tw-border-solid tw-border-l-amber-300',
-        props.index == 2 && 'tw-border-l-4 tw-border-solid tw-border-l-blue-300'
+        (props.index == 0 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-emerald-300',
+        (props.index == 1 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-amber-300',
+        (props.index == 2 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-blue-300'
         ] "
     class="tw-border-b tw-border-solid tw-border-gray-100 last:tw-border-b-0 tw-group even:tw-bg-gray-50/50">
         <td class="tw-px-2 tw-py-3">
@@ -71,7 +71,7 @@
 <script setup>
 import { defineProps, toRef } from 'vue';
 
-const props = defineProps(['item', 'index'])
+const props = defineProps(['item', 'index', 'page'])
 const item = toRef(props, 'item')
 
 const formatNumber = (number, type = {style: 'currency', currency: 'USD'}) => {

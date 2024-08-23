@@ -1,13 +1,28 @@
 <template>
     <div class="tw-bg-white tw-p-2 tw-border tw-border-solid tw-border-gray-200">
-        <div class="tw-flex tw-items-center tw-gap-2">
-            <p class="tw-p-2 tw-font-bold tw-text-lg">Products</p>
-            <p v-if="loading" class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">
-                <icon icon="eos-icons:three-dots-loading" class="tw-text-xl" />
-            </p>
-            <p v-else class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">{{ new
-            Intl.NumberFormat().format(total)
-            }}</p>
+        <div class="tw-flex tw-items-center tw-justify-between">
+            <div class="tw-flex tw-items-center tw-gap-2">
+                <p class="tw-p-2 tw-font-bold tw-text-lg">Products</p>
+                <p v-if="loading" class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">
+                    <icon icon="eos-icons:three-dots-loading" class="tw-text-xl" />
+                </p>
+                <p v-else class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">{{ new
+                    Intl.NumberFormat().format(total)
+                    }}</p>
+            </div>
+
+            <div class="tw-flex tw-items-center tw-gap-2">
+                <p class="tw-font-semibold tw-text-gray-600 tw-uppercase tw-tracking-wider tw-text-xs">Show: </p>
+                <select v-model.number="options.per_page" @change="() => getData()" class="tw-w-[100px] tw-outline-none tw-bg-white tw-text-black tw-border tw-border-solid tw-border-gray-200 tw-rounded tw-px-2 tw-py-1">
+                    <option :value="5">5</option>
+                    <option :value="10">10</option>
+                    <option :value="20">20</option>
+                    <option :value="50">50</option>
+                    <option :value="100">100</option>
+                    <option :value="250">250</option>
+                    <option :value="500">500</option>
+                </select>
+            </div>
         </div>
         <div class="tw-roundedx tw-border tw-border-solid tw-border-gray-100 tw-overflow-auto">
             <table class="tw-min-w-full tw-leading-normal tw-w-full">
@@ -16,9 +31,11 @@
                         <th v-for="c in columns" :key="c.name" :class="c.classes"
                             class="tw-px-5 tw-text-[10px] last:tw-border-e-0 tw-whitespace-nowrap tw-border-e tw-py-3 tw-border-b tw-borderx tw-border-gray-100 tw-bg-gray-50 tw-text-start tw-font-semibold tw-text-gray-600 tw-uppercase tw-tracking-wider">
                             <div role="button" @click="loading ? null : onSortClick(c)" v-if="c.sortable"
-                            class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer">
+                                class="tw-flex tw-items-center tw-justify-center tw-gap-2 tw-cursor-pointer">
                                 <p>{{ c.label }}</p>
-                                <icon :class="[c.name in sorting && (sorting[c.name] == 'desc' ? '!tw-text-gray-800' : '!tw-text-gray-800 !tw-rotate-180')]" icon="ic:round-sort" class="tw-text-lg tw-text-gray-200" />
+                                <icon
+                                    :class="[c.name in sorting && (sorting[c.name] == 'desc' ? '!tw-text-gray-800' : '!tw-text-gray-800 !tw-rotate-180')]"
+                                    icon="ic:round-sort" class="tw-text-lg tw-text-gray-200" />
                             </div>
                             <p v-else>{{ c.label }}</p>
                         </th>
@@ -36,11 +53,32 @@
                         </td>
                     </tr>
                 </tbody>
-                
-                <tbody v-if="!loading">
-                    <ProfitPerProductRow v-for="(item, index) in data" :key="item" :item="item" :index="index" />
+
+                <tbody v-if="!loading && data.length">
+                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.page" :key="item" :item="item" :index="index" />
+                </tbody>
+
+                <tbody v-if="!loading && !data.length">
+                    <tr
+                        class="tw-border-b tw-border-solid tw-border-gray-100 last:tw-border-b-0 tw-group even:tw-bg-gray-50/50">
+                        <td :colspan="columns.length">
+                            <p class="tw-p-2 tw-py-5 tw-text-center">
+                                No data found
+                            </p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="tw-flex tw-items-center tw-gap-2 tw-justify-end tw-mt-4">
+            <button @click="onPrev" :disabled="!options.prev_page_url"
+                :class="[!options.prev_page_url && 'tw-bg-gray-50 tw-cursor-not-allowed tw-text-gray-300 tw-border-gray-100 hover:!tw-bg-gray-50']"
+                class="tw-w-[120px] tw-py-2 tw-border tw-border-solid tw-border-gray-200 hover:tw-bg-gray-100 tw-duration-200">Previous</button>
+
+            <button @click="onNext" :disabled="!options.next_page_url"
+                :class="[!options.next_page_url && 'tw-bg-gray-50 tw-cursor-not-allowed tw-text-gray-300 tw-border-gray-100 hover:!tw-bg-gray-50']"
+                class="tw-w-[120px] tw-py-2 tw-border tw-border-solid tw-border-gray-200 hover:tw-bg-gray-100 tw-duration-200">Next</button>
         </div>
     </div>
 
@@ -49,16 +87,18 @@
 
 <script setup>
 import Analytics from '@/api/Analytics';
-import { ref, watch, defineEmits, defineProps, toRef } from 'vue';
+import { ref, defineEmits, defineProps, toRef } from 'vue';
 import ProfitPerProductRow from './ProfitPerProductRow.vue';
 
 const props = defineProps(['register', 'filters'])
 const emit = defineEmits(['register'])
 const filters = toRef(props, 'filters');
-const sorting = ref({});
+const sorting = ref({
+    net_profit: 'desc'
+});
 
 const order_by = ref('high');
-// const options = ref({});
+const options = ref({ per_page: 10 });
 const loading = ref(true);
 const total = ref(0);
 const data = ref([]);
@@ -74,21 +114,18 @@ let columns = [
     { name: 'net_profit', label: 'Net Profit', sortable: true, classes: ['tw-w-[120px] !tw-text-center'] },
 ]
 
-watch(() => order_by.value, () => {
-    getData();
-})
-
-const getData = async (per_page = 10, page = 1) => {
+const getData = async (per_page = options.value.per_page, page = 1) => {
     loading.value = true;
-
-    await Analytics.getProductsByProfit({ ...filters.value, per_page, page, order_by: order_by.value, sort: sorting.value })
+    console.log(per_page);
+    
+    await Analytics.getProductsByProfit({ ...filters.value, per_page: per_page, page, order_by: order_by.value, sort: sorting.value })
         .then(
             res => {
                 data.value = res.data.data;
+                options.value = res.data;
+                total.value = options.value.total;
                 if (res.data.code == 'SUCCESS') {
                     // handleData(res.data.data.data);
-                    // options.value = res.data.data;
-                    // total.value = options.value.total;
                 }
             },
             err => {
@@ -99,18 +136,18 @@ const getData = async (per_page = 10, page = 1) => {
 };
 
 const onSortClick = (column) => {
-    if(column.sortable) {
+    if (column.sortable) {
 
         const field = sorting.value[column.name];
-        if(field == undefined) {
+        if (field == undefined) {
             sorting.value[column.name] = 'desc'
-        } else if(field == 'desc') {
+        } else if (field == 'desc') {
             sorting.value[column.name] = 'asc'
         } else {
             delete sorting.value[column.name]
         }
 
-        getData();
+        getData(options.value.per_page, 1);
     }
 
 }
@@ -122,13 +159,13 @@ const onSortClick = (column) => {
 //     chartOptions.value.xaxis.categories = response.map(i => i.name)
 // };
 
-// const onNext = () => {
-//     getData(options.value.per_page, options.value.current_page + 1);
-// }
+const onNext = () => {
+    getData(options.value.per_page, options.value.current_page + 1);
+}
 
-// const onPrev = () => {
-//     getData(options.value.per_page, options.value.current_page - 1);
-// }
+const onPrev = () => {
+    getData(options.value.per_page, options.value.current_page - 1);
+}
 
 // getData();
 emit('register', getData)
