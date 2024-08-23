@@ -84,8 +84,8 @@ const getData = async (per_page = 10, page = 1) => {
     await Analytics.getProductsByProfit({ ...filters.value, per_page, page, order_by: order_by.value, sort: sorting.value })
         .then(
             res => {
+                data.value = res.data.data;
                 if (res.data.code == 'SUCCESS') {
-                    data.value = res.data.data;
                     // handleData(res.data.data.data);
                     // options.value = res.data.data;
                     // total.value = options.value.total;
