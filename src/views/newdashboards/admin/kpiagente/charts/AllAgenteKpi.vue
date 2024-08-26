@@ -44,68 +44,71 @@ const props = defineProps({
 });
 
 const options = computed(() => {
-  const categories = data.value.map(item => item.x);
-  
-  const { startDate, endDate } = props.filters.dateRange || {};
-  const daysCount = startDate && endDate ? (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24) : 7;
+  const categories = [];
+  const seriesData = {};
 
-  if (startDate && endDate) {
-    for (let day = new Date(startDate); day <= new Date(endDate); day.setDate(day.getDate() + 1)) {
-      categories.push(new Date(day).getTime());
-    }
-  } else {
-    const today = new Date();
-    for (let i = daysCount; i >= 0; i--) {
-      const day = new Date(today);
-      day.setDate(today.getDate() - i);
-      categories.push(new Date(day).getTime());
-    }
+  if (data.value.length > 0) {
+    data.value.forEach((item) => {
+      if (!categories.includes(item.agente)) {
+        categories.push(item.agente);
+      }
+
+      if (!seriesData[item.status]) {
+        seriesData[item.status] = [];
+      }
+
+      const agentData = seriesData[item.status].find((d) => d.name === item.agente);
+      if (agentData) {
+        agentData.data.push(item.count);
+      } else {
+        seriesData[item.status].push({
+          name: item.agente,
+          data: [item.count],
+          color: item.color,
+        });
+      }
+    });
   }
 
+  const series = Object.keys(seriesData).map((status) => ({
+    name: status,
+    data: seriesData[status].map((d) => d.data[0]),
+    color: seriesData[status][0]?.color || '#000000',
+  }));
+
   return {
-    series: selectedKpi.value === 'all' ? (options.value?.series || []) : [{
-      name: selectedKpi.value,
-      data: data.value || [],
-      type: 'area',
-      color: color.value || '#000000',
-      fill: {
-        type: 'solid',
-      },
-    }],
+    series,
     chart: {
-      type: 'area',
+      type: 'bar',
+      stacked: true,
     },
     xaxis: {
-      type: 'datetime',
-      labels: {
-        formatter: function (value, timestamp) {
-          return new Date(timestamp).toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
-        }
+      categories,
+      title: {
+        text: 'Agente',
       },
-      categories: categories,
     },
-    theme: {
-      palette: 'palette4',
+    plotOptions: {
+      bar: {
+        columnWidth: '30%',
+      },
     },
-    stroke: {
-      curve: 'smooth',
+    yaxis: {
+      title: {
+        text: 'Count',
+      },
     },
     fill: {
       opacity: 1,
     },
     tooltip: {
       y: {
-        formatter: function (value, { seriesIndex, dataPointIndex, w }) {
-          const agenteName = w.config.series[seriesIndex].data[dataPointIndex].agente; // Correct reference to the agente_fullname
-          return `Count: ${value}<br>Agent: ${agenteName}`;
-        },
-        title: {
-          formatter: () => '',
+        formatter: function (value) {
+          return `Count: ${value}`;
         },
       },
     },
     legend: {
-      show: selectedKpi.value === 'all',
       position: 'top',
       horizontalAlign: 'left',
     },
@@ -117,51 +120,21 @@ const getData = async (filters) => {
   try {
     const res = await Dashboard.getAllAgenteKpis(filters);
     if (res.data.code === 'SUCCESS') {
-      if (selectedKpi.value === 'all') {
-        const combinedData = [];
-        const seriesData = [];
-
-        if (res.data.data && typeof res.data.data === 'object') {
-          Object.keys(res.data.data).forEach((kpiKey) => {
-            const kpiData = res.data.data[kpiKey]?.[kpiKey + 'ByDate'] || [];
-            seriesData.push({
-              name: kpiKey,
-              data: kpiData.map(item => ({
-                x: new Date(item.date).getTime(),
-                y: item.count,
-                agente: item.agente_fullname, // Ajouter le nom de l'agent ici
-              })),
-              type: 'area',
+      const combinedData = [];
+      if (res.data.data && typeof res.data.data === 'object') {
+        Object.keys(res.data.data).forEach((kpiKey) => {
+          const kpiData = res.data.data[kpiKey]?.[kpiKey + 'ByDate'] || [];
+          kpiData.forEach((item) => {
+            combinedData.push({
+              agente: item.agente_fullname,
+              count: item.count,
+              status: kpiKey,
               color: res.data.data[kpiKey]?.card?.color || '#000000',
             });
-
-            combinedData.push(...kpiData.map(item => ({
-              x: new Date(item.date).getTime(),
-              y: item.count,
-              agente: item.agente_fullname, // Ajouter le nom de l'agent ici
-            })));
           });
+        });
 
-          data.value = combinedData;
-          if (seriesData.length > 0) {
-            options.value.series = seriesData;
-          }
-        }
-      } else {
-        const kpiData = res.data.data[selectedKpi.value];
-        if (kpiData && kpiData[selectedKpi.value + 'ByDate']) {
-          data.value = kpiData[selectedKpi.value + 'ByDate'].map(item => ({
-            x: new Date(item.date).getTime(),
-            y: item.count,
-            agente: item.agente_fullname, // Ajouter le nom de l'agent ici
-          }));
-          confirmationNumber.value = kpiData.card.value;
-          color.value = kpiData.card.color;
-        } else {
-          data.value = [];
-          confirmationNumber.value = 0;
-          color.value = '#000000';
-        }
+        data.value = combinedData;
       }
     }
   } catch (error) {
