@@ -5,9 +5,9 @@
 
             <IndexFilters @update="f => filters = f" @filter="handleFilter" />
 
-            <RevenueContainer @register="register" :filters="filters"  />
+            <RevenueContainer @register="register" :filters="filters" @loaded="handleProfitLoaded"  />
 
-            <IndexAnalytics :analytics="analytics" :fetching="fetching" />
+            <IndexAnalytics :analytics="fullAnalytics" :fetching="fetching" />
 
             <div class="tw-grid tw-grid-cols-12 tw-gap-3">
                 <div class="tw-col-span-12 md:tw-col-span-12">
@@ -24,8 +24,8 @@
 <script>
 import IndexAnalytics from '@/views/dashboardanalytics/partials/analytics/IndexAnalytics'
 import IndexFilters from '@/views/dashboardanalytics/partials/filters/IndexFilters'
-import RevenueContainer from '@/views/newdashboards/admin/partials/RevenueContainer.vue';
-import ProfitPerProductChart from '@/views/dashboardanalytics/partials/products/ProfitPerProductChart'
+import RevenueContainer from './partials/RevenueContainer.vue';
+import ProfitPerProductChart from './partials/products/ProfitPerProductChart'
 
 
 import Admin from '@/api/Admin';
@@ -35,10 +35,11 @@ export default {
 
     data() {
         return {
-            filters: null,
-            analytics: null,
+            filters: {},
+            analytics: [],
             fetching: true,
-            callbacks: []
+            callbacks: [],
+            profit: null
 
         }
     },
@@ -46,7 +47,11 @@ export default {
     computed: {
         user() {
             return this.$store.getters['user/user'];
+        },
 
+        fullAnalytics() {
+            if(this.profit) return [...this.analytics, this.profit]
+            return this.analytics
         }
     },
 
@@ -55,7 +60,9 @@ export default {
             this.callbacks.push(callback)
         },
         handleFilter() {
-            this.callbacks.forEach(callback => callback());
+            // console.log(this.filters);
+            
+            this.callbacks.forEach(callback => callback(this.filters));
             this.fetching = true;
 
             Admin.analytics(this.filters)
@@ -70,12 +77,30 @@ export default {
 
                 })
                 .catch(this.$handleApiError);
+        },
+
+        handleProfitLoaded(profit) {
+            let data = {
+                    "id": 10,
+                    "title": "Profit",
+                    "value": profit,
+                    "icon": "mdi-currency-usd",
+                    "color": "#16a34a"
+                };
+
+            this.profit = data
+            
         }
     },
 
     mounted() {
         if (this.user.role != 'admin') this.$router.push({ name: '404' });
 
+    },
+    provide() {
+        return {
+            filters: this.filters
+        }
     }
 }
 </script>

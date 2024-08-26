@@ -7,9 +7,13 @@
 
       <DateFilter v-model:from="filters.created_from" v-model:to="filters.created_to" label="Created" />
 
+      <DateFilter v-model:from="filters.treated_from" v-model:to="filters.treated_to" label="Treated" />
+
       <DateFilter v-model:from="filters.dropped_from" v-model:to="filters.dropped_to" label="Dropped" />
 
-      <SellerFilter v-if="false" :filters="filters" @update="f => filters = f" />
+      <DateFilter v-model:from="filters.delivered_from" v-model:to="filters.delivered_to" label="Delivered" />
+
+      <DateFilter v-if="false" v-model:from="filters.ads_from" v-model:to="filters.ads_to" label="Ad Spend" />
 
       <ProductFilter :filters="filters" @update="f => filters = f" />
 
@@ -48,12 +52,11 @@
 </template>
 
 <script>
-import SellerFilter from '@/views/dashboardanalytics/partials/filters/components/SellerFilter'
 import ProductFilter from '@/views/dashboardanalytics/partials/filters/components/ProductFilter'
 import DateFilter from '@/views/dashboardanalytics/partials/filters/components/DateFilter'
 
 export default {
-  components: { SellerFilter, ProductFilter, DateFilter },
+  components: { ProductFilter, DateFilter },
 
   props: {},
 

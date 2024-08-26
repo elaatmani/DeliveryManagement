@@ -13,7 +13,8 @@
 
             <div class="tw-flex tw-items-center tw-gap-2">
                 <p class="tw-font-semibold tw-text-gray-600 tw-uppercase tw-tracking-wider tw-text-xs">Show: </p>
-                <select v-model.number="options.per_page" @change="() => getData()" class="tw-w-[100px] tw-outline-none tw-bg-white tw-text-black tw-border tw-border-solid tw-border-gray-200 tw-rounded tw-px-2 tw-py-1">
+                <select v-model.number="options.per_page" @change="() => getData()"
+                    class="tw-w-[100px] tw-outline-none tw-bg-white tw-text-black tw-border tw-border-solid tw-border-gray-200 tw-rounded tw-px-2 tw-py-1">
                     <option :value="5">5</option>
                     <option :value="10">10</option>
                     <option :value="20">20</option>
@@ -55,7 +56,8 @@
                 </tbody>
 
                 <tbody v-if="!loading && data.length">
-                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.current_page" :key="item" :item="item" :index="index" />
+                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.current_page" :key="item"
+                        :item="item" :index="index" />
                 </tbody>
 
                 <tbody v-if="!loading && !data.length">
@@ -87,12 +89,10 @@
 
 <script setup>
 import Analytics from '@/api/Analytics';
-import { ref, defineEmits, defineProps, toRef } from 'vue';
+import { ref, defineEmits } from 'vue';
 import ProfitPerProductRow from './ProfitPerProductRow.vue';
 
-const props = defineProps(['register', 'filters'])
 const emit = defineEmits(['register'])
-const filters = toRef(props, 'filters');
 const sorting = ref({
     net_profit: 'desc'
 });
@@ -114,11 +114,11 @@ let columns = [
     { name: 'net_profit', label: 'Net Profit', sortable: true, classes: ['tw-w-[120px] !tw-text-center'] },
 ]
 
-const getData = async (per_page = options.value.per_page, page = 1) => {
+const getData = async (filters, per_page = options.value.per_page, page = 1) => {
     loading.value = true;
     console.log(per_page);
-    
-    await Analytics.getProductsByProfit({ ...filters.value, per_page: per_page, page, order_by: order_by.value, sort: sorting.value })
+
+    await Analytics.getProductsByProfit({ ...filters, per_page: per_page, page, order_by: order_by.value, sort: sorting.value })
         .then(
             res => {
                 data.value = res.data.data;
