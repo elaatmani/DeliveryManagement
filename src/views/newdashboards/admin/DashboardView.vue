@@ -10,7 +10,7 @@
 
         <IndexRevenue v-if="false" :statistics="statistics" :fetching="fetching" />
 
-        <RevenueContainer @register="register" :filters="filters"  />
+        <RevenueContainer v-if="false" @register="register" :filters="filters"  />
         
         <IndexStatistics :statistics="statistics" :fetching="fetching" />     
 
