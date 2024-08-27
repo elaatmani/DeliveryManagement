@@ -53,9 +53,13 @@
         </td>
 
         <td class="tw-px-2 tw-py-3">
-            <div
+            <div v-if="props.excludeAds"
                 class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-emerald-500">
-                {{ formatNumber (item.net_profit) }}
+                {{ formatNumber(item.net_profit + (item.total_spent ?? 0)) }}
+            </div>
+            <div v-if="!props.excludeAds"
+                class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-emerald-500">
+                {{ formatNumber(item.net_profit) }}
             </div>
         </td>
 
@@ -71,7 +75,7 @@
 <script setup>
 import { defineProps, toRef } from 'vue';
 
-const props = defineProps(['item', 'index', 'page'])
+const props = defineProps(['item', 'index', 'page', 'excludeAds'])
 const item = toRef(props, 'item')
 
 const formatNumber = (number, type = {style: 'currency', currency: 'USD'}) => {

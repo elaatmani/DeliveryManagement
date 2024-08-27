@@ -9,21 +9,46 @@
                 <p v-else class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">{{ new
                     Intl.NumberFormat().format(total)
                     }}</p>
+
+                <div>
+                    <div role="button" @click="onExcludeAds" class="tw-inline-flex tw-items-center tw-cursor-pointer">
+                        <label class="tw-relative tw-flex tw-cursor-pointer tw-items-center tw-rounded-full tw-p-3"
+                            for="checkbox" data-ripple-dark="true">
+                            <input type="checkbox" :checked="excludeAds"
+                                class="before:tw-content[''] tw-border-solid tw-bg-white tw-peer tw-relative tw-h-5 tw-w-5 tw-cursor-pointer tw-appearance-none tw-rounded-md tw-border tw-border-blue-gray-200 tw-transition-all before:tw-absolute before:tw-top-2/4 before:tw-left-2/4 before:tw-block before:tw-h-8 before:tw-w-8 before:-tw-translate-y-2/4 before:-tw-translate-x-2/4 before:tw-rounded-full before:tw-bg-blue-gray-500 before:tw-opacity-0 before:tw-transition-opacity checked:tw-border-orange-500 checked:tw-bg-orange-500 checked:before:tw-bg-orange-500 hover:before:tw-opacity-10" />
+                            <div
+                                class="tw-pointer-events-none tw-absolute tw-top-2/4 tw-left-2/4 -tw-translate-y-2/4 -tw-translate-x-2/4 tw-text-white tw-opacity-0 tw-transition-opacity peer-checked:tw-opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="tw-h-3.5 tw-w-3.5" viewBox="0 0 20 20"
+                                    fill="currentColor" stroke="currentColor" stroke-width="1">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </label>
+
+                        <p class="tw-text-sm tw-whitespace-nowrap">Exclude ADS</p>
+                    </div>
+                </div>
             </div>
 
             <div class="tw-flex tw-items-center tw-gap-2">
-                <p class="tw-font-semibold tw-text-gray-600 tw-uppercase tw-tracking-wider tw-text-xs">Show: </p>
-                <select v-model.number="options.per_page" @change="() => getData()"
-                    class="tw-w-[100px] tw-outline-none tw-bg-white tw-text-black tw-border tw-border-solid tw-border-gray-200 tw-rounded tw-px-2 tw-py-1">
-                    <option :value="5">5</option>
-                    <option :value="10">10</option>
-                    <option :value="20">20</option>
-                    <option :value="50">50</option>
-                    <option :value="100">100</option>
-                    <option :value="250">250</option>
-                    <option :value="500">500</option>
-                </select>
+
+                <div class="tw-flex tw-items-center tw-gap-2">
+                    <p class="tw-font-semibold tw-text-gray-600 tw-uppercase tw-tracking-wider tw-text-xs">Show: </p>
+                    <select v-model.number="options.per_page" @change="() => getData()"
+                        class="tw-w-[100px] tw-outline-none tw-bg-white tw-text-black tw-border tw-border-solid tw-border-gray-200 tw-rounded tw-px-2 tw-py-1">
+                        <option :value="5">5</option>
+                        <option :value="10">10</option>
+                        <option :value="20">20</option>
+                        <option :value="50">50</option>
+                        <option :value="100">100</option>
+                        <option :value="250">250</option>
+                        <option :value="500">500</option>
+                    </select>
+                </div>
             </div>
+
         </div>
         <div class="tw-roundedx tw-border tw-border-solid tw-border-gray-100 tw-overflow-auto">
             <table class="tw-min-w-full tw-leading-normal tw-w-full">
@@ -56,8 +81,8 @@
                 </tbody>
 
                 <tbody v-if="!loading && data.length">
-                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.current_page" :key="item"
-                        :item="item" :index="index" />
+                    <ProfitPerProductRow v-for="(item, index) in data" :page="options.current_page"
+                        :exclude-ads="excludeAds" :key="item" :item="item" :index="index" />
                 </tbody>
 
                 <tbody v-if="!loading && !data.length">
@@ -97,11 +122,14 @@ const sorting = ref({
     net_profit: 'desc'
 });
 
+const excludeAds = ref(false);
 const order_by = ref('high');
 const options = ref({ per_page: 10 });
 const loading = ref(true);
 const total = ref(0);
 const data = ref([]);
+
+const onExcludeAds = () => excludeAds.value = !excludeAds.value;
 
 let columns = [
     { name: 'name', label: 'Product', sortable: false, classes: ['tw-w-[260px]'] },
@@ -116,7 +144,6 @@ let columns = [
 
 const getData = async (filters, per_page = options.value.per_page, page = 1) => {
     loading.value = true;
-    console.log(per_page);
 
     await Analytics.getProductsByProfit({ ...filters, per_page: per_page, page, order_by: order_by.value, sort: sorting.value })
         .then(

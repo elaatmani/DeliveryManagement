@@ -13,7 +13,7 @@
 
       <DateFilter v-model:from="filters.delivered_from" v-model:to="filters.delivered_to" label="Delivered" />
 
-      <DateFilter v-if="false" v-model:from="filters.ads_from" v-model:to="filters.ads_to" label="Ad Spend" />
+      <DateFilter v-model:from="filters.ads_from" v-model:to="filters.ads_to" label="Ad Spend" />
 
       <ProductFilter :filters="filters" @update="f => filters = f" />
 
