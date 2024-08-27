@@ -114,10 +114,12 @@
 
 <script setup>
 import Analytics from '@/api/Analytics';
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, defineProps, computed } from 'vue';
 import ProfitPerProductRow from './ProfitPerProductRow.vue';
 
 const emit = defineEmits(['register'])
+const props = defineProps(['filters'])
+const filters = computed(() => props.filters)
 const sorting = ref({
     net_profit: 'desc'
 });
@@ -174,93 +176,26 @@ const onSortClick = (column) => {
             delete sorting.value[column.name]
         }
 
-        getData(options.value.per_page, 1);
+        getData(props.filters, options.value.per_page, 1);
     }
 
 }
 
-// const handleData = response => {
-//     series.value[0].data = response.map(i => i.total_orders)
-//     series.value[1].data = response.map(i => i.total_quantity)
-//     series.value[2].data = response.map(i => parseFloat(i.net_profit).toFixed(2))
-//     chartOptions.value.xaxis.categories = response.map(i => i.name)
-// };
 
 const onNext = () => {
-    getData(options.value.per_page, options.value.current_page + 1);
+    getData(props.filters, options.value.per_page, options.value.current_page + 1);
 }
 
 const onPrev = () => {
-    getData(options.value.per_page, options.value.current_page - 1);
+    getData(props.filters, options.value.per_page, options.value.current_page - 1);
 }
 
 // getData();
-emit('register', getData)
+emit('register', (f) => {
+    getData(f, options.value.per_page, 1);
+})
 
 
-// const fakeData = [
-//     {
-//         "name": "منشار الحطب الكهربائي",
-//         "product_id": 48,
-//         "total_orders": 953,
-//         "total_quantity": 960,
-//         "total_sales": 46785.91,
-//         "product_cost": 5760,
-//         "inside_beirut_cost": "306.0",
-//         "outside_beirut_cost": "2035.8",
-//         "total_spent": 206.59,
-//         "net_profit": 38477.5199999999
-//     },
-//     {
-//         "name": "مضخة غسيل السيارات",
-//         "product_id": 76,
-//         "total_orders": 677,
-//         "total_quantity": 679,
-//         "total_sales": 34066.92,
-//         "product_cost": 6790,
-//         "inside_beirut_cost": "322.2",
-//         "outside_beirut_cost": "1294.8",
-//         "total_spent": 110.42,
-//         "net_profit": 25549.500000000393
-//     },
-//     {
-//         "name": "مزيل  التجاعيد",
-//         "product_id": 117,
-//         "total_orders": 841,
-//         "total_quantity": 1268,
-//         "total_sales": 26173.93,
-//         "product_cost": 2536,
-//         "inside_beirut_cost": "498.6",
-//         "outside_beirut_cost": "1466.4",
-//         "total_spent": 0,
-//         "net_profit": 21672.930000000175
-//     },
-//     {
-//         "name": "مسدس مسامير  متعدد الاستخدامات",
-//         "product_id": 128,
-//         "total_orders": 820,
-//         "total_quantity": 855,
-//         "total_sales": 32339.45,
-//         "product_cost": 8550,
-//         "inside_beirut_cost": "367.2",
-//         "outside_beirut_cost": "1601.6",
-//         "total_spent": 1511.81,
-//         "net_profit": 20308.840000000484
-//     },
-//     {
-//         "name": "منظار أحادي العدسة",
-//         "product_id": 170,
-//         "total_orders": 701,
-//         "total_quantity": 705,
-//         "total_sales": 21098.13,
-//         "product_cost": 2375.849999999958,
-//         "inside_beirut_cost": "271.8",
-//         "outside_beirut_cost": "1430.0",
-//         "total_spent": 1512.34,
-//         "net_profit": 15508.140000000185
-//     }]
-//     fakeData
-// handleData(fakeData)
 </script>
 
 <style></style>
