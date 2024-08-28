@@ -176,18 +176,18 @@ const onSortClick = (column) => {
             delete sorting.value[column.name]
         }
 
-        getData(props.filters, options.value.per_page, 1);
+        getData(filters.value, options.value.per_page, 1);
     }
 
 }
 
 
 const onNext = () => {
-    getData(props.filters, options.value.per_page, options.value.current_page + 1);
+    getData(filters.value, options.value.per_page, options.value.current_page + 1);
 }
 
 const onPrev = () => {
-    getData(props.filters, options.value.per_page, options.value.current_page - 1);
+    getData(filters.value, options.value.per_page, options.value.current_page - 1);
 }
 
 // getData();

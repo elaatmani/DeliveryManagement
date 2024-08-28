@@ -1,15 +1,24 @@
 <template>
     <tr 
     :class=" [
-        (props.index == 0 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-emerald-300',
-        (props.index == 1 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-amber-300',
-        (props.index == 2 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-blue-300'
+        (props.index == 0 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-amber-300',
+        (props.index == 1 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-gray-300',
+        (props.index == 2 && props.page == 1) && 'tw-border-l-4 tw-border-solid tw-border-l-orange-400'
         ] "
     class="tw-border-b tw-border-solid tw-border-gray-100 last:tw-border-b-0 tw-group even:tw-bg-gray-50/50">
         <td class="tw-px-2 tw-py-3">
-            <div :title="item.name"
-                class="tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-w-[200px] tw-truncate">
-                {{ item.name }}
+            <div class="tw-flex tw-items-center tw-gap-2">
+                <icon icon="fluent:trophy-24-filled" class="tw-text-lg"
+                :class=" [
+                    (props.index == 0 && props.page == 1) && 'tw-text-amber-300',
+                    (props.index == 1 && props.page == 1) && 'tw-text-gray-300',
+                    (props.index == 2 && props.page == 1) && 'tw-text-orange-400'
+                    ] "
+                />
+                <div :title="item.name"
+                    class="tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-w-[200px] tw-truncate">
+                    {{ item.name }}
+                </div>
             </div>
         </td>
         <td class="tw-px-2 tw-py-3">

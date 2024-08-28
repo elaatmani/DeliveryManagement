@@ -39,7 +39,7 @@ export default {
             analytics: [],
             fetching: true,
             callbacks: [],
-            profit: null
+            profit: null,
 
         }
     },
