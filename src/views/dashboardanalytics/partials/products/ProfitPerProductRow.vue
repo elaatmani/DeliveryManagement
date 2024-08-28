@@ -8,7 +8,7 @@
     class="tw-border-b tw-border-solid tw-border-gray-100 last:tw-border-b-0 tw-group even:tw-bg-gray-50/50">
         <td class="tw-px-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-gap-2">
-                <icon icon="fluent:trophy-24-filled" class="tw-text-lg"
+                <icon v-if="[1, 2, 3].includes(props.index) && props.page == 1" icon="fluent:trophy-24-filled" class="tw-text-lg"
                 :class=" [
                     (props.index == 0 && props.page == 1) && 'tw-text-amber-300',
                     (props.index == 1 && props.page == 1) && 'tw-text-gray-300',
@@ -63,10 +63,12 @@
 
         <td class="tw-px-2 tw-py-3">
             <div v-if="props.excludeAds"
+                :class="[item.net_profit + (item.total_spent ?? 0) <= 0 && '!tw-bg-rose-500']"
                 class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-emerald-500">
                 {{ formatNumber(item.net_profit + (item.total_spent ?? 0)) }}
             </div>
             <div v-if="!props.excludeAds"
+                :class="[item.net_profit <= 0 && '!tw-bg-rose-500']"
                 class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-emerald-500">
                 {{ formatNumber(item.net_profit) }}
             </div>

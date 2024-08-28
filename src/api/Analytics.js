@@ -9,6 +9,13 @@ class Analytics {
             params
         });
     }
+
+    async kpis(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/kpis', {
+            params
+        });
+    }
 }
 
 export default new Analytics();

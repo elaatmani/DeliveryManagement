@@ -5,9 +5,17 @@
 
             <IndexFilters @update="f => filters = f" @filter="handleFilter" />
 
-            <RevenueContainer @register="register" :filters="filters" @loaded="handleProfitLoaded"  />
+            <div class="tw-grid tw-grid-cols-12 tw-gap-3">
+                <div class="tw-col-span-12 md:tw-col-span-7">
+                    <KpisContainer @register="register" :filters="filters" @loaded="handleProfitLoaded"  />
+                </div>
 
-            <IndexAnalytics :analytics="fullAnalytics" :fetching="fetching" />
+                <div class="tw-col-span-12 md:tw-col-span-5">
+                    <RevenueContainer @register="register" :filters="filters"  />
+                </div>
+            </div>
+
+            <IndexAnalytics v-if="false" :analytics="fullAnalytics" :fetching="fetching" />
 
             <div class="tw-grid tw-grid-cols-12 tw-gap-3">
                 <div class="tw-col-span-12 md:tw-col-span-12">
@@ -25,13 +33,14 @@
 import IndexAnalytics from '@/views/dashboardanalytics/partials/analytics/IndexAnalytics'
 import IndexFilters from '@/views/dashboardanalytics/partials/filters/IndexFilters'
 import RevenueContainer from './partials/RevenueContainer.vue';
+import KpisContainer from './partials/KpisContainer.vue';
 import ProfitPerProductChart from './partials/products/ProfitPerProductChart'
 
 
 import Admin from '@/api/Admin';
 
 export default {
-    components: { IndexAnalytics, IndexFilters, RevenueContainer, ProfitPerProductChart },
+    components: { IndexAnalytics, IndexFilters, RevenueContainer, ProfitPerProductChart, KpisContainer },
 
     data() {
         return {
