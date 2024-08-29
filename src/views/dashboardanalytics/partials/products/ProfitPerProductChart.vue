@@ -135,12 +135,13 @@ const onExcludeAds = () => excludeAds.value = !excludeAds.value;
 
 let columns = [
     { name: 'name', label: 'Product', sortable: false, classes: ['tw-w-[260px]'] },
-    { name: 'total_orders', label: 'Orders', sortable: true, classes: ['tw-w-[150px] !tw-text-center'] },
-    { name: 'total_quantity', label: 'Quantity', sortable: true, classes: ['tw-w-[150px] !tw-text-center'] },
+    { name: 'total_orders', label: 'Orders', sortable: true, classes: ['tw-w-[100px] !tw-text-center'] },
+    { name: 'total_quantity', label: 'Quantity', sortable: true, classes: ['tw-w-[100px] !tw-text-center'] },
     { name: 'total_sales', label: 'Sales', sortable: true, classes: ['tw-w-[150px] !tw-text-center'] },
     { name: 'product_cost', label: 'Product Cost', sortable: true, classes: ['tw-w-[100px] !tw-text-center'] },
     { name: 'shipping_fees', label: 'Shipping', sortable: true, classes: ['tw-w-[120px] !tw-text-center'] },
     { name: 'total_spent', label: 'Ads', sortable: true, classes: ['tw-w-[120px] !tw-text-center'] },
+    { name: 'variant_fees', label: 'Variants', sortable: false, classes: ['tw-w-[100px] !tw-text-center'] },
     { name: 'net_profit', label: 'Net Profit', sortable: true, classes: ['tw-w-[120px] !tw-text-center'] },
 ]
 

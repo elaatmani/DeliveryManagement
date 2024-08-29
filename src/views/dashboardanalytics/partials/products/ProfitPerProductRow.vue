@@ -62,6 +62,13 @@
         </td>
 
         <td class="tw-px-2 tw-py-3">
+            <div
+                class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-black">
+                {{ formatNumber (item.variant_fees) }}
+            </div>
+        </td>
+
+        <td class="tw-px-2 tw-py-3">
             <div v-if="props.excludeAds"
                 :class="[item.net_profit + (item.total_spent ?? 0) <= 0 && '!tw-bg-rose-500']"
                 class="tw-w-full tw-py-1 tw-px-1 tw-font-[cairo] tw-text-sm tw-text-center tw-font-bold tw-text-emerald-500">
@@ -74,12 +81,6 @@
             </div>
         </td>
 
-        <td v-for="c in 0" :key="c" class="tw-px-2 tw-py-3">
-            <div
-                class="tw-w-full tw-py-3 tw-bg-gray-50 group-even:tw-bg-white  tw-rounded tw-min-w-[30px] tw-animate-pulse">
-            
-            </div>
-        </td>
     </tr>
 </template>
 

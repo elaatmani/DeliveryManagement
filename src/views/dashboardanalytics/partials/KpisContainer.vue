@@ -14,12 +14,23 @@
 
             <div title="Count of Confirmed Orders" class="tw-p-2 tw-h tw-border-b-2 tw-border-solid tw-border-emerald-500 lg:tw-col-span-3 md:tw-col-span-4 sm:tw-col-span-6 tw-col-span-12" >
                 <p class="tw-text-sm">Confirmed</p>
-                <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.confirmed_orders, {}) }}</p>
+                <div class="tw-flex tw-items-center tw-justify-between">
+                    <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.confirmed_orders, {}) }}</p>
+                    
+                    <p v-if="data.total_orders > 0" class="tw-text-xl tw-font-bold">{{ formatNumber((data.confirmed_orders * 100) / data.total_orders, {}) }}%</p>
+                    <p v-else class="tw-text-xl tw-font-bold">·</p>
+                </div>
             </div>
 
             <div title="Count of Delivered Orders" class="tw-p-2 tw-h tw-border-b-2 tw-border-solid tw-border-green-500 lg:tw-col-span-3 md:tw-col-span-4 sm:tw-col-span-6 tw-col-span-12" >
                 <p class="tw-text-sm">Delivered</p>
-                <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.delivered_orders, {}) }}</p>
+                <div class="tw-flex tw-items-center tw-justify-between">
+                    <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.delivered_orders, {}) }}</p>
+
+                    <p v-if="data.confirmed_orders > 0" class="tw-text-xl tw-font-bold">{{ formatNumber((data.delivered_orders * 100) / data.confirmed_orders, {}) }}%</p>
+                    <p v-else class="tw-text-xl tw-font-bold">·</p>
+
+                </div>
             </div>
 
             <div title="Total Ads" class="tw-p-2 tw-h tw-border-b-2 tw-border-solid tw-border-amber-500 lg:tw-col-span-3 md:tw-col-span-4 sm:tw-col-span-6 tw-col-span-12" >
