@@ -17,8 +17,8 @@
                 <div class="tw-flex tw-items-center tw-justify-between">
                     <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.confirmed_orders, {}) }}</p>
                     
-                    <p v-if="data.total_orders > 0" class="tw-text-xl tw-font-bold">{{ formatNumber((data.confirmed_orders * 100) / data.total_orders, {}) }}%</p>
-                    <p v-else class="tw-text-xl tw-font-bold">·</p>
+                    <p v-if="data.total_orders > 0" class="tw-text-sm tw-font-semibold">{{ formatNumber((data.confirmed_orders * 100) / data.total_orders, {}) }}%</p>
+                    <p v-else class="tw-text-xl tw-font-semibold">·</p>
                 </div>
             </div>
 
@@ -27,8 +27,8 @@
                 <div class="tw-flex tw-items-center tw-justify-between">
                     <p class="tw-text-xl tw-font-bold">{{ formatNumber(data.delivered_orders, {}) }}</p>
 
-                    <p v-if="data.confirmed_orders > 0" class="tw-text-xl tw-font-bold">{{ formatNumber((data.delivered_orders * 100) / data.confirmed_orders, {}) }}%</p>
-                    <p v-else class="tw-text-xl tw-font-bold">·</p>
+                    <p v-if="data.confirmed_orders > 0" class="tw-text-sm tw-font-semibold">{{ formatNumber((data.delivered_orders * 100) / data.confirmed_orders, {}) }}%</p>
+                    <p v-else class="tw-text-xl tw-font-semibold">·</p>
 
                 </div>
             </div>
