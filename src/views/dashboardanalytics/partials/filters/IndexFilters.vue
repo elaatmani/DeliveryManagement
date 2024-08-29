@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-bg-white tw-p-5 tw-border tw-border-solid tw-border-gray-200">
+  <div class="tw-bg-white tw-p-4 tw-border tw-border-solid tw-border-gray-200">
     <div>
-        <h1 class="tw-mb-3 tw-text-xl tw-font-medium">Filters</h1>
+        <h1 class="tw-mb-3 tw-text-lg tw-font-bold">Filters</h1>
     </div>
     <div class="tw-grid tw-grid-cols-12 tw-gap-4 tw-p-1">
 

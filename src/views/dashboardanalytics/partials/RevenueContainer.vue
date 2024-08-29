@@ -68,7 +68,7 @@
                 <!-- <div class="tw-h-[0.5px] tw-bg-gray-200 tw-w-1/2 tw-mx-auto"></div> -->
             </div>
 
-            <div class="tw-flex tw-items-center tw-justify-between tw-gap-2 hover:tw-cursor-pointer">
+            <div class="tw-flex tw-items-center tw-justify-between tw-gap-2">
                 <div class="tw-flex tw-items-center tw-gap-2">
                     <div class="tw-p-2 tw-bg-rose-50 tw-w-fit tw-aspect-square tw-rounded-full">
                         <icon icon="healthicons:money-bag-outline" class="tw-text-lg tw-text-rose-500" />
@@ -99,19 +99,19 @@ const profit = computed(() => {
     let result = data.value.profit;
 
     if(exclude.value.product_cost) {
-        result -= data.value.product_cost
+        result += data.value.product_cost
     }
 
     if(exclude.value.shipping_cost) {
-        result -= data.value.shipping_cost
+        result += data.value.shipping_cost
     }
 
     if(exclude.value.ads) {
-        result -= data.value.ads
+        result += data.value.ads
     }
 
     if(exclude.value.variant_fees) {
-        result -= data.value.variant_fees
+        result += data.value.variant_fees
     }
 
     return result;

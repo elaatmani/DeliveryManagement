@@ -8,7 +8,7 @@
     class="tw-border-b tw-border-solid tw-border-gray-100 last:tw-border-b-0 tw-group even:tw-bg-gray-50/50">
         <td class="tw-px-2 tw-py-3">
             <div class="tw-flex tw-items-center tw-gap-2">
-                <icon v-if="[1, 2, 3].includes(props.index) && props.page == 1" icon="fluent:trophy-24-filled" class="tw-text-lg"
+                <icon v-if="[0, 1, 2].includes(props.index) && props.page == 1" icon="fluent:trophy-24-filled" class="tw-text-lg"
                 :class=" [
                     (props.index == 0 && props.page == 1) && 'tw-text-amber-300',
                     (props.index == 1 && props.page == 1) && 'tw-text-gray-300',
