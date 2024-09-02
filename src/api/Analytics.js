@@ -16,6 +16,27 @@ class Analytics {
             params
         });
     }
+
+    async ordersPerDay(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/orders-per-day', {
+            params
+        });
+    }
+
+    async deliveredPerDay(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/delivered-per-day', {
+            params
+        });
+    }
+
+    async confirmedPerDay(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/confirmed-per-day', {
+            params
+        });
+    }
 }
 
 export default new Analytics();

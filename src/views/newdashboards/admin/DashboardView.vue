@@ -2,6 +2,18 @@
   <div class="tw-pb-40">
     <div class="tw-space-y-3">
 
+        <div class="tw-grid tw-grid-cols-3 tw-gap-4">
+            <div>
+                <OrdersByDayChart />
+            </div>
+            <div>
+                <ConfirmedByDayChart />
+            </div>
+            <div>
+                <DeliveredByDayChart />
+            </div>
+        </div>
+
         <RealTimeOnlineUsers />
         
         <OnlineUsers v-if="false" />
@@ -26,10 +38,14 @@ import IndexFilters from '@/views/newdashboards/admin/partials/filters/IndexFilt
 import IndexRevenue from '@/views/newdashboards/admin/partials/statistics/IndexRevenue'
 import RevenueContainer from './partials/RevenueContainer.vue';
 
+import OrdersByDayChart from './partials/charts/OrdersByDayChart.vue';
+import ConfirmedByDayChart from './partials/charts/ConfirmedByDayChart.vue';
+import DeliveredByDayChart from './partials/charts/DeliveredByDayChart.vue';
+
 import Admin from '@/api/Admin';
 
 export default {
-    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue, RealTimeOnlineUsers, RevenueContainer },
+    components: { OnlineUsers, IndexStatistics, IndexFilters, IndexRevenue, RealTimeOnlineUsers, RevenueContainer, OrdersByDayChart, ConfirmedByDayChart, DeliveredByDayChart },
 
     data() {
         return {
