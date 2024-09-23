@@ -37,6 +37,22 @@ class Analytics {
             params
         });
     }
+
+    async assignedPerDay(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/assigned-per-day', {
+            params
+        });
+    }
+
+    async agentsRanking(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/agents-ranking', {
+            params
+        });
+    }
+
+
 }
 
 export default new Analytics();
