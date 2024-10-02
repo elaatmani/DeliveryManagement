@@ -28,7 +28,7 @@
       </div>
 
       <div>
-        <IndexOptions />
+        <IndexOptions :statistics="statistics" :loading="isLoading"/>
       </div>
 
       <div>
@@ -58,6 +58,7 @@ import IndexTable from '@/views/sourcing/partials/common/table/IndexTable';
 import { ref, reactive, provide } from 'vue';
 
 const sourcings = ref([]);
+const statistics = ref([]);
 const options = reactive({
   total: 0,
   current_page: 1,
@@ -87,6 +88,7 @@ const getData = async () => {
         options.to = res.data.sourcings.to
         options.per_page = res.data.sourcings.per_page
         options.page = options.current_page
+        statistics.value = res.data.statistics
       }
     }
   );

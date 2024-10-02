@@ -19,6 +19,11 @@
                     <icon icon="mi:filter" class="tw-text-2xl" />
                 </button>
 
+                
+                <div>
+                <SourcingData :statistics="props.statistics" :loading="props.loading" />
+                </div>
+
                 <div class="tw-relative tw-h-[40px]">
                     <select :value="10"
                     @change="v => handlePerPageChange(v.target.value)"
@@ -50,12 +55,28 @@
 </template>
 
 <script setup>
-import { reactive, inject } from 'vue';
+import { reactive, inject, defineProps } from 'vue';
 import FilterOption from './partials/FilterOption';
 import SearchOption from './partials/SearchOption';
+import SourcingData from './partials/filters/components/SourcingData';
 
 const visible = reactive({
     filters: false
+})
+
+const props = defineProps({
+    loading: {
+        required: true,
+        type: Boolean
+    },
+    statistics: {
+        required: true,
+        type: Array
+    },
+    sourcings: {
+        required: true,
+        type: Array
+    }
 })
 
 const ioptions = inject('options');
