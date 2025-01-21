@@ -1,5 +1,11 @@
 <template>
     <div class="tw-grid tw-grid-cols-12 tw-gap-2">
+          <div class="tw-col-span-4">
+            <ProgressionBar />
+        </div>
+        <div class="tw-col-span-8">
+            <RankingMarketer />
+        </div>
         <div class="tw-col-span-12">
           <AnalitycsMarketer :statistics="statistics" :fetching="fetching"/>
         </div>
@@ -13,7 +19,7 @@
           <LeadsChart/>
         </div>
         <div class="tw-col-span-12 tw-bg-white tw-rounded tw-border tw-border-solid tw-border-gray-200">
-          <AmountPerLead/>
+          <AmountPerLead />
         </div>
        
     </div>
@@ -25,6 +31,8 @@ import LeadsChart from './charts/partials/LeadsChart';
 import {ref} from 'vue'
 import SourceDonutsCharts  from './charts/partials/SourceDonutsCharts';
 import CostPerDay from './charts/partials/CostPerDay';
+import ProgressionBar from './charts/partials/ProgressionBar';
+import RankingMarketer from './charts/partials/RankingMarketer';
 import AnalitycsMarketer from './analytics/AnalitycsMarketer';
 import Dashboard from '@/api/Dashboard';
 
