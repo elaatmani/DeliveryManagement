@@ -148,6 +148,10 @@
                 >
               </div>
 
+              <div class="tw-col-span-2" v-if="itemCopy.confirmation == 'annuler'">
+                <OrderCancelReason v-model:order="itemCopy" v-model:error="errors.cancel_reason" />
+              </div>
+
               <div class="md:tw-col-span-1 tw-col-span-2" v-if="itemCopy.confirmation == 'reporter'">
                 <label
                   class="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white"
@@ -327,10 +331,11 @@ import OrderItems from '@/views/newagent/partials/components/OrderItems'
 import OrderAffectation from '@/views/newagent/partials/components/OrderAffectation'
 import Product from '@/api/Product';
 import ProductOffersTable from "./ProductOffersTable.vue";
+import OrderCancelReason from "@/components/orders/OrderCancelReason.vue";
 
 
 export default {
-  components: { OrderItems, OrderAffectation, ProductOffersTable },
+  components: { OrderItems, OrderAffectation, ProductOffersTable, OrderCancelReason },
 
   props: {
     visible: {

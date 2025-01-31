@@ -15,8 +15,8 @@ export const validate = (app, order) => {
     }
 
 
-    if(!order.note && order.confirmation == "annuler") {
-        app.errors.note = "Add Cancelation note !";
+    if(!order.cancel_reason && order.followup_confirmation == "annuler") {
+        app.errors.cancel_reason = "Add Cancelation reason !";
         return false;
     }
 

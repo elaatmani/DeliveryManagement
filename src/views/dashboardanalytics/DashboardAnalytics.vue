@@ -21,6 +21,9 @@
                 <div class="tw-col-span-12 md:tw-col-span-12">
                     <ProfitPerProductChart @register="register" :filters="filters" />
                 </div>
+                <div class="tw-col-span-12 md:tw-col-span-12">
+                    <CancelChart />
+                </div>
             </div>
 
 
@@ -35,12 +38,13 @@ import IndexFilters from '@/views/dashboardanalytics/partials/filters/IndexFilte
 import RevenueContainer from './partials/RevenueContainer.vue';
 import KpisContainer from './partials/KpisContainer.vue';
 import ProfitPerProductChart from './partials/products/ProfitPerProductChart'
+import CancelChart from './partials/CancelChart'
 
 
 import Admin from '@/api/Admin';
 
 export default {
-    components: { IndexAnalytics, IndexFilters, RevenueContainer, ProfitPerProductChart, KpisContainer },
+    components: { IndexAnalytics, IndexFilters, RevenueContainer, ProfitPerProductChart, KpisContainer, CancelChart },
 
     data() {
         return {
