@@ -54,7 +54,6 @@ export default {
         history: false,
         historyItem: false,
         isLoading: false,
-
         }
     },
 

@@ -7,7 +7,7 @@
             <div class="tw-flex tw-items-center tw-gap-x-3">
                 <h2 class="tw-text-lg tw-font-medium tw-text-gray-800 darkx:tw-text-white">Orders</h2>
 
-                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ totalOrders }} order</span>
+                <span class="tw-px-3 tw-py-1 tw-text-xs tw-text-emerald-600 tw-bg-emerald-100 tw-rounded-full darkx:tw-bg-gray-800 darkx:tw-text-orange-400">{{ totalOrders }} orders</span>
             </div>
 
             <p class="tw-mt-1 tw-text-sm tw-text-gray-500 darkx:tw-text-gray-300">Show all confirmed orders.</p>

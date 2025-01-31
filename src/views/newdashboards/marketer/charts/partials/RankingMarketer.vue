@@ -8,7 +8,7 @@
             <div class="tw-flex tw-flex-col tw-gap-1">
                 <div v-for="(marketer, index) in data" :key="marketer.id" :class="[user.id == marketer.id &&  'tw-border-amber-500 tw-font-semibold tw-bg-gray-50']" class="tw-text-sm tw-flex tw-items-center tw-justify-between tw-border-l-2 tw-px-2 tw-border-solid tw-border-gray-200">
                     <span :class="[user.id == marketer.id ? 'tw-text-base tw-text-amber-500' : 'tw-blur-sm tw-select-none tw-pointer-events-none']">#{{ index + 1 }} - {{ marketer.firstname }} {{ marketer.lastname }}</span>
-                    <div class="tw-font-semibold">{{ marketer.total_leads }}</div>
+                    <div :class="[user.id == marketer.id ? 'tw-font-semibold' : 'tw-font-semibold tw-blur-sm tw-select-none tw-pointer-events-none']">{{ marketer.total_leads }}</div>
                 </div>
             </div>
         </div>
