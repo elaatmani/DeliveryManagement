@@ -1,5 +1,5 @@
 <template>
-    <div class="tw-bg-white tw-p-4 tw-rounded tw-border tw-border-solid tw-border-gray-200">
+    <div class="tw-bg-white tw-p-4 tw-rounded tw-border tw-border-solid tw-border-gray-200 tw-h-full">
         <div class="tw-flex tw-items-center tw-justify-between">
             <h1 class="tw-font-semibold tw-text-lg">Users</h1>
             <div class="tw-flex tw-items-center tw-gap-2">
