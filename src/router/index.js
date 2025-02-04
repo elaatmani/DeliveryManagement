@@ -22,6 +22,7 @@ import followup from './routes/followup'
 import dashboard from './routes/dashboard'
 import sourcing from './routes/sourcing'
 import alert from './routes/alert'
+import cashflow from './routes/cash-flow'
 
 import DefaultLayout from '@/layouts/default/DefaultLayout.vue'
 import NotFound from '@/views/NotFound'
@@ -48,6 +49,7 @@ const routes = [
   sourcing,
   alert,
   scanner,
+  cashflow,
   {
     name: 'default',
     path: '/test',
