@@ -86,7 +86,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
                     period,
                     amount_per_lead: res.data.data.amount_per_lead
                 };
-                if (!parsedData || JSON.stringify(parsedData.amount_per_lead) !== JSON.stringify(newData.amount_per_lead)) {
+                if (!parsedData || JSON.stringify(parsedData.amount_per_lead) !== JSON.stringify(newData.amount_per_lead) || !"") {
                     sessionStorage.setItem('cachedAmountPerLead', JSON.stringify(newData));
                     data.value = res.data.data.amount_per_lead;
                     averageCostPerLeadGeneral.value = res.data.data.average_cost_per_lead_general;
@@ -105,6 +105,7 @@ const getData = async (date_avant = null, date_apres = null, period = 'lastseven
 
 getData();
 const formattedAverageData = computed(() => {
+    if(!averageCostPerLeadGeneral.value)return 0
     return averageCostPerLeadGeneral.value.toFixed(2); 
 });
 

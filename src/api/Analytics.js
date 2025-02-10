@@ -51,15 +51,36 @@ class Analytics {
             params
         });
     }
-
+  
     async agentsRanking(params) {
         await Csrf.getCookie();
         return Api.get('api/analytics/agents-ranking', {
             params
         });
     }
-
-
+    async Goalprogression(month) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/goal-progression', {
+            params: {
+                month: month,
+            },
+        });
+    }
+    async goalprogressionmarketer(params) {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/goal-progression-marketer', {
+            params
+        });
+    }
+    async updateGoal(goal) {
+        await Csrf.getCookie();
+        return Api.post('api/analytics/update-goal',goal)
+    }
+    async marketersRanking() {
+        await Csrf.getCookie();
+        return Api.get('api/analytics/marketers-ranking');
+    }
+    
 }
 
 export default new Analytics();
