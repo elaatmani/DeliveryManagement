@@ -1,6 +1,6 @@
 <template>
     <div class="tw-mb-4 tw-flex tw-justify-between tw-items-center">
-        <div>
+        <div class="tw-hidden md:tw-block">
 
             <h2 class="tw-text-lg tw-font-semibold">Overview</h2>
             <p class="tw-text-sm">Here is a quick overview of your cash flow</p>
@@ -16,10 +16,10 @@
 
         <div class="tw-col-span-12 md:tw-col-span-4 tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex-1 tw-border tw-border-solid tw-border-gray-200">
-                <BalanceBox />
+                <LifetimeBalance />
             </div>
-            <div class="tw-border tw-border-solid tw-border-gray-200">
-                <QuickActions />
+            <div class="tw-flex-1 tw-border tw-border-solid tw-border-gray-200">
+                <BalanceBox />
             </div>
         </div>
 
@@ -45,8 +45,8 @@
 import CashFlowChart from './partials/charts/CashFlowChart.vue';
 import CategoryIncomeChart from './partials/charts/CategoryIncomeChart.vue';
 import CategoryExpensesChart from './partials/charts/CategoryExpensesChart.vue';
-import QuickActions from './partials/QuickActions.vue';
 import BalanceBox from './partials/BalanceBox.vue';
+import LifetimeBalance from './partials/LifetimeBalance.vue';
 import FilterContainer from './partials/filters/FilterContainer.vue';
 import { ref, provide } from 'vue';
 

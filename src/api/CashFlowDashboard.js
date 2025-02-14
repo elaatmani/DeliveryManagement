@@ -41,6 +41,13 @@ class CashFlowCategory {
         });
     }
 
+    async lifetime(params) {
+        await Csrf.getCookie();
+        return Api.get('api/cash-flow-dashboard/lifetime', {
+            params
+        });
+    }
+
 
 }
 

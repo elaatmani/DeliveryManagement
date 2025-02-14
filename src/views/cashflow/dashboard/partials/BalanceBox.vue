@@ -4,7 +4,7 @@
 
         <div class="tw-grid tw-grid-cols-2 tw-gap-2 tw-flex-1">
             <div class=" ">
-                <p class="tw-text-lg">Account Balance</p>
+                <p class="tw-text-lg">Your Balance</p>
                 <p v-if="loading"
                     class="tw-text-2xl tw-font-bold tw-h-[32px] tw-bg-gray-200 tw-animate-pulse tw-rounded tw-w-[200px]">
                 </p>
@@ -16,14 +16,14 @@
                     <p v-if="loading"
                         class="tw-text-2xl tw-font-bold tw-h-[24px] tw-bg-gray-200 tw-animate-pulse tw-rounded tw-w-[150px]">
                     </p>
-                    <p v-else class="tw-text- tw-font-bold tw-text-emerald-500">{{ formatNumber(data.expenses) }}</p>
+                    <p v-else class="tw-text- tw-font-bold tw-text-emerald-500">{{ formatNumber(data.income) }}</p>
                 </div>
                 <div class="tw-flex-1">
                     <p class="tw-text-sm tw-font-semibold">Cash Out</p>
                     <p v-if="loading"
                         class="tw-text-2xl tw-font-bold tw-h-[24px] tw-bg-gray-200 tw-animate-pulse tw-rounded tw-w-[150px]">
                     </p>
-                    <p v-else class="tw-text- tw-font-bold tw-text-rose-400">{{ formatNumber(data.income) }}</p>
+                    <p v-else class="tw-text- tw-font-bold tw-text-rose-400">{{ formatNumber(data.expenses) }}</p>
                 </div>
 
             </div>

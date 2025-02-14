@@ -3,6 +3,10 @@
         <div class="tw-flex tw-items-center tw-gap-2">
             <p class="tw-p-2 tw-font-bold tw-text-lg">Orders</p>
             <p class="tw-px-1 tw-bg-black tw-text-white tw-text-sm tw-rounded">{{ new Intl.NumberFormat().format(total)  }}</p>
+            <div class="tw-ml-auto tw-flex tw-items-center tw-gap-1" :class="[difference > 0 ? 'tw-text-emerald-500' : 'tw-text-rose-500']">
+                <icon :class="[difference <= 0 && '-tw-scale-y-100']" icon="stash:chart-trend-up-light" class="tw-text-xl" />
+                <p class="tw-text-sm">{{ difference }}%</p>
+            </div>
         </div>
         <apexchart type="area" height="220" :options="options" :series="series"></apexchart>
     </div>
@@ -24,8 +28,11 @@ import Analytics from '@/api/Analytics'
 
 const loading = ref(true);
 const total = ref(0)
+const yesterday = ref(0);
+const today = ref(0);
 
 const data = ref([])
+const difference = computed(() => getDifference())
 
 const options = computed(() => {
 
@@ -102,6 +109,8 @@ const getData = async () => {
             if(res.data.code == 'SUCCESS') {
                 console.log(data)
                 data.value = res.data.data
+                yesterday.value = data.value[data.value.length - 2].count
+                today.value = data.value[data.value.length - 1].count
                 total.value = res.data.data.reduce((s, c) => {
                     return s + c.count
                 }, 0)
@@ -114,6 +123,14 @@ const getData = async () => {
     )
     loading.value = false;
 }
+
+const getDifference = () => {
+    if (yesterday.value === 0) {
+        return today.value > 0 ? 100 : 0; // Avoid division by zero
+    }
+    return ((today.value - yesterday.value) / yesterday.value) * 100;
+};
+
 
 getData()
 
