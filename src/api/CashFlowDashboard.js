@@ -10,6 +10,13 @@ class CashFlowCategory {
         });
     }
 
+    async monthlyCashflow(params) {
+        await Csrf.getCookie();
+        return Api.get('api/cash-flow-dashboard/monthly-cashflows', {
+            params
+        });
+    }
+
     async balance(params) {
         await Csrf.getCookie();
         return Api.get('api/cash-flow-dashboard/balance', {

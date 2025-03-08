@@ -121,6 +121,26 @@ class Dashboard {
         return Api.get('api/agentekpi/top_agentes', {params: filters});
     }
 
+    async agentsByConfirmation(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/agents-by-confirmation', {params: filters});
+    }
+
+    async agentsByDelivery(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/agents-by-delivery', {params: filters});
+    }
+
+    async agentsPerformanceLifetime(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/agents-performance-lifetime', {params: filters});
+    }
+
+    async agentsPerformanceByTime(filters){
+        await Csrf.getCookie();
+        return Api.get('api/agentekpi/agents-performance-by-time', {params: filters});
+    }
+
 }
 
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!loading" class="tw-w-full tw-shadow-md tw-p-4 tw-bg-white tw-rounded-lg">
+    <div v-if="!loading" class="tw-w-full tw-shadow-mdx tw-p-4 tw-bg-white tw-rounded-lgx">
       <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
         <h1 class="tw-text-xl tw-font-medium tw-py-2">Total Confirmation :</h1>
         <div class="tw-full md:tw-mb-0 tw-mb-3">

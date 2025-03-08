@@ -11,8 +11,10 @@
 
     <div class="tw-grid tw-grid-cols-12 tw-gap-4">
         <div class="tw-col-span-12 md:tw-col-span-8 tw-border tw-border-solid tw-border-gray-200">
-            <CashFlowChart />
+            <MonthlyCashFlowChart />
         </div>
+
+        
 
         <div class="tw-col-span-12 md:tw-col-span-4 tw-flex tw-flex-col tw-gap-4">
             <div class="tw-flex-1 tw-border tw-border-solid tw-border-gray-200">
@@ -23,17 +25,20 @@
             </div>
         </div>
 
-        <div class="tw-col-span-12 md:tw-col-span-4 tw-border tw-border-solid tw-border-gray-200">
+
+        <div class="tw-col-span-12 md:tw-col-span-6 tw-border tw-border-solid tw-border-gray-200">
+            <CashFlowChart />
+        </div>
+
+
+        <div class="tw-col-span-12 md:tw-col-span-3 tw-border tw-border-solid tw-border-gray-200">
             <CategoryIncomeChart />
         </div>
 
-        <div class="tw-col-span-12 md:tw-col-span-4 tw-border tw-border-solid tw-border-gray-200">
+        <div class="tw-col-span-12 md:tw-col-span-3 tw-border tw-border-solid tw-border-gray-200">
             <CategoryExpensesChart />
         </div>
 
-        <div class="tw-col-span-12 md:tw-col-span-4 tw-border tw-border-solid tw-border-gray-200">
-            <CategoryExpensesChart />
-        </div>
     </div>
 
 
@@ -43,6 +48,7 @@
 
 <script setup>
 import CashFlowChart from './partials/charts/CashFlowChart.vue';
+import MonthlyCashFlowChart from './partials/charts/MonthlyCashFlowChart';
 import CategoryIncomeChart from './partials/charts/CategoryIncomeChart.vue';
 import CategoryExpensesChart from './partials/charts/CategoryExpensesChart.vue';
 import BalanceBox from './partials/BalanceBox.vue';

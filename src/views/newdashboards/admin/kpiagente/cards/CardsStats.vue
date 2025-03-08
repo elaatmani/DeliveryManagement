@@ -1,7 +1,7 @@
 <template>
     <div v-if="!loading" class="tw-grid md:tw-grid-cols-4 tw-grid-cols-1 tw-gap-4 tw-mb-2">
         <div v-for="card in cards" :key="card.id"
-            class="tw-shadow-lg tw-p-4 tw-flex-wrap tw-bg-[#ffffff] tw-rounded-xl">
+            class="tw-p-4x tw-flex-wrapx">
             <DashboardCard :color="card.color" :icon="card.icon" :title="card.title" :symbol="card.symbol"
                 :percentage="card.percentage" :value="card.value" />
         </div>
